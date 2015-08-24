@@ -31,7 +31,7 @@ def input(events):
 
 signal.signal(signal.SIGINT, signal_handler)
 ss = socket.socket()
-ss.bind(('192.168.1.99' , 7778))
+ss.bind(('192.168.1.100' , 7778))
 ss.listen(0)
 
 connection, address = ss.accept()

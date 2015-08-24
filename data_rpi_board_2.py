@@ -9,7 +9,7 @@ import thread
 
 port = serial.Serial('/dev/ttyUSB0', baudrate = 38400, parity='E', timeout = 1)
 ss = socket.socket()
-ss.connect(('192.168.1.99' , 7778))
+ss.connect(('192.168.1.100' , 7778))
 
 quit = 0
 control = 0
@@ -54,7 +54,7 @@ def Receive_Data(control_id):
 			print serial_read
 			log=serial_read.split(",")
 			if len(log)==3:
-				log_file=open("/var/www/stat.json","w")
+				log_file=open("/srv/http/stat.json","w")
 				log_file.write("{\"mode\":")
 				log_file.write(log[0])
 				log_file.write(",\"angle\":")
