@@ -21,7 +21,7 @@ log_file=open("/var/www/stat.json","w")
 def signal_handler(signal, frame):
 	port.close()
 	ss.close()
-        sys.exit(0)
+	sys.exit(0)
 
 def Send_Data(control_id):
 	global print_control
