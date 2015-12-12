@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>CamLCD.qml</file>
+    </qresource>
+</RCC>
