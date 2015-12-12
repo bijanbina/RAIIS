@@ -55,14 +55,7 @@ OBJECTS       = main.o \
 		grid.o \
 		qrc_qml.o \
 		moc_grid.o
-DIST          = android/AndroidManifest.xml \
-		android/gradle/wrapper/gradle-wrapper.jar \
-		android/gradlew \
-		android/res/values/libs.xml \
-		android/build.gradle \
-		android/gradle/wrapper/gradle-wrapper.properties \
-		android/gradlew.bat \
-		/usr/lib/qt/mkspecs/features/spec_pre.prf \
+DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
 		/usr/lib/qt/mkspecs/common/sanitize.conf \
@@ -142,7 +135,6 @@ DIST          = android/AndroidManifest.xml \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
-		deployment.pri \
 		/usr/lib/qt/mkspecs/features/resolve_config.prf \
 		/usr/lib/qt/mkspecs/features/default_post.prf \
 		/usr/lib/qt/mkspecs/features/qml_debug.prf \
@@ -269,7 +261,6 @@ Makefile: grid.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
-		deployment.pri \
 		/usr/lib/qt/mkspecs/features/resolve_config.prf \
 		/usr/lib/qt/mkspecs/features/default_post.prf \
 		/usr/lib/qt/mkspecs/features/qml_debug.prf \
@@ -374,7 +365,6 @@ Makefile: grid.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/
 /usr/lib/qt/mkspecs/features/spec_post.prf:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
-deployment.pri:
 /usr/lib/qt/mkspecs/features/resolve_config.prf:
 /usr/lib/qt/mkspecs/features/default_post.prf:
 /usr/lib/qt/mkspecs/features/qml_debug.prf:
@@ -439,27 +429,8 @@ compiler_rcc_make_all: qrc_qml.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) qrc_qml.cpp
 qrc_qml.cpp: qml.qrc \
-		moraba_roshan.png \
-		Cell.qml \
-		dayere.png \
-		StartBtn.qml \
-		zarbdar_r.png \
-		moraba.png \
-		mosalas_r.png \
-		mybutton.wav \
-		cursuor.png \
-		Joystick.qml \
-		main.qml \
-		arrow.png \
 		CamLCD.qml \
-		mosalas.png \
-		dayere_roshan.png \
-		blueArrow.png \
-		zarbdar.png \
-		back.png \
-		Resources/powerBtnOff.png \
-		Resources/powerBtnOn.png \
-		Resources/settings.png
+		main.qml
 	/usr/lib/qt/bin/rcc -name qml qml.qrc -o qrc_qml.cpp
 
 compiler_moc_header_make_all: moc_grid.cpp
@@ -494,18 +465,9 @@ moc_grid.o: moc_grid.cpp
 
 ####### Install
 
-install_target: first FORCE
-	@test -d $(INSTALL_ROOT)/opt/grid/bin || mkdir -p $(INSTALL_ROOT)/opt/grid/bin
-	-$(INSTALL_PROGRAM) $(QMAKE_TARGET) $(INSTALL_ROOT)/opt/grid/bin/$(QMAKE_TARGET)
+install:  FORCE
 
-uninstall_target: FORCE
-	-$(DEL_FILE) $(INSTALL_ROOT)/opt/grid/bin/$(QMAKE_TARGET)
-	-$(DEL_DIR) $(INSTALL_ROOT)/opt/grid/bin/ 
-
-
-install: install_target  FORCE
-
-uninstall: uninstall_target  FORCE
+uninstall:  FORCE
 
 FORCE:
 

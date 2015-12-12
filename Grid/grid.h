@@ -9,8 +9,8 @@
 #include <QtSerialPort/QSerialPort>
 
 #define WRITE_BUFFER_LENGTH 100
-#define X_MAX 150
-#define Y_MAX 150
+#define X_MAX 60
+#define Y_MAX 80
 
 class Grid : public QObject
 {
@@ -31,6 +31,7 @@ private slots:
 private:
     QSerialPort *port = new QSerialPort;
     QString readData;
+    qreal x_last,y_last;
 };
 
 #endif // TRANSMISSION_H
