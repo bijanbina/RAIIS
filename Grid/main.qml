@@ -32,8 +32,8 @@ Window {
             var ctx = gridCanvas.getContext('2d')
             ctx.beginPath();
             ctx.lineWidth = 1;
-            ctx.strokeStyle = '#ff0000';
-            ctx.globalAlpha = 0.5;
+            //ctx.strokeStyle = '#ff0000';
+            ctx.globalAlpha = 0.5;/* Grid
             ///////////////Center///////////////
             ctx.moveTo(page.minimumWidth/2,0);
             ctx.lineTo(page.minimumWidth/2,page.minimumHeight);
@@ -51,7 +51,43 @@ Window {
             ctx.moveTo(3 * page.minimumWidth/4,0);
             ctx.lineTo(3 * page.minimumWidth/4,page.minimumHeight);
             ctx.moveTo(0,3 * page.minimumHeight/4);
-            ctx.lineTo(page.minimumWidth,3 * page.minimumHeight/4);
+            ctx.lineTo(page.minimumWidth,3 * page.minimumHeight/4);*/
+
+            ctx.moveTo(page.minimumWidth/2,page.minimumHeight/2 - page.minimumHeight/8);
+            ctx.lineTo(page.minimumWidth/2,page.minimumHeight/2 + page.minimumHeight/8);
+            ctx.moveTo(page.minimumWidth/2 - page.minimumHeight/8,page.minimumHeight/2);
+            ctx.lineTo(page.minimumWidth/2 + page.minimumHeight/8,page.minimumHeight/2);
+
+            var t1t_x = page.minimumWidth/2 - page.minimumWidth/6;
+            var t1t_y = page.minimumHeight/2 - page.minimumHeight/4;
+            var t1t_len = page.minimumHeight/16;
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x + t1t_len,t1t_y);
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x,t1t_y + t1t_len);
+
+            t1t_x = page.minimumWidth/2 + page.minimumWidth/6;
+            t1t_y = page.minimumHeight/2 - page.minimumHeight/4;
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x - t1t_len,t1t_y);
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x,t1t_y + t1t_len);
+
+            t1t_x = page.minimumWidth/2 - page.minimumWidth/6;
+            t1t_y = page.minimumHeight/2 + page.minimumHeight/4;
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x + t1t_len,t1t_y);
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x,t1t_y - t1t_len);
+
+            t1t_x = page.minimumWidth/2 + page.minimumWidth/6;
+            t1t_y = page.minimumHeight/2 + page.minimumHeight/4;
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x - t1t_len,t1t_y);
+            ctx.moveTo(t1t_x,t1t_y);
+            ctx.lineTo(t1t_x,t1t_y - t1t_len);
+
+
 
             ctx.stroke();
         }

@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtMultimedia 5.1
+import QtMultimedia 5.0
 
 Item {
     anchors.fill: parent
@@ -13,27 +13,10 @@ Item {
     Camera {
         id: camera
 
-        imageProcessing.whiteBalanceMode: CameraImageProcessing.WhiteBalanceFlash
-
-
-        exposure {
-            exposureCompensation: -1.0
-            exposureMode: Camera.ExposurePortrait
-        }
-
-
-        imageCapture {
-            resolution: "1920x1080"
-            onImageCaptured: {
-                photoPreview.source = preview  // Show the preview in an Image
-            }
-        }
     }
 
-    //MediaPlayer {
     VideoOutput{
-    id: mediaplayer
-        //source: loloArea.videoLocation
+        id: mediaplayer
         source :camera
         anchors.fill : parent
 
