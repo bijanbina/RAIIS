@@ -23,6 +23,41 @@ Window {
         onReleased: mouseReleased(mouseX/page.width,mouseY/page.height)
     }
 
+    Canvas
+    {
+        id: gridCanvas
+        anchors.fill: parent
+        z: 3
+        onPaint: {
+            var ctx = gridCanvas.getContext('2d')
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#ff0000';
+            ctx.globalAlpha = 0.5;
+            ///////////////Center///////////////
+            ctx.moveTo(page.minimumWidth/2,0);
+            ctx.lineTo(page.minimumWidth/2,page.minimumHeight);
+            ctx.moveTo(0,page.minimumHeight/2);
+            ctx.lineTo(page.minimumWidth,page.minimumHeight/2);
+
+            ///////////////Horizontal///////////////
+            ctx.moveTo(page.minimumWidth/4,0);
+            ctx.lineTo(page.minimumWidth/4,page.minimumHeight);
+            ctx.moveTo(0,page.minimumHeight/4);
+            ctx.lineTo(page.minimumWidth,page.minimumHeight/4);
+
+            ///////////////Vertical///////////////
+
+            ctx.moveTo(3 * page.minimumWidth/4,0);
+            ctx.lineTo(3 * page.minimumWidth/4,page.minimumHeight);
+            ctx.moveTo(0,3 * page.minimumHeight/4);
+            ctx.lineTo(page.minimumWidth,3 * page.minimumHeight/4);
+
+            ctx.stroke();
+        }
+    }
+
+
     Rectangle{
         id: pageOverlay
         anchors.fill: parent

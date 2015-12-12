@@ -24,8 +24,8 @@ Grid::Grid(QObject *parent) : QObject(parent)
         port->close();
     }
 
-    y_last = 0.5;
-    x_last = 0.5;
+    y_last = 0.0;
+    x_last = 0.0;
 }
 
 Grid::~Grid()
@@ -35,25 +35,46 @@ Grid::~Grid()
 
 void Grid::pressedSlot(qreal x, qreal y)
 {
-    qDebug() << "X: " << qFloor(x * X_MAX) << "Y: " << qFloor(y * Y_MAX) << "\t Pressed";
-    int x_send = qFloor((x - x_last) * X_MAX);
-    int y_send = qFloor((y - y_last) * Y_MAX);
+
+    int x_send = qFloor(x_last + (x - 0.5) * SCREEN_WIDTH);
+    int y_send = qFloor(y_last + (y - 0.5) * SCREEN_HEIGHT);
+
+    qDebug() << (x - x_last) << "\t" << x_last;
+
+    qDebug() << "x: " << x << "y: " << y << "\t pressed\t" << "x send: " <<
+                x_send << "y send: " << y_send;
+
+    if ( x_send < 0 || y_send < 0  || x_send > X_MAX || y_send > Y_MAX)
+    {
+        qDebug() << "Entered Dead Zone!!!";
+        return;
+    }
 
     char writeBuffer[WRITE_BUFFER_LENGTH];
     sprintf(writeBuffer,"%d %d\n",x_send,y_send);
     qint64 bytesWritten = port->write(writeBuffer);
 
-    qDebug()<<bytesWritten << "is written.";
+    qDebug() << bytesWritten << "is written.";
 
-    x_last = x;
-    y_last = y;
+    x_last += (x - 0.5) * SCREEN_WIDTH;
+    y_last += (y - 0.5) * SCREEN_HEIGHT;
+
 }
 
 void Grid::releaseSlot(qreal x, qreal y)
 {
-    qDebug() << "X: " << qFloor(x * X_MAX) << "Y: " << qFloor(y * Y_MAX) << "\t Released";
-    int x_send = qFloor((x - x_last) * X_MAX);
-    int y_send = qFloor((y - y_last) * Y_MAX);
+    int x_send = qFloor(x_last + (x - 0.5) * SCREEN_WIDTH);
+    int y_send = qFloor(y_last + (y - 0.5) * SCREEN_HEIGHT);
+
+
+    qDebug() << "x: " << x << "y: " << y << "\t pressed\t" << "x send: " <<
+                x_send << "y send: " << y_send;
+
+    if ( x_send < 0 || y_send < 0  || x_send > X_MAX || y_send > Y_MAX)
+    {
+        qDebug() << "Entered Dead Zone!!!";
+        return;
+    }
 
     char writeBuffer[WRITE_BUFFER_LENGTH];
     sprintf(writeBuffer,"%d %d\n",x_send,y_send);
@@ -61,13 +82,12 @@ void Grid::releaseSlot(qreal x, qreal y)
 
     qDebug()<<bytesWritten << "is written.";
 
-    x_last = x;
-    y_last = y;
+    x_last += (x - 0.5) * SCREEN_WIDTH;
+    y_last += (y - 0.5) * SCREEN_HEIGHT;
 }
 
 void Grid::on_dataReady()
 {
     readData += QString(port->readAll());
     //qDebug()<<readData;
-
 }

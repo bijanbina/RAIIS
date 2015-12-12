@@ -9,8 +9,10 @@
 #include <QtSerialPort/QSerialPort>
 
 #define WRITE_BUFFER_LENGTH 100
-#define X_MAX 60
-#define Y_MAX 80
+#define X_MAX               147
+#define Y_MAX               100
+#define SCREEN_WIDTH        70
+#define SCREEN_HEIGHT       50
 
 class Grid : public QObject
 {
