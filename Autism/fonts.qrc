@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Resources/Fonts/Roboto-Medium.ttf</file>
+        <file>Resources/Fonts/Roboto-Light.ttf</file>
+        <file>Resources/Fonts/Roboto-Regular.ttf</file>
+        <file>Resources/Fonts/Roboto-Bold.ttf</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>mybutton.wav</file>
+        <file>main.qml</file>
+        <file>Joystick.qml</file>
+        <file>Cell.qml</file>
+        <file>AndroidSlider.qml</file>
+        <file>LampCell.qml</file>
+    </qresource>
+</RCC>
