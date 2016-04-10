@@ -71,6 +71,10 @@ void updateScreenInfo(QObject *item)
     screen_pos PrimaryScreen = getPrimaryScreen();
     QQmlProperty::write(item, "x_base", PrimaryScreen.x);
     QQmlProperty::write(item, "y_base", PrimaryScreen.y);
+//    int minimumWidth = QQmlProperty::read(item, "minimumWidth");
+//    int minimumHeight = QQmlProperty::read(item, "minimumHeight");
+//    x:x_base + (Screen.width  - minimumWidth)  / 2
+//    y:y_base + (Screen.height - minimumHeight) / 2
     QQmlProperty::write(item, "visible", 1);
     //QMetaObject::invokeMethod(item, "show");
 }
