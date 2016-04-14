@@ -1,5 +1,5 @@
-#ifndef TRMMARK_H
-#define TRMMARK_H
+#ifndef GNCCORE_H
+#define GNCCORE_H
 
 #include <QtWidgets>
 #include <cv.h>
@@ -9,7 +9,6 @@
 #include <iostream>
 #include <jsoncpp/json/json.h>
 #include <string.h>
-#include "Track.h"
 
 #define PI 3.14159265
 #define calib_prev_size 800.0

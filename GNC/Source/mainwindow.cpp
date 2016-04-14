@@ -204,14 +204,14 @@ void MainWindow::updatePrev()
     trmMark *plus_obj;
     if (a_mahyar->isChecked())
     {
-        plus_obj = markFromMahyar(imagesrc,filter_param);
+        //plus_obj = markFromMahyar(imagesrc,filter_param);
     }
     else
     {
         plus_obj = markFromImage(imagesrc,filter_param,&isAuto) ;
         if (plus_obj == NULL && a_auto->isChecked())
         {
-            plus_obj = markFromMahyar(imagesrc,filter_param);
+            //plus_obj = markFromMahyar(imagesrc,filter_param);
             isSwitch = true;
         }
     }
@@ -249,20 +249,10 @@ void MainWindow::updatePrev()
 
 void MainWindow::calibrate_clicked()
 {
-    if (a_mahyar->isChecked())
-    {
-        CalibrateIIWindow *calibrateii_window = new CalibrateIIWindow(this);
-        filter_param = calibrateii_window->start(filter_param.frame_num);
-        updatePrev();
-        delete calibrateii_window;
-    }
-    else
-    {
-        calibrate_window = new CalibrateWindow(this);
-        filter_param = calibrate_window->start(filter_param.frame_num);
-        updatePrev();
-        delete calibrate_window;
-    }
+    calibrate_window = new CalibrateWindow(this);
+    filter_param = calibrate_window->start(filter_param.frame_num);
+    updatePrev();
+    delete calibrate_window;
 }
 
 void MainWindow::open_clicked()
@@ -532,7 +522,7 @@ trmData *createTrmdata(CvCapture *capture,trmParam param,int startFrame,int endF
 		trmMark *plus_obj;
         if (param.algorithm == TRM_ONLY_MAHYAR)
 		{
-            plus_obj = markFromMahyar(imagesrc,param);
+            //plus_obj = markFromMahyar(imagesrc,param);
 		}
 		else
 		{

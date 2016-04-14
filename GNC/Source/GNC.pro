@@ -15,13 +15,11 @@ SOURCES += main.cpp\
         mainwindow.cpp\
 	calibratewindow.cpp \
         recwindow.cpp \
-        calibrateiiwindow.cpp \
         gnccore.cpp
 
 HEADERS  += mainwindow.h\
 	calibratewindow.h \
         recwindow.h \
-        calibrateiiwindow.h \
         gnccore.h
 
 PKGCONFIG += opencv jsoncpp

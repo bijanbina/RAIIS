@@ -23,6 +23,7 @@
 #include "recwindow.h"
 #include "calibratewindow.h"
 #include "calibrateiiwindow.h"
+#include "gnccore.h"
 
 #define prev_size 200.0
 

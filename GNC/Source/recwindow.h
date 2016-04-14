@@ -6,7 +6,7 @@
 #include <QtWidgets>
 #include <cv.h>
 #include <sys/time.h>
-#include "trmmark.h"
+#include "gnccore.h"
 
 #define TEMP_VIDEO_ADDRESS "/tmp/tremor.mpg"
 

@@ -1,4 +1,4 @@
-#include "trmmark.h"
+#include "gnccore.h"
 
 trmMark *create_from_point(CvSeq *points,double previous)
 {
