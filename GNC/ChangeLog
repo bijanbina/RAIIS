@@ -1,0 +1,106 @@
+------------------------------------------------------------
+revno:       10
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 20, 2012
+message:
+  create GList Page
+  Impliment Pages Array
+  create header Array
+  use header in page manager
+  Design new header for add library
+  embed add library header in make file
+  set style of add library label
+  add widget of library to new project wizard
+------------------------------------------------------------
+revno:       9
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 18, 2012
+message:
+  Find how add something to ExtraDist
+  Add Template Project and other resource file to make file.am
+  Add To makefile
+------------------------------------------------------------
+revno:       8
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 16, 2012
+message:
+  Start HARD Working
+  Add next , back button
+  create next and back signal and slot
+  implement what the slot do
+  create a page manager
+  Change layout
+  add comment to code
+  Design how page manager work
+  Change structure of ui builder
+  create ui_init function and implimet it
+  use GtkBin for replace widget
+  Disable Back button on first page
+  merge cancel and backbutton
+------------------------------------------------------------
+revno:       7
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 16, 2012
+message:
+  Research for GtkAssistent and result if we not use it
+  finish the first step new-project wizard
+------------------------------------------------------------
+revno:       6
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 12, 2012
+message:
+  Debug error for signal and slot in GtkSwitch
+  Add ui builder to private object in class
+  set git enable handle
+  Create Browse Window
+  add git signal and slot
+------------------------------------------------------------
+revno:       5
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 12, 2012
+message:
+  Debug error for signal and slot in GtkSwitch
+  Add ui builder to private object in class
+  set git enable handle
+  Create Browse Window
+  add git signal and slot
+------------------------------------------------------------
+revno:       4
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 3, 2012
+message:
+  All change that not affected update
+------------------------------------------------------------
+revno:       3
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 2, 2012
+message:
+  Add config.h.in for get some info in C source file
+  Add ijadi icon and shortcut
+  Add some file to project makefile
+  Use local file to load resource
+  Add ijadi-define.h for include some default value
+------------------------------------------------------------
+revno:       2
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Friday, March 1, 2012
+message:
+  Add Header for new-project Diolog
+  Change some make file and edit code
+------------------------------------------------------------
+revno:       1 (Start Project)
+committer:   Bijan Binaee <bijanbina@gmail.com>
+branch nick: Main
+timestamp:   Wednesday, December 14, 2011
+message:
+  Start Project and writing first code with gtk3 and gobject
+------------------------------------------------------------

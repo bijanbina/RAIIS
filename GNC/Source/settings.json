@@ -1,0 +1,32 @@
+{
+   "Algorithm" : 1,
+   "Bold" : 2,
+   "Calibre Image Width" : 800,
+   "Color1" : {
+      "Hue" : 70.0,
+      "Saturation" : 100.0,
+      "Value" : 100.0
+   },
+   "Color2" : {
+      "Hue" : 100.0,
+      "Saturation" : 255.0,
+      "Value" : 255.0
+   },
+   "Corner Minimum Distance" : 25,
+   "Device ID" : 1,
+   "Dilate" : 2,
+   "Do canny after bold" : true,
+   "Edge Detection" : {
+      "Treshold 1" : 214.0,
+      "Treshold 2" : 71.0
+   },
+   "Erode" : 2,
+   "File Address" : "/home/bijan/Project/Tremor/Resources/Sample.mp4",
+   "Is Video" : true,
+   "Maximum RMS Error" : 5,
+   "Morphology Algorithm" : 0,
+   "Narrow" : 0,
+   "ROI CutOff" : 6482440,
+   "Start Frame Number" : 189,
+   "Window" : 1920
+}

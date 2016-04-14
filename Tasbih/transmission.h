@@ -9,28 +9,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QTimer>
+#include <QQmlProperty>
+
+#define TR_PORT_ADDRESS 7651
 
 class Transmission : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit Transmission(QObject *parent = 0);
+    explicit Transmission(QObject *item, QObject *parent = 0);
     ~Transmission();
 signals:
     void errorConnection();
 private slots:
-    void morabaaSlot();
-    void mosalasSlot();
-    void dayereSlot();
-    void zarbdarSlot();
     void connected();
     void start(QString IP);
     void startTransfer(const char* command);
     void displayError(QAbstractSocket::SocketError socketError);
-    void sendJoystick(QString key);
     void sendBuffer();
-    void stopJoystick();
+    void updateNumber();
 private:
     QTcpSocket tcpClient;
 
@@ -45,6 +43,8 @@ private:
     bool commandMode;
     int commandIndex;
     short commandByte;
+
+    QObject *ui;
 };
 
 #endif // TRANSMISSION_H

@@ -24,8 +24,11 @@ Window {
         terminalPane.refreshFocus() //set active focus to terminal
     }
 
+    signal start()
+
     //Properties:
     property string ipAddress: "192.168.1.101"
+    property string counterNumber: "21"
 
     //Signals:
     signal morabaSignal
@@ -79,7 +82,7 @@ Window {
                 {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    text : "42"
+                    text : counterNumber
                     color: "#e8e9e3";
                     font.pixelSize: 102
                     font.family: genomeLight.name
