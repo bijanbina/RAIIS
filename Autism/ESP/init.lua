@@ -93,6 +93,7 @@ end
 function clientConnected(conn)
 	  conn:on("receive", onReceive)
 	  conn:send("Welcome\n")
+      print("Client Connected")
 end
 
 function con_to_server()
@@ -105,29 +106,10 @@ function con_to_server()
 end
 
 function music_off()
---[[clk=0
-    di=1
-    rst=2
-    cntr=0
-    gpio.mode(clk,gpio.OUTPUT)
-    gpio.mode(di,gpio.OUTPUT)
-    gpio.mode(rst,gpio.OUTPUT)
-    gpio.write(clk,gpio.HIGH)
-    gpio.write(di,gpio.HIGH)
-    gpio.write(rst,gpio.HIGH)
---]]
 	play(0xFFFF);
 end
 
 function onReceive(conn,receive)
---[[
-    command=tonumber(receive)
-    if command<1000 then
-        lightOn(command)
-    elseif command==1000 then
-        play(4)
-    end
---]]
     if (receive == nil or receive == '') then
         return
         print("Receive Data is not nil")
@@ -183,5 +165,5 @@ function onReceive(conn,receive)
     conn:send("command:")
 end
 
-print("Version: 0.12")
+print("Version: 0.13")
 connect()
