@@ -29,6 +29,11 @@ private slots:
 private:
     void openSerialPort();
     QSerialPort *channel;
+    QString getStrCommand(QString command);
+
+
+
+    QString buffer;
 };
 
 #endif // CHAPER_H
