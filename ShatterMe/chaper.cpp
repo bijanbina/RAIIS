@@ -5,7 +5,13 @@ chaper::chaper(QObject *parent) : QObject(parent)
     channel = new QSerialPort(this);
     openSerialPort();
     connect(channel,SIGNAL(readyRead()),this,SLOT(updateData()));
-    channel->write("12\n");
+    timer = new QTimer(this);
+    //channel->write("12\n");
+    connect(timer,SIGNAL(timeout()),this,SLOT(timout_reach()));
+    buffer_size = 0;
+    sendRequest();
+    timer->setInterval(TIMOUT_DELAY);
+    //timout_reach();
 }
 
 void chaper::openSerialPort()
@@ -35,30 +41,42 @@ void chaper::openSerialPort()
 void chaper::updateData()
 {
     QByteArray data;
-    data = channel->read(1);
-    if (*data.data() == '\n')
+    data = channel->readAll();
+    buffer[buffer_size] = *data.data();
+    qInfo() << QString("receive %1").arg(data.data() , 0, 16);
+    buffer_size += data.size();
+    timer->start(TIMOUT_DELAY);
+}
+
+void chaper::timout_reach()
+{
+    qInfo() << QString("timeout reached, buffer length is %1").arg(buffer_size);
+    qInfo() << QString("%1").arg(timer->interval());
+    timer->stop();
+    if (buffer_size > 0)
     {
-        bool ok;
-        int temp = QString(buffer).toInt(&ok);
-        if (ok)
+        printf("proccess ");
+        int i;
+        for ( i = 0 ; i < PACKET_LEN ; i++ )
         {
-            qInfo() << QString("set temp to %1").arg(temp);
-            QString command = "snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.0 = ";
-            command.append(buffer);
-            //qInfo() << QString("run %1").arg(command);
-            getStrCommand(command);
+            printf ("%02x ",(int)(buffer[i] & 0xFF));
         }
-        else
-        {
-            qCritical() << "Error : " << "Entered value is not a integer";
-        }
-        buffer = "";
+        printf ("\n");
+        int temp = buffer[3] + 255 * buffer[4];
+        QString command = "/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.0 = ";
+        command.append(QString("%1").arg(temp));
+
+        //temp
+        //humedity
+        //setpoint
+
+        qInfo() << QString("run %1").arg(command);
+        getStrCommand(command);
+        buffer_size = 0;
+        *buffer = 0;
     }
-    else
-    {
-        buffer.append(data);
-        qInfo() << QString("receive %1").arg(data.data());
-    }
+
+    sendRequest();
 }
 
 chaper::~chaper()
@@ -75,7 +93,6 @@ QString chaper::getStrCommand(QString command)
 {
     FILE *fp;
     QString returnData;
-
     char path[1035];
 
     /* Open the command for reading. */
@@ -97,3 +114,83 @@ QString chaper::getStrCommand(QString command)
     pclose(fp);
     return returnData;
 }
+
+void chaper::sendRequest()
+{
+    //send request
+    char send_command[100];
+    send_command[0] = 'R';
+    send_command[1] = 1;
+    send_command[2] = 0x1F;
+    send_command[3] = 0;
+    send_command[4] = 0;
+    send_command[5] = 0;
+    send_command[6] = 0;
+    send_command[7] = 0x2D;//MakeCRC(send_command);
+    send_command[0] = 0;//MakeCRC(send_command);
+
+    qInfo() << QString("send request");
+    timer->start(TIMOUT_DELAY);
+    channel->write(send_command,PACKET_LEN);
+}
+
+short chaper::MakeCRC(char *BitString)
+   {
+
+   /*char CRC[8];
+   int  i;
+   char DoInvert;
+   char x=0;
+   short oo=0;
+
+   for (i=0; i<8; ++i)  CRC[i] = 0;                    // Init before calculation
+
+
+   for (i=0; i<56; ++i)
+      {
+       if((bitreader(BitString,i))==1)
+       {
+        x=1;
+       }
+       else
+       {
+       x=0;
+       }
+      DoInvert =x ^ CRC[7];//('1'==BitString[i]) ^ CRC[7];         // XOR required?
+
+      CRC[7] = CRC[6] ^ DoInvert;
+      CRC[6] = CRC[5] ^ DoInvert;
+      CRC[5] = CRC[4];
+      CRC[4] = CRC[3] ^ DoInvert;
+      CRC[3] = CRC[2];
+      CRC[2] = CRC[1] ^ DoInvert;
+      CRC[1] = CRC[0];
+      CRC[0] = DoInvert;
+      }
+
+   for (i=0; i<8; ++i)
+   {
+    if (CRC[i]==1)
+    {
+    // Res[7-i]='1';
+     oo=oo+1*((short)pow(2,(double)(i)));
+    }
+    else
+    {
+    // Res[7-i]='0';
+    }
+   }
+
+   //Res[8] = 0;                                         // Set string terminator
+
+   return oo;
+  // return(Res);*/
+}
+
+//d5
+
+/*char chaper::bitreader(char *string, int offset)
+{
+    int index = offset/8;
+    qinfo() <<
+}*/
