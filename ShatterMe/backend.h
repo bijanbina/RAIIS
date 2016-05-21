@@ -3,9 +3,11 @@
 
 #include <QDebug>
 #include <QString>
+#include <stdint.h>
+#include <math.h>
 
 
-#define SHATTER_DEBUG   false
+#define SHATTER_DEBUG   true
 
 void shatter_debug(QString message);
 void shatter_debug(char *message);

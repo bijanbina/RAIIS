@@ -87,7 +87,7 @@ bool bitreader(const char *data, int offset)
 {
     int index = offset/8;
     uint8_t byte = data[index];
-    bool returnValue =  byte & 0x01 << offset%8;
+    bool returnValue =  byte & (0x01 << (7 - offset%8));
     return returnValue;
 }
 

@@ -62,14 +62,14 @@ void chapar::timout_reach()
     {
         shatter_debug_hex("proccess ", buffer, PACKET_LEN);
         int temp = buffer[3] + 255 * buffer[4];
-        QString command = "/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.0 = ";
+        QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID-1)*4 + paramID);
         command.append(QString("%1").arg(temp));
 
         //temp
         //humedity
         //setpoint
 
-        shatter_debug(QString("update %1").arg(temp));
+        shatter_debug(QString("update %1 ID: ").arg(temp).arg((coolerID-1)*4 + paramID));
         runCommand(command);
         buffer_size = 0;
         *buffer = 0;
@@ -92,36 +92,53 @@ void chapar::sendRequest()
 {
     //send request
     char send_command[100];
+    //
     send_command[0] = 'R';
-    send_command[1] = 1;
-    send_command[2] = 0x1F;
+    send_command[1] = coolerID;
+    //send_command[2] = 0x1F;
+    //calculate attribute
+    switch (paramID) {
+    case 0:
+        send_command[2] = 0x1E;
+        break;
+    case 1:
+        send_command[2] = 0x1F;
+        break;
+    case 2:
+        send_command[2] = 0x17;
+        break;
+    case 3:
+        send_command[2] = 0x2F;
+        break;
+    default:
+        break;
+    }
     send_command[3] = 0;
     send_command[4] = 0;
     send_command[5] = 0;
     send_command[6] = 0;
-    send_command[7] = 0x2D;//MakeCRC(send_command);
-
-    printf("%02x\n",MakeCRC(send_command));
+    send_command[7] = MakeCRC(send_command);
 
     shatter_debug(QString("send request"));
     timer->start(TIMOUT_DELAY);
     channel->write(send_command,PACKET_LEN);
 
-    if (coolerID < 10)
-    {
-        coolerID++;
-    }
-    else
-    {
-        coolerID = 0;
-    }
 
-    if (paramID < 3)
+
+    if (paramID < 4)
     {
         paramID++;
     }
     else
     {
-        paramID = 2;
+        paramID = 0;
+        if (coolerID < 6)
+        {
+            coolerID++;
+        }
+        else
+        {
+            coolerID = 1;
+        }
     }
 }
