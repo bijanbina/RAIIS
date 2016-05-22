@@ -42,6 +42,9 @@ private:
 
     char buffer[MAX_BUFFER_LEN];
     int buffer_size;
+
+    int coolerID;
+    int paramID;
 };
 
 #endif // chapar_H
