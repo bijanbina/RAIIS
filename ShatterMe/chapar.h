@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QSerialPort>
-#include <QDebug>
 #include <QTimer>
+#include <backend.h>
 
 
 #define PORT_NAME "ttyUSB0"

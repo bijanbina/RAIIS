@@ -63,7 +63,7 @@ void chaper::timout_reach()
         }
         printf ("\n");
         int temp = buffer[3] + 255 * buffer[4];
-        QString command = "/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.0 = ";
+        QString command = "/usr/local/bin/snmpset -v2c -c tutset 192.168.88.110 NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.0 = ";
         command.append(QString("%1").arg(temp));
 
         //temp
