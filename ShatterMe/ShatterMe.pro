@@ -17,9 +17,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    chaper.cpp \
+    chapar.cpp \
     backend.cpp
 
 HEADERS += \
     backend.h \
-    chaper.h
+    chapar.h
