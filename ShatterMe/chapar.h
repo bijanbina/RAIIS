@@ -1,5 +1,5 @@
-#ifndef CHAPER_H
-#define CHAPER_H
+#ifndef chapar_H
+#define chapar_H
 
 #include <QObject>
 #include <QSerialPort>
@@ -17,13 +17,13 @@
 #define TIMOUT_DELAY    100
 #define MAX_BUFFER_LEN  100
 
-class chaper : public QObject
+class chapar : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit chaper(QObject *parent = 0);
-    ~chaper();
+    explicit chapar(QObject *parent = 0);
+    ~chapar();
 
 signals:
 
@@ -36,14 +36,12 @@ private slots:
 private:
     void sendRequest();
     void openSerialPort();
-    short MakeCRC(char *BitString);
 
     QSerialPort *channel;
-    QString getStrCommand(QString command);
     QTimer *timer;
 
     char buffer[MAX_BUFFER_LEN];
     int buffer_size;
 };
 
-#endif // CHAPER_H
+#endif // chapar_H
