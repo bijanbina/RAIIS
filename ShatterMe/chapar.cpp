@@ -69,7 +69,7 @@ void chapar::timout_reach()
         //humedity
         //setpoint
 
-        shatter_debug(QString("update %1 ID: ").arg(temp).arg((coolerID-1)*4 + paramID));
+        shatter_debug(QString("update %1 ID: %2").arg(temp).arg((coolerID-1)*4 + paramID));
         runCommand(command);
         buffer_size = 0;
         *buffer = 0;

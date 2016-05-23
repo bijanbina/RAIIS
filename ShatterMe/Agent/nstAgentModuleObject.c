@@ -13,11 +13,8 @@
  * * GET and SET requests to this variable changing it's value as needed.
  */
 
-static long nstAgentModuleObject = 42;
-static long nstAgentModuleObject2 = 42;
-static long nstAgentModuleObjects[30];
+static long nstAgentModuleObject[30];
 
-void register_second_sensor();
 
 /*
  * our initialization routine, automatically called by the agent 
@@ -26,78 +23,30 @@ void register_second_sensor();
 void
 init_nstAgentModuleObject(void)
 {
-    static oid      nstAgentModuleObject_oid[] =
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 0 };
+    static int     nstAgentModuleObject_oid[25][13] = {{ 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 0 }};
 
-    /*
-     * a debugging statement.  Run the agent with -DnstAgentModuleObject to see
-     * the output of this debugging statement. 
-     */
-    DEBUGMSGTL(("nstAgentModuleObject",
-                "Initializing the nstAgentModuleObject module\n"));
-
-
-    /*
-     * the line below registers our variables defined above as
-     * accessible and makes it writable.  A read only version of any
-     * of these registration would merely call
-     * register_read_only_int_instance() instead.  The functions
-     * called below should be consistent with your MIB, however.
-     * 
-     * If we wanted a callback when the value was retrieved or set
-     * (even though the details of doing this are handled for you),
-     * you could change the NULL pointer below to a valid handler
-     * function. 
-     */
-    DEBUGMSGTL(("nstAgentModuleObject",
-                "Initalizing nstAgentModuleObject scalar integer.  Default value = %d\n",
-                nstAgentModuleObject));
-
-    netsnmp_register_long_instance("nstAgentModuleObject",
-                                  nstAgentModuleObject_oid,
-                                  OID_LENGTH(nstAgentModuleObject_oid),
-                                  &nstAgentModuleObject, NULL);
-
-    DEBUGMSGTL(("nstAgentModuleObject",
-                "Done initalizing nstAgentModuleObject module\n"));
-    register_second_sensor();
-}
-
-void register_second_sensor()
-{
-    static oid     nstAgentModuleObject_oids[24][13] = {
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 1 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 2 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 3 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 4 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 5 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 6 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 7 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 8 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 9 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 10 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 11 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 12 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 13 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 14 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 15 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 16 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 17 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 18 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 19 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 20 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 21 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 22 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 23 },
-        { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, 24 }
-    };
-	
-	int i = 0;
-	for ( i = 1; i < 25 ; i++ )
+    for ( int i = 1; i < 25 ; i++ )
+    {
+        for (int j = 0 ; j < 13 ; j++ )
+        {
+            if ( j < 12)
+            {
+                nstAgentModuleObject_oid[i][j] = nstAgentModuleObject_oid[0][j];
+            }
+            else
+            {
+                nstAgentModuleObject_oid[i][j] = i;
+            }
+            //printf(",%d" , nstAgentModuleObject_oids[i][j]);
+        }
+        //printf("\n");
+    }
+	for ( int i = 0 ; i < 25 ; i++ )
 	{
+	    //*(nstAgentModuleObject_oids[i]) = { 1, 3, 6, 1, 4, 1, 8072, 2, 4, 1, 1, 1, i };
 		netsnmp_register_long_instance("nstAgentModuleObject",
-		                              nstAgentModuleObject_oids[i],
-		                              OID_LENGTH(nstAgentModuleObject_oids[i]),
-		                              &nstAgentModuleObjects[i], NULL);
+		                              nstAgentModuleObject_oid[i],
+		                              OID_LENGTH(nstAgentModuleObject_oid[i]),
+		                              &nstAgentModuleObject[i], NULL);
 	}
 }
