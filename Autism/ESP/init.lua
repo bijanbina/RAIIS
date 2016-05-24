@@ -1,3 +1,4 @@
+buffer = ""
 function send(a)
     gpio.write(clk,gpio.LOW)
     tmr.delay(2000)
@@ -109,12 +110,8 @@ function music_off()
 	play(0xFFFF);
 end
 
-function onReceive(conn,receive)
-    if (receive == nil or receive == '') then
-        return
-        print("Receive Data is not nil")
-    end
-    command = receive:sub(1,1) --get first char
+function interpret(conn,string)
+    command = string:sub(1,1) --get first char
     print(command)
     if      command == "1" then 
         print("light on");
@@ -127,12 +124,12 @@ function onReceive(conn,receive)
         play(1)
     elseif  command == "3" then
         print("change color");
-        --print(tostring(receive:len()));
-        if (receive:len() == 11) or (receive:len() == 13) then
+        --print(tostring(string:len()));
+        if (string:len() == 11) or (string:len() == 13) then
             -- tear down and convert to int
-            color_r = tonumber(receive:sub(2,4))
-            color_g = tonumber(receive:sub(5,7))
-            color_b = tonumber(receive:sub(8,11))
+            color_r = tonumber(string:sub(2,4))
+            color_g = tonumber(string:sub(5,7))
+            color_b = tonumber(string:sub(8,11))
             print(color_r,color_g,color_b);
             changeColor(color_r,color_g,color_b);
         else
@@ -140,8 +137,8 @@ function onReceive(conn,receive)
         end
     elseif  command == "4" then
         print("change track");
-        if (receive:len() == 2)  or (receive:len() == 4) then
-            tracknumber = tonumber(receive:sub(2,2))
+        if (string:len() == 2)  or (string:len() == 4) then
+            tracknumber = tonumber(string:sub(2,2))
             print(tracknumber);
             play(tracknumber)
         else
@@ -162,8 +159,25 @@ function onReceive(conn,receive)
         music_off()
         lightOff()
     end
+end
+
+function onReceive(conn,receive)
+    if (receive == nil or receive == '') then
+        return
+        print("Receive Data is not nil")
+    end
+    lastInter = 1
+    for i=1,receive:len() do
+        if receive:sub(i,i) == '\n' then
+            buffer = buffer .. receive:sub(lastInter,i-1)
+            interpret(buffer)
+            buffer = ""
+            lastInter = i+1
+        end
+    end
+    buffer = buffer .. receive:sub(lastInter,receive:len())
     conn:send("command:")
 end
 
-print("Version: 0.13")
+print("Version: 0.12")
 connect()
