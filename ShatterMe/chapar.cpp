@@ -69,7 +69,7 @@ void chapar::timout_reach()
 
     	shatter_debug_hex("crc is:\t", crc_buufer, 1);
         int temp = buffer[3] + 255 * buffer[4];
-        QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID-1)*4 + paramID);
+        QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID)*4 + paramID);
         command.append(QString("%1").arg(temp));
 
         //temp
