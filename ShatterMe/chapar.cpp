@@ -146,7 +146,7 @@ void chapar::sendRequest()
         }
         else
         {
-            coolerID = 1;
+            coolerID = 0;
         }
     }
 }
