@@ -48,7 +48,7 @@ void chapar::updateData()
     QByteArray data;
     data = channel->readAll();
     buffer[buffer_size] = *data.data();
-    shatter_debug(QString("receive %1").arg(data.data() , 0, 16));
+    //shatter_debug(QString("receive %1").arg(data.data() , 0, 16));
     buffer_size += data.size();
     timer->start(TIMOUT_DELAY);
 }
@@ -60,8 +60,8 @@ void chapar::timout_reach()
     timer->stop();
     if (buffer_size > 0)
     {
-        shatter_debug_hex("proccess ", buffer, PACKET_LEN);
-        int temp = buffer[3] + 255 * buffer[4];
+        shatter_debug_hex("proccess:\t", buffer, PACKET_LEN);
+        int temp = buffer[2] + 255 * buffer[3];
         QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID-1)*4 + paramID);
         command.append(QString("%1").arg(temp));
 
@@ -119,7 +119,8 @@ void chapar::sendRequest()
     send_command[6] = 0;
     send_command[7] = MakeCRC(send_command);
 
-    shatter_debug(QString("send request"));
+    //shatter_debug(QString("send request: %1"));
+    shatter_debug_hex("send request:\t", send_command, PACKET_LEN);
     timer->start(TIMOUT_DELAY);
     channel->write(send_command,PACKET_LEN);
 
