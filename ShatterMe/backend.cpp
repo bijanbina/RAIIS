@@ -21,7 +21,7 @@ void shatter_debug_hex(const char *message, char *data, int len)
 {
     if (SHATTER_DEBUG)
     {
-        printf("proccess ");
+        printf(message);
         int i;
         for ( i = 0 ; i < len ; i++ )
         {

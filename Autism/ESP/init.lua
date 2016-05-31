@@ -99,7 +99,7 @@ end
 
 function clientConnected(conn)
 	  conn:on("receive", onReceive)
-	  conn:send("command:\n")
+	  conn:send("command:")
       print("Client Connected")
 end
 
@@ -187,5 +187,5 @@ function onReceive(conn,receive)
     conn:send("command:")
 end
 
-print("Version: 0.44")
+print("Version: 0.45")
 connect()
