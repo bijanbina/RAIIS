@@ -73,14 +73,20 @@ function connect()
     wifi.setmode(wifi.STATION)
     --wifi.sta.config("Mahdi","12345678")
     print("connect")
+    --cfg =
+    --{
+    --    ip="172.18.132.81",
+    --    netmask="255.255.255.0",
+    --    gateway="172.18.132.1"
+    --}
     cfg =
     {
-        ip="172.18.132.81",
+        ip="192.168.43.20",
         netmask="255.255.255.0",
-        gateway="172.18.132.1"
+        gateway="192.168.43.20"
     }
     wifi.sta.setip(cfg)
-    wifi.sta.config("ECE-Department","toB0rnot2be")
+    wifi.sta.config("Autism","12345678")
     wifi.sta.connect()
     print("hi")
     tmr.alarm (5,333,1,function() con_to_server() end)
@@ -125,11 +131,11 @@ function interpret(conn,string)
     elseif  command == "3" then
         print("change color");
         --print(tostring(string:len()));
-        if (string:len() == 11) or (string:len() == 13) then
+        if (string:len() == 10) or (string:len() == 13) then
             -- tear down and convert to int
             color_r = tonumber(string:sub(2,4))
             color_g = tonumber(string:sub(5,7))
-            color_b = tonumber(string:sub(8,11))
+            color_b = tonumber(string:sub(8,10))
             print(color_r,color_g,color_b);
             changeColor(color_r,color_g,color_b);
         else
@@ -152,11 +158,11 @@ function interpret(conn,string)
         lightOff()
     elseif  command == "6" then
         print("music off");
-        music_off()
+        --music_off()
         lightOff()
     elseif  command == "7" then
-        print("switch off");
-        music_off()
+        print("light off");
+        --music_off()
         lightOff()
     end
 end
@@ -179,5 +185,5 @@ function onReceive(conn,receive)
     conn:send("command:")
 end
 
-print("Version: 0.12")
+print("Version: 0.32")
 connect()
