@@ -83,10 +83,10 @@ function connect()
     {
         ip="192.168.43.20",
         netmask="255.255.255.0",
-        gateway="192.168.43.20"
+        gateway="192.168.43.1"
     }
     wifi.sta.setip(cfg)
-    wifi.sta.config("Autism","12345678")
+    wifi.sta.config("GAB","12345678")
     wifi.sta.connect()
     print("hi")
     tmr.alarm (5,333,1,function() con_to_server() end)
@@ -99,7 +99,7 @@ end
 
 function clientConnected(conn)
 	  conn:on("receive", onReceive)
-	  conn:send("Welcome\n")
+	  conn:send("command:\n")
       print("Client Connected")
 end
 
@@ -131,7 +131,7 @@ function interpret(conn,string)
     elseif  command == "3" then
         print("change color");
         --print(tostring(string:len()));
-        if (string:len() == 10) or (string:len() == 13) then
+	if (string:len() >= 10) then
             -- tear down and convert to int
             color_r = tonumber(string:sub(2,4))
             color_g = tonumber(string:sub(5,7))
@@ -175,8 +175,10 @@ function onReceive(conn,receive)
     lastInter = 1
     for i=1,receive:len() do
         if receive:sub(i,i) == '\n' then
+        	--print("recieve is: ",receive:len())
             buffer = buffer .. receive:sub(lastInter,i-1)
-            interpret(buffer)
+        	--print("buffer is: ",buffer)
+            interpret(conn,buffer)
             buffer = ""
             lastInter = i+1
         end
@@ -185,5 +187,5 @@ function onReceive(conn,receive)
     conn:send("command:")
 end
 
-print("Version: 0.32")
+print("Version: 0.44")
 connect()
