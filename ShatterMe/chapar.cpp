@@ -46,8 +46,11 @@ void chapar::openSerialPort()
 void chapar::updateData()
 {
     QByteArray data;
-    data = channel->readAll();
-    buffer[buffer_size] = *data.data();
+    data = channel->readAll();\
+    for (int i = 0 ; i < data.size() ; i++)
+    {
+    	buffer[buffer_size + i] = data.data()[i];
+    }
     //shatter_debug(QString("receive %1").arg(data.data() , 0, 16));
     buffer_size += data.size();
     timer->start(TIMOUT_DELAY);
@@ -61,7 +64,11 @@ void chapar::timout_reach()
     if (buffer_size > 0)
     {
         shatter_debug_hex("proccess:\t", buffer, PACKET_LEN);
-        int temp = buffer[2] + 255 * buffer[3];
+		char crc_buufer[2];
+        crc_buufer[0] = MakeCRC(buffer);
+
+    	shatter_debug_hex("crc is:\t", crc_buufer, 1);
+        int temp = buffer[3] + 255 * buffer[4];
         QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID-1)*4 + paramID);
         command.append(QString("%1").arg(temp));
 
