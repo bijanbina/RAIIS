@@ -14,7 +14,7 @@
 #define STOP_BITS QSerialPort::OneStop
 #define FLOW_CONT QSerialPort::NoFlowControl
 #define PACKET_LEN 8
-#define TIMOUT_DELAY    100
+#define TIMOUT_DELAY    300
 #define MAX_BUFFER_LEN  100
 
 class chapar : public QObject

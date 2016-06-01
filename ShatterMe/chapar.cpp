@@ -74,20 +74,21 @@ void chapar::timout_reach()
     	{
     		shatter_debug_hex("ERROR: CRC IS WRONG!!! GENERATED CRC IS:\t", crc_buffer, 1);
     	}
-    	
-    	
-        int temp = buffer[3] + 255 * buffer[4];
-        QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID)*4 + paramID);
-        command.append(QString("%1").arg(temp));
+    	else //if crc is right
+    	{
+		    int temp = buffer[3] + 256 * buffer[4];
+		    QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID)*4 + paramID);
+		    command.append(QString("%1").arg(temp));
 
-        //temp
-        //humedity
-        //setpoint
+		    //temp
+		    //humedity
+		    //setpoint
 
-        shatter_debug(QString("update %1 ID: %2").arg(temp).arg((coolerID)*4 + paramID));
-        runCommand(command);
-        buffer_size = 0;
-        *buffer = 0;
+		    shatter_debug(QString("update %1 ID: %2").arg(temp).arg((coolerID)*4 + paramID));
+		    runCommand(command);
+		    buffer_size = 0;
+		    *buffer = 0;
+        }
     }
 
     sendRequest();
