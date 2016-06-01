@@ -64,10 +64,18 @@ void chapar::timout_reach()
     if (buffer_size > 0)
     {
         shatter_debug_hex("proccess:\t", buffer, PACKET_LEN);
-		char crc_buufer[2];
-        crc_buufer[0] = MakeCRC(buffer);
-
-    	shatter_debug_hex("crc is:\t", crc_buufer, 1);
+        
+        //-----check CRC--------
+		char crc_buffer[2];
+        crc_buffer[0] = MakeCRC(buffer);
+    	shatter_debug_hex("crc is:\t", crc_buffer, 1);
+    	
+    	if ( crc_buffer[0] != buffer[7] )
+    	{
+    		shatter_debug_hex("ERROR: CRC IS WRONG!!! GENERATED CRC IS:\t", crc_buffer, 1);
+    	}
+    	
+    	
         int temp = buffer[3] + 255 * buffer[4];
         QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID)*4 + paramID);
         command.append(QString("%1").arg(temp));
@@ -76,7 +84,7 @@ void chapar::timout_reach()
         //humedity
         //setpoint
 
-        shatter_debug(QString("update %1 ID: %2").arg(temp).arg((coolerID-1)*4 + paramID));
+        shatter_debug(QString("update %1 ID: %2").arg(temp).arg((coolerID)*4 + paramID));
         runCommand(command);
         buffer_size = 0;
         *buffer = 0;
@@ -140,7 +148,7 @@ void chapar::sendRequest()
     else
     {
         paramID = 0;
-        if (coolerID < 6)
+        if (coolerID < 5)
         {
             coolerID++;
         }
