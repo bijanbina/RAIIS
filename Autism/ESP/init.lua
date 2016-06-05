@@ -86,7 +86,7 @@ function connect()
         gateway="192.168.43.1"
     }
     wifi.sta.setip(cfg)
-    wifi.sta.config("GAB","12345678")
+    wifi.sta.config("JAB","12345678")
     wifi.sta.connect()
     print("hi")
     tmr.alarm (5,333,1,function() con_to_server() end)
