@@ -3,22 +3,24 @@
 chapar::chapar(QObject *parent) : QObject(parent)
 {
     channel = new QSerialPort(this);
-    openSerialPort();
     connect(channel,SIGNAL(readyRead()),this,SLOT(updateData()));
     timer = new QTimer(this);
-    //channel->write("12\n");
     connect(timer,SIGNAL(timeout()),this,SLOT(timout_reach()));
 
     buffer_size = 0;
     coolerID = 0;
     paramID = 0;
 
-    sendRequest();
-    timer->setInterval(TIMOUT_DELAY);
 
-    //timout_reach();
 }
 
+void chapar::start()
+{
+    openSerialPort();
+    sendRequest();
+    //channel->write("12\n");
+    //timout_reach();
+}
 void chapar::openSerialPort()
 {
     channel->setPortName(PORT_NAME);

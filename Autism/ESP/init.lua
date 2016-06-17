@@ -4,18 +4,18 @@ function send(a)
     tmr.delay(2000)
    -- print(gpio.read(clk)..gpio.read(rst)..gpio.read(di))
     for j=15,0,-1 do
-		gpio.write(clk,gpio.LOW)
+	gpio.write(clk,gpio.LOW)
         tmr.delay(50)
         gpio.write(di,a[j])
         tmr.delay(50)
         gpio.write(clk,gpio.HIGH)
         tmr.delay(100)
-		if j>0 then
-			tmr.delay(2)
-        --    print("The END\n")
-		end
-	end
-	tmr.delay(20000)
+        if j>0 then
+            tmr.delay(2)
+        --print("The END\n")
+        end
+    end
+    tmr.delay(20000)
 end
 
 function init(addr)
@@ -88,18 +88,18 @@ function connect()
     wifi.sta.setip(cfg)
     wifi.sta.config("JAB","12345678")
     wifi.sta.connect()
-    print("hi")
+    --print("hi")
     tmr.alarm (5,333,1,function() con_to_server() end)
 end
 
 function createServer()
-	sv = net.createServer(net.TCP, 28700)
-	sv:listen(7778, clientConnected)
+      sv = net.createServer(net.TCP, 28700)
+      sv:listen(7778, clientConnected)
 end
 
 function clientConnected(conn)
-	  conn:on("receive", onReceive)
-	  conn:send("command:")
+      conn:on("receive", onReceive)
+      conn:send("command:")
       print("Client Connected")
 end
 
@@ -107,7 +107,7 @@ function con_to_server()
     if(wifi.sta.getip() ~= NULL) then
         print("connected to AP")
         print("IP Address: ",wifi.sta.getip())
-		createServer()
+        createServer()
         tmr.stop(5)
     end
 end
@@ -158,8 +158,8 @@ function interpret(conn,string)
         lightOff()
     elseif  command == "6" then
         print("music off");
-        --music_off()
-        lightOff()
+        music_off()
+        --lightOff()
     elseif  command == "7" then
         print("light off");
         --music_off()
@@ -175,9 +175,9 @@ function onReceive(conn,receive)
     lastInter = 1
     for i=1,receive:len() do
         if receive:sub(i,i) == '\n' then
-        	--print("recieve is: ",receive:len())
+            --print("recieve is: ",receive:len())
             buffer = buffer .. receive:sub(lastInter,i-1)
-        	--print("buffer is: ",buffer)
+            --print("buffer is: ",buffer)
             interpret(conn,buffer)
             buffer = ""
             lastInter = i+1
@@ -187,5 +187,5 @@ function onReceive(conn,receive)
     conn:send("command:")
 end
 
-print("Version: 0.45")
+print("Version: 0.5")
 connect()
