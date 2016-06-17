@@ -23,6 +23,7 @@ class chapar : public QObject
 
 public:
     explicit chapar(QObject *parent = 0);
+    void     start();
     ~chapar();
 
 signals:
