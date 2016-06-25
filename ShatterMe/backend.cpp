@@ -1,8 +1,8 @@
 #include "backend.h"
-
+bool isShatterDebug = false;
 void shatter_debug(QString message)
 {
-    if (SHATTER_DEBUG)
+    if (isShatterDebug)
     {
         qDebug() << message;
     }
@@ -10,7 +10,7 @@ void shatter_debug(QString message)
 
 void shatter_debug(char *message)
 {
-    if (SHATTER_DEBUG)
+    if (isShatterDebug)
     {
         qDebug() << message;
     }
@@ -19,7 +19,7 @@ void shatter_debug(char *message)
 //print message, then data in hex format which is length is "len"
 void shatter_debug_hex(const char *message, char *data, int len)
 {
-    if (SHATTER_DEBUG)
+    if (isShatterDebug)
     {
         printf(message);
         int i;
