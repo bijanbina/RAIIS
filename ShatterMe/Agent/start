@@ -1,0 +1,8 @@
+#!/bin/sh
+sleep 5
+ip addr flush dev eth0
+sleep 1
+ip addr add 192.168.5.89/255.255.248.0 broadcast 192.168.5.1 dev eth0
+sleep 1
+snmpd -Lo
+/root/Project/RAIIS/ShatterMe/ShatterMe
