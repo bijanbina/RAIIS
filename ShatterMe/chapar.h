@@ -46,6 +46,8 @@ private:
 
     int coolerID;
     int paramID;
+
+    bool clock;
 };
 
 #endif // chapar_H
