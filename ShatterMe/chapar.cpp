@@ -11,7 +11,6 @@ chapar::chapar(QObject *parent) : QObject(parent)
     coolerID = 0;
     paramID = 0;
 
-
 }
 
 void chapar::start()
@@ -94,6 +93,16 @@ void chapar::timout_reach()
     }
 
     sendRequest();
+
+    //clock
+    clock = !clock;
+    QString command_clock = QString("echo \"%1\" > /sys/class/gpio/gpio4/value").arg(clock);
+    runCommand(command_clock);
+
+    //temp
+    //humedity
+    //setpoint
+
 }
 
 chapar::~chapar()
