@@ -47,7 +47,7 @@ void chapar::openSerialPort()
 void chapar::updateData()
 {
     QByteArray data;
-    data = channel->readAll();\
+    data = channel->readAll();
     for (int i = 0 ; i < data.size() ; i++)
     {
     	buffer[buffer_size + i] = data.data()[i];
@@ -77,9 +77,9 @@ void chapar::timout_reach()
     	}
     	else //if crc is right
     	{
-		    int temp = buffer[3] + 256 * buffer[4];
-		    QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID)*4 + paramID);
-		    command.append(QString("%1").arg(temp));
+            int temp = buffer[3] + 256 * buffer[4];
+            QString command = QString("/usr/local/bin/snmpset -v2c -c tutset localhost NET-SNMP-TUTORIAL-MIB::nstAgentModuleObject.%1 = ").arg((coolerID)*4 + paramID);
+            command.append(QString("%1").arg(temp));
 
 		    //temp
 		    //humedity
@@ -96,8 +96,8 @@ void chapar::timout_reach()
 
     //clock
     clock = !clock;
-    QString command_clock = QString("echo \"%1\" > /sys/class/gpio/gpio4/value").arg(clock);
-    runCommand(command_clock);
+    //QString command_clock = QString("echo \"%1\" > /sys/class/gpio/gpio4/value").arg(clock);
+    //runCommand(command_clock);
 
     //temp
     //humedity
