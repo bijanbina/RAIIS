@@ -1,6 +1,6 @@
 
-_G[device_id] = 1;
-_G[start_search] = 0;
+device_id = 1;
+start_search = 0;
 function wifiSetup(t)
     wifiFound = 0
     for k,v in pairs(t) do
@@ -53,7 +53,7 @@ function con_to_server()
         tmr.stop(5)
         print("connected to AP")
         print("IP Address: ",wifi.sta.getip())
-        if (_G[start_search == 0) then --if search is not started
+        if (_G[start_search] == 0) then --if search is not started
           print("inside search")
         	_G[start_search] = 1	--lets do it
 					srv = net.createConnection(net.TCP, 0)

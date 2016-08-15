@@ -1,10 +1,10 @@
 buffer = ""
-_G[rainbow_r] = 0;
-_G[rainbow_g] = 100;
-_G[rainbow_b] = 200;
-_G[rainbow_direction_r] = 1;
-_G[rainbow_direction_g] = 1;
-_G[rainbow_direction_b] = -1;
+rainbow_r = 0;
+rainbow_g = 100;
+rainbow_b = 200;
+rainbow_direction_r = 1;
+rainbow_direction_g = 1;
+rainbow_direction_b = -1;
 
 --timer table
 --tmr0: rainbow
