@@ -1,0 +1,125 @@
+body {
+	background: #F2F2F2;
+	direction: rtl;
+}
+.part-img-missing {
+	background-image: url(../Images/missing.png);
+}
+
+.footer .container-fluid{
+	text-align: center;
+}
+
+.container-oc {
+	line-height: 1.2;
+	display: inline-block;
+	margin-bottom: 0;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	padding: 6px 6px;
+	font-size: 14px;
+	border: 1px solid transparent;
+}
+
+.container-right {
+	padding: 6px 12px 6px 6px;
+}
+
+.container-left {
+	padding: 6px 6px 6px 20px;
+}
+
+.icon-oc {
+	padding: 0 0 0 4px
+}
+
+.topbar .right-menu a {
+	height: 52px;
+	padding: 25px 15px 25px;
+	margin: 0;
+}
+
+.topbar .right-menu a:hover {
+	background-color: #5692dd;
+	text-decoration: none;
+}
+
+.tag-oc {
+	color: #777;
+	background-color: #F0F0F0;
+	border-color: transparent;
+}
+
+.btn-tag {
+	color: #777;
+	background-color: #EDEDED;
+	border-color: #EDEDED;
+	font-size: 9px;
+	margin: 6px 1px;
+	padding: 3px 6px;
+}
+
+
+.btn-left {
+	margin-left: 8px;
+}
+
+.btn-right {
+	margin-right: 8px;
+}
+
+.download-oc {
+	padding: 0 0px 0 10px;
+}
+
+.more-filter-link {
+}
+
+.btn-loading {
+    color: #b64900;
+    background-color: #ffefbd;
+    border-color: #ffefbd;
+		margin: 20px 5px;
+		font-size: 16px;
+		padding: 8px 16px;
+		border-radius: 5px;
+}
+
+.btn-loading:hover {
+    color: #b64900;
+    cursor: default;
+}
+
+.btn-undertest {
+    color: #8c0700;
+    background-color: #f0d9d8;
+    border-color: #f0d9d8;
+		margin: 20px 5px;
+		font-size: 16px;
+		padding: 8px 16px;
+		border-radius: 6px;
+		padding-right: 8px;
+		padding-left: 11px;
+}
+
+.btn-undertest:hover {
+    color: #8c0700;
+    cursor: default;
+}
+
+/*
+position: relative;
+display: inline-block;
+padding: .4em .5em;
+margin: 2px 2px 2px 0;
+font-size: 11px;
+line-height: 1;
+white-space: nowrap;
+text-decoration: none;
+text-align: center;
+border-width: 1px;
+border-style: solid;
+border-radius: 0;
+transition: all .15s ease-in-out;
+*/
