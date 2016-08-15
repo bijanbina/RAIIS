@@ -57,3 +57,7 @@ function rainbow()
     rainbow_direction_b = -1;
     tmr.alarm(0, 100, tmr.ALARM_AUTO, rainbow_timer)
 end
+
+function respond_new_device(conn)
+		conn:send("1")
+end

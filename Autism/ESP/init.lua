@@ -1,4 +1,16 @@
-dofile("include.lua");
+buffer = ""
+_G[rainbow_r] = 0;
+_G[rainbow_g] = 100;
+_G[rainbow_b] = 200;
+_G[rainbow_direction_r] = 1;
+_G[rainbow_direction_g] = 1;
+_G[rainbow_direction_b] = -1;
+
+--timer table
+--tmr0: rainbow
+--tmr3: connect to test device
+--tmr5: connect tabledofile("include.lua");
+dofile("wifi.lua");
 dofile("command_list.lua");
 
 function interpret(conn,string)
@@ -48,6 +60,9 @@ function interpret(conn,string)
     elseif  command == "8" then
         print("rainbow");
         rainbow()
+    elseif  command == "20" then
+        print("Device Checking...");
+        respond_new_device(conn)
     end
 end
 
@@ -71,6 +86,6 @@ function onReceive(conn,receive)
     conn:send("command:")
 end
 
-print("Version: 0.60")
+print("Version: 0.83")
 bootup()
 
