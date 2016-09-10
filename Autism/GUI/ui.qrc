@@ -6,5 +6,6 @@
         <file>AndroidSlider.qml</file>
         <file>LampCell.qml</file>
         <file alias="mybutton.wav">Resources/mybutton.wav</file>
+        <file>settings.qml</file>
     </qresource>
 </RCC>

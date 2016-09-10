@@ -3,6 +3,7 @@
 #include <transmission.h>
 #include <QQuickView>
 #include <QQuickItem>
+#include "uihandler.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,6 +11,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     QObject *item = engine.rootObjects().first();
+    UiHandler *handler = new UiHandler(item);
+
 
     Transmission channel;
     QObject::connect(item, SIGNAL(morabaSignal()), &channel, SLOT(morabaaSlot()));

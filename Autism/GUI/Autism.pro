@@ -3,7 +3,8 @@ TEMPLATE = app
 QT += qml quick
 
 SOURCES += main.cpp \
-    transmission.cpp
+    transmission.cpp \
+    uihandler.cpp
 
 RESOURCES += ui.qrc \
     images.qrc \
@@ -13,4 +14,5 @@ RESOURCES += ui.qrc \
 QML_IMPORT_PATH =
 
 HEADERS += \
-    transmission.h
+    transmission.h \
+    uihandler.h

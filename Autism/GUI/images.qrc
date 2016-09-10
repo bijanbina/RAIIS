@@ -6,5 +6,12 @@
         <file>Resources/more_icon.png</file>
         <file>Resources/icon_menu.png</file>
         <file>Resources/icon_volume.png</file>
+        <file>Resources/Screens/about.jpg</file>
+        <file>Resources/Screens/aboutAutism.jpg</file>
+        <file>Resources/Screens/lamp.jpg</file>
+        <file>Resources/Screens/rahnema.jpg</file>
+        <file>Resources/Screens/settings.jpg</file>
+        <file>Resources/Screens/splash.jpg</file>
+        <file>Resources/Screens/start.jpg</file>
     </qresource>
 </RCC>
