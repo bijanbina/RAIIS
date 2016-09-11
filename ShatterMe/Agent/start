@@ -1,9 +1,14 @@
 #!/bin/sh
-sleep 5
-ip addr flush dev eth0
-sleep 1
-ip addr add 192.168.1.38/255.255.255.0 broadcast 192.168.1.255 dev eth0
-sleep 1
-snmpd -Lo
-/root/smartReset.sh &
-/root/Projects/RAIIS/ShatterMe/ShatterMe
+sleep 3
+ip=`sed "1q;d" /srv/http/Scripts/ip_address | awk -F "=" '{printf "%s",$2}'`
+mask=`sed "2q;d" /srv/http/Scripts/ip_address | awk -F "=" '{printf "%s",$2}'`
+gateway=`sed "3q;d" /srv/http/Scripts/ip_address | awk -F "=" '{printf "%s",$2}'`
+#ip addr add 192.168.1.38/255.255.255.0 broadcast 192.168.1.255 dev eth0
+if [ -n "$ip"  ] && [ -n "$mask"  ] && [ -n "$gateway"  ] ; then 
+	ip link set eth0 up
+	ip addr flush dev eth0
+	ip addr add $ip/$mask broadcast $gateway dev eth0
+	ip route add default via $gateway
+	sleep 1
+fi
+/root/smartReset.sh
