@@ -1,9 +1,15 @@
 #include "transmission.h"
 #include <string.h>
+#include <QQmlProperty>
 
 #define JOYSTICK_DELAY 100
 
-Transmission::Transmission(QObject *parent) : QObject(parent)
+#define DEVICE1_IP  "192.168.1.21"
+#define DEVICE2_IP  "192.168.1.22"
+#define DEVICE3_IP  "192.168.1.23"
+#define DEVICE4_IP  "192.168.1.24"
+
+Transmission::Transmission(QObject *ui,QObject *parent) : QObject(parent)
 {
     //init
     charBuffer = '0';
@@ -13,66 +19,8 @@ Transmission::Transmission(QObject *parent) : QObject(parent)
     connect(&tcpClient, SIGNAL(connected()), this, SLOT(connected()));
     connect(&tcpClient, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
-    bufferTimer = new QTimer;
-    bufferTimer->setSingleShot(true);
-    connect(bufferTimer, SIGNAL(timeout()), this, SLOT(sendBuffer()));
-    bufferTimer->setInterval(JOYSTICK_DELAY);
-}
 
-//If rectangle press controller goes to command mode
-//in command mode two key recieve and iterpreted a command
-//and generate commandByte as follow list
-//Key           Dec Binary
-//Triangle  =   1   01
-//Circle    =   2   10
-//Cross     =   3   11
-
-
-void Transmission::morabaaSlot()
-{
-    if(stack.size() == 1)
-        return;
-    stack.push_back("morabaa");
-    code = 0xff0;
-    //startTransfer(stack.toUtf8().data());
-}
-
-void Transmission::mosalasSlot()
-{
-    /*
-    message = "k";
-    commandMode=true;
-    commandIndex=0;
-    startTransfer(message.toUtf8().data());
-    */
-    message = "s";
-    startTransfer(message.toUtf8().data());
-    /*if (!commandMode)
-    {
-        message = "s";
-        startTransfer(message.toUtf8().data());
-    }
-    else
-    {
-        commandByte |= 3 << commandIndex;
-        if (commandIndex < 2)
-        {
-            commandIndex++;
-        }
-    }*/
-}
-
-void Transmission::dayereSlot()
-{
-
-    message = "z";
-    startTransfer(message.toUtf8().data());
-}
-
-void Transmission::zarbdarSlot()
-{
-    message = "t";
-    startTransfer(message.toUtf8().data());
+    root = ui;
 }
 
 Transmission::~Transmission()
@@ -80,9 +28,13 @@ Transmission::~Transmission()
     tcpClient.close();
 }
 
-void Transmission::startTransfer(const char* command)
+int Transmission::startTransfer(const char* command)
 {
-    int bytesToWrite = tcpClient.write(command);
+    if (tcpClient.isOpen())
+    {
+        int bytesToWrite = tcpClient.write(command);
+        return bytesToWrite;
+    }
 }
 
 void Transmission::displayError(QAbstractSocket::SocketError socketError)
@@ -90,7 +42,8 @@ void Transmission::displayError(QAbstractSocket::SocketError socketError)
     if (socketError == QTcpSocket::RemoteHostClosedError)
         return;
 
-    qDebug() << tr("Network error") << tr("The following error occurred: %1.").arg(tcpClient.errorString());
+    QString error =  QString("\nNetwork error\nThe following error occurred: %1.").arg(tcpClient.errorString());
+    tof_on_screen( error );
     tcpClient.close();
     emit errorConnection();
 
@@ -99,44 +52,78 @@ void Transmission::displayError(QAbstractSocket::SocketError socketError)
 void Transmission::connected()
 {
     qDebug() << "connected";
+    tof_on_screen( "\nconnected" );
 }
 
 void Transmission::start(QString IP)
 {
+    if (tcpClient.isOpen())
+    {
+        tcpClient.disconnect();
+    }
     tcpClient.connectToHost(QHostAddress(IP), 7778 );
     qDebug() << "connecting to " << IP;
+    tof_on_screen( "\nconnecting to " );
+    tof_on_screen( IP );
 }
 
-void Transmission::sendJoystick(QString key)
+void Transmission::set_lamp(int id)
 {
-    if (isBufferEmpty)
+    QString ip_address;
+    switch (id)
     {
-        charBuffer = key.toUtf8().data()[0];
-        isBufferEmpty = false;
-        bufferTimer->start(JOYSTICK_DELAY);
+        case 0:
+            ip_address = DEVICE1_IP;
+            break;
+        case 1:
+            ip_address = DEVICE2_IP;
+            break;
+        case 2:
+            ip_address = DEVICE3_IP;
+            break;
+        case 3:
+            ip_address = DEVICE4_IP;
+            break;
+        default:
+            return;
     }
-    else
-    {
-        charBuffer = key.toUtf8().data()[0];
-    }
+    start(ip_address);
 }
 
-void Transmission::sendBuffer()
+void Transmission::change_color(int id)
 {
-    if (!isBufferEmpty)
+    ColorButtonID button_id = static_cast<ColorButtonID>(id);
+    QString command;
+    switch (button_id)
     {
-        char sendBuffer[10];
-        qDebug() << "Joystick: " << charBuffer;
-        sprintf(sendBuffer,"%c", charBuffer);
-        isBufferEmpty = true;
-        startTransfer(sendBuffer);
+        case GREEN_BUTTON:
+            command = "3000100000";
+            break;
+        case BLUE_BUTTON:
+            command = "3000000100";
+            break;
+        case RED_BUTTON:
+            command = "3100000000";
+            break;
     }
+    startTransfer(command.toStdString().c_str());
 }
 
-void Transmission::stopJoystick()
+void Transmission::music_random()
 {
-    bufferTimer->stop();
-    charBuffer = 't';
-    startTransfer("t");
-    isBufferEmpty = true;
+    QString command = "4";
+    startTransfer(command.toStdString().c_str());
+}
+
+void Transmission::music_play()
+{
+    QString command = "5";
+    startTransfer(command.toStdString().c_str());
+}
+
+void Transmission::tof_on_screen(QString message)
+{
+    QQmlProperty::write(root, "message", message);
+    QMetaObject::invokeMethod(root, "tof_on_screen"); //show warning to
+
 }

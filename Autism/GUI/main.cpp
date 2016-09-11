@@ -13,15 +13,11 @@ int main(int argc, char *argv[])
     QObject *item = engine.rootObjects().first();
     UiHandler *handler = new UiHandler(item);
 
-
-    Transmission channel;
-    QObject::connect(item, SIGNAL(morabaSignal()), &channel, SLOT(morabaaSlot()));
-    QObject::connect(item, SIGNAL(mosalasSignal()), &channel, SLOT(mosalasSlot()));
-    QObject::connect(item, SIGNAL(dayereSignal()), &channel, SLOT(dayereSlot()));
-    QObject::connect(item, SIGNAL(zarbdarSignal()), &channel, SLOT(zarbdarSlot()));
-    QObject::connect(item, SIGNAL(startSignal(QString)), &channel, SLOT(start(QString)));
-    QObject::connect(item, SIGNAL(keySignal(QString)), &channel, SLOT(sendJoystick(QString)));
-    QObject::connect(item, SIGNAL(noneSignal()), &channel, SLOT(stopJoystick()));
+    Transmission channel(item);
+    QObject::connect(item, SIGNAL(set_lamp(int)), &channel, SLOT(set_lamp(int)));
+    QObject::connect(item, SIGNAL(change_color(int)), &channel, SLOT(change_color(int)));
+    QObject::connect(item, SIGNAL(music_random()), &channel, SLOT(music_random()));
+    QObject::connect(item, SIGNAL(music_play()), &channel, SLOT(music_play()));
 
     return app.exec();
 }
