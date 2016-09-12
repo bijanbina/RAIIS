@@ -32,9 +32,14 @@ int Transmission::startTransfer(const char* command)
 {
     if (tcpClient.isOpen())
     {
+        tof_on_screen( "\ntransfering command" );
         int bytesToWrite = tcpClient.write(command);
-        return bytesToWrite;
+        tof_on_screen( QString::number(bytesToWrite) );
+        return 0;
     }
+    else
+        tof_on_screen( "\nNo device is connected" );
+
 }
 
 void Transmission::displayError(QAbstractSocket::SocketError socketError)
@@ -52,7 +57,14 @@ void Transmission::displayError(QAbstractSocket::SocketError socketError)
 void Transmission::connected()
 {
     qDebug() << "connected";
+    connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(dataReady()));
     tof_on_screen( "\nconnected" );
+    startTransfer("1\n");
+}
+
+void Transmission::dataReady()
+{
+    qDebug() << "Received: " << tcpClient.readAll();
 }
 
 void Transmission::start(QString IP)
@@ -60,6 +72,7 @@ void Transmission::start(QString IP)
     if (tcpClient.isOpen())
     {
         tcpClient.disconnect();
+        tcpClient.close();
     }
     tcpClient.connectToHost(QHostAddress(IP), 7778 );
     qDebug() << "connecting to " << IP;
@@ -97,13 +110,13 @@ void Transmission::change_color(int id)
     switch (button_id)
     {
         case GREEN_BUTTON:
-            command = "3000100000";
+            command = "3000100000\n";
             break;
         case BLUE_BUTTON:
-            command = "3000000100";
+            command = "3000000100\n";
             break;
         case RED_BUTTON:
-            command = "3100000000";
+            command = "3100000000\n";
             break;
     }
     startTransfer(command.toStdString().c_str());
@@ -111,13 +124,13 @@ void Transmission::change_color(int id)
 
 void Transmission::music_random()
 {
-    QString command = "4";
+    QString command = "42\n";
     startTransfer(command.toStdString().c_str());
 }
 
 void Transmission::music_play()
 {
-    QString command = "5";
+    QString command = "2\n";
     startTransfer(command.toStdString().c_str());
 }
 

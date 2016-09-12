@@ -57,7 +57,7 @@ Window {
         }
 
 
-        Rectangle
+        /*Rectangle
         {
             color: "#00000000"
             border.color: "#00f"
@@ -66,7 +66,7 @@ Window {
             y: 95 * scale_y
             width: 80 * scale_x
             height: 265 * scale_y
-        }
+        }*/
 
         MouseArea
         {
@@ -137,6 +137,15 @@ Window {
             width: 195 * scale_x
             height: 80 * scale_y
         }
+
+        Keys.onReleased:
+        {
+            if (event.key === Qt.Key_Back || event.key=== Qt.Key_Backspace)
+            {
+                event.accepted=true;
+                page.close();
+            }
+        }
     }
 
     Rectangle
@@ -184,9 +193,9 @@ Window {
         {
             id: music_button
             x: 100 * scale_x
-            y: 385
+            y: 385 * scale_y
             width: 215 * scale_x
-            height: 30
+            height: 30 * scale_y
             onClicked: music_play()
         }
 
@@ -257,6 +266,7 @@ Window {
                 event.accepted=true;
                 main_window.visible = true;
                 lamp_window.visible = false;
+                main_window.forceActiveFocus();
             }
         }
     }
@@ -278,6 +288,7 @@ Window {
                 event.accepted=true;
                 main_window.visible = true;
                 puzzle_window.visible = false;
+                main_window.forceActiveFocus();
             }
         }
     }
@@ -299,6 +310,7 @@ Window {
                 event.accepted=true;
                 main_window.visible = true;
                 info_window.visible = false;
+                main_window.forceActiveFocus();
             }
         }
     }
@@ -320,6 +332,7 @@ Window {
                 event.accepted=true;
                 main_window.visible = true;
                 screen_window.visible = false;
+                main_window.forceActiveFocus();
             }
         }
     }
@@ -340,6 +353,7 @@ Window {
                 event.accepted=true;
                 main_window.visible = true;
                 setting_window.visible = false;
+                main_window.forceActiveFocus();
             }
         }
     }

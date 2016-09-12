@@ -30,6 +30,7 @@ private slots:
     void start(QString IP);
     int startTransfer(const char* command);
     void displayError(QAbstractSocket::SocketError socketError);
+    void dataReady();
 
     void set_lamp(int id);
     void change_color(int id);
