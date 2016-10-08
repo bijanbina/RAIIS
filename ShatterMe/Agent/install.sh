@@ -43,6 +43,11 @@ cp	./snmpd.conf /usr/local/etc/snmp/
 cp	./shatterme.service /etc/systemd/system/
 cp	./start /usr/bin
 
+chmod 777 /srv/http/Scripts
+chmod +x  /srv/http/Scripts/change_ip.sh
+chmod +x  /srv/http/Scripts/reboot.sh
+chmod 777 /srv/http/Scripts/ip_address
+
 #add permission for reboot script 
 cat "http alarmpi = (root) NOPASSWD: /srv/http/Scripts/reboot.sh" >> /etc/sudoers
 
