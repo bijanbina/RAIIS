@@ -32,9 +32,10 @@ int Transmission::startTransfer(const char* command)
 {
     if (tcpClient.isOpen())
     {
-        tof_on_screen( "\ntransfering command" );
+        tof_on_screen( "\ntransfering command " );
         int bytesToWrite = tcpClient.write(command);
         tof_on_screen( QString::number(bytesToWrite) );
+        tof_on_screen( " byte written " );
         return 0;
     }
     else
@@ -71,9 +72,14 @@ void Transmission::start(QString IP)
 {
     if (tcpClient.isOpen())
     {
-        tcpClient.disconnect();
+        QString command = "5\n";
+        startTransfer(command.toStdString().c_str());
+        tof_on_screen( "\nclosing connection" );
         tcpClient.close();
     }
+    //tcpClient.disconnect();
+    tcpClient.waitForBytesWritten(1000);
+    tcpClient.abort();
     tcpClient.connectToHost(QHostAddress(IP), 7778 );
     qDebug() << "connecting to " << IP;
     tof_on_screen( "\nconnecting to " );
@@ -130,7 +136,7 @@ void Transmission::music_random()
 
 void Transmission::music_play()
 {
-    QString command = "2\n";
+    QString command = "5\n";
     startTransfer(command.toStdString().c_str());
 }
 
