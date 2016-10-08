@@ -9,11 +9,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <QTimer>
+#include <QColor>
 
 enum ColorButtonID {
+    RED_BUTTON,
     GREEN_BUTTON,
-    BLUE_BUTTON,
-    RED_BUTTON
+    BLUE_BUTTON
 };
 
 class Transmission : public QObject
@@ -32,7 +33,7 @@ private slots:
     void displayError(QAbstractSocket::SocketError socketError);
 
     void set_lamp(int id);
-    void change_color(int id);
+    void change_color(int id, int value);
     void music_random();
     void music_play();
 private:
@@ -51,6 +52,9 @@ private:
     short commandByte;
 
     QObject *root;
+
+    QColor lightColor;
+    int lamp_id;
 };
 
 #endif // TRANSMISSION_H
