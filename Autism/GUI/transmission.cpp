@@ -39,8 +39,9 @@ int Transmission::startTransfer(const char* command)
         return 0;
     }
     else
-        tof_on_screen( "\nNo device is connected" );
-
+    {
+        tof_on_screen( "\nData cannot transfer, no connection established" );
+    }
 }
 
 void Transmission::displayError(QAbstractSocket::SocketError socketError)
@@ -60,6 +61,8 @@ void Transmission::connected()
     qDebug() << "connected";
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(dataReady()));
     tof_on_screen( "\nconnected" );
+    QQmlProperty::write(root, "lamp_con_id", lamp_id);
+    QMetaObject::invokeMethod(root, "lamp_connected"); //light on
     startTransfer("1\n");
 }
 
@@ -75,6 +78,8 @@ void Transmission::start(QString IP)
         QString command = "5\n";
         startTransfer(command.toStdString().c_str());
         tof_on_screen( "\nclosing connection" );
+        QMetaObject::invokeMethod(root, "lamp_disconnected"); //light off
+        tcpClient.disconnect();
         tcpClient.close();
     }
     //tcpClient.disconnect();
@@ -106,25 +111,31 @@ void Transmission::set_lamp(int id)
         default:
             return;
     }
+    lamp_id = id;
     start(ip_address);
 }
 
-void Transmission::change_color(int id)
+void Transmission::change_color(int id, int value)
 {
     ColorButtonID button_id = static_cast<ColorButtonID>(id);
-    QString command;
+    QString command = "3";
     switch (button_id)
     {
         case GREEN_BUTTON:
-            command = "3000100000\n";
+            lightColor.setGreen(value);
             break;
         case BLUE_BUTTON:
-            command = "3000000100\n";
+            lightColor.setBlue(value);
             break;
         case RED_BUTTON:
-            command = "3100000000\n";
+            lightColor.setRed(value);
             break;
     }
+    command += QString("%1").arg(lightColor.red()  , 3, 10, QChar('0'));
+    command += QString("%1").arg(lightColor.green(), 3, 10, QChar('0'));
+    command += QString("%1").arg(lightColor.blue() , 3, 10, QChar('0'));
+    command += "\n";
+    qDebug() << command;
     startTransfer(command.toStdString().c_str());
 }
 
@@ -144,5 +155,4 @@ void Transmission::tof_on_screen(QString message)
 {
     QQmlProperty::write(root, "message", message);
     QMetaObject::invokeMethod(root, "tof_on_screen"); //show warning to
-
 }

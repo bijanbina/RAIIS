@@ -10,8 +10,15 @@
         <file>Resources/Screens/aboutAutism.jpg</file>
         <file>Resources/Screens/lamp.jpg</file>
         <file>Resources/Screens/rahnema.jpg</file>
-        <file>Resources/Screens/settings.jpg</file>
         <file>Resources/Screens/splash.jpg</file>
         <file>Resources/Screens/start.jpg</file>
+        <file>Resources/Screens/settings.png</file>
+        <file>Resources/redGrip.png</file>
+        <file>Resources/blueGrip.png</file>
+        <file>Resources/greenGrip.png</file>
+        <file>Resources/Screens/tr.png</file>
+        <file>Resources/Screens/tl.png</file>
+        <file>Resources/Screens/br.png</file>
+        <file>Resources/Screens/bl.png</file>
     </qresource>
 </RCC>

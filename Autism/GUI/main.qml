@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
+import Qt.labs.settings 1.0
 
 Window {
     id:page
@@ -18,12 +19,22 @@ Window {
     //Properties:
     property string ipAddress: "192.168.1.101"
     property string message
+    property int  lamp_con_id
     property real scale_x : width/minimumWidth
     property real scale_y : height/620
 
+    property real setting_red_value
+    property real setting_green_value
+    property real setting_blue_value
+
+    Settings {
+        property alias setting_red_value: settings_redSlider.value
+        property alias setting_green_value: settings_greenSlider.value
+        property alias setting_blue_value: settings_blueSlider.value
+    }
 
     signal set_lamp(int id);
-    signal change_color(int id);
+    signal change_color(int id,int value);
     signal music_random;
     signal music_play;
 
@@ -80,7 +91,6 @@ Window {
             y: 165 * scale_y
             width: 95 * scale_x
             height: 105 * scale_y
-
         }
 
         MouseArea
@@ -159,6 +169,16 @@ Window {
             source: "qrc:Resources/Screens/lamp.jpg"
         }
 
+        AndroidSlider{
+            id: greenSlider
+            anchors.bottom: green_button.top
+            anchors.left: green_button.left
+            anchors.leftMargin: -7
+            width: 153 * scale_x
+            handle_image: "qrc:Resources/greenGrip.png"
+            onValueChanged: change_color(1,value*255)
+        }
+
         MouseArea
         {
             id: green_button
@@ -166,7 +186,17 @@ Window {
             y: 225 * scale_y
             width: 215 * scale_x
             height: 30 * scale_y
-            onClicked: change_color(0)
+            //onClicked: change_color(0)
+        }
+
+        AndroidSlider{
+            id: blueSlider
+            anchors.bottom: blue_button.top
+            anchors.left: blue_button.left
+            anchors.leftMargin: -7
+            width: 153 * scale_x
+            handle_image: "qrc:Resources/blueGrip.png"
+            onValueChanged: change_color(2,value*255)
         }
 
         MouseArea
@@ -176,7 +206,17 @@ Window {
             y: 280 * scale_y
             width: 215 * scale_x
             height: 30 * scale_y
-            onClicked: change_color(1)
+            //onClicked: change_color(1)
+        }
+
+        AndroidSlider{
+            id: redSlider
+            anchors.bottom: red_button.top
+            anchors.left: red_button.left
+            anchors.leftMargin: -7
+            anchors.bottomMargin: 2
+            width: 153 * scale_x
+            onValueChanged: change_color(0,value*255)
         }
 
         MouseArea
@@ -186,7 +226,7 @@ Window {
             y: 335 * scale_y
             width: 215 * scale_x
             height: 30 * scale_y
-            onClicked: change_color(2)
+            //onClicked: change_color(2)
         }
 
         MouseArea
@@ -247,6 +287,38 @@ Window {
             width: 115 * scale_x
             height: 100 * scale_y
             onClicked: set_lamp(3)
+        }
+
+        Image
+        {
+            id: lamp1_on
+            anchors.fill: parent
+            source: "qrc:Resources/Screens/tl.png"
+            visible: false
+        }
+
+        Image
+        {
+            id: lamp2_on
+            anchors.fill: parent
+            source: "qrc:Resources/Screens/tr.png"
+            visible: false
+        }
+
+        Image
+        {
+            id: lamp3_on
+            anchors.fill: parent
+            source: "qrc:Resources/Screens/bl.png"
+            visible: false
+        }
+
+        Image
+        {
+            id: lamp4_on
+            anchors.fill: parent
+            source: "qrc:Resources/Screens/br.png"
+            visible: false
         }
 
         Text
@@ -342,9 +414,10 @@ Window {
         id: setting_window
         visible: false
         anchors.fill: parent
-        Settings
-        {
+        Image {
+            id: back_image_setting;
             anchors.fill: parent
+            source: "qrc:Resources/Screens/settings.png"
         }
         Keys.onReleased:
         {
@@ -356,10 +429,105 @@ Window {
                 main_window.forceActiveFocus();
             }
         }
+        AndroidSlider{
+            id: settings_greenSlider
+            anchors.bottom: settings_green_button.top
+            anchors.left: settings_green_button.left
+            anchors.leftMargin: -7
+            width: 153 * scale_x
+            handle_image: "qrc:Resources/greenGrip.png"
+            onValueChanged: change_color(1,value*255)
+        }
+
+        MouseArea
+        {
+            id: settings_green_button
+            x: 100 * scale_x
+            y: 225 * scale_y
+            width: 215 * scale_x
+            height: 30 * scale_y
+            //onClicked: change_color(0)
+        }
+
+        AndroidSlider{
+            id: settings_blueSlider
+            anchors.bottom: settings_blue_button.top
+            anchors.left: settings_blue_button.left
+            anchors.leftMargin: -7
+            width: 153 * scale_x
+            handle_image: "qrc:Resources/blueGrip.png"
+            onValueChanged: change_color(2,value*255)
+        }
+
+        MouseArea
+        {
+            id: settings_blue_button
+            x: 100 * scale_x
+            y: 280 * scale_y
+            width: 215 * scale_x
+            height: 30 * scale_y
+            //onClicked: change_color(1)
+        }
+
+        AndroidSlider{
+            id: settings_redSlider
+            anchors.bottom: settings_red_button.top
+            anchors.left: settings_red_button.left
+            anchors.leftMargin: -7
+            anchors.bottomMargin: 2
+            width: 153 * scale_x
+            onValueChanged: change_color(0,value*255)
+        }
+
+        MouseArea
+        {
+            id: settings_red_button
+            x: 100 * scale_x
+            y: 335 * scale_y
+            width: 215 * scale_x
+            height: 30 * scale_y
+            //onClicked: change_color(2)
+        }
     }
 
     function tof_on_screen () {
         debug_label.text += message;
+    }
+
+    function lamp_connected () {
+        switch(lamp_con_id)
+        {
+            case 0:
+                lamp1_on.visible = true;
+                break;
+            case 1:
+                lamp2_on.visible = true;
+                break;
+            case 2:
+                lamp3_on.visible = true;
+                break;
+            case 3:
+                lamp4_on.visible = true;
+                break;
+        }
+    }
+
+    function lamp_disconnected () {
+        switch(lamp_con_id)
+        {
+            case 0:
+                lamp1_on.visible = false;
+                break;
+            case 1:
+                lamp2_on.visible = false;
+                break;
+            case 2:
+                lamp3_on.visible = false;
+                break;
+            case 3:
+                lamp4_on.visible = false;
+                break;
+        }
     }
 
 
