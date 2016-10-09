@@ -32,9 +32,10 @@ int Transmission::startTransfer(const char* command)
 {
     if (tcpClient.isOpen())
     {
-        tof_on_screen( "\ntransfering command" );
+        tof_on_screen( "\ntransfering command " );
         int bytesToWrite = tcpClient.write(command);
         tof_on_screen( QString::number(bytesToWrite) );
+        tof_on_screen( " byte written " );
         return 0;
     }
     else
@@ -74,10 +75,16 @@ void Transmission::start(QString IP)
 {
     if (tcpClient.isOpen())
     {
+        QString command = "5\n";
+        startTransfer(command.toStdString().c_str());
+        tof_on_screen( "\nclosing connection" );
         QMetaObject::invokeMethod(root, "lamp_disconnected"); //light off
         tcpClient.disconnect();
         tcpClient.close();
     }
+    //tcpClient.disconnect();
+    tcpClient.waitForBytesWritten(1000);
+    tcpClient.abort();
     tcpClient.connectToHost(QHostAddress(IP), 7778 );
     qDebug() << "connecting to " << IP;
     tof_on_screen( "\nconnecting to " );
@@ -127,6 +134,7 @@ void Transmission::change_color(int id, int value)
     command += QString("%1").arg(lightColor.red()  , 3, 10, QChar('0'));
     command += QString("%1").arg(lightColor.green(), 3, 10, QChar('0'));
     command += QString("%1").arg(lightColor.blue() , 3, 10, QChar('0'));
+    command += "\n";
     qDebug() << command;
     startTransfer(command.toStdString().c_str());
 }
@@ -139,7 +147,7 @@ void Transmission::music_random()
 
 void Transmission::music_play()
 {
-    QString command = "2\n";
+    QString command = "5\n";
     startTransfer(command.toStdString().c_str());
 }
 

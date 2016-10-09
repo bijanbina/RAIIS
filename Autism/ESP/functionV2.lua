@@ -2,6 +2,7 @@
 function send(a)
     gpio.write(sda,gpio.LOW)
     tmr.delay(10000)
+    
    -- print(gpio.read(clk)..gpio.read(rst)..gpio.read(sda))
     for j=0,7,1 do
         gpio.write(sda,gpio.HIGH)
@@ -28,6 +29,7 @@ function init(addr)
     for i=0,7,1 do
         t=addr%2
         addr=addr/2
+    		print("t" .. t)
         --t=math.floor(t)
         if t==0 then
            a[i]=gpio.LOW
