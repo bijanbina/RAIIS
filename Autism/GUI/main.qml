@@ -174,9 +174,10 @@ Window {
             anchors.bottom: green_button.top
             anchors.left: green_button.left
             anchors.leftMargin: -7
-            width: 153 * scale_x
             handle_image: "qrc:Resources/greenGrip.png"
             onValueChanged: change_color(1,value*255)
+            width: 153 * scale_x
+            height: 15 * scale_y
         }
 
         MouseArea
@@ -194,9 +195,10 @@ Window {
             anchors.bottom: blue_button.top
             anchors.left: blue_button.left
             anchors.leftMargin: -7
-            width: 153 * scale_x
             handle_image: "qrc:Resources/blueGrip.png"
             onValueChanged: change_color(2,value*255)
+            width: 153 * scale_x
+            height: 15 * scale_y
         }
 
         MouseArea
@@ -215,8 +217,9 @@ Window {
             anchors.left: red_button.left
             anchors.leftMargin: -7
             anchors.bottomMargin: 2
-            width: 153 * scale_x
             onValueChanged: change_color(0,value*255)
+            width: 153 * scale_x
+            height: 15 * scale_y
         }
 
         MouseArea
@@ -434,9 +437,10 @@ Window {
             anchors.bottom: settings_green_button.top
             anchors.left: settings_green_button.left
             anchors.leftMargin: -7
-            width: 153 * scale_x
             handle_image: "qrc:Resources/greenGrip.png"
             onValueChanged: change_color(1,value*255)
+            width: 153 * scale_x
+            height: 15 * scale_y
         }
 
         MouseArea
@@ -454,9 +458,10 @@ Window {
             anchors.bottom: settings_blue_button.top
             anchors.left: settings_blue_button.left
             anchors.leftMargin: -7
-            width: 153 * scale_x
             handle_image: "qrc:Resources/blueGrip.png"
             onValueChanged: change_color(2,value*255)
+            width: 153 * scale_x
+            height: 15 * scale_y
         }
 
         MouseArea
@@ -475,8 +480,9 @@ Window {
             anchors.left: settings_red_button.left
             anchors.leftMargin: -7
             anchors.bottomMargin: 2
-            width: 153 * scale_x
             onValueChanged: change_color(0,value*255)
+            width: 153 * scale_x
+            height: 15 * scale_y
         }
 
         MouseArea

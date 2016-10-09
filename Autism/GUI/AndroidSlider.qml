@@ -17,8 +17,8 @@ Slider {
        }
        handle: Rectangle {
            anchors.centerIn: parent
-           implicitWidth: 15
-           implicitHeight: 15
+           width: parent.parent.height
+           height: parent.parent.height
            color: "transparent"
 
            Image {
