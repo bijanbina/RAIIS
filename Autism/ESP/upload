@@ -1,5 +1,0 @@
-#!/bin/sh
-nodemcu-uploader upload '$GEDIT_CURRENT_DOCUMENT_NAME' --compile
-nodemcu-uploader file remove '$GEDIT_CURRENT_DOCUMENT_NAME'
-nodemcu-uploader node restart
-
