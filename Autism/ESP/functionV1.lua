@@ -67,7 +67,7 @@ function createAP()
     wifi.setmode(wifi.SOFTAP)
     cfg={}
     cfg.ssid=wifi_name
-    cfg.pwd="12345678"
+    cfg.pwd=wifi_pass
     wifi.ap.config(cfg)
     cfg_ip =
     {
@@ -100,7 +100,7 @@ function wifiSetup(t)
             gateway="192.168.1.21"
         }
         wifi.sta.setip(cfg)
-        wifi.sta.config(wifi_name,"12345678")
+        wifi.sta.config(wifi_name,wifi_pass)
         wifi.sta.connect()
         tmr.alarm (5,333,1,con_to_server)
         

@@ -7,6 +7,7 @@ rainbow_direction_g = 1;
 rainbow_direction_b = -1;
 device_id = 1;
 wifi_name = "JAB";
+wifi_pass = "12345678";
 
 --timer table
 --tmr0: rainbow

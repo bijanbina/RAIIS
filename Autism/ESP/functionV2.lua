@@ -58,9 +58,9 @@ function lightOff()
 end
 
 function changeColor( r, g, b )
-    pwm.setduty(6,b) --abi
-    pwm.setduty(7,r)   --ghermez
-    pwm.setduty(8,g)  --sabz
+    pwm.setduty(6,b)
+    pwm.setduty(7,r)
+    pwm.setduty(8,g)
 end
 
 function createAP()
@@ -68,13 +68,13 @@ function createAP()
     wifi.setmode(wifi.SOFTAP)
     cfg={}
     cfg.ssid=wifi_name
-    cfg.pwd="12345678"
+    cfg.pwd=wifi_pass
     wifi.ap.config(cfg)
     cfg_ip =
     {
-      ip="192.168.1." .. (20+device_id),
+      ip="192.168.1.1",
       netmask="255.255.255.0",
-      gateway="192.168.1.21"
+      gateway="192.168.1.1"
     }
     print("Server Address: " .. cfg_ip.ip)
     wifi.ap.setip(cfg_ip)
@@ -96,15 +96,14 @@ function wifiSetup(t)
         wifi.setmode(wifi.STATION)
         cfg =
         {
-            ip="192.168.1." .. (20+device_id),
+            ip="192.168.1.250",
             netmask="255.255.255.0",
-            gateway="192.168.1.21"
+            gateway="192.168.1.1"
         }
         wifi.sta.setip(cfg)
-        wifi.sta.config(wifi_name,"12345678")
+        wifi.sta.config(wifi_name,wifi_pass)
         wifi.sta.connect()
         tmr.alarm (5,333,1,con_to_server)
-        
     else
         tmr.alarm(2, 5000, tmr.ALARM_SINGLE, createAP)
         print("Timer Created")
@@ -126,16 +125,6 @@ function clientConnected(conn)
       conn:on("receive", onReceive)
       conn:send("command:")
       print("Client Connected")
-end
-
-function con_to_server()
-    if(wifi.sta.getip() ~= NULL) then
-        tmr.stop(5)
-        print("connected to AP")
-        print("IP Address: ",wifi.sta.getip())
-            createServer()
-        print("Server Ready")
-        end
 end
 
 function play(n) --n: music number
@@ -227,6 +216,9 @@ function interpret(conn,string)
     elseif  command == "8" then
         print("rainbow");
         rainbow()
+    elseif  command == "20" then
+    		device_id = device_id + 1
+    		conn:send(device_id);
     end
 end
 
@@ -249,4 +241,40 @@ function onReceive(conn,receive)
     conn:send("command:")
 end
 
+--Auto Connect:
+function con_to_server()
+    if(wifi.sta.getip() ~= NULL) then
+        tmr.stop(5)
+        print("connected to AP")
+        print("IP Address: ",wifi.sta.getip())
+        
+				srv = net.createConnection(net.TCP, 0)
+				srv:on("receive", onRecieve_test_device)
+				srv:connect(7778,"192.168.1.1")
+				srv:on("connection", connected_test_device)
+    end
+end
 
+--This function query server for device count
+function connected_test_device(sck, c)
+    sck:send("20\n")
+end
+
+function onRecieve_test_device(sck, c)
+		tmr.stop(3)
+    print("Recieved", c)
+    device_id = c
+    --assume id is free
+	  wifi.sta.disconnect()
+		cfg =
+		{
+			  ip="192.168.1." .. device_id,
+			  netmask="255.255.255.0",
+			  gateway="192.168.1.1"
+		}
+	
+	  wifi.sta.setip(cfg)
+	  wifi.sta.config("JAB","12345678")
+	  wifi.sta.connect()
+	  createServer()
+end
