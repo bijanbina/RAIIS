@@ -66,7 +66,7 @@ function createAP()
     print("Create AP")
     wifi.setmode(wifi.SOFTAP)
     cfg={}
-    cfg.ssid="JAB"
+    cfg.ssid=wifi_name
     cfg.pwd="12345678"
     wifi.ap.config(cfg)
     cfg_ip =
@@ -86,7 +86,7 @@ end
 function wifiSetup(t)
     wifiFound = 0
     for k,v in pairs(t) do
-        if k == "JAB" then
+        if k == wifi_name then
             wifiFound = 1
         end
     end
@@ -100,7 +100,7 @@ function wifiSetup(t)
             gateway="192.168.1.21"
         }
         wifi.sta.setip(cfg)
-        wifi.sta.config("JAB","12345678")
+        wifi.sta.config(wifi_name,"12345678")
         wifi.sta.connect()
         tmr.alarm (5,333,1,con_to_server)
         

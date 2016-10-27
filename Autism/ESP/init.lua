@@ -6,6 +6,7 @@ rainbow_direction_r = 1;
 rainbow_direction_g = 1;
 rainbow_direction_b = -1;
 device_id = 1;
+wifi_name = "JAB";
 
 --timer table
 --tmr0: rainbow
@@ -13,5 +14,5 @@ device_id = 1;
 --tmr5: con_to_server
 dofile("functionV2.lc")
 
-print("Version: 1.3")
+print("Version: 1.31")
 bootup()
