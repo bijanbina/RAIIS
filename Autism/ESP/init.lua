@@ -11,9 +11,10 @@ wifi_pass = "12345678";
 
 --timer table
 --tmr0: rainbow
+--tmr1: Auto Ap Connect
 --tmr2: createAP
 --tmr5: con_to_server
-dofile("functionV2.lc")
+dofile("functionV2.lua")
 
-print("Version: 1.31")
+print("Version: 1.4")
 bootup()

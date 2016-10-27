@@ -94,13 +94,6 @@ function wifiSetup(t)
     if wifiFound == 1 then
         print("WiFi found")
         wifi.setmode(wifi.STATION)
-        cfg =
-        {
-            ip="192.168.1.250",
-            netmask="255.255.255.0",
-            gateway="192.168.1.1"
-        }
-        wifi.sta.setip(cfg)
         wifi.sta.config(wifi_name,wifi_pass)
         wifi.sta.connect()
         tmr.alarm (5,333,1,con_to_server)
@@ -116,14 +109,17 @@ function bootup()
 end
 
 function createServer()
-    sv = net.createServer(net.TCP, 28700)
+    sv = net.createServer(net.TCP, 28000)
+    print("Server Created")
     sv:listen(7778, clientConnected)
     print("Port opened on 7778")
+    print("After Delay")
 end
 
 function clientConnected(conn)
-      conn:on("receive", onReceive)
-      conn:send("command:")
+      print("Hi")
+      --conn:on("receive", onReceive)
+      --conn:send("command:")
       print("Client Connected")
 end
 
@@ -216,9 +212,12 @@ function interpret(conn,string)
     elseif  command == "8" then
         print("rainbow");
         rainbow()
-    elseif  command == "20" then
-    		device_id = device_id + 1
-    		conn:send(device_id);
+    elseif  command == "n" then
+        print("New Device Requested, sent :" .. device_id);
+		device_id = device_id + 1
+		conn:send(device_id);
+    elseif  command == "q" then
+		conn:send(device_id .. "\n");
     end
 end
 
@@ -248,33 +247,45 @@ function con_to_server()
         print("connected to AP")
         print("IP Address: ",wifi.sta.getip())
         
-				srv = net.createConnection(net.TCP, 0)
-				srv:on("receive", onRecieve_test_device)
-				srv:connect(7778,"192.168.1.1")
-				srv:on("connection", connected_test_device)
+		srv = net.createConnection(net.TCP, 0)
+		srv:on("receive", onRecieve_test_device)
+		srv:connect(7778,"192.168.1.1")
     end
 end
 
---This function query server for device count
-function connected_test_device(sck, c)
-    sck:send("20\n")
+function connect_to_AP()
+    tmr.stop(1)
+    print("Inside Timer");
+    cfg =
+    {
+          ip="192.168.1." .. device_id,
+          netmask="255.255.255.0",
+          gateway="192.168.1.1"
+    }
+    
+    wifi.sta.setip(cfg)
+    wifi.sta.config("JAB","12345678")
+    wifi.sta.connect()
+    if(wifi.sta.getip() ~= NULL) then  
+        print("connected to NEW IP")
+        print("IP Address: ",wifi.sta.getip())
+        createServer()
+    end
+    print("Debug #2");
+    --tmr.delay(9000000)
 end
 
 function onRecieve_test_device(sck, c)
-		tmr.stop(3)
-    print("Recieved", c)
-    device_id = c
+	print("Recieved", c, "Len", c:len())
+	if ( c:sub(1,1) == 'c' ) then --if recieve "command:" just ignore it
+        sck:send("n\n")
+		return
+	end
+	device_id = c; --get first char
+    --device_id = string.byte(get_id)
+    print("New IP", "192.168.1." .. device_id)
     --assume id is free
-	  wifi.sta.disconnect()
-		cfg =
-		{
-			  ip="192.168.1." .. device_id,
-			  netmask="255.255.255.0",
-			  gateway="192.168.1.1"
-		}
-	
-	  wifi.sta.setip(cfg)
-	  wifi.sta.config("JAB","12345678")
-	  wifi.sta.connect()
-	  createServer()
+    sck:close()
+    wifi.sta.disconnect()
+    tmr.alarm(1, 500, tmr.ALARM_SINGLE, connect_to_AP)
 end
