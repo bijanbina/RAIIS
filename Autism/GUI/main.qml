@@ -38,11 +38,11 @@ Window {
     signal music_random;
     signal music_play;
 
-    //Fonts:
-    FontLoader { id: robotoMediumFont ; source: "qrc:Resources/Fonts/Roboto-Medium.ttf" }
-    FontLoader { id: robotoRegularFont ; source: "qrc:Resources/Fonts/Roboto-Regular.ttf" }
-    //FontLoader { id: robotoBoldFont ; source: "qrc:Resources/Fonts/Roboto-Bold.ttf" }
 
+
+    ///////////////////////////////////////////////////
+    //----------------MAIN WINDOW--------------------//
+    ///////////////////////////////////////////////////
     Rectangle
     {
         anchors.fill: parent
@@ -158,6 +158,9 @@ Window {
         }
     }
 
+    ///////////////////////////////////////////////////
+    //----------------LAMP WINDOW--------------------//
+    ///////////////////////////////////////////////////
     Rectangle
     {
         visible: false;
@@ -346,6 +349,9 @@ Window {
         }
     }
 
+    ///////////////////////////////////////////////////
+    //---------------PUZZLE WINDOW-------------------//
+    ///////////////////////////////////////////////////
     Rectangle
     {
         visible: false;
@@ -368,6 +374,10 @@ Window {
         }
     }
 
+
+    ///////////////////////////////////////////////////
+    //----------------INFO WINDOW--------------------//
+    ///////////////////////////////////////////////////
     Rectangle
     {
         visible: false;
@@ -390,6 +400,10 @@ Window {
         }
     }
 
+
+    ///////////////////////////////////////////////////
+    //---------------SCREEN WINDOW-------------------//
+    ///////////////////////////////////////////////////
     Rectangle
     {
         visible: false;
@@ -412,6 +426,10 @@ Window {
         }
     }
 
+
+    ///////////////////////////////////////////////////
+    //---------------SETTING WINDOW------------------//
+    ///////////////////////////////////////////////////
     Rectangle
     {
         id: setting_window
@@ -538,3 +556,4 @@ Window {
 
 
 }
+
