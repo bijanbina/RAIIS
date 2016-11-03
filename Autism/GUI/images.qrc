@@ -4,7 +4,7 @@
         <file>Resources/icon_volume.png</file>
         <file>Resources/Screens/about.jpg</file>
         <file>Resources/Screens/aboutAutism.jpg</file>
-        <file>Resources/Screens/lamp.jpg</file>
+        <file>Resources/Screens/lamp-window.png</file>
         <file>Resources/Screens/rahnema.jpg</file>
         <file>Resources/Screens/splash.jpg</file>
         <file>Resources/Screens/start.jpg</file>
@@ -12,9 +12,17 @@
         <file>Resources/redGrip.png</file>
         <file>Resources/blueGrip.png</file>
         <file>Resources/greenGrip.png</file>
-        <file>Resources/Screens/tr.png</file>
-        <file>Resources/Screens/tl.png</file>
-        <file>Resources/Screens/br.png</file>
-        <file>Resources/Screens/bl.png</file>
+        <file>Resources/Lamp/off-tr.png</file>
+        <file>Resources/Lamp/off-tl.png</file>
+        <file>Resources/Lamp/off-br.png</file>
+        <file>Resources/Lamp/off-bl.png</file>
+        <file>Resources/Lamp/on-tr.png</file>
+        <file>Resources/Lamp/on-tl.png</file>
+        <file>Resources/Lamp/on-br.png</file>
+        <file>Resources/Lamp/on-bl.png</file>
+        <file>Resources/Button/color-off.png</file>
+        <file>Resources/Button/color-on.png</file>
+        <file>Resources/Button/sound-off.png</file>
+        <file>Resources/Button/sound-on.png</file>
     </qresource>
 </RCC>

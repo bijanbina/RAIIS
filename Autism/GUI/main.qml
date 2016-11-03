@@ -169,7 +169,7 @@ Window {
         Image {
             id: back_image_lamp;
             anchors.fill: parent
-            source: "qrc:Resources/Screens/lamp.jpg"
+            source: "qrc:Resources/Screens/lamp-window.png"
         }
 
         AndroidSlider{
@@ -237,7 +237,7 @@ Window {
 
         MouseArea
         {
-            id: music_button
+            id: play_button
             x: 100 * scale_x
             y: 385 * scale_y
             width: 215 * scale_x
@@ -299,7 +299,7 @@ Window {
         {
             id: lamp1_on
             anchors.fill: parent
-            source: "qrc:Resources/Screens/tl.png"
+            source: "qrc:Resources/Lamp/on-tl.png"
             visible: false
         }
 
@@ -307,7 +307,7 @@ Window {
         {
             id: lamp2_on
             anchors.fill: parent
-            source: "qrc:Resources/Screens/tr.png"
+            source: "qrc:Resources/Lamp/on-tr.png"
             visible: false
         }
 
@@ -315,7 +315,7 @@ Window {
         {
             id: lamp3_on
             anchors.fill: parent
-            source: "qrc:Resources/Screens/bl.png"
+            source: "qrc:Resources/Lamp/on-bl.png"
             visible: false
         }
 
@@ -323,9 +323,96 @@ Window {
         {
             id: lamp4_on
             anchors.fill: parent
-            source: "qrc:Resources/Screens/br.png"
+            source: "qrc:Resources/Lamp/on-br.png"
             visible: false
         }
+
+        Image
+        {
+            id: lamp1_off
+            anchors.fill: parent
+            source: "qrc:Resources/Lamp/off-tl.png"
+            visible: false
+        }
+
+        Image
+        {
+            id: lamp2_off
+            anchors.fill: parent
+            source: "qrc:Resources/Lamp/off-tr.png"
+            visible: false
+        }
+
+        Image
+        {
+            id: lamp3_off
+            anchors.fill: parent
+            source: "qrc:Resources/Lamp/off-bl.png"
+            visible: false
+        }
+
+        Image
+        {
+            id: lamp4_off
+            anchors.fill: parent
+            source: "qrc:Resources/Lamp/off-br.png"
+            visible: false
+        }
+
+
+        Image
+        {
+            id: color_button
+            x: 40 * scale_x
+            y: 270 * scale_y
+            width: 45 * scale_x
+            height: 45 * scale_y
+            source: "qrc:Resources/Button/color-off.png"
+            MouseArea
+            {
+                id: colorbtn_mouseArea
+                anchors.fill: parent
+                onClicked:
+                {
+                    if (color_button.source == "qrc:Resources/Button/color-off.png")
+                    {
+                        color_button.source = "qrc:Resources/Button/color-on.png";
+                    }
+                    else
+                    {
+                        color_button.source = "qrc:Resources/Button/color-off.png";
+                    }
+                }
+            }
+        }
+
+
+        Image
+        {
+            id: music_button
+            x: 40 * scale_x
+            y: 375 * scale_y
+            width: 45 * scale_x
+            height: 45 * scale_y
+            source: "qrc:Resources/Button/sound-off.png"
+            MouseArea
+            {
+                id: musicbtn_mouseArea
+                anchors.fill: parent
+                onClicked:
+                {
+                    if (music_button.source == "qrc:Resources/Button/sound-off.png")
+                    {
+                        music_button.source = "qrc:Resources/Button/sound-on.png";
+                    }
+                    else
+                    {
+                        music_button.source = "qrc:Resources/Button/sound-off.png";
+                    }
+                }
+            }
+        }
+
 
         Text
         {
