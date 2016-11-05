@@ -14,7 +14,7 @@ wifi_pass = "12345678";
 --tmr1: Auto Ap Connect
 --tmr2: createAP
 --tmr5: con_to_server
-dofile("functionV2.lua")
+dofile("functionV2.lc")
 
 print("Version: 1.4")
 bootup()

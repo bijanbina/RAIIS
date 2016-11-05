@@ -2,12 +2,10 @@
 #include <string.h>
 #include <QQmlProperty>
 
-#define JOYSTICK_DELAY 100
-
-#define DEVICE1_IP  "192.168.1.21"
-#define DEVICE2_IP  "192.168.1.22"
-#define DEVICE3_IP  "192.168.1.23"
-#define DEVICE4_IP  "192.168.1.24"
+#define DEVICE1_IP  "192.168.1.1"
+#define DEVICE2_IP  "192.168.1.2"
+#define DEVICE3_IP  "192.168.1.3"
+#define DEVICE4_IP  "192.168.1.4"
 
 Transmission::Transmission(QObject *ui,QObject *parent) : QObject(parent)
 {
@@ -16,11 +14,13 @@ Transmission::Transmission(QObject *ui,QObject *parent) : QObject(parent)
     isBufferEmpty = true;
     commandMode=false;
 
-    connect(&tcpClient, SIGNAL(connected()), this, SLOT(connected()));
     connect(&tcpClient, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
+    connect(&tcpClient, SIGNAL(connected()), this, SLOT(connected()));
 
     root = ui;
+    upDevices = 0;
+    reqDeviceList();
 }
 
 Transmission::~Transmission()
@@ -61,14 +61,49 @@ void Transmission::connected()
     qDebug() << "connected";
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(dataReady()));
     tof_on_screen( "\nconnected" );
-    QQmlProperty::write(root, "lamp_con_id", lamp_id);
-    QMetaObject::invokeMethod(root, "lamp_connected"); //light on
-    startTransfer("1\n");
+    if( !listRequested )
+    {
+        QQmlProperty::write(root, "lamp_con_id", lamp_id);
+        QMetaObject::invokeMethod(root, "lamp_connected"); //light on
+        startTransfer("1\n");
+    }
+}
+
+//Request for device list
+void Transmission::reqDeviceList()
+{
+    listRequested = true;
+    tcpClient.connectToHost(QHostAddress(DEVICE1_IP), 7778 );
+    qDebug() << "connecting to " << DEVICE1_IP;
+    tof_on_screen( "\nconnecting to " );
+    tof_on_screen( DEVICE1_IP );
 }
 
 void Transmission::dataReady()
 {
-    qDebug() << "Received: " << tcpClient.readAll();
+    QString recieve = tcpClient.readAll();
+    qDebug() << "Received: " << recieve;
+    if (listRequested)
+    {
+        if (recieve.size() < 5)
+        {
+            int devCount; //device count
+            devCount = recieve.toInt();
+            if ( upDevices != devCount)//list changed
+            {
+                upDevices = devCount;
+                QQmlProperty::write(root, "lamp_count", upDevices);
+                QMetaObject::invokeMethod(root, "lamp_enable"); //update ui device list
+            }
+            listRequested = false;
+            tcpClient.disconnect();
+            tcpClient.close();
+            tcpClient.waitForBytesWritten(1000);
+            tcpClient.abort();
+        }
+        else
+            startTransfer("q\n");//query
+    }
 }
 
 void Transmission::start(QString IP)

@@ -37,6 +37,8 @@ private slots:
     void change_color(int id, int value);
     void music_random();
     void music_play();
+
+    void reqDeviceList();
 private:
     QTcpSocket tcpClient;
     void tof_on_screen(QString message);
@@ -51,6 +53,8 @@ private:
     bool commandMode;
     int commandIndex;
     short commandByte;
+    int   upDevices; //number of availble devices
+    bool  listRequested; //enable if listing request sent to server
 
     QObject *root;
 

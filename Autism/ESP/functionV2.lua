@@ -96,9 +96,9 @@ function wifiSetup(t)
         wifi.setmode(wifi.STATION)
         wifi.sta.config(wifi_name,wifi_pass)
         wifi.sta.connect()
-        tmr.alarm (5,333,1,con_to_server)
+        tmr.alarm (5,100,1,con_to_server)
     else
-        tmr.alarm(2, 5000, tmr.ALARM_SINGLE, createAP)
+        tmr.alarm(2, 500, tmr.ALARM_SINGLE, createAP)
         print("Timer Created")
     end
 end
@@ -113,13 +113,12 @@ function createServer()
     print("Server Created")
     sv:listen(7778, clientConnected)
     print("Port opened on 7778")
-    print("After Delay")
 end
 
 function clientConnected(conn)
       print("Hi")
-      --conn:on("receive", onReceive)
-      --conn:send("command:")
+      conn:on("receive", onReceive)
+      conn:send("command:")
       print("Client Connected")
 end
 
@@ -167,7 +166,7 @@ end
 
 function interpret(conn,string)
     command = string:sub(1,1) --get first char
-    print(command)
+    print("recieve command: " .. command)
     if      command == "1" then 
         print("light on");
         lightOn()
@@ -217,7 +216,7 @@ function interpret(conn,string)
 		device_id = device_id + 1
 		conn:send(device_id);
     elseif  command == "q" then
-		conn:send(device_id .. "\n");
+		conn:send(device_id .. "\r\n");
     end
 end
 
@@ -264,14 +263,13 @@ function connect_to_AP()
     }
     
     wifi.sta.setip(cfg)
-    wifi.sta.config("JAB","12345678")
+    wifi.sta.config(wifi_name,wifi_pass)
     wifi.sta.connect()
-    if(wifi.sta.getip() ~= NULL) then  
-        print("connected to NEW IP")
+    if(wifi.sta.getip() ~= NULL) then
         print("IP Address: ",wifi.sta.getip())
         createServer()
     end
-    print("Debug #2");
+    --print("Debug #2");
     --tmr.delay(9000000)
 end
 
@@ -287,5 +285,5 @@ function onRecieve_test_device(sck, c)
     --assume id is free
     sck:close()
     wifi.sta.disconnect()
-    tmr.alarm(1, 500, tmr.ALARM_SINGLE, connect_to_AP)
+    tmr.alarm(1, 100, tmr.ALARM_SINGLE, connect_to_AP)
 end

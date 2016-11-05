@@ -20,8 +20,10 @@ Window {
     property string ipAddress: "192.168.1.101"
     property string message
     property int  lamp_con_id
+    property int  lamp_count : 0
     property real scale_x : width/minimumWidth
     property real scale_y : height/620
+    property bool isConnected : false
 
     property real setting_red_value
     property real setting_green_value
@@ -37,6 +39,8 @@ Window {
     signal change_color(int id,int value);
     signal music_random;
     signal music_play;
+    signal music_toggle;
+    signal color_toggle;
 
 
 
@@ -374,13 +378,16 @@ Window {
                 anchors.fill: parent
                 onClicked:
                 {
-                    if (color_button.source == "qrc:Resources/Button/color-off.png")
+                    if (isConnected)
                     {
-                        color_button.source = "qrc:Resources/Button/color-on.png";
-                    }
-                    else
-                    {
-                        color_button.source = "qrc:Resources/Button/color-off.png";
+                        if (color_button.source == "qrc:Resources/Button/color-off.png")
+                        {
+                            color_button.source = "qrc:Resources/Button/color-on.png";
+                        }
+                        else
+                        {
+                            color_button.source = "qrc:Resources/Button/color-off.png";
+                        }
                     }
                 }
             }
@@ -401,13 +408,16 @@ Window {
                 anchors.fill: parent
                 onClicked:
                 {
-                    if (music_button.source == "qrc:Resources/Button/sound-off.png")
+                    if (isConnected)
                     {
-                        music_button.source = "qrc:Resources/Button/sound-on.png";
-                    }
-                    else
-                    {
-                        music_button.source = "qrc:Resources/Button/sound-off.png";
+                        if (music_button.source == "qrc:Resources/Button/sound-off.png")
+                        {
+                            music_button.source = "qrc:Resources/Button/sound-on.png";
+                        }
+                        else
+                        {
+                            music_button.source = "qrc:Resources/Button/sound-off.png";
+                        }
                     }
                 }
             }
@@ -621,6 +631,7 @@ Window {
                 lamp4_on.visible = true;
                 break;
         }
+        isConnected = true;
     }
 
     function lamp_disconnected () {
@@ -639,6 +650,28 @@ Window {
                 lamp4_on.visible = false;
                 break;
         }
+        isConnected = false;
+    }
+
+    function lamp_enable () {
+        if (lamp_count > 0)
+        {
+            lamp1_off.visible = true;
+        }
+        if (lamp_count > 1)
+        {
+            lamp2_off.visible = true;
+        }
+        if (lamp_count > 2)
+        {
+            lamp3_off.visible = true;
+        }
+        if (lamp_count > 3)
+        {
+            lamp4_off.visible = true;
+        }
+
+        isConnected = false;
     }
 
 
