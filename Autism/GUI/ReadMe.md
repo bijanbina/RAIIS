@@ -1,1 +1,1 @@
-For resources go to dropbox [shared folder](https://www.dropbox.com/sh/zze7mwyufb01v5v/AAAeUfy4_Zzzua2swH43ZUZaa?dl=0)
+Resources are avalible on dropbox [shared folder](https://www.dropbox.com/sh/fisonmauag8j8az/AAAmAukgyog1Ddv0FIbjIv-la?dl=0)
