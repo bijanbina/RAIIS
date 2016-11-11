@@ -32,10 +32,10 @@ int Transmission::startTransfer(const char* command)
 {
     if (tcpClient.isOpen())
     {
-        tof_on_screen( "\ntransfering command " );
+        //tof_on_screen( "\ntransfering command " );
         int bytesToWrite = tcpClient.write(command);
-        tof_on_screen( QString::number(bytesToWrite) );
-        tof_on_screen( " byte written " );
+        //tof_on_screen( QString::number(bytesToWrite) );
+        //tof_on_screen( " byte written " );
         return 0;
     }
     else
@@ -96,8 +96,7 @@ void Transmission::dataReady()
                 QMetaObject::invokeMethod(root, "lamp_enable"); //update ui device list
             }
             listRequested = false;
-            tcpClient.disconnect();
-            tcpClient.close();
+            tcpClient.disconnectFromHost();
             tcpClient.waitForBytesWritten(1000);
             tcpClient.abort();
         }
@@ -114,10 +113,9 @@ void Transmission::start(QString IP)
         startTransfer(command.toStdString().c_str());
         tof_on_screen( "\nclosing connection" );
         QMetaObject::invokeMethod(root, "lamp_disconnected"); //light off
-        tcpClient.disconnect();
+        tcpClient.disconnectFromHost();
         tcpClient.close();
     }
-    //tcpClient.disconnect();
     tcpClient.waitForBytesWritten(1000);
     tcpClient.abort();
     tcpClient.connectToHost(QHostAddress(IP), 7778 );

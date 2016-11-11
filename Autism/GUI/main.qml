@@ -304,6 +304,7 @@ Window {
             id: lamp1_on
             anchors.fill: parent
             source: "qrc:Resources/Lamp/on-tl.png"
+            z:2
             visible: false
         }
 
@@ -312,6 +313,7 @@ Window {
             id: lamp2_on
             anchors.fill: parent
             source: "qrc:Resources/Lamp/on-tr.png"
+            z:2
             visible: false
         }
 
@@ -320,6 +322,7 @@ Window {
             id: lamp3_on
             anchors.fill: parent
             source: "qrc:Resources/Lamp/on-bl.png"
+            z:2
             visible: false
         }
 
@@ -328,6 +331,7 @@ Window {
             id: lamp4_on
             anchors.fill: parent
             source: "qrc:Resources/Lamp/on-br.png"
+            z:2
             visible: false
         }
 
