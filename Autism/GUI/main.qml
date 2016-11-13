@@ -39,8 +39,10 @@ Window {
     signal change_color(int id,int value);
     signal music_random;
     signal music_play;
-    signal music_toggle;
-    signal color_toggle;
+    signal music_stop;
+    signal light_off;
+    signal light_on;
+    signal rainbow;
 
 
 
@@ -375,7 +377,7 @@ Window {
             y: 270 * scale_y
             width: 45 * scale_x
             height: 45 * scale_y
-            source: "qrc:Resources/Button/color-off.png"
+            source: "qrc:/Resources/Button/color-off.png"
             MouseArea
             {
                 id: colorbtn_mouseArea
@@ -384,13 +386,13 @@ Window {
                 {
                     if (isConnected)
                     {
-                        if (color_button.source == "qrc:Resources/Button/color-off.png")
+                        if (color_button.source == "qrc:/Resources/Button/color-off.png")
                         {
-                            color_button.source = "qrc:Resources/Button/color-on.png";
+                            color_button.source = "qrc:/Resources/Button/color-on.png";
                         }
                         else
                         {
-                            color_button.source = "qrc:Resources/Button/color-off.png";
+                            color_button.source = "qrc:/Resources/Button/color-off.png";
                         }
                     }
                 }
@@ -405,7 +407,7 @@ Window {
             y: 375 * scale_y
             width: 45 * scale_x
             height: 45 * scale_y
-            source: "qrc:Resources/Button/sound-off.png"
+            source: "qrc:/Resources/Button/sound-off.png"
             MouseArea
             {
                 id: musicbtn_mouseArea
@@ -414,13 +416,13 @@ Window {
                 {
                     if (isConnected)
                     {
-                        if (music_button.source == "qrc:Resources/Button/sound-off.png")
+                        if (music_button.source == "qrc:/Resources/Button/sound-off.png")
                         {
-                            music_button.source = "qrc:Resources/Button/sound-on.png";
+                            music_button.source = "qrc:/Resources/Button/sound-on.png";
                         }
                         else
                         {
-                            music_button.source = "qrc:Resources/Button/sound-off.png";
+                            music_button.source = "qrc:/Resources/Button/sound-off.png";
                         }
                     }
                 }

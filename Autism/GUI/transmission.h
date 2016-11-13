@@ -37,6 +37,10 @@ private slots:
     void change_color(int id, int value);
     void music_random();
     void music_play();
+    void music_stop();
+    void light_off();
+    void light_on();
+    void rainbow();
 
     void reqDeviceList();
 private:

@@ -16,5 +16,5 @@ wifi_pass = "12345678";
 --tmr5: con_to_server
 dofile("functionV2.lc")
 
-print("Version: 1.4")
+print("Version: 1.5")
 bootup()

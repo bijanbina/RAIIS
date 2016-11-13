@@ -184,6 +184,31 @@ void Transmission::music_play()
     startTransfer(command.toStdString().c_str());
 }
 
+void Transmission::music_stop()
+{
+    QString command = "6\n";
+    startTransfer(command.toStdString().c_str());
+}
+
+void Transmission::light_off()
+{
+    QString command = "7\n";
+    startTransfer(command.toStdString().c_str());
+}
+
+void Transmission::light_on()
+{
+    QString command = "1\n";
+    startTransfer(command.toStdString().c_str());
+}
+
+void Transmission::rainbow()
+{
+    QString command = "8\n";
+    startTransfer(command.toStdString().c_str());
+}
+
+
 void Transmission::tof_on_screen(QString message)
 {
     QQmlProperty::write(root, "message", message);
