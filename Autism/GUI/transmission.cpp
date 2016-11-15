@@ -180,7 +180,7 @@ void Transmission::music_random()
 
 void Transmission::music_play()
 {
-    QString command = "5\n";
+    QString command = "2\n";
     startTransfer(command.toStdString().c_str());
 }
 

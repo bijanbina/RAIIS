@@ -184,7 +184,13 @@ Window {
             anchors.left: green_button.left
             anchors.leftMargin: -7
             handle_image: "qrc:Resources/greenGrip.png"
-            onValueChanged: change_color(1,value*255)
+            onValueChanged:
+            {
+                if(isConnected && color_button.source == "qrc:/Resources/Button/color-on.png")
+                {
+                    change_color(1,value*255)
+                }
+            }
             width: 153 * scale_x
             height: 15 * scale_y
         }
@@ -205,7 +211,13 @@ Window {
             anchors.left: blue_button.left
             anchors.leftMargin: -7
             handle_image: "qrc:Resources/blueGrip.png"
-            onValueChanged: change_color(2,value*255)
+            onValueChanged:
+            {
+                if(isConnected && color_button.source == "qrc:/Resources/Button/color-on.png")
+                {
+                    change_color(2,value*255);
+                }
+            }
             width: 153 * scale_x
             height: 15 * scale_y
         }
@@ -226,7 +238,13 @@ Window {
             anchors.left: red_button.left
             anchors.leftMargin: -7
             anchors.bottomMargin: 2
-            onValueChanged: change_color(0,value*255)
+            onValueChanged:
+            {
+                if(isConnected && color_button.source == "qrc:/Resources/Button/color-on.png")
+                {
+                    change_color(0,value*255);
+                }
+            }
             width: 153 * scale_x
             height: 15 * scale_y
         }
@@ -299,6 +317,19 @@ Window {
             width: 115 * scale_x
             height: 100 * scale_y
             onClicked: set_lamp(3)
+        }
+
+        MouseArea
+        {
+
+            //color: "#00000000"
+            //border.color: "#00f"
+            x: 120 * scale_x
+            y: 0 * scale_y
+            width: 120 * scale_x
+            height: 100 * scale_y
+            id: rainbow_button
+            onClicked: rainbow();
         }
 
         Image
@@ -389,10 +420,13 @@ Window {
                         if (color_button.source == "qrc:/Resources/Button/color-off.png")
                         {
                             color_button.source = "qrc:/Resources/Button/color-on.png";
+                            light_on();
+
                         }
                         else
                         {
                             color_button.source = "qrc:/Resources/Button/color-off.png";
+                            light_off();
                         }
                     }
                 }
@@ -419,10 +453,12 @@ Window {
                         if (music_button.source == "qrc:/Resources/Button/sound-off.png")
                         {
                             music_button.source = "qrc:/Resources/Button/sound-on.png";
+                            music_play();
                         }
                         else
                         {
                             music_button.source = "qrc:/Resources/Button/sound-off.png";
+                            music_stop();
                         }
                     }
                 }
