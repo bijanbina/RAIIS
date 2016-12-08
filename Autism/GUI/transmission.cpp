@@ -7,6 +7,8 @@
 #define DEVICE3_IP  "192.168.1.3"
 #define DEVICE4_IP  "192.168.1.4"
 
+#define MUSIC_MAX 6
+
 Transmission::Transmission(QObject *ui,QObject *parent) : QObject(parent)
 {
     //init
@@ -21,6 +23,7 @@ Transmission::Transmission(QObject *ui,QObject *parent) : QObject(parent)
     root = ui;
     upDevices = 0;
     reqDeviceList();
+    play_music_id=1;
 }
 
 Transmission::~Transmission()
@@ -174,7 +177,9 @@ void Transmission::change_color(int id, int value)
 
 void Transmission::music_random()
 {
-    QString command = "42\n";
+    play_music_id = qrand()%MUSIC_MAX;
+    QString command = QString("4%1\n").arg(play_music_id);
+
     startTransfer(command.toStdString().c_str());
 }
 
@@ -184,11 +189,32 @@ void Transmission::music_play()
     startTransfer(command.toStdString().c_str());
 }
 
+void Transmission::music_next()
+{
+    if (play_music_id < MUSIC_MAX)
+        play_music_id++;
+    else
+        play_music_id = 1;
+    QString command = QString("4%1\n").arg(play_music_id);
+    startTransfer(command.toStdString().c_str());
+}
+
+void Transmission::music_prev()
+{
+    if (play_music_id > 1)
+        play_music_id--;
+    else
+        play_music_id = MUSIC_MAX-1;
+    QString command = QString("4%1\n").arg(play_music_id);
+    startTransfer(command.toStdString().c_str());
+}
+
 void Transmission::music_stop()
 {
     QString command = "6\n";
     startTransfer(command.toStdString().c_str());
 }
+
 
 void Transmission::light_off()
 {

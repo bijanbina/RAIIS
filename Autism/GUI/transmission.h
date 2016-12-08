@@ -38,6 +38,8 @@ private slots:
     void music_random();
     void music_play();
     void music_stop();
+    void music_next();
+    void music_prev();
     void light_off();
     void light_on();
     void rainbow();
@@ -59,6 +61,7 @@ private:
     short commandByte;
     int   upDevices; //number of availble devices
     bool  listRequested; //enable if listing request sent to server
+    int play_music_id;
 
     QObject *root;
 
