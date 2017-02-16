@@ -36,7 +36,7 @@ Window {
     }
 
     signal set_lamp(int id);
-    signal change_color(int id,int value);
+    signal change_1(int id,int value);
     signal music_random;
     signal music_play;
     signal music_stop;
@@ -176,87 +176,6 @@ Window {
             id: back_image_lamp;
             anchors.fill: parent
             source: "qrc:Resources/Screens/lamp-window.png"
-        }
-
-        AndroidSlider{
-            id: greenSlider
-            anchors.bottom: green_button.top
-            anchors.left: green_button.left
-            anchors.leftMargin: -7
-            handle_image: "qrc:Resources/greenGrip.png"
-            onValueChanged:
-            {
-                if(isConnected && color_button.source == "qrc:/Resources/Button/color-on.png")
-                {
-                    change_color(1,value*255)
-                }
-            }
-            width: 153 * scale_x
-            height: 15 * scale_y
-        }
-
-        MouseArea
-        {
-            id: green_button
-            x: 100 * scale_x
-            y: 225 * scale_y
-            width: 215 * scale_x
-            height: 30 * scale_y
-            //onClicked: change_color(0)
-        }
-
-        AndroidSlider{
-            id: blueSlider
-            anchors.bottom: blue_button.top
-            anchors.left: blue_button.left
-            anchors.leftMargin: -7
-            handle_image: "qrc:Resources/blueGrip.png"
-            onValueChanged:
-            {
-                if(isConnected && color_button.source == "qrc:/Resources/Button/color-on.png")
-                {
-                    change_color(2,value*255);
-                }
-            }
-            width: 153 * scale_x
-            height: 15 * scale_y
-        }
-
-        MouseArea
-        {
-            id: blue_button
-            x: 100 * scale_x
-            y: 280 * scale_y
-            width: 215 * scale_x
-            height: 30 * scale_y
-            //onClicked: change_color(1)
-        }
-
-        AndroidSlider{
-            id: redSlider
-            anchors.bottom: red_button.top
-            anchors.left: red_button.left
-            anchors.leftMargin: -7
-            anchors.bottomMargin: 2
-            onValueChanged:
-            {
-                if(isConnected && color_button.source == "qrc:/Resources/Button/color-on.png")
-                {
-                    change_color(0,value*255);
-                }
-            }
-            width: 153 * scale_x
-            height: 15 * scale_y
-        }
-
-        MouseArea
-        {
-            id: red_button
-            x: 100 * scale_x
-            y: 335 * scale_y
-            width: 215 * scale_x
-            height: 30 * scale_y
-            //onClicked: change_color(2)
         }
 
         MouseArea
@@ -484,6 +403,71 @@ Window {
                 main_window.visible = true;
                 lamp_window.visible = false;
                 main_window.forceActiveFocus();
+            }
+        }
+        ColorCell
+        {
+            id: cell1
+            x: 110 * page.scale_x
+            y: 210 * page.scale_y
+            color1: "#F73E2A"
+            color2: "#EA1361"
+            color3: "#9C1AB2"
+            color4: "#4C288D"
+            color5: "#3C4DB7"
+            onCell_clicked: {
+                cell2.checkedNum=0
+                cell3.checkedNum=0
+                cell4.checkedNum=0
+            }
+        }
+        ColorCell
+        {
+            id: cell2
+            x: 110 * page.scale_x
+            y: 250 * page.scale_y
+            color1: "#47AF4C"
+            color2: "#009687"
+            color3: "#00B9D4"
+            color4: "#00A6F4"
+            color5: "#0F8FEC"
+            onCell_clicked: {
+                cell1.checkedNum=0
+                cell3.checkedNum=0
+                cell4.checkedNum=0
+                console.log (cell.color)
+            }
+        }
+        ColorCell
+        {
+            id: cell3
+            x: 110 * page.scale_x
+            y: 290 * page.scale_y
+            color1: "#88C440"
+            color2: "#CDDB1F"
+            color3: "#FEEA17"
+            color4: "#FEC000"
+            color5: "#3C4DB7"
+            onCell_clicked: {
+                cell1.checkedNum=0
+                cell2.checkedNum=0
+                cell4.checkedNum=0
+            }
+        }
+        ColorCell
+        {
+            id: cell4
+            x: 110 * page.scale_x
+            y: 330 * page.scale_y
+            color1: "#000000"
+            color2: "#5E7B8B"
+            color3: "#9C9C9C"
+            color4: "#7A5449"
+            color5: "#FF5405"
+            onCell_clicked: {
+                cell1.checkedNum=0
+                cell2.checkedNum=0
+                cell3.checkedNum=0
             }
         }
     }

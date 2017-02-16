@@ -6,5 +6,6 @@
         <file>AndroidSlider.qml</file>
         <file>LampCell.qml</file>
         <file>Settings.qml</file>
+        <file>ColorCell.qml</file>
     </qresource>
 </RCC>

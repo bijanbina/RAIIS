@@ -24,5 +24,6 @@
         <file>Resources/Button/color-on.png</file>
         <file>Resources/Button/sound-off.png</file>
         <file>Resources/Button/sound-on.png</file>
+        <file>Resources/Button/check_mark.png</file>
     </qresource>
 </RCC>
