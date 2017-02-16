@@ -19,6 +19,8 @@ int main(int argc, char *argv[])
     QObject::connect(item, SIGNAL(music_random()), &channel, SLOT(music_random()));
     QObject::connect(item, SIGNAL(music_play()), &channel, SLOT(music_play()));
     QObject::connect(item, SIGNAL(music_stop()), &channel, SLOT(music_stop()));
+    QObject::connect(item, SIGNAL(music_prev()), &channel, SLOT(music_prev()));
+    QObject::connect(item, SIGNAL(music_forward()), &channel, SLOT(music_forward()));
     QObject::connect(item, SIGNAL(light_off()), &channel, SLOT(light_off()));
     QObject::connect(item, SIGNAL(light_on()), &channel, SLOT(light_on()));
     QObject::connect(item, SIGNAL(rainbow()), &channel, SLOT(rainbow()));

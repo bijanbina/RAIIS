@@ -38,7 +38,7 @@ private slots:
     void music_random();
     void music_play();
     void music_stop();
-    void music_next();
+    void music_forward();
     void music_prev();
     void light_off();
     void light_on();
@@ -67,6 +67,8 @@ private:
 
     QColor lightColor;
     int lamp_id;
+    bool lampIsOn;
+    bool musicIsOn;
 };
 
 #endif // TRANSMISSION_H
