@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     Transmission channel(item);
     QObject::connect(item, SIGNAL(set_lamp(int)), &channel, SLOT(set_lamp(int)));
     QObject::connect(item, SIGNAL(change_color(int,int)), &channel, SLOT(change_color(int,int)));
+    QObject::connect(item, SIGNAL(change_color2(QString)), &channel, SLOT(change_color2(QString)));
     QObject::connect(item, SIGNAL(music_random()), &channel, SLOT(music_random()));
     QObject::connect(item, SIGNAL(music_play()), &channel, SLOT(music_play()));
     QObject::connect(item, SIGNAL(music_stop()), &channel, SLOT(music_stop()));

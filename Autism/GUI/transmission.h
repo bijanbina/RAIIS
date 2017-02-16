@@ -35,6 +35,7 @@ private slots:
 
     void set_lamp(int id);
     void change_color(int id, int value);
+    void change_color2(QString value);
     void music_random();
     void music_play();
     void music_stop();

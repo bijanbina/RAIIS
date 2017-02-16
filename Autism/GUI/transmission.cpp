@@ -178,6 +178,28 @@ void Transmission::set_lamp(int id)
     start(ip_address);
 }
 
+void Transmission::change_color2(QString value)
+{
+    int r,g,b;
+    QString temp;
+    QString command = "3";
+    temp = value[1];
+    temp += value[2];
+    r = temp.toInt(0,16);
+    temp = value[3];
+    temp += value[4];
+    g = temp.toInt(0,16);
+    temp = value[5];
+    temp += value[6];
+    b = temp.toInt(0,16);
+    command += QString("%1").arg(r  , 3, 10, QChar('0'));
+    command += QString("%1").arg(g, 3, 10, QChar('0'));
+    command += QString("%1").arg(b , 3, 10, QChar('0'));
+    command += "\n";
+    qDebug() << command;
+    startTransfer(command.toStdString().c_str());
+}
+
 void Transmission::change_color(int id, int value)
 {
     ColorButtonID button_id = static_cast<ColorButtonID>(id);

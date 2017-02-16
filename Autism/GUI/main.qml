@@ -36,7 +36,8 @@ Window {
     }
 
     signal set_lamp(int id);
-    signal change_1(int id,int value);
+    signal change_color(int id,int value);
+    signal change_color2(string value);
     signal music_random;
     signal music_play;
     signal music_stop;
@@ -304,7 +305,7 @@ Window {
             anchors.fill: parent
             source: "qrc:Resources/Lamp/on-tl.png"
             z:2
-            visible: false
+            visible: true
         }
 
         Image
@@ -339,7 +340,7 @@ Window {
             id: lamp1_off
             anchors.fill: parent
             source: "qrc:Resources/Lamp/off-tl.png"
-            visible: false
+            visible: true
         }
 
         Image
@@ -347,7 +348,7 @@ Window {
             id: lamp2_off
             anchors.fill: parent
             source: "qrc:Resources/Lamp/off-tr.png"
-            visible: false
+            visible: true
         }
 
         Image
@@ -355,7 +356,7 @@ Window {
             id: lamp3_off
             anchors.fill: parent
             source: "qrc:Resources/Lamp/off-bl.png"
-            visible: false
+            visible: true
         }
 
         Image
@@ -466,6 +467,7 @@ Window {
                 cell2.checkedNum=0
                 cell3.checkedNum=0
                 cell4.checkedNum=0
+                change_color2 (cell.color)
             }
         }
         ColorCell
@@ -482,7 +484,7 @@ Window {
                 cell1.checkedNum=0
                 cell3.checkedNum=0
                 cell4.checkedNum=0
-                console.log (cell.color)
+                change_color2 (cell.color)
             }
         }
         ColorCell
@@ -499,6 +501,7 @@ Window {
                 cell1.checkedNum=0
                 cell2.checkedNum=0
                 cell4.checkedNum=0
+                change_color2 (cell.color)
             }
         }
         ColorCell
@@ -515,6 +518,7 @@ Window {
                 cell1.checkedNum=0
                 cell2.checkedNum=0
                 cell3.checkedNum=0
+                change_color2 (cell.color)
             }
         }
     }
@@ -626,7 +630,7 @@ Window {
             anchors.left: settings_green_button.left
             anchors.leftMargin: -7
             handle_image: "qrc:Resources/greenGrip.png"
-            onValueChanged: change_color(1,value*255)
+            //onValueChanged: change_color(1,value*255)
             width: 153 * scale_x
             height: 15 * scale_y
         }
@@ -647,7 +651,7 @@ Window {
             anchors.left: settings_blue_button.left
             anchors.leftMargin: -7
             handle_image: "qrc:Resources/blueGrip.png"
-            onValueChanged: change_color(2,value*255)
+            //onValueChanged: change_color(2,value*255)
             width: 153 * scale_x
             height: 15 * scale_y
         }
@@ -668,7 +672,7 @@ Window {
             anchors.left: settings_red_button.left
             anchors.leftMargin: -7
             anchors.bottomMargin: 2
-            onValueChanged: change_color(0,value*255)
+            //onValueChanged: change_color(0,value*255)
             width: 153 * scale_x
             height: 15 * scale_y
         }
