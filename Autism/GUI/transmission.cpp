@@ -24,6 +24,10 @@ Transmission::Transmission(QObject *ui,QObject *parent) : QObject(parent)
     upDevices = 0;
     reqDeviceList();
     play_music_id=1;
+
+    lampIsOn=0;
+    musicIsOn=0;
+    lightColor = QColor(100,100,100);
 }
 
 Transmission::~Transmission()
@@ -68,7 +72,30 @@ void Transmission::connected()
     {
         QQmlProperty::write(root, "lamp_con_id", lamp_id);
         QMetaObject::invokeMethod(root, "lamp_connected"); //light on
-        startTransfer("1\n");
+        if (lampIsOn)
+        {
+            startTransfer("1\n");
+
+            QString command = "3";
+            command += QString("%1").arg(lightColor.red()  , 3, 10, QChar('0'));
+            command += QString("%1").arg(lightColor.green(), 3, 10, QChar('0'));
+            command += QString("%1").arg(lightColor.blue() , 3, 10, QChar('0'));
+            command += "\n";
+            qDebug() << command;
+            startTransfer(command.toStdString().c_str());
+        }
+        else
+        {
+            light_off();
+        }
+        if (musicIsOn)
+        {
+            startTransfer("41\n");
+        }
+        else
+        {
+            startTransfer("6\n");
+        }
     }
 }
 
@@ -185,11 +212,12 @@ void Transmission::music_random()
 
 void Transmission::music_play()
 {
+    musicIsOn = 1;
     QString command = "2\n";
     startTransfer(command.toStdString().c_str());
 }
 
-void Transmission::music_next()
+void Transmission::music_forward()
 {
     if (play_music_id < MUSIC_MAX)
         play_music_id++;
@@ -197,6 +225,7 @@ void Transmission::music_next()
         play_music_id = 1;
     QString command = QString("4%1\n").arg(play_music_id);
     startTransfer(command.toStdString().c_str());
+    qDebug() << "Next music " << play_music_id;
 }
 
 void Transmission::music_prev()
@@ -207,10 +236,12 @@ void Transmission::music_prev()
         play_music_id = MUSIC_MAX-1;
     QString command = QString("4%1\n").arg(play_music_id);
     startTransfer(command.toStdString().c_str());
+    qDebug() << "Prev music";
 }
 
 void Transmission::music_stop()
 {
+    musicIsOn = 0;
     QString command = "6\n";
     startTransfer(command.toStdString().c_str());
 }
@@ -218,12 +249,14 @@ void Transmission::music_stop()
 
 void Transmission::light_off()
 {
+    lampIsOn = 0;
     QString command = "7\n";
     startTransfer(command.toStdString().c_str());
 }
 
 void Transmission::light_on()
 {
+    lampIsOn = 1;
     QString command = "1\n";
     startTransfer(command.toStdString().c_str());
 }

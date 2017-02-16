@@ -40,6 +40,8 @@ Window {
     signal music_random;
     signal music_play;
     signal music_stop;
+    signal music_forward;
+    signal music_prev;
     signal light_off;
     signal light_on;
     signal rainbow;
@@ -180,21 +182,66 @@ Window {
 
         MouseArea
         {
-            id: play_button
+            id: select_button
             x: 100 * scale_x
             y: 385 * scale_y
             width: 215 * scale_x
             height: 30 * scale_y
+            //border.color: "#00f"
+            //color: "#00000000"
+
+            //onClicked: music_play()
+        }
+
+        MouseArea
+        {
+            id: stop_button
+            x: 100 * scale_y
+            y: 425 * scale_y
+            width: 34 * scale_y
+            height: 45 * scale_y
+            onClicked: music_stop()
+        }
+
+        MouseArea
+        {
+            id: prev_button
+            x: 134 * scale_y
+            y: 425 * scale_y
+            width: 34 * scale_y
+            height: 45 * scale_y
+            onClicked: music_prev()
+        }
+
+        MouseArea
+        {
+            id: play_button
+            x: 168 * scale_y
+            y: 425 * scale_y
+            width: 33 * scale_y
+            height: 45 * scale_y
             onClicked: music_play()
         }
 
         MouseArea
         {
-            id: random_button
-            x: 100 * scale_y
+            id: forward_button
+            x: 201 * scale_y
             y: 425 * scale_y
-            width: 215 * scale_y
+            width: 37 * scale_y
             height: 45 * scale_y
+            onClicked: music_forward()
+        }
+
+        MouseArea
+        {
+            id: random_button
+            x: 238 * scale_y
+            y: 425 * scale_y
+            width: 38 * scale_y
+            height: 45 * scale_y
+            //border.color: "#00f"
+            //color: "#00000000"
             onClicked: music_random()
         }
 
