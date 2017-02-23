@@ -8,14 +8,16 @@ sudo pip2 install nodemcu-uploader
 
 # Use timer
 Somewhere inside codes, timer used instead of direct function call.
-The reason is ESP8266 need to run some commands every 1000 clock so if the function is a callback and it's too long it needs to breck into other function and called by a timer otherwise following error appear
+The reason is ESP8266 runs some assessment codes, each 1000 clock.  Thus executing long functions interrupt the process and will  cause the following error to appear
+
 ```
 rst cause:2, boot mode:(3,6)
 ```
 
+To prevent that, simply use a time and a callback to break a long function into smaller pieces
 
-# gEdit Scripts
-use following script in gEdit to automate proccess
+# gedit Scripts
+following scripts helping to automate the uploading process in gedit.
 
 ### F5
 
