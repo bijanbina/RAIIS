@@ -17,7 +17,7 @@ In the following, short reportage of codes represented. This is not meant to be 
 ## Jobs of various files
 
 | Filename | Description |
-| -- | --|
+| -------- | ----------- |
 |main.cpp| main.cpp is a best starting point. main function, call for qml rendering engine and load the qml data. to bind qml to c++ and vise versa signal coming through qml D-Bus connect to c++ functions.|
 |Transmission.cpp,</br>Transmission.h| All communications to ESP8266 are implemented in Transmission.cpp file,  These files in addition contain UI Slot which should ported to "uihandler" in future releases.|
 |main.qml| Unfortunately this file is not realy on good structure. All UI stuff are happening here and you have to give it some time to get familiar to it. For more information check UI Structures section. |
@@ -44,8 +44,8 @@ As a last note scale_x and scale_y used to scale coordinate system to match vari
 ## Communication Protocol
 
 | Command | Description | Example |
-| -- | --|:-- :|
-| 1 | Turn on lamp |-|
+| ------- | ----------- |:-------:|
+| 1 | Turn on lamp | - |
 | 2 | Play music (FIXME: force to play first track) |-|
 | 3 | Set color | 3222000111 should set to #de006f (need calibration) |
 | 4 | Change track | 42 set track number to 2 |
