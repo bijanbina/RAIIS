@@ -21,6 +21,40 @@ In the following, short reportage of codes represented. This is not meant to be 
 |main.cpp| main.cpp is a best starting point. main function, call for qml rendering engine and load the qml data. to bind qml to c++ and vise versa signal coming through qml D-Bus connect to c++ functions.|
 |Transmission.cpp,</br>Transmission.h| All communications to ESP8266 are implemented in Transmission.cpp file,  These files in addition contain UI Slot which should ported to "uihandler" in future releases.|
 |main.qml| Unfortunately this file is not realy on good structure. All UI stuff are happening here and you have to give it some time to get familiar to it. For more information check UI Structures section. |
+| ColorCell.qml  | ColorCell.qml implement a row of color chooser. This widget create  create a table of colors which can be seen in the screenshot. 
 |AndroidSlider.qml,</br> Cell.qml,</br>Joystick.qml,</br>LampCell,</br> 	Settings.qml| Deprecated and should be removed in next cleanup |
 
 ## UI Structures
+UI implemented based on raw images. A bare background used as platform to draw things on top of it. main.qml is a simple container for all pages
+
+* Main Window: starting window that user can choose pages from it
+* Lamp Window: page that let user to connect to the lamp and manipulate it.
+* Puzzle Window: this page named from the fact that the designed material used puzzle as a background. check Resources directory for more info. you can ignore codes of this page.
+* Screen Window: like Puzzle Window.
+* Setting Window:  I'm still not sure what this page should do. ask Dr. Moradi please.
+
+As a last note scale_x and scale_y used to scale coordinate system to match various screen resolutions. check widget position assignment for more info.
+## Connecting Process
+
+1. Connecting to 192.168.1.1:7778
+2. Ask for number of devices (NOD)
+3. Show lamps based upon returned data
+4. If user click on a lamp connect to IP+ID which ID is the ID of lamp that user tapped on.
+
+## Communication Protocol
+
+| Command | Description | Example |
+| -- | --|:-- :|
+| 1 | Turn on lamp |-|
+| 2 | Play music (FIXME: force to play first track) |-|
+| 3 | Set color | 3222000111 should set to #de006f (need calibration) |
+| 4 | Change track | 42 set track number to 2 |
+| 5 | Go to sleep mode ( Disable music + light) | - |
+| 6 | Stop music | - |
+| 7 | Turn off light | - |
+| 8 | Active Rainbow mode (need deactivation) | - |
+| n | New device get into the chain | - |
+| q | Report NOD | - |
+
+# Screenshot
+![GUI screenshot](http://s8.iranxm.com/up/709909b1ea5c.png)
