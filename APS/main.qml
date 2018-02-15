@@ -6,8 +6,8 @@ import QtQuick.Layouts 1.1
 
 Window {
     visible: true
-    width: 640
-    height: 480
+    width: 600
+    height: 600
     title: qsTr("Hello World")
     color: "#444444"
     /*GridLayout{
@@ -15,29 +15,31 @@ Window {
         columns: 2
     }*/
 
-    Label{
-        x: 120;y:100
-        Layout.alignment: Qt.AlignHCenter
-        text: gyro_str
-        color: "#eeeeee"
+    EmeraldRing{
+        x: 0;y:0
+        value_x: gyro_x
+        value_y: gyro_y
+        value_z: gyro_z
+        centre_str: gyro_str
     }
-    Label{
-        x: 420;y:100
-        Layout.alignment: Qt.AlignHCenter
-        text: mag_str
-        color: "#eeeeee"
+    EmeraldRing{
+        x: 300;y:0
+        value_x: mag_x
+        value_y: mag_y
+        value_z: mag_z
+        centre_str: mag_str
     }
-    Label{
-        x: 120;y:350
-        Layout.alignment: Qt.AlignHCenter
-        text: aux_str
-        color: "#eeeeee"
+    EmeraldRing{
+        x: 0;y:300
+        value_x: aux_x
+        value_y: aux_y
+        value_z: aux_z
+        centre_str: aux_str
     }
-    Label{
-        x: 420;y:350
-        Layout.alignment: Qt.AlignHCenter
-        text: acc_str
-        color: "#eeeeee"
+    EmeraldRing{
+        x: 300;y:300
+        //Layout.alignment: Qt.AlignHCenter
+        centre_str: acc_str
     }
 
     function addLast()
@@ -57,6 +59,15 @@ Window {
 
     //these values get updated inside c sources code
     property bool isConnected: false
+    property real gyro_x: 130
+    property real gyro_y: 100
+    property real gyro_z: 80
+    property real mag_x: 45
+    property real mag_y: 70
+    property real mag_z: 80
+    property real aux_x: 21
+    property real aux_y: 66
+    property real aux_z: 170
     property string gyro_str: "Gyro Data"
     property string mag_str: "Mag Data"
     property string aux_str: "Aux Data"
