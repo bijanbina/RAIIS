@@ -9,25 +9,35 @@ Window {
     width: 640
     height: 480
     title: qsTr("Hello World")
-    GridLayout{
+    color: "#444444"
+    /*GridLayout{
         anchors.fill: parent
         columns: 2
-        Label{
-            Layout.alignment: Qt.AlignHCenter
-            text: gyro_str
-        }
-        Label{
-            Layout.alignment: Qt.AlignHCenter
-            text: mag_str
-        }
-        Label{
-            Layout.alignment: Qt.AlignHCenter
-            text: aux_str
-        }
-        Label{
-            Layout.alignment: Qt.AlignHCenter
-            text: acc_str
-        }
+    }*/
+
+    Label{
+        x: 120;y:100
+        Layout.alignment: Qt.AlignHCenter
+        text: gyro_str
+        color: "#eeeeee"
+    }
+    Label{
+        x: 420;y:100
+        Layout.alignment: Qt.AlignHCenter
+        text: mag_str
+        color: "#eeeeee"
+    }
+    Label{
+        x: 120;y:350
+        Layout.alignment: Qt.AlignHCenter
+        text: aux_str
+        color: "#eeeeee"
+    }
+    Label{
+        x: 420;y:350
+        Layout.alignment: Qt.AlignHCenter
+        text: acc_str
+        color: "#eeeeee"
     }
 
     function addLast()
