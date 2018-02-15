@@ -2,19 +2,23 @@
 #define MOTIOND_H
 
 #include <QObject>
+#include <QQmlApplicationEngine>
+#include <QQmlProperty>
 
 class motiond : public QObject
 {
     Q_OBJECT
 public:
-    explicit motiond(QObject *parent = 0);
+    explicit motiond(QObject *ui, QObject *parent = 0);
+    void dataready(QByteArray data);
 
 signals:
 
-slots:
-    void dataready
-
 public slots:
+
+private:
+
+    QObject  *root;
 };
 
 #endif // MOTIOND_H

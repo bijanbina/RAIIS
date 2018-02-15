@@ -12,12 +12,13 @@
 #include <QLowEnergyController>
 #include <QBluetoothServiceInfo>
 #include <QDebug>
+#include "motiond.h"
 
 class blue_driver : public QObject
 {
     Q_OBJECT
 public:
-    explicit blue_driver(QObject *parent = 0);
+    explicit blue_driver(motiond *ch, QObject *parent = 0);
 
 signals:
 
@@ -33,6 +34,7 @@ private:
     QLowEnergyController *controller;
     QLowEnergyService *m_service;
     QLowEnergyCharacteristic m_characteristics;
+    motiond *channel;
     //QDebug dbg;
 };
 

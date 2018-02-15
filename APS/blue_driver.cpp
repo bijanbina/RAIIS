@@ -1,14 +1,17 @@
 #include "blue_driver.h"
 
-blue_driver::blue_driver(QObject *parent) : QObject(parent)
+blue_driver::blue_driver(motiond *ch, QObject *parent) : QObject(parent)
 {
+    channel = ch;
     controller = new QLowEnergyController(QBluetoothAddress("34:81:F4:2E:C1:83"));
     controller->setRemoteAddressType(QLowEnergyController::PublicAddress);
+
     controller->connect(controller,SIGNAL(connected()),this,SLOT(connected()));
     controller->connect(controller,SIGNAL(discoveryFinished()),this,SLOT(service_discovered()));
     controller->connect(controller,SIGNAL(error(QLowEnergyController::Error)),this,SLOT(get_error(QLowEnergyController::Error)));
     controller->connect (controller,SIGNAL(disconnected()),
                            this,SLOT(disconnected()));
+
     controller->connectToDevice();
 }
 
@@ -74,10 +77,12 @@ void blue_driver::get_error(QLowEnergyController::Error error)
 void blue_driver::data_ready(QLowEnergyCharacteristic ch,QByteArray data)
 {
     //uint *rx_data = (uint *)data.at(0);
-    char message[300];
+    /*char message[300];
     sprintf(message,"AUX: %.2x %.2x %.2x GYRO: %.2x %.2x %.2x MAG: %.2x %.2x %.2x            SIZE: %d",
             data.at(0)&0xff, data.at(1)&0xff, data.at(2)&0xff,
             data.at(3)&0xff, data.at(4)&0xff, data.at(5)&0xff,
             data.at(6)&0xff, data.at(7)&0xff, data.at(8)&0xff, data.size());
-    qInfo() << message;
+    qInfo() << message;*/
+
+    channel->dataready(data);
 }
