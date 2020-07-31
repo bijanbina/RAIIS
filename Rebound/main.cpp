@@ -1,7 +1,4 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQuickView>
-#include <QQuickItem>
+#include <QCoreApplication>
 #include "re_client.h"
 
 #ifdef _WIN32
@@ -10,14 +7,8 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-    QObject *item = engine.rootObjects().first();
-    ReServer *channel_se;
+    QCoreApplication app(argc, argv);
     ReClient *channel_cl;
-
-    updateScreenInfo(item);
 
     //check if app should start in server
     //or client mode
@@ -29,13 +20,14 @@ int main(int argc, char *argv[])
     }
 
 #ifdef _WIN32
+    ReServer *channel_se;
     channel_se = new ReServer(item);
 #elif __linux__
-    channel_cl = new ReClient(item);
+    channel_cl = new ReClient();
 #endif
 
     //REMOVE THIS LINE
-    channel_cl = new ReClient(item);
+    // channel_cl = new ReClient();
     //REMOVE THIS LINE
 
     return app.exec();

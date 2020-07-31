@@ -1,10 +1,9 @@
 #include "re_client.h"
 #include <string.h>
 
-ReClient::ReClient(QObject *item, QObject *parent) : QObject(parent)
+ReClient::ReClient(QObject *parent) : QObject(parent)
 {
     //init
-    ui = item;
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode=false;
@@ -55,16 +54,19 @@ void ReClient::disconnected()
 //    QMetaObject::invokeMethod(root, "set_disconnected");
 //    m_wakeLock.callMethod<void>("release", "()V");
     qDebug() << "Client Disconnected";
+    tcpClient.close();
 //    disconnect((&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead())));
 
     if ( !(timer->isActive()) )
     {
         timer->start(RE_TIMEOUT);
+        qDebug() << "Timer start";
     }
 }
 
 void ReClient::start()
 {
+//    qDebug() << "Timer tick";
     if(!tcpClient.isOpen())
     {
         qDebug() << "connecting to server: " << RE_IP << RE_PORT;

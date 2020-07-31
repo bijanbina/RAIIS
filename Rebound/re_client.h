@@ -18,7 +18,7 @@ class ReClient : public QObject
     Q_OBJECT
 
 public:
-    explicit ReClient(QObject *item, QObject *parent = 0);
+    explicit ReClient(QObject *parent = 0);
     ~ReClient();
 signals:
     void errorConnection();

@@ -10,7 +10,9 @@
 #include <stdlib.h>
 #include <QTimer>
 #include <QQmlProperty>
+#ifdef _WIN32
 #include <QGamepad>
+#endif
 #include "backend.h"
 
 class ReServer : public QObject
@@ -58,7 +60,10 @@ private:
     bool commandMode;
     int commandIndex;
     short commandByte;
+
+#ifdef _Win32
     QGamepad *pad;
+#endif
 
     QObject *ui;
 };

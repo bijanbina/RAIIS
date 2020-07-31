@@ -9,7 +9,7 @@ void ReExec::buttonAPressed()
 {
     qDebug() <<  "Client: Go Next Page";
 #ifdef __linux__
-       getIntCommand("xdotool key Right")
+       getIntCommand("xdotool key Right");
 #endif
 }
 
@@ -17,7 +17,7 @@ void ReExec::buttonBPressed()
 {
     qDebug() <<  "Client: Go Previous Page";
 #ifdef __linux__
-       getIntCommand("xdotool key Left")
+       getIntCommand("xdotool key Left");
 #endif
 }
 
@@ -25,7 +25,7 @@ void ReExec::buttonXPressed()
 {
     qDebug() <<  "Client: Go To Sleep";
 #ifdef __linux__
-       getIntCommand("xdotool key Left")
+       getIntCommand("xdotool key Left");
 #endif
 }
 
@@ -33,7 +33,7 @@ void ReExec::buttonYPressed()
 {
     qDebug() <<  "Change Workspace";
 #ifdef __linux__
-       getIntCommand("xdotool key Left")
+       getIntCommand("xdotool key Left");
 #endif
 }
 
@@ -42,7 +42,7 @@ void ReExec::buttonL1Pressed()
 
     qDebug() <<  "Reset F";
 #ifdef __linux__
-       getIntCommand("xdotool key Left")
+       getIntCommand("xdotool key Left");
 #endif
 }
 
