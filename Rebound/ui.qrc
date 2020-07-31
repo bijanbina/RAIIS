@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Terminal.qml</file>
+        <file>BlinkChar.qml</file>
+        <file>SystemStatus.qml</file>
+        <file>WifiIndicator.qml</file>
+        <file>Switcher.qml</file>
+        <file>RoundButton.qml</file>
+    </qresource>
+</RCC>
