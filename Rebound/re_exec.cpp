@@ -113,6 +113,40 @@ void ReExec::buttonSelectChanged()
 #endif
 }
 
+void ReExec::buttonDownChanged()
+{
+    qDebug() <<  "Down workspace";
+#ifdef __linux__
+        getIntCommand("xdotool set_desktop --relative 1");
+#endif
+}
+
+void ReExec::buttonUpChanged()
+{
+    qDebug() <<  "Up workspace";
+#ifdef __linux__
+       getIntCommand("xdotool set_desktop --relative 4");
+#endif
+}
+
+void ReExec::buttonRightChanged()
+{
+    qDebug() <<  "Next Window";
+#ifdef __linux__
+//    getIntCommand("xdotool keydown alt key Tab; sleep 1; xdotool keyup alt");
+    getIntCommand("xdotool key Alt+Escape");
+#endif
+}
+
+void ReExec::buttonLeftChanged()
+{
+    qDebug() <<  "Previous Window";
+#ifdef __linux__
+//    getIntCommand("xdotool keydown alt keydown shift key Tab; sleep 1; xdotool keyup shift keyup alt");
+    getIntCommand("xdotool key Shift+Alt+Escape");
+#endif
+}
+
 
 
 

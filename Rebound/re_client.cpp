@@ -51,7 +51,7 @@ void ReClient::connected()
     qDebug() << "Client: Connected";
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
-    timer->stop();
+//    timer->stop();
 }
 
 void ReClient::disconnected()
@@ -69,6 +69,7 @@ void ReClient::disconnected()
     }
 }
 
+//TimerTick
 void ReClient::start()
 {
     if(!tcpClient.isOpen())
@@ -81,6 +82,10 @@ void ReClient::start()
         qDebug() << "TimerTick, Connecting";
 //        tcpClient.close();
 //        tcpClient.connectToHost(QHostAddress(RE_IP), RE_PORT );
+    }
+    else if(tcpClient.state() != QAbstractSocket::ConnectedState)
+    {
+        qDebug() << "TimerTick State:" << tcpClient.state();
     }
 }
 
@@ -147,5 +152,25 @@ void ReClient::readyRead()
    else if( read_data=="s" )
    {
        exec.buttonSelectChanged();
+   }
+   else if( read_data=="d" )
+   {
+       exec.buttonDownChanged();
+   }
+   else if( read_data=="u" )
+   {
+       exec.buttonUpChanged();
+   }
+   else if( read_data=="r" )
+   {
+       exec.buttonRightChanged();
+   }
+   else if( read_data=="l" )
+   {
+       exec.buttonLeftChanged();
+   }
+   else
+   {
+       qDebug() << "Get unkdown packet:" << read_data;
    }
 }

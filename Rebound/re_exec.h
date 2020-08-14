@@ -26,6 +26,11 @@ public:
     void buttonAxisRyChanged(double);
     void buttonStartChanged();
     void buttonSelectChanged();
+
+    void buttonDownChanged();
+    void buttonUpChanged();
+    void buttonRightChanged();
+    void buttonLeftChanged();
 };
 
 #endif // RE_EXEC_H
