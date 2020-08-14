@@ -1,13 +1,29 @@
-#include <QCoreApplication>
+
 #include "re_client.h"
 
 #ifdef _WIN32
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQuickView>
+#include <QQuickItem>
 #include <re_server.h>
+#else
+#include <QCoreApplication>
 #endif
 
 int main(int argc, char *argv[])
 {
+
+#ifdef _WIN32
+    QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    QObject *item = engine.rootObjects().first();
+    ReServer *channel_se;
+    updateScreenInfo(item);
+#else
     QCoreApplication app(argc, argv);
+#endif
     ReClient *channel_cl;
 
     //check if app should start in server
@@ -20,14 +36,13 @@ int main(int argc, char *argv[])
     }
 
 #ifdef _WIN32
-    ReServer *channel_se;
     channel_se = new ReServer(item);
 #elif __linux__
-    channel_cl = new ReClient();
+    channel_cl = new ReClient(item);
 #endif
 
     //REMOVE THIS LINE
-    // channel_cl = new ReClient();
+//    channel_cl = new ReClient(item);
     //REMOVE THIS LINE
 
     return app.exec();

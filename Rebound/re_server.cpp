@@ -41,6 +41,19 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
     connect(pad, SIGNAL(axisRightXChanged(double)),
             this, SLOT(buttonAxisRxChanged(double)));
 
+    connect(pad, SIGNAL(buttonStartChanged(bool)),
+            this, SLOT(buttonStartChanged(bool)));
+    connect(pad, SIGNAL(buttonSelectChanged(bool)),
+            this, SLOT(buttonSelectChanged(bool)));
+
+    connect(pad, SIGNAL(buttonLeftChanged(bool)),
+            this, SLOT(buttonLeftChanged(bool)));
+    connect(pad, SIGNAL(buttonRightChanged(bool)),
+            this, SLOT(buttonRightChanged(bool)));
+    connect(pad, SIGNAL(buttonUpChanged(bool)),
+            this, SLOT(buttonUpChanged(bool)));
+    connect(pad, SIGNAL(buttonDownChanged(bool)),
+            this, SLOT(buttonDownChanged(bool)));
     server = new QTcpServer;
     connect(server, SIGNAL(newConnection()),
             this, SLOT(acceptConnection()));
@@ -107,94 +120,190 @@ void ReServer::displayError(QAbstractSocket::SocketError socketError)
 
 void ReServer::buttonAChanged(bool value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("a",1);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("a",1);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
 void ReServer::buttonBChanged(bool value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("b",1);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("b",1);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
 void ReServer::buttonXChanged(bool value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("x",1);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("x",1);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
 void ReServer::buttonYChanged(bool value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("y",1);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("y",1);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
 void ReServer::buttonL1Changed(bool value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("l1",2);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("l1",2);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
 void ReServer::buttonL2Changed(double value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("l2",2);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("l2",2);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
 void ReServer::buttonR1Changed(bool value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("r1",2);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("r1",2);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
 void ReServer::buttonR2Changed(double value)
 {
-    if (value == 1)
+    if (connection_socket)
     {
-        connection_socket->write("r2",2);
-        connection_socket->waitForBytesWritten();
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("r2",2);
+            connection_socket->waitForBytesWritten();
+        }
     }
 }
 
-void ReServer::buttonAxisLxChanged(double)
+void ReServer::buttonAxisLxChanged(double value)
 {
 
 }
 
-void ReServer::buttonAxisLyChanged(double)
+void ReServer::buttonAxisLyChanged(double value)
 {
 
 }
 
-void ReServer::buttonAxisRxChanged(double)
+void ReServer::buttonAxisRxChanged(double value)
 {
 
 }
 
-void ReServer::buttonAxisRyChanged(double)
+void ReServer::buttonAxisRyChanged(double value)
 {
 
+}
+
+void ReServer::buttonStartChanged(bool value)
+{
+    if (connection_socket)
+    {
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("m",1);
+            connection_socket->waitForBytesWritten();
+        }
+    }
+}
+
+void ReServer::buttonSelectChanged(bool value)
+{
+    if (connection_socket)
+    {
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("s",1);
+            connection_socket->waitForBytesWritten();
+        }
+    }
+}
+
+void ReServer::buttonLeftChanged(bool value)
+{
+    if (connection_socket)
+    {
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("l",1);
+            connection_socket->waitForBytesWritten();
+        }
+    }
+}
+
+void ReServer::buttonRightChanged(bool value)
+{
+    if (connection_socket)
+    {
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("r",1);
+            connection_socket->waitForBytesWritten();
+        }
+    }
+}
+
+void ReServer::buttonUpChanged(bool value)
+{
+    if (connection_socket)
+    {
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("u",1);
+            connection_socket->waitForBytesWritten();
+        }
+    }
+}
+
+void ReServer::buttonDownChanged(bool value)
+{
+    if (connection_socket)
+    {
+        if ( value==1 && connection_socket->isOpen() )
+        {
+            connection_socket->write("d",1);
+            connection_socket->waitForBytesWritten();
+        }
+    }
 }
 
 

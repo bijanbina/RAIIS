@@ -44,6 +44,13 @@ public slots:
     void buttonAxisRxChanged(double);
     void buttonAxisRyChanged(double);
 
+    void buttonStartChanged(bool);
+    void buttonSelectChanged(bool);
+
+    void buttonLeftChanged(bool);
+    void buttonRightChanged(bool);
+    void buttonUpChanged(bool);
+    void buttonDownChanged(bool);
 private:
     long bytesReceived;
     QTcpServer *server;
