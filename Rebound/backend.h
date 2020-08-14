@@ -15,7 +15,6 @@
 
 #define RE_PORT      7610
 #define RE_IP        "192.168.88.25"
-#define RE_TIMEOUT   100
 
 struct screen_pos{
     int x;

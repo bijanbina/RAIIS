@@ -37,6 +37,11 @@ void ReClient::displayError(QAbstractSocket::SocketError socketError)
 
     qDebug() << tr("Network error") << tr("The following error occurred: %1.").arg(tcpClient.errorString());
     tcpClient.close();
+    if ( !(timer->isActive()) )
+    {
+        timer->start(RE_TIMEOUT);
+        qDebug() << "Timer start";
+    }
     emit errorConnection();
 
 }
@@ -66,11 +71,16 @@ void ReClient::disconnected()
 
 void ReClient::start()
 {
-//    qDebug() << "Timer tick";
     if(!tcpClient.isOpen())
     {
-        qDebug() << "connecting to server: " << RE_IP << RE_PORT;
+        qDebug() << "TimerTick, connecting to: " << RE_IP << RE_PORT;
         tcpClient.connectToHost(QHostAddress(RE_IP), RE_PORT );
+    }
+    else if(tcpClient.state() == QAbstractSocket::ConnectingState)
+    {
+        qDebug() << "TimerTick, Connecting";
+//        tcpClient.close();
+//        tcpClient.connectToHost(QHostAddress(RE_IP), RE_PORT );
     }
 }
 
@@ -129,5 +139,13 @@ void ReClient::readyRead()
    else if( read_data=="r2" )
    {
        exec.buttonR2Pressed();
+   }
+   else if( read_data=="m" )
+   {
+       exec.buttonStartChanged();
+   }
+   else if( read_data=="s" )
+   {
+       exec.buttonSelectChanged();
    }
 }

@@ -13,6 +13,7 @@
 #include "backend.h"
 #include "re_exec.h"
 
+#define RE_TIMEOUT   1000
 class ReClient : public QObject
 {
     Q_OBJECT

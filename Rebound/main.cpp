@@ -38,11 +38,11 @@ int main(int argc, char *argv[])
 #ifdef _WIN32
     channel_se = new ReServer(item);
 #elif __linux__
-    channel_cl = new ReClient(item);
+    channel_cl = new ReClient();
 #endif
 
     //REMOVE THIS LINE
-//    channel_cl = new ReClient(item);
+    // channel_cl = new ReClient();
     //REMOVE THIS LINE
 
     return app.exec();

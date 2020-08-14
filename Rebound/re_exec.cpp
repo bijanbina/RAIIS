@@ -49,16 +49,28 @@ void ReExec::buttonL1Pressed()
 void ReExec::buttonL2Pressed()
 {
 
+    qDebug() <<  "Slower";
+#ifdef __linux__
+       getIntCommand("xdotool mousemove_relative 0 -20");
+#endif
 }
 
 void ReExec::buttonR1Pressed()
 {
 
+//    qDebug() <<  "Faster";
+//#ifdef __linux__
+//       getIntCommand("xdotool mousemove_relative 0 -20");
+//#endif
 }
 
 void ReExec::buttonR2Pressed()
 {
 
+    qDebug() <<  "Faster";
+#ifdef __linux__
+       getIntCommand("xdotool mousemove_relative 0 20");
+#endif
 }
 
 void ReExec::buttonAxisLxChanged(double)
@@ -79,6 +91,26 @@ void ReExec::buttonAxisRxChanged(double)
 void ReExec::buttonAxisRyChanged(double)
 {
 
+}
+
+void ReExec::buttonStartChanged()
+{
+    qDebug() <<  "Enable autoscroll";
+#ifdef __linux__
+       getIntCommand("xdotool key Menu");
+       getIntCommand("xdotool key Up");
+       getIntCommand("xdotool key Up");
+       getIntCommand("xdotool key Up");
+       getIntCommand("xdotool key Return");
+#endif
+}
+
+void ReExec::buttonSelectChanged()
+{
+    qDebug() <<  "Enable autoscroll";
+#ifdef __linux__
+       getIntCommand("xdotool key Escape");
+#endif
 }
 
 
