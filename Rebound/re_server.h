@@ -52,6 +52,8 @@ public slots:
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
 private:
+    void sendKey(const char *data, int size);
+
     long bytesReceived;
     QTcpServer *server;
     QTcpSocket *connection_socket;
@@ -68,7 +70,7 @@ private:
     int commandIndex;
     short commandByte;
 
-#ifdef _Win32
+#ifdef _WIN32
     QGamepad *pad;
 #endif
 

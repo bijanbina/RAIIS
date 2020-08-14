@@ -120,97 +120,65 @@ void ReServer::displayError(QAbstractSocket::SocketError socketError)
 
 void ReServer::buttonAChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("a",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("a",1);
     }
 }
 
 void ReServer::buttonBChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("b",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("b",1);
     }
 }
 
 void ReServer::buttonXChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("x",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("x",1);
     }
 }
 
 void ReServer::buttonYChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("y",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("y",1);
     }
 }
 
 void ReServer::buttonL1Changed(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("l1",2);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("l1",2);
     }
 }
 
 void ReServer::buttonL2Changed(double value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("l2",2);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("l2",2);
     }
 }
 
 void ReServer::buttonR1Changed(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("r1",2);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("r1",2);
     }
 }
 
 void ReServer::buttonR2Changed(double value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("r2",2);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("r2",2);
     }
 }
 
@@ -236,71 +204,59 @@ void ReServer::buttonAxisRyChanged(double value)
 
 void ReServer::buttonStartChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("m",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("m",1); //menu key
     }
 }
 
 void ReServer::buttonSelectChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("s",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("s",1);
     }
 }
 
 void ReServer::buttonLeftChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("l",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("l",1);
     }
 }
 
 void ReServer::buttonRightChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("r",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("r",1);
     }
 }
 
 void ReServer::buttonUpChanged(bool value)
 {
-    if (connection_socket)
+    if ( value==1 )
     {
-        if ( value==1 && connection_socket->isOpen() )
-        {
-            connection_socket->write("u",1);
-            connection_socket->waitForBytesWritten();
-        }
+        sendKey("u",1);
     }
 }
 
 void ReServer::buttonDownChanged(bool value)
 {
+    if ( value==1 )
+    {
+        sendKey("d",1);
+    }
+}
+
+void ReServer::sendKey(const char *data, int size)
+{
     if (connection_socket)
     {
-        if ( value==1 && connection_socket->isOpen() )
+        if ( connection_socket->isOpen() )
         {
-            connection_socket->write("d",1);
+            connection_socket->write(data,size);
             connection_socket->waitForBytesWritten();
         }
     }
