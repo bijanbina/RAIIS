@@ -20,10 +20,18 @@ public:
     void buttonR1Pressed();
     void buttonR2Pressed();
 
-    void buttonAxisLxChanged(double);
-    void buttonAxisLyChanged(double);
-    void buttonAxisRxChanged(double);
-    void buttonAxisRyChanged(double);
+    //Left Analog Axis
+    void buttonLAxisRight();
+    void buttonLAxisLeft();
+    void buttonLAxisUp();
+    void buttonLAxisDown();
+
+    //Right Analog Axis
+    void buttonRAxisRight();
+    void buttonRAxisLeft();
+    void buttonRAxisUp();
+    void buttonRAxisDown();
+
     void buttonStartChanged();
     void buttonSelectChanged();
 

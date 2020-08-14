@@ -121,6 +121,50 @@ void ReClient::readyRead()
    {
        exec.buttonBPressed();
    }
+   else if( read_data=="c" ) //Left Axis
+   {
+       exec.buttonLAxisRight();
+   }
+   else if( read_data=="d" )
+   {
+       exec.buttonDownChanged();
+   }
+   else if( read_data=="e" ) //Left Axis
+   {
+       exec.buttonLAxisLeft();
+   }
+   else if( read_data=="f" ) //Left Axis
+   {
+       exec.buttonLAxisUp();
+   }
+   else if( read_data=="g" ) //Right Axis
+   {
+       exec.buttonLAxisDown();
+   }
+   else if( read_data=="h" ) //Right Axis
+   {
+       exec.buttonRAxisRight();
+   }
+   else if( read_data=="i" ) //Right Axis
+   {
+       exec.buttonRAxisLeft();
+   }
+   else if( read_data=="j" ) //Right Axis
+   {
+       exec.buttonRAxisUp();
+   }
+   else if( read_data=="k" ) //Right Axis
+   {
+       exec.buttonRAxisDown();
+   }
+   else if( read_data=="l" )
+   {
+       exec.buttonLeftChanged();
+   }
+   else if( read_data=="m" )
+   {
+       exec.buttonStartChanged();
+   }
    else if( read_data=="x" )
    {
        exec.buttonXPressed();
@@ -137,6 +181,10 @@ void ReClient::readyRead()
    {
        exec.buttonL2Pressed();
    }
+   else if( read_data=="r" )
+   {
+       exec.buttonRightChanged();
+   }
    else if( read_data=="r1" )
    {
        exec.buttonR1Pressed();
@@ -145,29 +193,13 @@ void ReClient::readyRead()
    {
        exec.buttonR2Pressed();
    }
-   else if( read_data=="m" )
-   {
-       exec.buttonStartChanged();
-   }
    else if( read_data=="s" )
    {
        exec.buttonSelectChanged();
    }
-   else if( read_data=="d" )
-   {
-       exec.buttonDownChanged();
-   }
    else if( read_data=="u" )
    {
        exec.buttonUpChanged();
-   }
-   else if( read_data=="r" )
-   {
-       exec.buttonRightChanged();
-   }
-   else if( read_data=="l" )
-   {
-       exec.buttonLeftChanged();
    }
    else
    {

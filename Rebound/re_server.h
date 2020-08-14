@@ -70,6 +70,11 @@ private:
     int commandIndex;
     short commandByte;
 
+    double last_la_x = 0; //last left axis x value
+    double last_la_y = 0; //last left axis y value
+    double last_ra_x = 0; //last right axis x value
+    double last_ra_y = 0; //last right axis y value
+
 #ifdef _WIN32
     QGamepad *pad;
 #endif

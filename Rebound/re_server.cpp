@@ -22,7 +22,6 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
     connect(pad, SIGNAL(buttonYChanged(bool)),
             this, SLOT(buttonYChanged(bool)));
 
-
     connect(pad, SIGNAL(buttonL1Changed(bool)),
             this, SLOT(buttonL1Changed(bool)));
     connect(pad, SIGNAL(buttonL2Changed(double)),
@@ -54,6 +53,7 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
             this, SLOT(buttonUpChanged(bool)));
     connect(pad, SIGNAL(buttonDownChanged(bool)),
             this, SLOT(buttonDownChanged(bool)));
+
     server = new QTcpServer;
     connect(server, SIGNAL(newConnection()),
             this, SLOT(acceptConnection()));
@@ -184,22 +184,98 @@ void ReServer::buttonR2Changed(double value)
 
 void ReServer::buttonAxisLxChanged(double value)
 {
-
+    if( value==1 )
+    {
+        if( last_la_x==0  )
+        {
+            sendKey("c",1);
+            last_la_x = 1;
+        }
+    }
+    else if( value ==-1 )
+    {
+        if( last_la_x==0  )
+        {
+            sendKey("e",1);
+            last_la_x = 1;
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_la_x = 0;
+    }
 }
 
 void ReServer::buttonAxisLyChanged(double value)
 {
-
+    if( value==1 )
+    {
+        if( last_la_y==0  )
+        {
+            sendKey("f",1);
+            last_la_y = 1;
+        }
+    }
+    else if( value ==-1 )
+    {
+        if( last_la_y==0  )
+        {
+            sendKey("g",1);
+            last_la_y = 1;
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_la_y = 0;
+    }
 }
 
 void ReServer::buttonAxisRxChanged(double value)
 {
-
+    if( value==1 )
+    {
+        if( last_ra_x==0  )
+        {
+            sendKey("h",1);
+            last_ra_x = 1;
+        }
+    }
+    else if( value ==-1)
+    {
+        if( last_ra_x==0  )
+        {
+            sendKey("i",1);
+            last_ra_x = 1;
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_ra_x = 0;
+    }
 }
 
 void ReServer::buttonAxisRyChanged(double value)
 {
-
+    if( value==1 )
+    {
+        if( last_ra_y==0  )
+        {
+            sendKey("j",1);
+            last_ra_y = 1;
+        }
+    }
+    else if( value ==-1)
+    {
+        if( last_ra_y==0  )
+        {
+            sendKey("k",1);
+            last_ra_y = 1;
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_ra_y = 0;
+    }
 }
 
 void ReServer::buttonStartChanged(bool value)

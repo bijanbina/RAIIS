@@ -57,22 +57,42 @@ void ReExec::buttonR2Pressed()
     system("xdotool mousemove_relative 0 20 &");
 }
 
-void ReExec::buttonAxisLxChanged(double)
+void ReExec::buttonLAxisRight()
 {
 
 }
 
-void ReExec::buttonAxisLyChanged(double)
+void ReExec::buttonLAxisLeft()
 {
 
 }
 
-void ReExec::buttonAxisRxChanged(double)
+void ReExec::buttonLAxisUp()
 {
 
 }
 
-void ReExec::buttonAxisRyChanged(double)
+void ReExec::buttonLAxisDown()
+{
+
+}
+
+void ReExec::buttonRAxisRight()
+{
+
+}
+
+void ReExec::buttonRAxisLeft()
+{
+
+}
+
+void ReExec::buttonRAxisUp()
+{
+
+}
+
+void ReExec::buttonRAxisDown()
 {
 
 }
