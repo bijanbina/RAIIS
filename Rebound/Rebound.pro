@@ -5,11 +5,11 @@ QT += qml quick
 win32:QT += gamepad
 
 SOURCES += main.cpp \
-    backend.cpp \
-    re_client.cpp \
-    re_exec.cpp
+    backend.cpp
 
 win32:SOURCES += re_server.cpp
+linux:SOURCES += re_exec.cpp \
+                 re_client.cpp
 
 RESOURCES += ui.qrc \
     images.qrc \
@@ -20,7 +20,8 @@ QML_IMPORT_PATH =
 
 HEADERS += \
     backend.h \
-    re_client.h \
-    re_exec.h
 
 win32:HEADERS += re_server.h
+linux:HEADERS += re_exec.h \
+                 re_client.h
+

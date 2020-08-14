@@ -1,6 +1,4 @@
 
-#include "re_client.h"
-
 #ifdef _WIN32
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
@@ -9,6 +7,7 @@
 #include <re_server.h>
 #else
 #include <QCoreApplication>
+#include "re_client.h"
 #endif
 
 int main(int argc, char *argv[])
@@ -19,12 +18,10 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     QObject *item = engine.rootObjects().first();
-    ReServer *channel_se;
     updateScreenInfo(item);
 #else
     QCoreApplication app(argc, argv);
 #endif
-    ReClient *channel_cl;
 
     //check if app should start in server
     //or client mode
@@ -36,8 +33,10 @@ int main(int argc, char *argv[])
     }
 
 #ifdef _WIN32
+    ReServer *channel_se;
     channel_se = new ReServer(item);
 #elif __linux__
+    ReClient *channel_cl;
     channel_cl = new ReClient();
 #endif
 
