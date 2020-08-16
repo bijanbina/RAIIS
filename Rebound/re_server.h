@@ -36,8 +36,10 @@ public slots:
 
     void buttonL1Changed(bool);
     void buttonL2Changed(double);
+    void buttonL3Changed(bool);
     void buttonR1Changed(bool);
     void buttonR2Changed(double);
+    void buttonR3Changed(bool);
 
     void buttonAxisLxChanged(double);
     void buttonAxisLyChanged(double);
@@ -46,13 +48,15 @@ public slots:
 
     void buttonStartChanged(bool);
     void buttonSelectChanged(bool);
+    void buttonCenterChanged(bool);
+    void buttonGuideChanged(bool);
 
     void buttonLeftChanged(bool);
     void buttonRightChanged(bool);
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
 private:
-    void sendKey(const char *data, int size);
+    void reboundSendKey(const char *data, int size);
 
     long bytesReceived;
     QTcpServer *server;

@@ -26,10 +26,14 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
             this, SLOT(buttonL1Changed(bool)));
     connect(pad, SIGNAL(buttonL2Changed(double)),
             this, SLOT(buttonL2Changed(double)));
+    connect(pad, SIGNAL(buttonL3Changed(bool)),
+            this, SLOT(buttonL3Changed(bool)));
     connect(pad, SIGNAL(buttonR1Changed(bool)),
             this, SLOT(buttonR1Changed(bool)));
     connect(pad, SIGNAL(buttonR2Changed(double)),
             this, SLOT(buttonR2Changed(double)));
+    connect(pad, SIGNAL(buttonR3Changed(bool)),
+            this, SLOT(buttonR3Changed(bool)));
 
     connect(pad, SIGNAL(axisLeftXChanged(double)),
             this, SLOT(buttonAxisLxChanged(double)));
@@ -37,13 +41,17 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
             this, SLOT(buttonAxisLyChanged(double)));
     connect(pad, SIGNAL(axisRightXChanged(double)),
             this, SLOT(buttonAxisRxChanged(double)));
-    connect(pad, SIGNAL(axisRightXChanged(double)),
-            this, SLOT(buttonAxisRxChanged(double)));
+    connect(pad, SIGNAL(axisRightYChanged(double)),
+            this, SLOT(buttonAxisRyChanged(double)));
 
     connect(pad, SIGNAL(buttonStartChanged(bool)),
             this, SLOT(buttonStartChanged(bool)));
     connect(pad, SIGNAL(buttonSelectChanged(bool)),
             this, SLOT(buttonSelectChanged(bool)));
+    connect(pad, SIGNAL(buttonCenterChanged(bool)),
+            this, SLOT(buttonCenterChanged(bool)));
+    connect(pad, SIGNAL(buttonGuideChanged(bool)),
+            this, SLOT(buttonGuideChanged(bool)));
 
     connect(pad, SIGNAL(buttonLeftChanged(bool)),
             this, SLOT(buttonLeftChanged(bool)));
@@ -92,6 +100,7 @@ void ReServer::acceptConnection()
 {
     qDebug() << "Server: Accepted connection";
     connection_socket = server->nextPendingConnection();
+    connection_socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(connection_socket, SIGNAL(readyRead()),
             this, SLOT(readyRead()));
     connect(connection_socket, SIGNAL(error(QAbstractSocket::SocketError)),
@@ -122,7 +131,7 @@ void ReServer::buttonAChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("a",1);
+        reboundSendKey("a",1);
     }
 }
 
@@ -130,7 +139,7 @@ void ReServer::buttonBChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("b",1);
+        reboundSendKey("b",1);
     }
 }
 
@@ -138,7 +147,7 @@ void ReServer::buttonXChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("x",1);
+        reboundSendKey("x",1);
     }
 }
 
@@ -146,7 +155,7 @@ void ReServer::buttonYChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("y",1);
+        reboundSendKey("y",1);
     }
 }
 
@@ -154,7 +163,7 @@ void ReServer::buttonL1Changed(bool value)
 {
     if ( value==1 )
     {
-        sendKey("l1",2);
+        reboundSendKey("l1",2);
     }
 }
 
@@ -162,7 +171,16 @@ void ReServer::buttonL2Changed(double value)
 {
     if ( value==1 )
     {
-        sendKey("l2",2);
+        reboundSendKey("l2",2);
+    }
+}
+
+void ReServer::buttonL3Changed(bool value)
+{
+    qDebug() << "l3 pressed";
+    if ( value==1 )
+    {
+        reboundSendKey("l3",2);
     }
 }
 
@@ -170,34 +188,41 @@ void ReServer::buttonR1Changed(bool value)
 {
     if ( value==1 )
     {
-        sendKey("r1",2);
+        reboundSendKey("r1",2);
     }
 }
 
 void ReServer::buttonR2Changed(double value)
 {
+    qDebug() << "r2 pressed";
     if ( value==1 )
     {
-        sendKey("r2",2);
+        reboundSendKey("r2",2);
+    }
+}
+
+void ReServer::buttonR3Changed(bool value)
+{
+    qDebug() << "r3 pressed";
+    if ( value==1 )
+    {
+        reboundSendKey("r3",2);
     }
 }
 
 void ReServer::buttonAxisLxChanged(double value)
 {
-    if( value==1 )
+    if( last_la_x==0 )
     {
-        if( last_la_x==0  )
+        if( value==1 )
         {
-            sendKey("c",1);
             last_la_x = 1;
+            reboundSendKey("e",1);
         }
-    }
-    else if( value ==-1 )
-    {
-        if( last_la_x==0  )
+        else if( value==-1 )
         {
-            sendKey("e",1);
             last_la_x = 1;
+            reboundSendKey("f",1);
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -208,20 +233,17 @@ void ReServer::buttonAxisLxChanged(double value)
 
 void ReServer::buttonAxisLyChanged(double value)
 {
-    if( value==1 )
+    if( last_la_y==0 )
     {
-        if( last_la_y==0  )
+        if( value<-0.99 ) //up
         {
-            sendKey("f",1);
             last_la_y = 1;
+            reboundSendKey("g",1);
         }
-    }
-    else if( value ==-1 )
-    {
-        if( last_la_y==0  )
+        else if( value>0.99 ) //down
         {
-            sendKey("g",1);
             last_la_y = 1;
+            reboundSendKey("h",1);
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -232,44 +254,39 @@ void ReServer::buttonAxisLyChanged(double value)
 
 void ReServer::buttonAxisRxChanged(double value)
 {
-    if( value==1 )
+    if( last_la_x==0 )
     {
-        if( last_ra_x==0  )
+        if( value==1 )
         {
-            sendKey("h",1);
-            last_ra_x = 1;
+            last_la_x = 1;
+            reboundSendKey("i",1);
         }
-    }
-    else if( value ==-1)
-    {
-        if( last_ra_x==0  )
+        else if( value==-1 )
         {
-            sendKey("i",1);
-            last_ra_x = 1;
+            last_la_x = 1;
+            reboundSendKey("j",1);
         }
     }
     else if( value<0.5 && value>-0.5 )
     {
-        last_ra_x = 0;
+        last_la_x = 0;
     }
 }
 
 void ReServer::buttonAxisRyChanged(double value)
 {
-    if( value==1 )
+//    qDebug() << value;
+    if( last_ra_y==0 )
     {
-        if( last_ra_y==0  )
+        if( value<-0.99 ) //up
         {
-            sendKey("j",1);
             last_ra_y = 1;
+            reboundSendKey("k",1);
         }
-    }
-    else if( value ==-1)
-    {
-        if( last_ra_y==0  )
+        else if( value>0.99 ) //down
         {
-            sendKey("k",1);
             last_ra_y = 1;
+            reboundSendKey("n",1);
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -282,7 +299,7 @@ void ReServer::buttonStartChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("m",1); //menu key
+        reboundSendKey("m",1); //menu key
     }
 }
 
@@ -290,7 +307,25 @@ void ReServer::buttonSelectChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("s",1);
+        reboundSendKey("s",1);
+    }
+}
+
+void ReServer::buttonCenterChanged(bool value)
+{
+    if ( value==1 )
+    {
+        qDebug() << "Center pressed";
+        reboundSendKey("c",1);
+    }
+}
+
+void ReServer::buttonGuideChanged(bool value)
+{
+    qDebug() << "Guide pressed";
+    if ( value==1 )
+    {
+        reboundSendKey("g",1);
     }
 }
 
@@ -298,7 +333,7 @@ void ReServer::buttonLeftChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("l",1);
+        reboundSendKey("l",1);
     }
 }
 
@@ -306,7 +341,7 @@ void ReServer::buttonRightChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("r",1);
+        reboundSendKey("r",1);
     }
 }
 
@@ -314,7 +349,7 @@ void ReServer::buttonUpChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("u",1);
+        reboundSendKey("u",1);
     }
 }
 
@@ -322,18 +357,29 @@ void ReServer::buttonDownChanged(bool value)
 {
     if ( value==1 )
     {
-        sendKey("d",1);
+        reboundSendKey("d",1);
     }
 }
 
-void ReServer::sendKey(const char *data, int size)
+void ReServer::reboundSendKey(const char *data, int size)
 {
     if (connection_socket)
     {
         if ( connection_socket->isOpen() )
         {
+            if(size == 2)
+            {
+                qDebug() << "Sending " << data[0] << data[1];
+            }
+            else
+            {
+                qDebug() << "Sending " << data[0];
+            }
+
             connection_socket->write(data,size);
             connection_socket->waitForBytesWritten();
+
+            qDebug() << "finisihed sending";
         }
     }
 }

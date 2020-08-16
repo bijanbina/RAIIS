@@ -31,16 +31,20 @@ void ReExec::buttonYPressed()
 
 void ReExec::buttonL1Pressed()
 {
-
     qDebug() <<  "Reset F";
-       system("xdotool key Left &");
+    system("xdotool key Left &");
 }
 
 void ReExec::buttonL2Pressed()
 {
-
     qDebug() <<  "Slower";
     system("xdotool mousemove_relative 0 -20 &");
+}
+
+void ReExec::buttonL3Pressed()
+{
+//    qDebug() <<  "Slower";
+//    system("xdotool mousemove_relative 0 -20 &");
 }
 
 void ReExec::buttonR1Pressed()
@@ -55,6 +59,12 @@ void ReExec::buttonR2Pressed()
 {
     qDebug() <<  "Faster";
     system("xdotool mousemove_relative 0 20 &");
+}
+
+void ReExec::buttonR3Pressed()
+{
+//    qDebug() <<  "Faster";
+//    system("xdotool mousemove_relative 0 20 &");
 }
 
 void ReExec::buttonLAxisRight()
@@ -111,6 +121,18 @@ void ReExec::buttonSelectChanged()
 {
     qDebug() <<  "Enable autoscroll";
     system("xdotool key Escape &");
+}
+
+void ReExec::buttonCenterChanged()
+{
+//    qDebug() <<  "Enable autoscroll";
+//    system("xdotool key Escape &");
+}
+
+void ReExec::buttonGuideChanged()
+{
+//    qDebug() <<  "Enable autoscroll";
+//    system("xdotool key Escape &");
 }
 
 void ReExec::buttonDownChanged()

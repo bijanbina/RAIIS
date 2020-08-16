@@ -5,10 +5,10 @@
 #include <QDebug>
 #include "backend.h"
 
-class ReExec
+class ReWin
 {
 public:
-    ReExec();
+    ReWin();
 
     void buttonAPressed();
     void buttonBPressed();
@@ -17,10 +17,8 @@ public:
 
     void buttonL1Pressed();
     void buttonL2Pressed();
-    void buttonL3Pressed();
     void buttonR1Pressed();
     void buttonR2Pressed();
-    void buttonR3Pressed();
 
     //Left Analog Axis
     void buttonLAxisRight();
@@ -36,8 +34,6 @@ public:
 
     void buttonStartChanged();
     void buttonSelectChanged();
-    void buttonCenterChanged();
-    void buttonGuideChanged();
 
     void buttonDownChanged();
     void buttonUpChanged();

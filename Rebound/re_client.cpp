@@ -121,9 +121,9 @@ void ReClient::readyRead()
    {
        exec.buttonBPressed();
    }
-   else if( read_data=="c" ) //Left Axis
+   else if( read_data=="c" )
    {
-       exec.buttonLAxisRight();
+       exec.buttonCenterChanged();
    }
    else if( read_data=="d" )
    {
@@ -131,31 +131,31 @@ void ReClient::readyRead()
    }
    else if( read_data=="e" ) //Left Axis
    {
-       exec.buttonLAxisLeft();
+       exec.buttonLAxisRight();
    }
    else if( read_data=="f" ) //Left Axis
    {
+       exec.buttonLAxisLeft();
+   }
+   else if( read_data=="g" )
+   {
+       exec.buttonGuideChanged();
+   }
+   else if( read_data=="h" ) //Left Axis
+   {
        exec.buttonLAxisUp();
    }
-   else if( read_data=="g" ) //Right Axis
+   else if( read_data=="i" ) //Left Axis
    {
        exec.buttonLAxisDown();
    }
-   else if( read_data=="h" ) //Right Axis
+   else if( read_data=="j" ) //Right Axis
    {
        exec.buttonRAxisRight();
    }
-   else if( read_data=="i" ) //Right Axis
-   {
-       exec.buttonRAxisLeft();
-   }
-   else if( read_data=="j" ) //Right Axis
-   {
-       exec.buttonRAxisUp();
-   }
    else if( read_data=="k" ) //Right Axis
    {
-       exec.buttonRAxisDown();
+       exec.buttonRAxisLeft();
    }
    else if( read_data=="l" )
    {
@@ -164,6 +164,14 @@ void ReClient::readyRead()
    else if( read_data=="m" )
    {
        exec.buttonStartChanged();
+   }
+   else if( read_data=="n" ) //Right Axis
+   {
+       exec.buttonRAxisUp();
+   }
+   else if( read_data=="o" ) //Right Axis
+   {
+       exec.buttonRAxisDown();
    }
    else if( read_data=="x" )
    {
@@ -181,6 +189,10 @@ void ReClient::readyRead()
    {
        exec.buttonL2Pressed();
    }
+   else if( read_data=="l3" )
+   {
+       exec.buttonL3Pressed();
+   }
    else if( read_data=="r" )
    {
        exec.buttonRightChanged();
@@ -192,6 +204,10 @@ void ReClient::readyRead()
    else if( read_data=="r2" )
    {
        exec.buttonR2Pressed();
+   }
+   else if( read_data=="r3" )
+   {
+       exec.buttonR3Pressed();
    }
    else if( read_data=="s" )
    {
