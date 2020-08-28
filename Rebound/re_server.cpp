@@ -78,9 +78,11 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
     }
 
     bufferTimer = new QTimer;
+    watchdog = new QTimer;
     bufferTimer->setSingleShot(true);
 //    connect(bufferTimer, SIGNAL(timeout()), this, SLOT(sendBuffer()));
 //    bufferTimer->setInterval(JOYSTICK_DELAY);
+    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
 }
 
 ReServer::~ReServer()
@@ -105,18 +107,36 @@ void ReServer::acceptConnection()
             this, SLOT(readyRead()));
     connect(connection_socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
+    watchdog->start(RE_S_WATCHDOG);
 
     qDebug() << "Accepted connection";
 }
 
-void ReServer::readyRead()
+void ReServer::watchdog_timeout()
 {
 //    bytesReceived += (int)connection_socket->bytesAvailable();
-    qDebug() << "Server" << connection_socket->readAll();
+    qDebug() << "Server: FUCK HAPPENED" ;
 
-    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
-    connection_socket->write("a",1);
-    connection_socket->waitForBytesWritten();
+//    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
+//    connection_socket->write("a",1);
+//    connection_socket->waitForBytesWritten();
+}
+
+void ReServer::readyRead()
+{
+    QByteArray data = connection_socket->readAll();
+    if(data.length() == 4)
+    {
+        watchdog->start(RE_S_WATCHDOG);
+    }
+    else
+    {
+        qDebug() << "Server: " << data;
+    }
+
+//    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
+//    connection_socket->write("a",1);
+//    connection_socket->waitForBytesWritten();
 }
 
 void ReServer::displayError(QAbstractSocket::SocketError socketError)

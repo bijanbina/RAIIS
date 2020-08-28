@@ -10,6 +10,10 @@
 #include "re_client.h"
 #endif
 
+#ifdef RE_TEST_EN
+#include "re_client.h"
+#endif
+
 int main(int argc, char *argv[])
 {
 
@@ -36,13 +40,13 @@ int main(int argc, char *argv[])
     ReServer *channel_se;
     channel_se = new ReServer(item);
 #elif __linux__
-    ReClient *channel_cl;
     channel_cl = new ReClient();
 #endif
 
-    //REMOVE THIS LINE
-    // channel_cl = new ReClient();
-    //REMOVE THIS LINE
+#ifdef RE_TEST_EN
+    ReClient *channel_cl;
+    channel_cl = new ReClient();
+#endif
 
     return app.exec();
 }

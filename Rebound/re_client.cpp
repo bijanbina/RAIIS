@@ -14,9 +14,12 @@ ReClient::ReClient(QObject *parent) : QObject(parent)
             this, SLOT(displayError(QAbstractSocket::SocketError)));
 
     timer = new QTimer;
+    watchdog = new QTimer;
 //    timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(start()));
+    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
     timer->start(RE_TIMEOUT);
+    watchdog->start(RE_C_WATCHDOG);
     start();
 }
 
@@ -49,7 +52,7 @@ void ReClient::displayError(QAbstractSocket::SocketError socketError)
 void ReClient::connected()
 {
     qDebug() << "Client: Connected";
-    tcpClient->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
 //    timer->stop();
@@ -67,6 +70,22 @@ void ReClient::disconnected()
     {
         timer->start(RE_TIMEOUT);
         qDebug() << "Timer start";
+    }
+}
+//Watchdog TimerTick
+void ReClient::watchdog_timeout()
+{
+    if(tcpClient.isOpen())
+    {
+        if(tcpClient.state() == QAbstractSocket::ConnectedState)
+        {
+            tcpClient.write("Live");
+            tcpClient.waitForBytesWritten();
+        }
+        else
+        {
+            qDebug() << "watchdog_timeout: not connected, State:" << tcpClient.state();
+        }
     }
 }
 
@@ -114,6 +133,8 @@ void ReClient::readyRead()
 {
    QString read_data = tcpClient.readAll();
    qDebug() <<  "Client: Received=" << read_data;
+
+#ifndef RE_TEST_EN
    if( read_data=="a" )
    {
        exec.buttonAPressed();
@@ -222,4 +243,5 @@ void ReClient::readyRead()
    {
        qDebug() << "Get unkdown packet:" << read_data;
    }
+#endif
 }

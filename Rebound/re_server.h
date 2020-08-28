@@ -27,6 +27,7 @@ signals:
 
 public slots:
     void acceptConnection();
+    void watchdog_timeout();
     void readyRead();
     void displayError(QAbstractSocket::SocketError socketError);
     void buttonAChanged(bool);
@@ -68,6 +69,7 @@ private:
 
     QString message;
     QTimer *bufferTimer;
+    QTimer *watchdog;
     char charBuffer;
     bool isBufferEmpty;
     bool commandMode;

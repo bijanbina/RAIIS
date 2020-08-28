@@ -11,9 +11,11 @@
 #include <QTimer>
 #include <QQmlProperty>
 #include "backend.h"
-#include "re_exec.h"
 
-#define RE_TIMEOUT   1000
+#ifndef RE_TEST_EN
+#include "re_exec.h"
+#endif
+
 class ReClient : public QObject
 {
     Q_OBJECT
@@ -26,6 +28,7 @@ signals:
 private slots:
     void connected();
     void start();
+    void watchdog_timeout();
     void startTransfer(const char* command);
     void displayError(QAbstractSocket::SocketError socketError);
     void sendBuffer();
@@ -40,6 +43,7 @@ private:
 
     QString message;
     QTimer *timer;
+    QTimer *watchdog;
     char charBuffer;
     bool isBufferEmpty;
     bool commandMode;
@@ -47,7 +51,10 @@ private:
     short commandByte;
 
     QObject *ui;
+
+#ifndef RE_TEST_EN
     ReExec exec;
+#endif
 };
 
 #endif // ReClient_H

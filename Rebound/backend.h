@@ -16,6 +16,12 @@
 #define RE_PORT      7610
 #define RE_IP        "192.168.88.25"
 
+#define RE_TEST_EN
+
+#define RE_TIMEOUT      1000
+#define RE_S_WATCHDOG   1000  //Server watchdog interval
+#define RE_C_WATCHDOG   100   //Client watchdog interval
+
 struct screen_pos{
     int x;
     int y;
