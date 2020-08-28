@@ -77,12 +77,14 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
         qDebug() << "Error message is:" << server->errorString();
     }
 
-    bufferTimer = new QTimer;
+    live = new QTimer;
     watchdog = new QTimer;
+    bufferTimer = new QTimer;
     bufferTimer->setSingleShot(true);
 //    connect(bufferTimer, SIGNAL(timeout()), this, SLOT(sendBuffer()));
 //    bufferTimer->setInterval(JOYSTICK_DELAY);
     connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
+    connect(watchdog, SIGNAL(timeout()), this, SLOT(live_timeout()));
 }
 
 ReServer::~ReServer()
@@ -107,7 +109,9 @@ void ReServer::acceptConnection()
             this, SLOT(readyRead()));
     connect(connection_socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
-    watchdog->start(RE_S_WATCHDOG);
+
+    live->start(RE_Live);
+    watchdog->start(RE_WATCHDOG);
 }
 
 void ReServer::watchdog_timeout()
@@ -133,6 +137,7 @@ void ReServer::watchdog_timeout()
     {
         qDebug() << "Watchdog: Disconnected successfully" ;
     }
+    live->stop();
     watchdog->stop();
     delete connection_socket;
 
@@ -141,12 +146,37 @@ void ReServer::watchdog_timeout()
 //    connection_socket->waitForBytesWritten();
 }
 
+void ReServer::live_timeout()
+{
+    if(connection_socket->isOpen())
+    {
+        if(connection_socket->state() == QAbstractSocket::ConnectedState)
+        {
+            int byte_count = connection_socket->write("Live");
+            connection_socket->waitForBytesWritten(1000);
+
+            if( byte_count!= 4)
+            {
+                qDebug() << "Client: live, Fuck Happened" << byte_count;
+            }
+        }
+        else
+        {
+            qDebug() << "Client: live, not connected, State:" << connection_socket->state();
+        }
+    }
+    else
+    {
+        qDebug() << "Client: live, tcpClient is closed??";
+    }
+}
+
 void ReServer::readyRead()
 {
     QByteArray data = connection_socket->readAll();
     if(data.length() == 4)
     {
-        watchdog->start(RE_S_WATCHDOG);
+        watchdog->start(RE_WATCHDOG);
     }
     else
     {

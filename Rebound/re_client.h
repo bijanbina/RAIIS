@@ -29,6 +29,7 @@ private slots:
     void connected();
     void start();
     void watchdog_timeout();
+    void live_timeout();
     void startTransfer(const char* command);
     void displayError(QAbstractSocket::SocketError socketError);
     void sendBuffer();
@@ -42,13 +43,15 @@ private:
     char code_char[4];
 
     QString message;
-    QTimer *timer;
-    QTimer *watchdog;
     char charBuffer;
     bool isBufferEmpty;
     bool commandMode;
     int commandIndex;
     short commandByte;
+
+    QTimer *live;
+    QTimer *timer;
+    QTimer *watchdog;
 
     QObject *ui;
 

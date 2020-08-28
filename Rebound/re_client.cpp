@@ -13,10 +13,12 @@ ReClient::ReClient(QObject *parent) : QObject(parent)
     connect(&tcpClient, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
 
+    live = new QTimer;
     timer = new QTimer;
     watchdog = new QTimer;
 //    timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(start()));
+    connect(live, SIGNAL(timeout()), this, SLOT(live_timeout()));
     connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
     timer->start(RE_TIMEOUT);
     start();
@@ -53,7 +55,8 @@ void ReClient::connected()
     qDebug() << "Client: Connected";
     tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
-    watchdog->start(RE_C_WATCHDOG);
+    watchdog->start(RE_WATCHDOG);
+    live->start(RE_Live);
 
 //    timer->stop();
 }
@@ -62,9 +65,9 @@ void ReClient::disconnected()
 {
 //    QMetaObject::invokeMethod(root, "set_disconnected");
 //    m_wakeLock.callMethod<void>("release", "()V");
-    qDebug() << "Client: Disconnected";
-    tcpClient.close();
     watchdog->stop();
+    live->stop();
+    tcpClient.close();
 //    disconnect((&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead())));
 
     if ( !(timer->isActive()) )
@@ -72,26 +75,46 @@ void ReClient::disconnected()
         timer->start(RE_TIMEOUT);
         qDebug() << "Client: Timer start";
     }
+    qDebug() << "Client: Disconnected";
 }
+
 //Watchdog TimerTick
 void ReClient::watchdog_timeout()
+{
+    if(tcpClient.isOpen())
+    {
+        qDebug() << "Client: watchdog shit happened:" << tcpClient.state();
+        disconnected();
+    }
+    else
+    {
+        qDebug() << "Client: watchdog, tcpClient is closed??";
+    }
+}
+
+//Live TimerTick
+void ReClient::live_timeout()
 {
     if(tcpClient.isOpen())
     {
         if(tcpClient.state() == QAbstractSocket::ConnectedState)
         {
             int byte_count = tcpClient.write("Live");
-            tcpClient.waitForBytesWritten();
-            qDebug() << "Client: watchdog, send signal" << byte_count;
+            tcpClient.waitForBytesWritten(1000);
+
+            if( byte_count!= 4)
+            {
+                qDebug() << "Client: live, Fuck Happened" << byte_count;
+            }
         }
         else
         {
-            qDebug() << "Client: watchdog, not connected, State:" << tcpClient.state();
+            qDebug() << "Client: live, not connected, State:" << tcpClient.state();
         }
     }
     else
     {
-        qDebug() << "Client: watchdog, tcpClient is closed??";
+        qDebug() << "Client: live, tcpClient is closed??";
     }
 }
 
@@ -139,6 +162,11 @@ void ReClient::readyRead()
 {
    QString read_data = tcpClient.readAll();
    qDebug() <<  "Client: Received=" << read_data;
+
+   if( read_data=="Live" )
+   {
+       live->start(RE_Live);
+   }
 
 #ifdef __linux__
    if( read_data=="a" )

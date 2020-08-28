@@ -18,9 +18,9 @@
 
 //#define RE_TEST_EN
 
-#define RE_TIMEOUT      1000
-#define RE_S_WATCHDOG   1000  //Server watchdog interval
-#define RE_C_WATCHDOG   100   //Client watchdog interval
+#define RE_TIMEOUT    1000
+#define RE_WATCHDOG   1000  //Watchdog interval
+#define RE_Live       100   //Live send interval
 
 struct screen_pos{
     int x;

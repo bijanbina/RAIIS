@@ -27,8 +27,9 @@ signals:
 
 public slots:
     void acceptConnection();
-    void watchdog_timeout();
     void readyRead();
+    void live_timeout();
+    void watchdog_timeout();
     void displayError(QAbstractSocket::SocketError socketError);
     void buttonAChanged(bool);
     void buttonBChanged(bool);
@@ -68,13 +69,15 @@ private:
     char code_char[4];
 
     QString message;
-    QTimer *bufferTimer;
-    QTimer *watchdog;
     char charBuffer;
     bool isBufferEmpty;
     bool commandMode;
     int commandIndex;
     short commandByte;
+
+    QTimer *live;
+    QTimer *watchdog;
+    QTimer *bufferTimer;
 
     double last_la_x = 0; //last left axis x value
     double last_la_y = 0; //last left axis y value
