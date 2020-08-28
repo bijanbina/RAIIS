@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 #ifdef _WIN32
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:main.qml")));
     QObject *item = engine.rootObjects().first();
     updateScreenInfo(item);
 #else

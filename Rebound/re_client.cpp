@@ -49,6 +49,7 @@ void ReClient::displayError(QAbstractSocket::SocketError socketError)
 void ReClient::connected()
 {
     qDebug() << "Client: Connected";
+    tcpClient->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
 
 //    timer->stop();

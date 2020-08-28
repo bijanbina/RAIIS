@@ -238,12 +238,12 @@ void ReServer::buttonAxisLyChanged(double value)
         if( value<-0.99 ) //up
         {
             last_la_y = 1;
-            reboundSendKey("g",1);
+            reboundSendKey("h",1);
         }
         else if( value>0.99 ) //down
         {
             last_la_y = 1;
-            reboundSendKey("h",1);
+            reboundSendKey("i",1);
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -259,12 +259,12 @@ void ReServer::buttonAxisRxChanged(double value)
         if( value==1 )
         {
             last_la_x = 1;
-            reboundSendKey("i",1);
+            reboundSendKey("j",1);
         }
         else if( value==-1 )
         {
             last_la_x = 1;
-            reboundSendKey("j",1);
+            reboundSendKey("k",1);
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -281,12 +281,12 @@ void ReServer::buttonAxisRyChanged(double value)
         if( value<-0.99 ) //up
         {
             last_ra_y = 1;
-            reboundSendKey("k",1);
+            reboundSendKey("n",1);
         }
         else if( value>0.99 ) //down
         {
             last_ra_y = 1;
-            reboundSendKey("n",1);
+            reboundSendKey("o",1);
         }
     }
     else if( value<0.5 && value>-0.5 )

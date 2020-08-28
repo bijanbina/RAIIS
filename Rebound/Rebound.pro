@@ -13,11 +13,14 @@ linux:SOURCES += re_exec.cpp \
                  re_client.cpp
 
 RESOURCES += ui.qrc \
-    images.qrc \
-    fonts.qrc
+             images.qrc \
+             fonts.qrc
+
+OTHER_FILES += \
+               Qml/*.qml
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH += Qml/
 
 HEADERS += \
     backend.h \

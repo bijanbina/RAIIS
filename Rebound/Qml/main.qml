@@ -4,6 +4,15 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 1.4
+import "qrc:/"
+
+
+//<file>main.qml</file>
+//<file>Qml/RoundButton.qml</file>
+//<file>Qml/Switcher.qml</file>
+//<file>Qml/SystemStatus.qml</file>
+//<file>Qml/Terminal.qml</file>
+//<file>Qml/WifiIndicator.qml</file>
 
 Window {
     id:page
@@ -50,26 +59,30 @@ Window {
 
 
 
-    Rectangle{
+    Rectangle
+    {
         id: paneWindow
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
         height: 200
         width: minimumWidth
-        MouseArea {
+        MouseArea
+        {
             id: mouseArea
             anchors.fill: parent
         }
 
         color: page.color
-        WifiIndicator{
+        WifiIndicator
+        {
             id: wifiStatus
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.bottom: parent.bottom
         }
 
-        Rectangle{
+        Rectangle
+        {
                 id: savedNumber
                 anchors.top: parent.top
                 anchors.left: wifiStatus.right
@@ -112,7 +125,8 @@ Window {
         }
     }
 
-    Switcher{
+    Switcher
+    {
         id: tabPane
         anchors.top: paneWindow.bottom
         anchors.topMargin: -9
@@ -120,7 +134,8 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         color: page.color
 
-        onButton1Clicked: {
+        onButton1Clicked:
+        {
             if (terminalPane.opacity == 1)
             {
                 changeTabAnime.from = 1
@@ -128,7 +143,8 @@ Window {
                 changeTabAnime.start()
             }
         }
-        onButton2Clicked: {
+        onButton2Clicked:
+        {
             if (terminalPane.opacity == 0)
             {
                 changeTabAnime.from = 0
@@ -136,7 +152,8 @@ Window {
                 changeTabAnime.start()
             }
         }
-        onButton3Clicked: {
+        onButton3Clicked:
+        {
             if (terminalPane.opacity == 1)
             {
                 changeTabAnime.from = 1
@@ -144,9 +161,10 @@ Window {
                 changeTabAnime.start()
             }
         }
-
     }
-    Terminal{
+
+    Terminal
+    {
         id: terminalPane
         anchors.top: tabPane.bottom
         anchors.left: parent.left
@@ -154,7 +172,8 @@ Window {
         color: page.color
     }
 
-    NumberAnimation {
+    NumberAnimation
+    {
         id: changeTabAnime
         target: terminalPane
         property: "opacity"
@@ -162,13 +181,7 @@ Window {
         easing.type: Easing.InOutQuad
     }
 
-
-
-
-
     //properties
-
-
     property int x_base: 0
     property int y_base: 0
 

@@ -1,4 +1,6 @@
 import QtQuick 2.5
+import "qrc:/"
+
 Rectangle{
 
     function refreshFocus()
@@ -75,9 +77,10 @@ accb14b..4d1e3c8  master -> master"
         cursorPosition: terminalEditor.text.length
         focus: true
     }
-    BlinkChar{
-        anchors.left: terminalEditor.right
-        anchors.top: terminalEditor.top
-        anchors.bottom: terminalEditor.bottom
-    }
+//    BlinkChar
+//    {
+//        anchors.left: terminalEditor.right
+//        anchors.top: terminalEditor.top
+//        anchors.bottom: terminalEditor.bottom
+//    }
 }
