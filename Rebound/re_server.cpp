@@ -84,7 +84,7 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
 //    connect(bufferTimer, SIGNAL(timeout()), this, SLOT(sendBuffer()));
 //    bufferTimer->setInterval(JOYSTICK_DELAY);
     connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
-    connect(watchdog, SIGNAL(timeout()), this, SLOT(live_timeout()));
+    connect(live, SIGNAL(timeout()), this, SLOT(live_timeout()));
 }
 
 ReServer::~ReServer()
@@ -436,6 +436,8 @@ void ReServer::reboundSendKey(const char *data, int size)
     {
         if ( connection_socket->isOpen() )
         {
+            live->start(RE_Live);//don't send live
+
             if(size == 2)
             {
                 qDebug() << "Sending " << data[0] << data[1];
@@ -449,6 +451,7 @@ void ReServer::reboundSendKey(const char *data, int size)
             connection_socket->waitForBytesWritten();
 
             qDebug() << "finisihed sending";
+            live->start(RE_Live);//don't send live
         }
     }
 }
