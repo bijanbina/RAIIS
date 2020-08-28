@@ -108,14 +108,33 @@ void ReServer::acceptConnection()
     connect(connection_socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
     watchdog->start(RE_S_WATCHDOG);
-
-    qDebug() << "Accepted connection";
 }
 
 void ReServer::watchdog_timeout()
 {
 //    bytesReceived += (int)connection_socket->bytesAvailable();
-    qDebug() << "Server: FUCK HAPPENED" ;
+    qDebug() << "Watchdog: Miss Window" ;
+    connection_socket->close();
+
+    if( connection_socket->state() != QAbstractSocket::UnconnectedState )
+    {
+        int success = connection_socket->waitForDisconnected();
+
+        if( success )
+        {
+            qDebug() << "Watchdog: Disconnected successfully" ;
+        }
+        else
+        {
+            qDebug() << "Watchdog: Fuck Happened" ;
+        }
+    }
+    else
+    {
+        qDebug() << "Watchdog: Disconnected successfully" ;
+    }
+    watchdog->stop();
+    delete connection_socket;
 
 //    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
 //    connection_socket->write("a",1);
@@ -131,7 +150,7 @@ void ReServer::readyRead()
     }
     else
     {
-        qDebug() << "Server: " << data;
+        qDebug() << "Server: Single watchdog failure," << data;
     }
 
 //    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);

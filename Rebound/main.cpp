@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
     ReServer *channel_se;
     channel_se = new ReServer(item);
 #elif __linux__
+    ReClient *channel_cl;
     channel_cl = new ReClient();
 #endif
 

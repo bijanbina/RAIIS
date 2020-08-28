@@ -19,7 +19,6 @@ ReClient::ReClient(QObject *parent) : QObject(parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(start()));
     connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
     timer->start(RE_TIMEOUT);
-    watchdog->start(RE_C_WATCHDOG);
     start();
 }
 
@@ -54,6 +53,7 @@ void ReClient::connected()
     qDebug() << "Client: Connected";
     tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    watchdog->start(RE_C_WATCHDOG);
 
 //    timer->stop();
 }
@@ -62,14 +62,15 @@ void ReClient::disconnected()
 {
 //    QMetaObject::invokeMethod(root, "set_disconnected");
 //    m_wakeLock.callMethod<void>("release", "()V");
-    qDebug() << "Client Disconnected";
+    qDebug() << "Client: Disconnected";
     tcpClient.close();
+    watchdog->stop();
 //    disconnect((&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead())));
 
     if ( !(timer->isActive()) )
     {
         timer->start(RE_TIMEOUT);
-        qDebug() << "Timer start";
+        qDebug() << "Client: Timer start";
     }
 }
 //Watchdog TimerTick
@@ -79,13 +80,18 @@ void ReClient::watchdog_timeout()
     {
         if(tcpClient.state() == QAbstractSocket::ConnectedState)
         {
-            tcpClient.write("Live");
+            int byte_count = tcpClient.write("Live");
             tcpClient.waitForBytesWritten();
+            qDebug() << "Client: watchdog, send signal" << byte_count;
         }
         else
         {
-            qDebug() << "watchdog_timeout: not connected, State:" << tcpClient.state();
+            qDebug() << "Client: watchdog, not connected, State:" << tcpClient.state();
         }
+    }
+    else
+    {
+        qDebug() << "Client: watchdog, tcpClient is closed??";
     }
 }
 
@@ -134,7 +140,7 @@ void ReClient::readyRead()
    QString read_data = tcpClient.readAll();
    qDebug() <<  "Client: Received=" << read_data;
 
-#ifndef RE_TEST_EN
+#ifdef __linux__
    if( read_data=="a" )
    {
        exec.buttonAPressed();

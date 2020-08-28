@@ -12,7 +12,7 @@
 #include <QQmlProperty>
 #include "backend.h"
 
-#ifndef RE_TEST_EN
+#ifdef __linux__
 #include "re_exec.h"
 #endif
 
@@ -52,7 +52,7 @@ private:
 
     QObject *ui;
 
-#ifndef RE_TEST_EN
+#ifdef __linux__
     ReExec exec;
 #endif
 };
