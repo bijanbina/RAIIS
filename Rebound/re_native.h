@@ -57,6 +57,8 @@ public slots:
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
 private:
+    void keyParser(QString key, int value);
+
     QVector<QString> stack;
     int code;
     char code_char[4];

@@ -35,16 +35,120 @@ void ReNative::loop()
 
                  key_val.chop(1);
 
-                 qDebug() << key_code << key_val;
+//                 qDebug() << key_code << key_val;
 
-                 if( key_val==1 )
-                 {
-
-                 }
-
+                 int key_val_int = key_val.toInt();
+                 keyParser(key_code, key_val_int);
              }
          }
     }
+}
+
+void ReNative::keyParser(QString key, int value)
+{
+//    qDebug() << key << value;
+    if( key==RE_KEY_HOMEPAGE )
+    {
+        buttonCenterChanged(value);
+    }
+    else if( key==RE_KEY_SOUTH )
+    {
+        buttonAChanged(value);
+    }
+    else if( key==RE_KEY_EAST )
+    {
+        buttonBChanged(value);
+    }
+    else if( key==RE_KEY_NORTH )
+    {
+        buttonXChanged(value);
+    }
+    else if( key==RE_KEY_WEST )
+    {
+        buttonYChanged(value);
+    }
+    else if( key==RE_KEY_START )
+    {
+        buttonStartChanged(value);
+    }
+    else if( key==RE_KEY_BACK )
+    {
+        buttonSelectChanged(value);
+    }
+    else if( key==RE_KEY_HAT0Y )
+    {
+        if( value==1 )
+        {
+            buttonDownChanged(1);
+        }
+        else if( value==-1 )
+        {
+            buttonUpChanged(1);
+        }
+        else if( value==0 )
+        {
+            buttonDownChanged(0);
+            buttonUpChanged(0);
+        }
+    }
+    else if( key==RE_KEY_HAT0X )
+    {
+        if( value==1 )
+        {
+            buttonRightChanged(1);
+        }
+        else if( value==-1 )
+        {
+            buttonLeftChanged(1);
+        }
+        else if( value==0 )
+        {
+            buttonRightChanged(0);
+            buttonLeftChanged(0);
+        }
+    }
+    else if( key==RE_KEY_TR )
+    {
+        buttonR1Changed(value);
+    }
+    else if( key==RE_KEY_TL )
+    {
+        buttonL1Changed(value);
+    }
+    else if( key==RE_KEY_GAS )
+    {
+        buttonR2Changed(value/1023.0);
+    }
+    else if( key==RE_KEY_BRAKE )
+    {
+        buttonL2Changed(value/1023.0);
+    }
+    else if( key==RE_KEY_THUMBR )
+    {
+        buttonR3Changed(value);
+    }
+    else if( key==RE_KEY_THUMBL )
+    {
+        buttonL3Changed(value);
+    }
+    else if( key==RE_KEY_X )
+    {
+        buttonAxisLxChanged(value/65530);
+    }
+    else if( key==RE_KEY_Y )
+    {
+        buttonAxisLyChanged(value/65530);
+    }
+    else if( key==RE_KEY_Z )
+    {
+        buttonAxisRxChanged(value/65530);
+    }
+    else if( key==RE_KEY_RZ )
+    {
+        buttonAxisRyChanged(value/65530);
+    }
+
+
 }
 
 ReNative::~ReNative()
