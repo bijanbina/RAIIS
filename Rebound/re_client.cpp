@@ -172,6 +172,7 @@ void ReClient::readyRead()
        return;
    }
 
+   watchdog->start(RE_WATCHDOG);
    qDebug() <<  "Client: Received=" << read_data << read_data.size();
 
 #ifdef __linux__
