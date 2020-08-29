@@ -9,56 +9,42 @@ ReNative::ReNative(QObject *parent) : QObject(parent)
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode=false;
+}
 
-    pad = new QGamepad;
-    connect(pad, SIGNAL(buttonAChanged(bool)),
-            this, SLOT(buttonAChanged(bool)));
-    connect(pad, SIGNAL(buttonBChanged(bool)),
-            this, SLOT(buttonBChanged(bool)));
-    connect(pad, SIGNAL(buttonXChanged(bool)),
-            this, SLOT(buttonXChanged(bool)));
-    connect(pad, SIGNAL(buttonYChanged(bool)),
-            this, SLOT(buttonYChanged(bool)));
+void ReNative::loop()
+{
+    QFile in;
+    in.open(stdin, QIODevice::ReadOnly);
+    QStringList space_separated;
 
-    connect(pad, SIGNAL(buttonL1Changed(bool)),
-            this, SLOT(buttonL1Changed(bool)));
-    connect(pad, SIGNAL(buttonL2Changed(double)),
-            this, SLOT(buttonL2Changed(double)));
-    connect(pad, SIGNAL(buttonL3Changed(bool)),
-            this, SLOT(buttonL3Changed(bool)));
-    connect(pad, SIGNAL(buttonR1Changed(bool)),
-            this, SLOT(buttonR1Changed(bool)));
-    connect(pad, SIGNAL(buttonR2Changed(double)),
-            this, SLOT(buttonR2Changed(double)));
-    connect(pad, SIGNAL(buttonR3Changed(bool)),
-            this, SLOT(buttonR3Changed(bool)));
+    while(true)
+    {
+         QString line = in.readLine();
+         if( line.contains("type 1") || line.contains("type 3"))
+         {
+             space_separated = line.split(" ");
 
-    connect(pad, SIGNAL(axisLeftXChanged(double)),
-            this, SLOT(buttonAxisLxChanged(double)));
-    connect(pad, SIGNAL(axisLeftYChanged(double)),
-            this, SLOT(buttonAxisLyChanged(double)));
-    connect(pad, SIGNAL(axisRightXChanged(double)),
-            this, SLOT(buttonAxisRxChanged(double)));
-    connect(pad, SIGNAL(axisRightYChanged(double)),
-            this, SLOT(buttonAxisRyChanged(double)));
+             if( space_separated.count()>10 )
+             {
+                 QString key_code = space_separated[8];
+                 QString key_val = space_separated[10];
 
-    connect(pad, SIGNAL(buttonStartChanged(bool)),
-            this, SLOT(buttonStartChanged(bool)));
-    connect(pad, SIGNAL(buttonSelectChanged(bool)),
-            this, SLOT(buttonSelectChanged(bool)));
-    connect(pad, SIGNAL(buttonCenterChanged(bool)),
-            this, SLOT(buttonCenterChanged(bool)));
-    connect(pad, SIGNAL(buttonGuideChanged(bool)),
-            this, SLOT(buttonGuideChanged(bool)));
+                 //clean string
+                 key_code.chop(2);
+                 key_code.remove(0, 2);
 
-    connect(pad, SIGNAL(buttonLeftChanged(bool)),
-            this, SLOT(buttonLeftChanged(bool)));
-    connect(pad, SIGNAL(buttonRightChanged(bool)),
-            this, SLOT(buttonRightChanged(bool)));
-    connect(pad, SIGNAL(buttonUpChanged(bool)),
-            this, SLOT(buttonUpChanged(bool)));
-    connect(pad, SIGNAL(buttonDownChanged(bool)),
-            this, SLOT(buttonDownChanged(bool)));
+                 key_val.chop(1);
+
+                 qDebug() << key_code << key_val;
+
+                 if( key_val==1 )
+                 {
+
+                 }
+
+             }
+         }
+    }
 }
 
 ReNative::~ReNative()

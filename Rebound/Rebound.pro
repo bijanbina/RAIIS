@@ -28,6 +28,7 @@ QML_IMPORT_PATH += Qml/
 
 HEADERS += \
     backend.h \
+    re_keycode.h \
     re_win.h \
     re_client.h
 

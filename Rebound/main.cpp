@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
 #ifdef RE_NATIVE_EN
     ReNative *native_cl;
     native_cl = new ReNative;
+    native_cl->loop();
 #else
     ReClient *channel_cl;
     channel_cl = new ReClient();

@@ -8,9 +8,10 @@
 #include <stdlib.h>
 #include <QTimer>
 #include <QQmlProperty>
-#include <QGamepad>
+#include <QFile>
 #include <QDebug>
 #include "backend.h"
+#include "re_keycode.h"
 
 #ifdef __linux__
 #include "re_exec.h"
@@ -23,6 +24,8 @@ class ReNative : public QObject
 public:
     explicit ReNative(QObject *parent = 0);
     ~ReNative();
+
+    void loop();
 signals:
     void errorConnection();
 
@@ -69,7 +72,6 @@ private:
     double last_la_y = 0; //last left axis y value
     double last_ra_x = 0; //last right axis x value
     double last_ra_y = 0; //last right axis y value
-    QGamepad *pad;
 
 #ifdef __linux__
     ReExec exec;
