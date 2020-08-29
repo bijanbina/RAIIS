@@ -161,12 +161,18 @@ void ReClient::sendBuffer()
 void ReClient::readyRead()
 {
    QString read_data = tcpClient.readAll();
-   qDebug() <<  "Client: Received=" << read_data;
-
    if( read_data=="Live" )
    {
-       live->start(RE_Live);
+       watchdog->start(RE_WATCHDOG);
+       return;
    }
+
+   if( read_data.size()==0 )
+   {
+       return;
+   }
+
+   qDebug() <<  "Client: Received=" << read_data << read_data.size();
 
 #ifdef __linux__
    if( read_data=="a" )

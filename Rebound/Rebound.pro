@@ -4,13 +4,17 @@ QT += qml quick
 
 win32:QT += gamepad
 
+# Only uncomment if you wand native mode
+QT += gamepad
+
 SOURCES += main.cpp \
            backend.cpp \
            re_win.cpp \
            re_client.cpp
 
 win32:SOURCES += re_server.cpp
-linux:SOURCES += re_exec.cpp
+linux:SOURCES += re_exec.cpp \
+                 re_native.cpp
 
 RESOURCES += ui.qrc \
              images.qrc \
@@ -28,5 +32,6 @@ HEADERS += \
     re_client.h
 
 win32:HEADERS += re_server.h
-linux:HEADERS += re_exec.h
+linux:HEADERS += re_exec.h \
+                 re_native.h
 

@@ -14,6 +14,10 @@
 #include "re_client.h"
 #endif
 
+#ifdef RE_NATIVE_EN
+#include "re_native.h"
+#endif
+
 int main(int argc, char *argv[])
 {
 
@@ -39,15 +43,24 @@ int main(int argc, char *argv[])
 #ifdef _WIN32
     ReServer *channel_se;
     channel_se = new ReServer(item);
-#elif __linux__
-    ReClient *channel_cl;
-    channel_cl = new ReClient();
-#endif
 
 #ifdef RE_TEST_EN
     ReClient *channel_cl;
     channel_cl = new ReClient();
 #endif
+
+#elif __linux__
+
+#ifdef RE_NATIVE_EN
+    ReNative *native_cl;
+    native_cl = new ReNative;
+#else
+    ReClient *channel_cl;
+    channel_cl = new ReClient();
+#endif
+
+#endif
+
 
     return app.exec();
 }
