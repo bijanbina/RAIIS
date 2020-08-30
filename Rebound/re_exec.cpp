@@ -20,13 +20,13 @@ void ReExec::buttonBPressed()
 void ReExec::buttonXPressed()
 {
     qDebug() <<  "Client: Go To Sleep";
-    system("xdotool key Left &");
+    system("xdotool click 1 &");
 }
 
 void ReExec::buttonYPressed()
 {
     qDebug() <<  "Change Workspace";
-    system("xdotool key Left &");
+    system("xdotool click 3 &");
 }
 
 void ReExec::buttonL1Pressed()
