@@ -173,6 +173,11 @@ void ReClient::readyRead()
    }
 
    watchdog->start(RE_WATCHDOG);
+
+   if( read_data.contains("Live") )
+   {
+       read_data.replace("Live", "")
+   }
    qDebug() <<  "Client: Received=" << read_data << read_data.size();
 
 #ifdef __linux__
