@@ -4,7 +4,7 @@
         <file>Resources/Fonts/Roboto-Light.ttf</file>
         <file>Resources/Fonts/Roboto-Regular.ttf</file>
         <file>Resources/Fonts/Roboto-Bold.ttf</file>
-        <file>Resources/Fonts/Genome-Thin.otf</file>
+        <file>Resources/Fonts/Gnome-Thin.otf</file>
         <file>Resources/Fonts/Consolas.ttf</file>
         <file>Resources/Fonts/Early Times_light Demo.otf</file>
     </qresource>

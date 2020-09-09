@@ -6,5 +6,8 @@
         <file alias="Terminal.qml">Qml/Terminal.qml</file>
         <file alias="WifiIndicator.qml">Qml/WifiIndicator.qml</file>
         <file alias="main.qml">Qml/main.qml</file>
+        <file alias="XboxButton.qml">Qml/XboxButton.qml</file>
+        <file alias="RButton.qml">Qml/RButton.qml</file>
+        <file alias="CommandButton.qml">Qml/CommandButton.qml</file>
     </qresource>
 </RCC>

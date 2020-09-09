@@ -6,14 +6,6 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 1.4
 import "qrc:/"
 
-
-//<file>main.qml</file>
-//<file>Qml/RoundButton.qml</file>
-//<file>Qml/Switcher.qml</file>
-//<file>Qml/SystemStatus.qml</file>
-//<file>Qml/Terminal.qml</file>
-//<file>Qml/WifiIndicator.qml</file>
-
 Window {
     id:page
     visible: false
@@ -51,8 +43,8 @@ Window {
     //Fonts:
     FontLoader { id: robotoMediumFont ; source: "qrc:Resources/Fonts/Roboto-Medium.ttf" }
     FontLoader { id: robotoRegularFont ; source: "qrc:Resources/Fonts/Roboto-Regular.ttf" }
-    //FontLoader { id: robotoBoldFont ; source: "qrc:Resources/Fonts/Roboto-Bold.ttf" }
-    FontLoader { id: genomeLight ; source: "qrc:Resources/Fonts/Genome-Thin.otf" }
+    FontLoader { id: robotoBoldFont ; source: "qrc:Resources/Fonts/Roboto-Bold.ttf" }
+    FontLoader { id: gnomeLight ; source: "qrc:Resources/Fonts/Gnome-Thin.otf" }
 
     FontLoader { id: consolas ; source: "qrc:Resources/Fonts/Consolas.ttf" }
     FontLoader { id: earlyTimes ; source: "qrc:Resources/Fonts/Early Times_light Demo.otf" }
@@ -64,7 +56,7 @@ Window {
         id: paneWindow
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        height: 200
+        height: 100
         width: minimumWidth
         MouseArea
         {
@@ -73,55 +65,28 @@ Window {
         }
 
         color: page.color
-        WifiIndicator
-        {
-            id: wifiStatus
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-        }
 
-        Rectangle
+        Label
         {
                 id: savedNumber
-                anchors.top: parent.top
-                anchors.left: wifiStatus.right
-                anchors.bottom: parent.bottom
-                width: 173
+                anchors.verticalCenter: parent.verticalCenter
                 //color: "#0F343F"
-                color: parent.color
 
-                Label
-                {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    text : counterNumber
-                    color: "#e8e9e3";
-                    font.pixelSize: 102
-                    font.family: genomeLight.name
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
+                text : "Please Enter Your Command..."
+                color: "#e8e9e3";
+                font.pixelSize: 28
+                font.family: robotoMediumFont.name
         }
         Rectangle
         {
             id: splitLine
-            anchors.left: savedNumber.right
-            anchors.leftMargin: 2
-            anchors.verticalCenter: parent.verticalCenter
-            height: 95
-            width: 1
+            anchors.top: parent.bottom
+            anchors.topMargin: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: 1
+            width: 500
             color: "#e8e9e3";
-        }
-        Rectangle
-        {
-            id: infoPanel
-            anchors.left: splitLine.right
-            anchors.verticalCenter: parent.verticalCenter
-            color: "#e8e9e3";
-            SystemStatus
-            {
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-            }
         }
     }
 
@@ -163,10 +128,119 @@ Window {
         }
     }
 
+    Rectangle
+    {
+        id: buttonPane
+        anchors.top: tabPane.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+//        color: "red"
+        color: "transparent"
+        width: childrenRect.width
+        height: childrenRect.height
+        anchors.topMargin: 30
+        anchors.leftMargin: 30
+
+
+        Rectangle
+        {
+            id: buttonPaneLeft
+            anchors.top: parent.top
+            anchors.left: parent.left
+//            color: "red"
+            color: "transparent"
+            width: childrenRect.width
+            height: childrenRect.height
+
+            CommandButton
+            {
+                id: xbutton
+                anchors.top: parent.top
+                anchors.left: parent.left
+                btn_id: "X"
+                cmd_text: "Quit"
+            }
+
+            CommandButton
+            {
+                id: ybutton
+                anchors.top: xbutton.bottom
+                anchors.left: parent.left
+                btn_id: "Y"
+                cmd_text: "Switch to firefox"
+            }
+
+            CommandButton
+            {
+                id: abutton
+                anchors.top: ybutton.bottom
+                anchors.left: parent.left
+                btn_id: "A"
+                cmd_text: "Disable Axis"
+            }
+
+            CommandButton
+            {
+                id: bbutton
+                anchors.top: abutton.bottom
+                anchors.left: parent.left
+                btn_id: "B"
+                cmd_text: "Put PC to sleep"
+            }
+        }
+
+        Rectangle
+        {
+            id: buttonPaneRight
+            anchors.top: parent.top
+            anchors.left: buttonPaneLeft.right
+//            color: "red"
+            color: "transparent"
+            width: childrenRect.width
+            height: childrenRect.height
+
+            CommandButton
+            {
+                id: rt_button
+                anchors.top: parent.top
+                anchors.left: parent.left
+                btn_id: "RT"
+                cmd_text: "Swtich to book"
+            }
+
+            CommandButton
+            {
+                id: rb_button
+                anchors.top: rt_button.bottom
+                anchors.left: parent.left
+                btn_id: "RB"
+                cmd_text: "Switch to epub reader"
+            }
+
+            CommandButton
+            {
+                id: lt_button
+                anchors.top: rb_button.bottom
+                anchors.left: parent.left
+                btn_id: "LT"
+                cmd_text: "Switch to nautilus"
+            }
+
+            CommandButton
+            {
+                id: lb_button
+                anchors.top: lt_button.bottom
+                anchors.left: parent.left
+                btn_id: "LB"
+                cmd_text: "Put PC to sleep"
+            }
+        }
+
+    }
+
     Terminal
     {
         id: terminalPane
-        anchors.top: tabPane.bottom
+        anchors.top: buttonPane.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         color: page.color

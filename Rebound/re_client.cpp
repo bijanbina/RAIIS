@@ -176,7 +176,7 @@ void ReClient::readyRead()
 
    if( read_data.contains("Live") )
    {
-       read_data.replace("Live", "")
+       read_data.replace("Live", "");
    }
    qDebug() <<  "Client: Received=" << read_data << read_data.size();
 
