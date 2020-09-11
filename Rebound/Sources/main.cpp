@@ -4,7 +4,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickView>
 #include <QQuickItem>
-#include <re_server.h>
+#include "re_server.h"
 #else
 #include <QCoreApplication>
 #include "re_client.h"

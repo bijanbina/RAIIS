@@ -12,7 +12,7 @@
 #include <QQmlProperty>
 #ifdef _WIN32
 #include <QGamepad>
-#include <re_xbox_win32.h>
+#include "re_xbox_win32.h"
 #endif
 #include "backend.h"
 

@@ -7,15 +7,26 @@ win32:QT += gamepad
 # Only uncomment if you wand native mode
 QT += gamepad
 
-SOURCES += main.cpp \
-           backend.cpp \
-           re_win.cpp \
-           re_client.cpp
+SOURCES += Sources/main.cpp \
+           Sources/backend.cpp \
+           Sources/re_win.cpp \
+           Sources/re_client.cpp
 
-win32:SOURCES += re_server.cpp \
-                 re_xbox_win32.cpp
-linux:SOURCES += re_exec.cpp \
-                 re_native.cpp
+win32:SOURCES += Sources/re_server.cpp \
+                 Sources/re_xbox_win32.cpp
+linux:SOURCES += Sources/re_exec.cpp \
+                 Sources/re_native.cpp
+
+HEADERS += \
+    Sources/backend.h \
+    Sources/re_keycode.h \
+    Sources/re_win.h \
+    Sources/re_client.h
+
+win32:HEADERS += Sources/re_server.h \
+                 Sources/re_xbox_win32.h
+linux:HEADERS += Sources/re_exec.h \
+                 Sources/re_native.h
 
 RESOURCES += Qml/ui.qrc \
              Resources/images.qrc \
@@ -25,15 +36,4 @@ OTHER_FILES += Qml/*.qml
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += Qml/
-
-HEADERS += \
-    backend.h \
-    re_keycode.h \
-    re_win.h \
-    re_client.h
-
-win32:HEADERS += re_server.h \
-                 re_xbox_win32.h
-linux:HEADERS += re_exec.h \
-                 re_native.h
 
