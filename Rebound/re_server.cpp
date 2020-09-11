@@ -401,8 +401,8 @@ void ReServer::buttonGuideChanged(bool value)
 {
     if ( value==1 )
     {
-        qDebug() << "Guide pressed";
         reboundSendKey("g",1);
+        QMetaObject::invokeMethod(ui, "uiToggle");
     }
 }
 

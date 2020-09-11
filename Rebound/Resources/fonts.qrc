@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Fonts/Roboto-Medium.ttf</file>
+        <file>Fonts/Roboto-Light.ttf</file>
+        <file>Fonts/Roboto-Regular.ttf</file>
+        <file>Fonts/Roboto-Bold.ttf</file>
+        <file>Fonts/Gnome-Thin.otf</file>
+        <file>Fonts/Consolas.ttf</file>
+        <file>Fonts/EarlyTimesLight.otf</file>
+    </qresource>
+</RCC>

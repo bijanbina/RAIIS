@@ -10,11 +10,12 @@ Window {
     id:page
     visible: false
     property alias miheight:page.width
-    minimumHeight: 460//500
+    minimumHeight: 300//500
     minimumWidth: 700
     color:"#2F343F"
     //minimumHeight: 565
     //minimumWidth: 360
+    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint// | Qt.SubWindow
 
     onVisibleChanged: {
         x = x_base + (Screen.width  - minimumWidth)  / 2;
@@ -22,7 +23,7 @@ Window {
     }
 
     onFocusObjectChanged: {
-        terminalPane.refreshFocus() //set active focus to terminal
+        //terminalPane.refreshFocus() //set active focus to terminal
     }
 
     signal start()
@@ -41,13 +42,13 @@ Window {
     signal noneSignal
 
     //Fonts:
-    FontLoader { id: robotoMediumFont ; source: "qrc:Resources/Fonts/Roboto-Medium.ttf" }
-    FontLoader { id: robotoRegularFont ; source: "qrc:Resources/Fonts/Roboto-Regular.ttf" }
-    FontLoader { id: robotoBoldFont ; source: "qrc:Resources/Fonts/Roboto-Bold.ttf" }
-    FontLoader { id: gnomeLight ; source: "qrc:Resources/Fonts/Gnome-Thin.otf" }
+    FontLoader { id: robotoMediumFont ; source: "qrc:Fonts/Roboto-Medium.ttf" }
+    FontLoader { id: robotoRegularFont ; source: "qrc:Fonts/Roboto-Regular.ttf" }
+    FontLoader { id: robotoBoldFont ; source: "qrc:Fonts/Roboto-Bold.ttf" }
+    FontLoader { id: gnomeLight ; source: "qrc:Fonts/Gnome-Thin.otf" }
 
-    FontLoader { id: consolas ; source: "qrc:Resources/Fonts/Consolas.ttf" }
-    FontLoader { id: earlyTimes ; source: "qrc:Resources/Fonts/Early Times_light Demo.otf" }
+    FontLoader { id: consolas ; source: "qrc:Fonts/Consolas.ttf" }
+    FontLoader { id: earlyTimes ; source: "qrc:Fonts/EarlyTimesLight.otf" }
 
 
 
@@ -137,8 +138,7 @@ Window {
         color: "transparent"
         width: childrenRect.width
         height: childrenRect.height
-        anchors.topMargin: 30
-        anchors.leftMargin: 30
+        anchors.topMargin: 20
 
 
         Rectangle
@@ -146,6 +146,7 @@ Window {
             id: buttonPaneLeft
             anchors.top: parent.top
             anchors.left: parent.left
+            anchors.leftMargin: 5
 //            color: "red"
             color: "transparent"
             width: childrenRect.width
@@ -237,26 +238,13 @@ Window {
 
     }
 
-    Terminal
-    {
-        id: terminalPane
-        anchors.top: buttonPane.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        color: page.color
-    }
-
-    NumberAnimation
-    {
-        id: changeTabAnime
-        target: terminalPane
-        property: "opacity"
-        duration: 300
-        easing.type: Easing.InOutQuad
-    }
-
     //properties
     property int x_base: 0
     property int y_base: 0
+
+    function uiToggle()
+    {
+        page.visible = !page.visible
+    }
 
 }

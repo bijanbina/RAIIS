@@ -46,7 +46,9 @@ Rectangle {
         text : button_text
         color: ( button_enabled ) ? color_disabled : color_stroke;
         font.pixelSize: 16
+        font.weight: Font.Light
         font.family: earlyTimes.name
+        antialiasing: true
     }
     MouseArea
     {

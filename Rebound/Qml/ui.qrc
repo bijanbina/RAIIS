@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="RoundButton.qml">RoundButton.qml</file>
+        <file alias="Switcher.qml">Switcher.qml</file>
+        <file alias="SystemStatus.qml">SystemStatus.qml</file>
+        <file alias="Terminal.qml">Terminal.qml</file>
+        <file alias="WifiIndicator.qml">WifiIndicator.qml</file>
+        <file alias="main.qml">main.qml</file>
+        <file alias="XboxButton.qml">XboxButton.qml</file>
+        <file alias="RButton.qml">RButton.qml</file>
+        <file alias="CommandButton.qml">CommandButton.qml</file>
+    </qresource>
+</RCC>

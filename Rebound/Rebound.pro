@@ -17,12 +17,11 @@ win32:SOURCES += re_server.cpp \
 linux:SOURCES += re_exec.cpp \
                  re_native.cpp
 
-RESOURCES += ui.qrc \
-             images.qrc \
-             fonts.qrc
+RESOURCES += Qml/ui.qrc \
+             Resources/images.qrc \
+             Resources/fonts.qrc
 
-OTHER_FILES += \
-               Qml/*.qml
+OTHER_FILES += Qml/*.qml
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += Qml/
