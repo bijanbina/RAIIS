@@ -2,12 +2,10 @@
 
 //HINSTANCE hGetProcIDDLL;
 //FARPROC lpfnGetProcessID;
-typedef int(__stdcall * pICFUNC)(int, ReXboxController &);
-pICFUNC getControllerData;
 
-void ReXbox_init()
+ReXboxWin32::ReXboxWin32(QObject *parent) : QObject(parent)
 {
-
+    guide_last_val = 0;
     //First create an HINSTANCE of the xinput1_3.dll.  Probably should use system variables to find it
     //but whatever.
     HINSTANCE hGetProcIDDLL = LoadLibraryA("C:/Windows/System32/xinput1_3.dll");  //In Visual Studio replace this
@@ -16,12 +14,27 @@ void ReXbox_init()
     //Get the address of ordinal 100.
     FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hGetProcIDDLL), (LPCSTR)100);
     getControllerData = pICFUNC(lpfnGetProcessID);
+
+    guideTimer = new QTimer;
+    guideTimer->start(RE_CHECK_BTN);
+    connect(guideTimer, SIGNAL(timeout()), this, SLOT(ReXbox_getGuideBtn()));
 }
 
-int ReXbox_getGuideBtn()
+ReXboxWin32::~ReXboxWin32()
+{
+    ;
+}
+
+int ReXboxWin32::ReXbox_getGuideBtn()
 {
     ReXboxController buttons;
     getControllerData(0, buttons);  //call the function with the controller number(zero based) and
                     //the pointer to the ControllerStruct.
-    return buttons.guideButton;  //simply access the variable like normal.  Easy peasy.
+
+    int value = buttons.guideButton;
+    if (guide_last_val != value)
+    {
+        guide_last_val = value;
+        emit buttonGuideChanged(value);
+    }
 }

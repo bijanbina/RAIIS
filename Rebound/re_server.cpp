@@ -23,7 +23,6 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
 
 #ifdef _WIN32
     pad = new QGamepad;
-    ReXbox_init();
 
     connect(pad, SIGNAL(buttonAChanged(bool)),
             this, SLOT(buttonAChanged(bool)));
@@ -62,8 +61,8 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
             this, SLOT(buttonSelectChanged(bool)));
     connect(pad, SIGNAL(buttonCenterChanged(bool)),
             this, SLOT(buttonCenterChanged(bool)));
-    connect(pad, SIGNAL(buttonGuideChanged(bool)),
-            this, SLOT(buttonGuideChanged(bool)));
+//    connect(pad, SIGNAL(buttonGuideChanged(bool)),
+//            this, SLOT(buttonGuideChanged(bool)));
 
     connect(pad, SIGNAL(buttonLeftChanged(bool)),
             this, SLOT(buttonLeftChanged(bool)));
@@ -75,9 +74,8 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
             this, SLOT(buttonDownChanged(bool)));
 
     //XBOX Guide Button check
-    guideTimer = new QTimer;
-    connect(guideTimer, SIGNAL(timeout()), this, SLOT(buttonGuideCheck()));
-    guideTimer->start(RE_CHECK_BTN);
+    backup = new ReXboxWin32;
+    connect(backup, SIGNAL(buttonGuideChanged(bool)), SLOT(buttonGuideChanged(bool)));
 
 #endif
 
@@ -401,20 +399,10 @@ void ReServer::buttonCenterChanged(bool value)
 
 void ReServer::buttonGuideChanged(bool value)
 {
-    qDebug() << "Guide pressed";
-    if ( value==1 )
-    {
-        reboundSendKey("g",1);
-    }
-}
-
-void ReServer::buttonGuideCheck()
-{
-    int value = ReXbox_getGuideBtn();
     if ( value==1 )
     {
         qDebug() << "Guide pressed";
-//        reboundSendKey("g",1);
+        reboundSendKey("g",1);
     }
 }
 

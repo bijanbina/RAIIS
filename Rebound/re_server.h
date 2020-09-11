@@ -59,7 +59,6 @@ public slots:
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
 
-    void buttonGuideCheck();
 private:
     void reboundSendKey(const char *data, int size);
 
@@ -88,8 +87,8 @@ private:
     double last_ra_y = 0; //last right axis y value
 
 #ifdef _WIN32
-    QGamepad *pad;
-    QTimer *guideTimer; //XBOX Guide Button check
+    QGamepad    *pad;
+    ReXboxWin32 *backup;
 #endif
 
     QObject *ui;

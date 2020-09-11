@@ -1,6 +1,9 @@
 #ifndef RE_XBOX_WIN32_H
 #define RE_XBOX_WIN32_H
 
+#include "backend.h"
+#include <QObject>
+#include <QTimer>
 #include <windows.h>
 #include <iostream>
 
@@ -19,7 +22,27 @@ struct ReXboxController
     short rJoyX;  //Right Joystick X
 };
 
-void ReXbox_init();
-int ReXbox_getGuideBtn();
+class ReXboxWin32 : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit ReXboxWin32(QObject *parent = 0);
+    ~ReXboxWin32();
+
+signals:
+    void buttonGuideChanged(bool);
+
+public slots:
+    int ReXbox_getGuideBtn();
+
+private:
+    QTimer *guideTimer; //XBOX Guide Button check
+    int guide_last_val;
+
+    typedef int(__stdcall * pICFUNC)(int, ReXboxController &);
+    pICFUNC getControllerData;
+
+};
 
 #endif // RE_XBOX_WIN32_H
