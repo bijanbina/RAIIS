@@ -12,6 +12,7 @@
 #include <QQmlProperty>
 #ifdef _WIN32
 #include <QGamepad>
+#include <re_xbox_win32.h>
 #endif
 #include "backend.h"
 
@@ -57,6 +58,8 @@ public slots:
     void buttonRightChanged(bool);
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
+
+    void buttonGuideCheck();
 private:
     void reboundSendKey(const char *data, int size);
 
@@ -86,6 +89,7 @@ private:
 
 #ifdef _WIN32
     QGamepad *pad;
+    QTimer *guideTimer; //XBOX Guide Button check
 #endif
 
     QObject *ui;

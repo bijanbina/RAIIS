@@ -12,7 +12,8 @@ SOURCES += main.cpp \
            re_win.cpp \
            re_client.cpp
 
-win32:SOURCES += re_server.cpp
+win32:SOURCES += re_server.cpp \
+                 re_xbox_win32.cpp
 linux:SOURCES += re_exec.cpp \
                  re_native.cpp
 
@@ -32,7 +33,8 @@ HEADERS += \
     re_win.h \
     re_client.h
 
-win32:HEADERS += re_server.h
+win32:HEADERS += re_server.h \
+                 re_xbox_win32.h
 linux:HEADERS += re_exec.h \
                  re_native.h
 

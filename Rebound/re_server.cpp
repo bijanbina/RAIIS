@@ -12,7 +12,19 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
     commandMode=false;
     connection_socket = NULL;
 
+    live = new QTimer;
+    watchdog = new QTimer;
+    bufferTimer = new QTimer;
+    bufferTimer->setSingleShot(true);
+//    connect(bufferTimer, SIGNAL(timeout()), this, SLOT(sendBuffer()));
+//    bufferTimer->setInterval(JOYSTICK_DELAY);
+    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
+    connect(live, SIGNAL(timeout()), this, SLOT(live_timeout()));
+
+#ifdef _WIN32
     pad = new QGamepad;
+    ReXbox_init();
+
     connect(pad, SIGNAL(buttonAChanged(bool)),
             this, SLOT(buttonAChanged(bool)));
     connect(pad, SIGNAL(buttonBChanged(bool)),
@@ -62,6 +74,13 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
     connect(pad, SIGNAL(buttonDownChanged(bool)),
             this, SLOT(buttonDownChanged(bool)));
 
+    //XBOX Guide Button check
+    guideTimer = new QTimer;
+    connect(guideTimer, SIGNAL(timeout()), this, SLOT(buttonGuideCheck()));
+    guideTimer->start(RE_CHECK_BTN);
+
+#endif
+
     server = new QTcpServer;
     connect(server, SIGNAL(newConnection()),
             this, SLOT(acceptConnection()));
@@ -76,15 +95,6 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
         qDebug() << "Server failed";
         qDebug() << "Error message is:" << server->errorString();
     }
-
-    live = new QTimer;
-    watchdog = new QTimer;
-    bufferTimer = new QTimer;
-    bufferTimer->setSingleShot(true);
-//    connect(bufferTimer, SIGNAL(timeout()), this, SLOT(sendBuffer()));
-//    bufferTimer->setInterval(JOYSTICK_DELAY);
-    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
-    connect(live, SIGNAL(timeout()), this, SLOT(live_timeout()));
 }
 
 ReServer::~ReServer()
@@ -395,6 +405,16 @@ void ReServer::buttonGuideChanged(bool value)
     if ( value==1 )
     {
         reboundSendKey("g",1);
+    }
+}
+
+void ReServer::buttonGuideCheck()
+{
+    int value = ReXbox_getGuideBtn();
+    if ( value==1 )
+    {
+        qDebug() << "Guide pressed";
+//        reboundSendKey("g",1);
     }
 }
 
