@@ -17,12 +17,11 @@
 #define RE_IP        "192.168.88.25"
 
 //#define RE_TEST_EN
-//#define RE_NATIVE_EN
 
 #define RE_TIMEOUT    1000
 #define RE_WATCHDOG   1000  //Watchdog interval
 #define RE_Live       100   //Live send interval
-#define RE_CHECK_BTN  10    //Live send interval
+#define RE_CHECK_BTN  4     //Live send interval
 
 struct screen_pos{
     int x;

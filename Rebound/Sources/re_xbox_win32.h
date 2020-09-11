@@ -4,6 +4,7 @@
 #include "backend.h"
 #include <QObject>
 #include <QTimer>
+#include <QDebug>
 #include <windows.h>
 #include <iostream>
 

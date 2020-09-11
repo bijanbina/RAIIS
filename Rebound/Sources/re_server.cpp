@@ -148,6 +148,7 @@ void ReServer::watchdog_timeout()
     live->stop();
     watchdog->stop();
     delete connection_socket;
+    connection_socket = NULL;
 
 //    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
 //    connection_socket->write("a",1);
@@ -184,6 +185,11 @@ void ReServer::readyRead()
     QByteArray data = connection_socket->readAll();
     if(data.length() == 4)
     {
+        watchdog->start(RE_WATCHDOG);
+    }
+    else if (data.contains("Live"))
+    {
+        qDebug() << "Server: Misterious Live" << data;
         watchdog->start(RE_WATCHDOG);
     }
     else
