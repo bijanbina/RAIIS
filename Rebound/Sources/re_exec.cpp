@@ -1,8 +1,9 @@
 #include "re_exec.h"
 
-ReExec::ReExec()
+ReExec::ReExec(QObject *item, QObject *parent) : QObject(parent)
 {
-
+    //init
+    ui = item;
 }
 
 void ReExec::buttonAPressed()
@@ -110,11 +111,7 @@ void ReExec::buttonRAxisDown()
 void ReExec::buttonStartChanged()
 {
     qDebug() <<  "Enable autoscroll";
-    system("xdotool key Menu");
-    system("xdotool key Up");
-    system("xdotool key Up");
-    system("xdotool key Up");
-    system("xdotool key Return");
+    system("./Scripts/menu_button");
 }
 
 void ReExec::buttonSelectChanged()
@@ -131,8 +128,8 @@ void ReExec::buttonCenterChanged()
 
 void ReExec::buttonGuideChanged()
 {
-//    qDebug() <<  "Enable autoscroll";
 //    system("xdotool key Escape &");
+    QMetaObject::invokeMethod(ui, "uiToggle");
 }
 
 void ReExec::buttonDownChanged()

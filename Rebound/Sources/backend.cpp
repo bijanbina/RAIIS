@@ -79,6 +79,11 @@ void updateScreenInfo(QObject *item)
 //    int minimumHeight = QQmlProperty::read(item, "minimumHeight");
 //    x:x_base + (Screen.width  - minimumWidth)  / 2
 //    y:y_base + (Screen.height - minimumHeight) / 2
+
+#ifdef __linux__
+    QQmlProperty::write(item, "minimumHeight", 330);
+#endif
+
     QQmlProperty::write(item, "visible", 1);
 
     //QMetaObject::invokeMethod(item, "show");

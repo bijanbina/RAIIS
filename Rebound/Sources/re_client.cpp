@@ -1,12 +1,14 @@
 #include "re_client.h"
 #include <string.h>
 
-ReClient::ReClient(QObject *parent) : QObject(parent)
+ReClient::ReClient(QObject *item, QObject *parent) : QObject(parent)
 {
     //init
+    ui = item;
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode=false;
+    exec = new ReExec(item);
 
     connect(&tcpClient, SIGNAL(connected()), this, SLOT(connected()));
     connect(&tcpClient, SIGNAL(disconnected()), this, SLOT(disconnected()));
@@ -183,111 +185,111 @@ void ReClient::readyRead()
 #ifdef __linux__
    if( read_data=="a" )
    {
-       exec.buttonAPressed();
+       exec->buttonAPressed();
    }
    else if( read_data=="b" )
    {
-       exec.buttonBPressed();
+       exec->buttonBPressed();
    }
    else if( read_data=="c" )
    {
-       exec.buttonCenterChanged();
+       exec->buttonCenterChanged();
    }
    else if( read_data=="d" )
    {
-       exec.buttonDownChanged();
+       exec->buttonDownChanged();
    }
    else if( read_data=="e" ) //Left Axis
    {
-       exec.buttonLAxisRight();
+       exec->buttonLAxisRight();
    }
    else if( read_data=="f" ) //Left Axis
    {
-       exec.buttonLAxisLeft();
+       exec->buttonLAxisLeft();
    }
    else if( read_data=="g" )
    {
-       exec.buttonGuideChanged();
+       exec->buttonGuideChanged();
    }
    else if( read_data=="h" ) //Left Axis
    {
-       exec.buttonLAxisUp();
+       exec->buttonLAxisUp();
    }
    else if( read_data=="i" ) //Left Axis
    {
-       exec.buttonLAxisDown();
+       exec->buttonLAxisDown();
    }
    else if( read_data=="j" ) //Right Axis
    {
-       exec.buttonRAxisRight();
+       exec->buttonRAxisRight();
    }
    else if( read_data=="k" ) //Right Axis
    {
-       exec.buttonRAxisLeft();
+       exec->buttonRAxisLeft();
    }
    else if( read_data=="l" )
    {
-       exec.buttonLeftChanged();
+       exec->buttonLeftChanged();
    }
    else if( read_data=="m" )
    {
-       exec.buttonStartChanged();
+       exec->buttonStartChanged();
    }
    else if( read_data=="n" ) //Right Axis
    {
-       exec.buttonRAxisUp();
+       exec->buttonRAxisUp();
    }
    else if( read_data=="o" ) //Right Axis
    {
-       exec.buttonRAxisDown();
+       exec->buttonRAxisDown();
    }
    else if( read_data=="x" )
    {
-       exec.buttonXPressed();
+       exec->buttonXPressed();
    }
    else if( read_data=="y" )
    {
-       exec.buttonYPressed();
+       exec->buttonYPressed();
    }
    else if( read_data=="l1" )
    {
-       exec.buttonL1Pressed();
+       exec->buttonL1Pressed();
    }
    else if( read_data=="l2" )
    {
-       exec.buttonL2Pressed();
+       exec->buttonL2Pressed();
    }
    else if( read_data=="l3" )
    {
-       exec.buttonL3Pressed();
+       exec->buttonL3Pressed();
    }
    else if( read_data=="r" )
    {
-       exec.buttonRightChanged();
+       exec->buttonRightChanged();
    }
    else if( read_data=="r1" )
    {
-       exec.buttonR1Pressed();
+       exec->buttonR1Pressed();
    }
    else if( read_data=="r2" )
    {
-       exec.buttonR2Pressed();
+       exec->buttonR2Pressed();
    }
    else if( read_data=="r3" )
    {
-       exec.buttonR3Pressed();
+       exec->buttonR3Pressed();
    }
    else if( read_data=="s" )
    {
-       exec.buttonSelectChanged();
+       exec->buttonSelectChanged();
    }
    else if( read_data=="u" )
    {
-       exec.buttonUpChanged();
+       exec->buttonUpChanged();
    }
    else
    {
-       qDebug() << "Get unkdown packet:" << read_data;
+       qDebug() << "Unkdown packet:" << read_data << read_data.size();
    }
 #endif
 }

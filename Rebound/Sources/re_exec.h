@@ -5,10 +5,12 @@
 #include <QDebug>
 #include "backend.h"
 
-class ReExec
+class ReExec: public QObject
 {
+    Q_OBJECT
+
 public:
-    ReExec();
+    ReExec(QObject *item, QObject *parent = 0);
 
     void buttonAPressed();
     void buttonBPressed();
@@ -43,6 +45,10 @@ public:
     void buttonUpChanged();
     void buttonRightChanged();
     void buttonLeftChanged();
+
+private:
+    QObject *ui;
+
 };
 
 #endif // RE_EXEC_H

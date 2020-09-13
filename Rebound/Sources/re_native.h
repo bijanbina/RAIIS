@@ -22,7 +22,7 @@ class ReNative : public QObject
     Q_OBJECT
 
 public:
-    explicit ReNative(QObject *parent = 0);
+    explicit ReNative(QObject *item, QObject *parent = 0);
     ~ReNative();
 
     void loop();
@@ -76,8 +76,10 @@ private:
     double last_ra_y = 0; //last right axis y value
 
 #ifdef __linux__
-    ReExec exec;
+    ReExec *exec;
 #endif
+
+    QObject *ui;
 };
 
 #endif // ReNative_H

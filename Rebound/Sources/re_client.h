@@ -21,7 +21,7 @@ class ReClient : public QObject
     Q_OBJECT
 
 public:
-    explicit ReClient(QObject *parent = 0);
+    explicit ReClient(QObject *item, QObject *parent = 0);
     ~ReClient();
 signals:
     void errorConnection();
@@ -56,7 +56,7 @@ private:
     QObject *ui;
 
 #ifdef __linux__
-    ReExec exec;
+    ReExec *exec;
 #endif
 };
 

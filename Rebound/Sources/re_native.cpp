@@ -3,9 +3,10 @@
 
 #define JOYSTICK_DELAY 100
 
-ReNative::ReNative(QObject *parent) : QObject(parent)
+ReNative::ReNative(QObject *item, QObject *parent) : QObject(parent)
 {
     //init
+    ui = item;
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode=false;
@@ -161,7 +162,7 @@ void ReNative::buttonAChanged(bool value)
     qDebug() << "A Pressed";
     if ( value==1 )
     {
-        exec.buttonAPressed();
+        exec->buttonAPressed();
     }
 }
 
@@ -169,7 +170,7 @@ void ReNative::buttonBChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonBPressed();
+        exec->buttonBPressed();
     }
 }
 
@@ -177,7 +178,7 @@ void ReNative::buttonXChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonXPressed();
+        exec->buttonXPressed();
     }
 }
 
@@ -185,7 +186,7 @@ void ReNative::buttonYChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonYPressed();
+        exec->buttonYPressed();
     }
 }
 
@@ -193,7 +194,7 @@ void ReNative::buttonL1Changed(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonL1Pressed();
+        exec->buttonL1Pressed();
     }
 }
 
@@ -201,7 +202,7 @@ void ReNative::buttonL2Changed(double value)
 {
     if ( value==1 )
     {
-        exec.buttonL2Pressed();
+        exec->buttonL2Pressed();
     }
 }
 
@@ -210,7 +211,7 @@ void ReNative::buttonL3Changed(bool value)
     qDebug() << "l3 pressed";
     if ( value==1 )
     {
-        exec.buttonL3Pressed();
+        exec->buttonL3Pressed();
     }
 }
 
@@ -218,7 +219,7 @@ void ReNative::buttonR1Changed(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonR1Pressed();
+        exec->buttonR1Pressed();
     }
 }
 
@@ -227,7 +228,7 @@ void ReNative::buttonR2Changed(double value)
     qDebug() << "r2 pressed";
     if ( value==1 )
     {
-        exec.buttonR2Pressed();
+        exec->buttonR2Pressed();
     }
 }
 
@@ -236,7 +237,7 @@ void ReNative::buttonR3Changed(bool value)
     qDebug() << "r3 pressed";
     if ( value==1 )
     {
-        exec.buttonR3Pressed();
+        exec->buttonR3Pressed();
     }
 }
 
@@ -247,12 +248,12 @@ void ReNative::buttonAxisLxChanged(double value)
         if( value==1 )
         {
             last_la_x = 1;
-            exec.buttonLAxisRight();
+            exec->buttonLAxisRight();
         }
         else if( value==-1 )
         {
             last_la_x = 1;
-            exec.buttonLAxisLeft();
+            exec->buttonLAxisLeft();
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -268,12 +269,12 @@ void ReNative::buttonAxisLyChanged(double value)
         if( value<-0.99 ) //up
         {
             last_la_y = 1;
-            exec.buttonLAxisUp();
+            exec->buttonLAxisUp();
         }
         else if( value>0.99 ) //down
         {
             last_la_y = 1;
-            exec.buttonLAxisDown();
+            exec->buttonLAxisDown();
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -289,12 +290,12 @@ void ReNative::buttonAxisRxChanged(double value)
         if( value==1 )
         {
             last_la_x = 1;
-            exec.buttonRAxisRight();
+            exec->buttonRAxisRight();
         }
         else if( value==-1 )
         {
             last_la_x = 1;
-            exec.buttonRAxisLeft();
+            exec->buttonRAxisLeft();
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -311,12 +312,12 @@ void ReNative::buttonAxisRyChanged(double value)
         if( value<-0.99 ) //up
         {
             last_ra_y = 1;
-            exec.buttonRAxisUp();
+            exec->buttonRAxisUp();
         }
         else if( value>0.99 ) //down
         {
             last_ra_y = 1;
-            exec.buttonRAxisDown();
+            exec->buttonRAxisDown();
         }
     }
     else if( value<0.5 && value>-0.5 )
@@ -329,7 +330,7 @@ void ReNative::buttonStartChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonStartChanged();
+        exec->buttonStartChanged();
     }
 }
 
@@ -337,7 +338,7 @@ void ReNative::buttonSelectChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonSelectChanged();
+        exec->buttonSelectChanged();
     }
 }
 
@@ -346,7 +347,7 @@ void ReNative::buttonCenterChanged(bool value)
     if ( value==1 )
     {
         qDebug() << "Center pressed";
-        exec.buttonCenterChanged();
+        exec->buttonCenterChanged();
     }
 }
 
@@ -355,7 +356,7 @@ void ReNative::buttonGuideChanged(bool value)
     qDebug() << "Guide pressed";
     if ( value==1 )
     {
-        exec.buttonGuideChanged();
+        exec->buttonGuideChanged();
     }
 }
 
@@ -363,7 +364,7 @@ void ReNative::buttonLeftChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonLeftChanged();
+        exec->buttonLeftChanged();
     }
 }
 
@@ -371,7 +372,7 @@ void ReNative::buttonRightChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonRightChanged();
+        exec->buttonRightChanged();
     }
 }
 
@@ -379,7 +380,7 @@ void ReNative::buttonUpChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonUpChanged();
+        exec->buttonUpChanged();
     }
 }
 
@@ -387,7 +388,7 @@ void ReNative::buttonDownChanged(bool value)
 {
     if ( value==1 )
     {
-        exec.buttonDownChanged();
+        exec->buttonDownChanged();
     }
 }
 
