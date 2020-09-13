@@ -80,7 +80,7 @@ private:
 #endif
 
     QObject *ui;
-    QTimer *std_timer;
+    QTimer  *std_timer;
 };
 
 #endif // ReNative_H

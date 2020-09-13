@@ -22,6 +22,7 @@
 #define RE_WATCHDOG   1000  //Watchdog interval
 #define RE_Live       100   //Live send interval
 #define RE_CHECK_BTN  4     //Live send interval
+#define RE_CHECK_IN   4     //check input(native mode)
 
 struct screen_pos{
     int x;
