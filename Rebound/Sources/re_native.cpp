@@ -50,7 +50,7 @@ void ReNative::keyParser(QString key, int value)
 //    qDebug() << key << value;
     if( key==RE_KEY_HOMEPAGE )
     {
-        buttonCenterChanged(value);
+        buttonGuideChanged(value);
     }
     else if( key==RE_KEY_SOUTH )
     {
