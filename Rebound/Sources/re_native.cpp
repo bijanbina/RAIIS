@@ -10,17 +10,28 @@ ReNative::ReNative(QObject *item, QObject *parent) : QObject(parent)
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode=false;
+
+    //read from stdin
+    stdin_notify = new QSocketNotifier(STDIN_FILENO, QSocketNotifier::Read, this);
+    connect(stdin_notify, SIGNAL(activated(int)), this, SLOT(readyData()));
+    stdin_notify->setEnabled(true);
+
+    stdin_file = new QFile;
+    stdin_file->open(stdin, QIODevice::ReadOnly);
+}
+
+void ReNative::readyData()
+{
+    qDebug() << stdin_file->readLine();
 }
 
 void ReNative::loop()
 {
-    QFile in;
-    in.open(stdin, QIODevice::ReadOnly);
     QStringList space_separated;
 
     while(true)
     {
-         QString line = in.readLine();
+         QString line = stdin_file->readLine();
          if( line.contains("type 1") || line.contains("type 3"))
          {
              space_separated = line.split(" ");

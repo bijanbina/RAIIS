@@ -405,10 +405,10 @@ void ReServer::buttonCenterChanged(bool value)
 
 void ReServer::buttonGuideChanged(bool value)
 {
-    if ( value==1 )
+    if ( value==0 )
     {
         reboundSendKey("g",1);
-        QMetaObject::invokeMethod(ui, "uiToggle");
+//        QMetaObject::invokeMethod(ui, "uiToggle");
     }
 }
 

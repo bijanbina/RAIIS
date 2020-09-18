@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <QTimer>
 #include <QQmlProperty>
+#include <QSocketNotifier>
 #include <QFile>
 #include <QDebug>
 #include "backend.h"
@@ -56,6 +57,8 @@ public slots:
     void buttonRightChanged(bool);
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
+
+    void readyData();
 private:
     void keyParser(QString key, int value);
 
@@ -79,8 +82,10 @@ private:
     ReExec *exec;
 #endif
 
-    QObject *ui;
-    QTimer  *std_timer;
+    QObject         *ui;
+    QTimer          *std_timer;
+    QSocketNotifier *stdin_notify;
+    QFile           *stdin_file;
 };
 
 #endif // ReNative_H

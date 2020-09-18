@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     {
         ReNative *native_cl;
         native_cl = new ReNative(item);
-        native_cl->loop();
+//        native_cl->loop();
     }
     else
     {
@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
         channel_cl = new ReClient(item);
     }
 #endif
-
 
     return app.exec();
 }
