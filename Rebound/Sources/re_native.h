@@ -26,7 +26,6 @@ public:
     explicit ReNative(QObject *item, QObject *parent = 0);
     ~ReNative();
 
-    void loop();
 signals:
     void errorConnection();
 

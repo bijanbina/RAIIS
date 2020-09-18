@@ -4,18 +4,29 @@ ReExec::ReExec(QObject *item, QObject *parent) : QObject(parent)
 {
     //init
     ui = item;
+
+    //switching tab
+    timer_tab = new QTimer;
+    timer_tab->setSingleShot(true);
+    connect(timer_tab, SIGNAL(timeout()), this, SLOT(start()));
+}
+
+void ReExec::tab_timeout()
+{
+    timer_tab->stop();
+    system("xdotool keyup Alt_L &");
 }
 
 void ReExec::buttonAPressed()
 {
     qDebug() <<  "Client: Go Next Page";
-    system("xdotool key Right &");
+    system("./Scripts/button_a &");
 }
 
 void ReExec::buttonBPressed()
 {
     qDebug() <<  "Client: Go Previous Page";
-    system("xdotool key Left");
+    system("./Scripts/button_b &");
 }
 
 void ReExec::buttonXPressed()
@@ -111,7 +122,7 @@ void ReExec::buttonRAxisDown()
 void ReExec::buttonStartChanged()
 {
     qDebug() <<  "Enable autoscroll";
-    system("./Scripts/menu_button");
+    system("./Scripts/menu_button &");
 }
 
 void ReExec::buttonSelectChanged()
@@ -147,15 +158,22 @@ void ReExec::buttonUpChanged()
 void ReExec::buttonRightChanged()
 {
     qDebug() <<  "Next Window";
-    system("xdotool key Alt+Escape &");
+    if( !timer_tab->isActive() )
+    {
+        system("xdotool keydown Alt_L &");
+    }
+    timer_tab->start(RE_TAB_TIME);
+    system("xdotool key Shift+Tab &");
 }
 
 void ReExec::buttonLeftChanged()
 {
     qDebug() <<  "Previous Window";
-    system("xdotool key Shift+Alt+Escape &");
+    if( !timer_tab->isActive() )
+    {
+        system("xdotool keydown Alt_L &");
+    }
+    timer_tab->start(RE_TAB_TIME);
+    system("xdotool key Tab &");
 }
-
-
-
 

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QTimer>
 #include "backend.h"
 
 class ReExec: public QObject
@@ -46,8 +47,12 @@ public:
     void buttonRightChanged();
     void buttonLeftChanged();
 
+private slots:
+    void tab_timeout();
+
 private:
     QObject *ui;
+    QTimer  *timer_tab;
 
 };
 

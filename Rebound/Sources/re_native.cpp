@@ -22,37 +22,27 @@ ReNative::ReNative(QObject *item, QObject *parent) : QObject(parent)
 
 void ReNative::readyData()
 {
-    qDebug() << stdin_file->readLine();
-}
-
-void ReNative::loop()
-{
-    QStringList space_separated;
-
-    while(true)
+    QString line = stdin_file->readLine();
+    if( line.contains("type 1") || line.contains("type 3"))
     {
-         QString line = stdin_file->readLine();
-         if( line.contains("type 1") || line.contains("type 3"))
-         {
-             space_separated = line.split(" ");
+        space_separated = line.split(" ");
 
-             if( space_separated.count()>10 )
-             {
-                 QString key_code = space_separated[8];
-                 QString key_val = space_separated[10];
+        if( space_separated.count()>10 )
+        {
+            QString key_code = space_separated[8];
+            QString key_val = space_separated[10];
 
-                 //clean string
-                 key_code.chop(2);
-                 key_code.remove(0, 2);
+            //clean string
+            key_code.chop(2);
+            key_code.remove(0, 2);
 
-                 key_val.chop(1);
+            key_val.chop(1);
 
 //                 qDebug() << key_code << key_val;
 
-                 int key_val_int = key_val.toInt();
-                 keyParser(key_code, key_val_int);
-             }
-         }
+            int key_val_int = key_val.toInt();
+            keyParser(key_code, key_val_int);
+        }
     }
 }
 
