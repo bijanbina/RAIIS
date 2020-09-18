@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QTimer>
 #include "backend.h"
+#include "re_x11.h"
 
 class ReExec: public QObject
 {
@@ -53,7 +54,6 @@ private slots:
 private:
     QObject *ui;
     QTimer  *timer_tab;
-
 };
 
 #endif // RE_EXEC_H

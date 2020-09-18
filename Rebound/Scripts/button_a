@@ -12,7 +12,7 @@ if [[ "$ACTIVE_WIN_PROCESS" = "evince"
 elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
 	xdotool key Ctrl+Right
 elif [ "$ACTIVE_WIN_PROCESS" = "firefox" ]; then
-	xdotool key Ctrl+Shift+Tab
+	xdotool key Ctrl+Tab
 else
 	echo "$ACTIVE_WIN_PROCESS"
 fi

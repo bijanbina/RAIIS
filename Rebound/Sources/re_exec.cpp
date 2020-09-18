@@ -4,17 +4,18 @@ ReExec::ReExec(QObject *item, QObject *parent) : QObject(parent)
 {
     //init
     ui = item;
+    reX11_init();
 
     //switching tab
     timer_tab = new QTimer;
     timer_tab->setSingleShot(true);
-    connect(timer_tab, SIGNAL(timeout()), this, SLOT(start()));
+    connect(timer_tab, SIGNAL(timeout()), this, SLOT(tab_timeout()));
 }
 
 void ReExec::tab_timeout()
 {
     timer_tab->stop();
-    system("xdotool keyup Alt_L &");
+    sendFakeEvent(0, XK_Alt_L); //A release
 }
 
 void ReExec::buttonAPressed()
@@ -160,20 +161,14 @@ void ReExec::buttonRightChanged()
     qDebug() <<  "Next Window";
     if( !timer_tab->isActive() )
     {
-        system("xdotool keydown Alt_L &");
-    }
-    timer_tab->start(RE_TAB_TIME);
-    system("xdotool key Shift+Tab &");
-}
-
-void ReExec::buttonLeftChanged()
-{
-    qDebug() <<  "Previous Window";
-    if( !timer_tab->isActive() )
-    {
-        system("xdotool keydown Alt_L &");
+         sendFakeEvent(1, XK_Alt_L); //ALT_L press
     }
     timer_tab->start(RE_TAB_TIME);
     system("xdotool key Tab &");
 }
 
+void ReExec::buttonLeftChanged()
+{
+    qDebug() <<  "Previous Window";
+//    system("xdotool key Tab &");
+}
