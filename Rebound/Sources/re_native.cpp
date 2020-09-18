@@ -23,6 +23,7 @@ ReNative::ReNative(QObject *item, QObject *parent) : QObject(parent)
 void ReNative::readyData()
 {
     QString line = stdin_file->readLine();
+    QStringList space_separated;
     if( line.contains("type 1") || line.contains("type 3"))
     {
         space_separated = line.split(" ");
