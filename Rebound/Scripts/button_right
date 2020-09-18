@@ -6,15 +6,11 @@ ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
 
 echo "'$ACTIVE_WIN_PROCESS'"
 
-if [[ "$ACTIVE_WIN_PROCESS" = "evince" 
- 	|| "$ACTIVE_WIN_PROCESS" = "com.github.john" ]]; then
+if [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
 	xdotool key Right
 elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
 	xdotool key Ctrl+Right
-elif [ "$ACTIVE_WIN_PROCESS" = "firefox" ]; then
-	xdotool key Ctrl+Tab
-elif [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
-	xdotool key Return
 else
 	echo "$ACTIVE_WIN_PROCESS"
 fi
+

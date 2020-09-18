@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ACTIVE_WIN_ID=$(xdotool getwindowfocus)
+ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
+ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
+
+echo "'$ACTIVE_WIN_PROCESS'"
+
+if [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
+	xdotool key Left
+elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
+	xdotool key Ctrl+Left
+else
+	echo "$ACTIVE_WIN_PROCESS"
+fi
+

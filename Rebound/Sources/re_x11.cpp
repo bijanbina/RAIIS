@@ -43,6 +43,4 @@ void sendFakeEvent(int isPress, int keysym)
 
     XTestFakeKeyEvent(display, keycode, isPress, 0);
     XFlush(display);
-
-    printf("bye\n");
 }

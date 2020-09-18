@@ -44,8 +44,7 @@ void ReExec::buttonYPressed()
 
 void ReExec::buttonL1Pressed()
 {
-    qDebug() <<  "Reset F";
-    system("xdotool key Left &");
+    qDebug() <<  "L1";
 }
 
 void ReExec::buttonL2Pressed()
@@ -62,10 +61,8 @@ void ReExec::buttonL3Pressed()
 
 void ReExec::buttonR1Pressed()
 {
-//    qDebug() <<  "Faster";
-//#ifdef __linux__
-//       system("xdotool mousemove_relative 0 -20");
-//#endif
+    qDebug() <<  "Escape autoscroll";
+    system("xdotool key Escape &");
 }
 
 void ReExec::buttonR2Pressed()
@@ -128,8 +125,13 @@ void ReExec::buttonStartChanged()
 
 void ReExec::buttonSelectChanged()
 {
-    qDebug() <<  "Enable autoscroll";
-    system("xdotool key Escape &");
+    qDebug() <<  "Next Window";
+    if( !timer_tab->isActive() )
+    {
+         sendFakeEvent(1, XK_Alt_L); //ALT_L press
+    }
+    timer_tab->start(RE_TAB_TIME);
+    system("xdotool key Tab &");
 }
 
 void ReExec::buttonCenterChanged()
@@ -158,17 +160,11 @@ void ReExec::buttonUpChanged()
 
 void ReExec::buttonRightChanged()
 {
-    qDebug() <<  "Next Window";
-    if( !timer_tab->isActive() )
-    {
-         sendFakeEvent(1, XK_Alt_L); //ALT_L press
-    }
-    timer_tab->start(RE_TAB_TIME);
-    system("xdotool key Tab &");
+    system("./Scripts/button_right &");
 }
 
 void ReExec::buttonLeftChanged()
 {
     qDebug() <<  "Previous Window";
-//    system("xdotool key Tab &");
+    system("./Scripts/button_left &");
 }
