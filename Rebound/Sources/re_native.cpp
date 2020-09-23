@@ -9,7 +9,8 @@ ReNative::ReNative(QObject *item, QObject *parent) : QObject(parent)
     ui = item;
     charBuffer = '0';
     isBufferEmpty = true;
-    commandMode=false;
+    commandMode = false;
+    exec = new ReExec(ui);
 
     //read from stdin
     stdin_notify = new QSocketNotifier(STDIN_FILENO, QSocketNotifier::Read, this);
