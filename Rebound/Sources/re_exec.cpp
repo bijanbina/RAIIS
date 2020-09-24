@@ -1,4 +1,5 @@
 #include "re_exec.h"
+#include "QThread"
 
 ReExec::ReExec(QObject *item, QObject *parent) : QObject(parent)
 {
@@ -109,12 +110,12 @@ void ReExec::buttonRAxisLeft()
 
 void ReExec::buttonRAxisUp()
 {
-
+    system("./Scripts/raxis_up &");
 }
 
 void ReExec::buttonRAxisDown()
 {
-
+    system("./Scripts/raxis_right &");
 }
 
 void ReExec::buttonStartChanged()
@@ -123,7 +124,8 @@ void ReExec::buttonStartChanged()
     system("./Scripts/menu_button &");
 }
 
-void ReExec::buttonSelectChanged()
+//in native mode add sleep
+void ReExec::buttonSelectChanged(int isNative)
 {
     qDebug() <<  "Next Window";
     if( !timer_tab->isActive() )
@@ -131,6 +133,11 @@ void ReExec::buttonSelectChanged()
          sendFakeEvent(1, XK_Alt_L); //ALT_L press
     }
     timer_tab->start(RE_TAB_TIME);
+
+    if( isNative )
+    {
+        qSleep(50);
+    }
     system("xdotool key Tab &");
 }
 

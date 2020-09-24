@@ -341,7 +341,7 @@ void ReNative::buttonSelectChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonSelectChanged();
+        exec->buttonSelectChanged(1);
     }
 }
 

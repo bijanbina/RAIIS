@@ -283,7 +283,7 @@ void ReClient::readyRead()
    }
    else if( read_data=="s" )
    {
-       exec->buttonSelectChanged();
+       exec->buttonSelectChanged(0);
    }
    else if( read_data=="u" )
    {

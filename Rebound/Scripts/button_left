@@ -9,8 +9,9 @@ echo "'$ACTIVE_WIN_PROCESS'"
 if [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
 	xdotool key Left
 elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
-	xdotool key Ctrl+Left
+	xdotool key Ctrl+Down
+elif [ "$ACTIVE_WIN_PROCESS" = "firefox" ]; then
+	xdotool key u
 else
 	echo "$ACTIVE_WIN_PROCESS"
 fi
-
