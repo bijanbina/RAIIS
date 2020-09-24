@@ -115,7 +115,7 @@ void ReExec::buttonRAxisUp()
 
 void ReExec::buttonRAxisDown()
 {
-    system("./Scripts/raxis_right &");
+    system("./Scripts/raxis_down &");
 }
 
 void ReExec::buttonStartChanged()
@@ -136,7 +136,7 @@ void ReExec::buttonSelectChanged(int isNative)
 
     if( isNative )
     {
-        qSleep(50);
+        QThread::sleep(50);
     }
     system("xdotool key Tab &");
 }

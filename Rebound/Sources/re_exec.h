@@ -39,7 +39,7 @@ public:
     void buttonRAxisDown();
 
     void buttonStartChanged();
-    void buttonSelectChanged();
+    void buttonSelectChanged(int isNative);
     void buttonCenterChanged();
     void buttonGuideChanged();
 
