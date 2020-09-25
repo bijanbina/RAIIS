@@ -4,8 +4,6 @@ ACTIVE_WIN_ID=$(xdotool getwindowfocus)
 ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
 ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
 
-echo "'$ACTIVE_WIN_PROCESS'"
-
 if [ "$ACTIVE_WIN_PROCESS" = "evince" ]; then
 	SCREEN_S=$(xrandr | grep "*" | awk '{print $1}') #Screen size
 	SCREEN_W=$(echo "$SCREEN_S" | awk -F 'x' '{print $1}')
@@ -23,6 +21,6 @@ if [ "$ACTIVE_WIN_PROCESS" = "evince" ]; then
 elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
 	xdotool key KP_Space
 else
-	echo "$ACTIVE_WIN_PROCESS"
+	echo "'$ACTIVE_WIN_PROCESS'"
 fi
 

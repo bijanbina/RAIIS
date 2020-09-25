@@ -4,8 +4,4 @@ ACTIVE_WIN_ID=$(xdotool getwindowfocus)
 ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
 ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
 
-if [ "$ACTIVE_WIN_PROCESS" = "evince" ]; then
-	echo "'$ACTIVE_WIN_PROCESS'"
-else
-	xdotool key XF86AudioRaiseVolume
-fi
+system("xdotool key Escape &");

@@ -46,6 +46,7 @@ void ReExec::buttonYPressed()
 void ReExec::buttonL1Pressed()
 {
     qDebug() <<  "L1";
+    system("./Scripts/button_l1 &");
 }
 
 void ReExec::buttonL2Pressed()
@@ -62,8 +63,8 @@ void ReExec::buttonL3Pressed()
 
 void ReExec::buttonR1Pressed()
 {
-    qDebug() <<  "Escape autoscroll";
-    system("xdotool key Escape &");
+    qDebug() <<  "R1";
+    system("./Scripts/button_r1 &");
 }
 
 void ReExec::buttonR2Pressed()
