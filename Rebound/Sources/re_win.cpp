@@ -105,6 +105,32 @@ void ReWin::buttonStartChanged()
     system("xdotool key Return");
 }
 
+void ReWin::buttonGuideChanged()
+{
+
+//    ZeroMemory(&StartupInfo, sizeof(StartupInfo));
+
+    qDebug() << "buttonGuideChanged";
+    PROCESS_INFORMATION ProcessInfo; //This is what we get as an [out] parameter
+    STARTUPINFOA StartupInfo; //This is an [in] parameter
+
+    ZeroMemory( &StartupInfo, sizeof(StartupInfo) );
+    StartupInfo.cb = sizeof(StartupInfo);
+    ZeroMemory( &ProcessInfo, sizeof(ProcessInfo) );
+
+    char app_name[200] = "C:\\Program Files\\AutoHotkey\\AutoHotkey.exe";
+    char app_cmd[200] = "\"C:\\Program Files\\AutoHotkey\\AutoHotkey.exe\" C:\\Softwares\\Rebound\\Suspend.ahk";
+
+    int ret = CreateProcessA(NULL, app_cmd, NULL,NULL,FALSE,0,NULL,
+            NULL,&StartupInfo,&ProcessInfo);
+
+    if( ret == 0 )
+    {
+        long last_error = GetLastError();
+        qDebug() << "CreateProcess failed" << last_error;
+    }
+}
+
 void ReWin::buttonSelectChanged()
 {
     qDebug() << "Enable autoscroll";

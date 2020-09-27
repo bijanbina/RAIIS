@@ -9,11 +9,12 @@ QT += gamepad
 
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
-           Sources/re_win.cpp \
            Sources/re_client.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
+                 Sources/re_win.cpp \
                  Sources/re_xbox_win32.cpp
+
 linux:SOURCES += Sources/re_exec.cpp \
                  Sources/re_native.cpp \
                  Sources/re_x11.cpp
@@ -21,10 +22,10 @@ linux:SOURCES += Sources/re_exec.cpp \
 HEADERS += \
     Sources/backend.h \
     Sources/re_keycode.h \
-    Sources/re_win.h \
     Sources/re_client.h
 
 win32:HEADERS += Sources/re_server.h \
+                 Sources/re_win.h \
                  Sources/re_xbox_win32.h
 linux:HEADERS += Sources/re_exec.h \
                  Sources/re_native.h \

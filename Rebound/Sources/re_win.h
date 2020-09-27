@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include "backend.h"
+#include <windows.h>
 
 class ReWin
 {
@@ -34,6 +35,7 @@ public:
 
     void buttonStartChanged();
     void buttonSelectChanged();
+    void buttonGuideChanged();
 
     void buttonDownChanged();
     void buttonUpChanged();

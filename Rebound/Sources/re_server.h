@@ -13,6 +13,7 @@
 #ifdef _WIN32
 #include <QGamepad>
 #include "re_xbox_win32.h"
+#include "re_win.h"
 #endif
 #include "backend.h"
 
@@ -88,6 +89,7 @@ private:
 
 #ifdef _WIN32
     QGamepad    *pad;
+    ReWin       *win;
     ReXboxWin32 *backup;
 #endif
 

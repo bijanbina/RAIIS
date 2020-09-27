@@ -23,6 +23,7 @@ ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
 
 #ifdef _WIN32
     pad = new QGamepad;
+    win = new ReWin;
 
     connect(pad, SIGNAL(buttonAChanged(bool)),
             this, SLOT(buttonAChanged(bool)));
@@ -408,7 +409,12 @@ void ReServer::buttonGuideChanged(bool value)
     if ( value==0 )
     {
         reboundSendKey("g",1);
-//        QMetaObject::invokeMethod(ui, "uiToggle");
+        QMetaObject::invokeMethod(ui, "uiToggle");
+        int visible = QQmlProperty::read(ui, "visible").toInt();
+        qDebug() << " visible " << visible;
+
+        win->buttonGuideChanged();
+
     }
 }
 
