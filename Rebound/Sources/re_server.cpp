@@ -192,17 +192,19 @@ void ReServer::readyRead()
     {
         qDebug() << "Server: Misterious Live" << data;
         watchdog->start(RE_WATCHDOG);
-        read_data.replace("Live", "");
+        data.replace("Live", "");
     }
     else
     {
         qDebug() << "Server: Single watchdog failure," << data;
     }
 
-    if( read_data=="M" )
+#ifdef _WIN32
+    if( data=="M" )
     {
         win->buttonGuideChanged();
     }
+#endif
 
 //    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
 //    connection_socket->write("a",1);
@@ -416,9 +418,6 @@ void ReServer::buttonGuideChanged(bool value)
     {
         reboundSendKey("g",1);
         QMetaObject::invokeMethod(ui, "uiToggle");
-
-        win->buttonGuideChanged();
-
     }
 }
 
