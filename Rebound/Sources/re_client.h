@@ -36,6 +36,9 @@ private slots:
     void disconnected();
     void readyRead();
 private:
+    int isUiVisible();
+    void sendData(const char *data, int size);
+
     QTcpSocket tcpClient;
 
     QVector<QString> stack;

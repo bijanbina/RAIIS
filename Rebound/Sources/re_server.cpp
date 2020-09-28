@@ -192,10 +192,16 @@ void ReServer::readyRead()
     {
         qDebug() << "Server: Misterious Live" << data;
         watchdog->start(RE_WATCHDOG);
+        read_data.replace("Live", "");
     }
     else
     {
         qDebug() << "Server: Single watchdog failure," << data;
+    }
+
+    if( read_data=="M" )
+    {
+        win->buttonGuideChanged();
     }
 
 //    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
@@ -410,8 +416,6 @@ void ReServer::buttonGuideChanged(bool value)
     {
         reboundSendKey("g",1);
         QMetaObject::invokeMethod(ui, "uiToggle");
-        int visible = QQmlProperty::read(ui, "visible").toInt();
-        qDebug() << " visible " << visible;
 
         win->buttonGuideChanged();
 

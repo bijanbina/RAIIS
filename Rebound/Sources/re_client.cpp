@@ -236,6 +236,10 @@ void ReClient::readyRead()
    else if( read_data=="m" )
    {
        exec->buttonStartChanged();
+       if( isUiVisible() )
+       {
+            sendData("M", 1);
+       }
    }
    else if( read_data=="n" ) //Right Axis
    {
@@ -294,4 +298,33 @@ void ReClient::readyRead()
        qDebug() << "Unkdown packet:" << read_data << read_data.size();
    }
 #endif
+}
+
+int ReClient::isUiVisible()
+{
+    int visible = QQmlProperty::read(ui, "visible").toInt();
+    return visible;
+}
+
+void ReClient::sendData(const char *data, int size)
+{
+    if ( tcpClient.isOpen() )
+    {
+        live->start(RE_Live);//don't send live
+
+        if(size == 2)
+        {
+            qDebug() << "Sending " << data[0] << data[1];
+        }
+        else
+        {
+            qDebug() << "Sending " << data[0];
+        }
+
+        tcpClient.write(data,size);
+        tcpClient.waitForBytesWritten();
+
+        qDebug() << "finisihed sending";
+        live->start(RE_Live);//don't send live
+    }
 }
