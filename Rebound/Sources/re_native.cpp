@@ -137,22 +137,20 @@ void ReNative::keyParser(QString key, int value)
     }
     else if( key==RE_KEY_X )
     {
-        buttonAxisLxChanged(value/65530);
+        buttonAxisLxChanged(value/65530.0);
     }
     else if( key==RE_KEY_Y )
     {
-        buttonAxisLyChanged(value/65530);
+        buttonAxisLyChanged(value/65530.0);
     }
     else if( key==RE_KEY_Z )
     {
-        buttonAxisRxChanged(value/65530);
+        buttonAxisRxChanged(value/65530.0);
     }
     else if( key==RE_KEY_RZ )
     {
-        buttonAxisRyChanged(value/65530);
+        buttonAxisRyChanged(value/65530.0);
     }
-
-
 }
 
 ReNative::~ReNative()
@@ -248,18 +246,18 @@ void ReNative::buttonAxisLxChanged(double value)
 {
     if( last_la_x==0 )
     {
-        if( value==1 )
+        if( value<0.02 )
         {
             last_la_x = 1;
             exec->buttonLAxisRight();
         }
-        else if( value==-1 )
+        else if( value>0.98  )
         {
             last_la_x = 1;
             exec->buttonLAxisLeft();
         }
     }
-    else if( value<0.5 && value>-0.5 )
+    else if( value<0.5 && value>0.25 )
     {
         last_la_x = 0;
     }
@@ -269,18 +267,18 @@ void ReNative::buttonAxisLyChanged(double value)
 {
     if( last_la_y==0 )
     {
-        if( value<-0.99 ) //up
+        if( value<0.02 ) //up
         {
             last_la_y = 1;
             exec->buttonLAxisUp();
         }
-        else if( value>0.99 ) //down
+        else if( value>0.98 ) //down
         {
             last_la_y = 1;
             exec->buttonLAxisDown();
         }
     }
-    else if( value<0.5 && value>-0.5 )
+    else if( value<0.75 && value>0.25 )
     {
         last_la_y = 0;
     }
@@ -290,18 +288,18 @@ void ReNative::buttonAxisRxChanged(double value)
 {
     if( last_la_x==0 )
     {
-        if( value==1 )
+        if( value<0.02 )
         {
             last_la_x = 1;
             exec->buttonRAxisRight();
         }
-        else if( value==-1 )
+        else if( value>0.98 )
         {
             last_la_x = 1;
             exec->buttonRAxisLeft();
         }
     }
-    else if( value<0.5 && value>-0.5 )
+    else if( value<0.75 && value>0.25 )
     {
         last_la_x = 0;
     }
@@ -312,18 +310,18 @@ void ReNative::buttonAxisRyChanged(double value)
 //    qDebug() << value;
     if( last_ra_y==0 )
     {
-        if( value<-0.99 ) //up
+        if( value<0.02 ) //up
         {
             last_ra_y = 1;
             exec->buttonRAxisUp();
         }
-        else if( value>0.99 ) //down
+        else if( value>0.98 ) //down
         {
             last_ra_y = 1;
             exec->buttonRAxisDown();
         }
     }
-    else if( value<0.5 && value>-0.5 )
+    else if( value<0.75 && value>0.25 )
     {
         last_ra_y = 0;
     }

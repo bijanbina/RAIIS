@@ -52,7 +52,7 @@ void ReExec::buttonL1Pressed()
 void ReExec::buttonL2Pressed()
 {
     qDebug() <<  "Slower";
-    system("xdotool mousemove_relative 0 -20 &");
+    system("./Scripts/button_l2 &");
 }
 
 void ReExec::buttonL3Pressed()
@@ -70,7 +70,7 @@ void ReExec::buttonR1Pressed()
 void ReExec::buttonR2Pressed()
 {
     qDebug() <<  "Faster";
-    system("xdotool mousemove_relative 0 20 &");
+    system("./Scripts/button_r2 &");
 }
 
 void ReExec::buttonR3Pressed()

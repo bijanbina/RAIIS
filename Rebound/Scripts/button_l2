@@ -1,0 +1,13 @@
+#!/bin/bash
+
+ACTIVE_WIN_ID=$(xdotool getwindowfocus)
+ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
+ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
+
+if [[ "$ACTIVE_WIN_PROCESS" = "evince"
+   || "$ACTIVE_WIN_PROCESS" = "com.github.john" ]]; then
+	xdotool mousemove_relative 0 -20
+else
+	xdotool key Left
+fi
+
