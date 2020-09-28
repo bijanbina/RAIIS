@@ -26,19 +26,24 @@ Rectangle{
         anchors.top: parent.top
         anchors.left: parent.left
         text_color: {
-                        if( btn_id == "A")
+                        if( btn_id == "A" )
                             "#ace932"
-                        else if( btn_id == "B")
+                        else if( btn_id == "B" )
                             "#2d90b7"
-                        else if( btn_id == "X")
+                        else if( btn_id == "X" )
                             "#ff422a"
-                        else if( btn_id == "Y")
+                        else if( btn_id == "Y" )
                             "#fced00"
+                        else if( btn_id == "M" ) //Menu
+                            "#aaaaaa"
+                        else if( btn_id == "S" ) //Select
+                            "#aaaaaa"
                         else
                             "#2d90b7"
                     }
 
-        visible: ( btn_id=="A" || btn_id=="B" || btn_id=="X" || btn_id=="Y" )
+        visible: ( btn_id=="A" || btn_id=="B" || btn_id=="X" || btn_id=="Y" ||
+                   btn_id=="M" || btn_id=="S" )
 
         button_text: btn_id
     }
@@ -76,11 +81,12 @@ Rectangle{
         anchors.left: cmd_btn.right
         anchors.leftMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -2
+        anchors.verticalCenterOffset: 0
         text : cmd_text
         color: "#e8e9e3";
         font.pixelSize: 14
         font.family: consolas.name
-        visible: ( btn_id=="A" || btn_id=="B" || btn_id=="X" || btn_id=="Y" )
+        visible: ( btn_id=="A" || btn_id=="B" || btn_id=="X" || btn_id=="Y" ||
+                   btn_id=="M" || btn_id=="S" )
     }
 }

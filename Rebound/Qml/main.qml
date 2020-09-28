@@ -10,7 +10,7 @@ Window {
     id:page
     visible: false
     property alias miheight:page.width
-    minimumHeight: 300//500
+    minimumHeight: 330//500
     minimumWidth: 700
     color:"#2F343F"
     //minimumHeight: 565
@@ -49,7 +49,8 @@ Window {
 
     FontLoader { id: consolas ; source: "qrc:Fonts/Consolas.ttf" }
     FontLoader { id: earlyTimes ; source: "qrc:Fonts/EarlyTimesLight.otf" }
-
+    FontLoader { id: fontAwesome ; source: "qrc:/Fonts/Fa-Solid.ttf" }
+    FontLoader { id: fontAwesome_brand ; source: "qrc:/Fonts/Fa-Brands.ttf" }
 
 
     Rectangle
@@ -185,6 +186,15 @@ Window {
                 anchors.top: abutton.bottom
                 anchors.left: parent.left
                 btn_id: "B"
+                cmd_text: "Open New Firefox Window"
+            }
+
+            CommandButton
+            {
+                id: mbutton
+                anchors.top: bbutton.bottom
+                anchors.left: parent.left
+                btn_id: "M"
                 cmd_text: "Put PC to sleep"
             }
         }
@@ -233,6 +243,15 @@ Window {
                 anchors.left: parent.left
                 btn_id: "LB"
                 cmd_text: "Put PC to sleep"
+            }
+
+            CommandButton
+            {
+                id: s_button
+                anchors.top: lb_button.bottom
+                anchors.left: parent.left
+                btn_id: "S"
+                cmd_text: "Mute/UnMute"
             }
         }
 

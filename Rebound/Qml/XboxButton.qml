@@ -24,10 +24,29 @@ Rectangle{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenterOffset: 1
-        text : button_text
+        text : if ( button_text=="M" )
+               {
+                   "\uf0c9"
+               }
+               else if ( button_text=="S" )
+               {
+                   "\uf2d2"
+               }
+               else
+               {
+                   button_text
+               }
         color: text_color;
         font.pixelSize: 14
-        font.family: robotoBoldFont.name
+        font.family: if ( button_text=="M" || button_text=="S")
+                     {
+                         fontAwesome.name
+                     }
+                     else
+                     {
+                         robotoBoldFont.name
+                     }
+
         font.weight: Font.Bold
     }
 

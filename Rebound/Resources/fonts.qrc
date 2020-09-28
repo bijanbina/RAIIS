@@ -7,5 +7,7 @@
         <file>Fonts/Gnome-Thin.otf</file>
         <file>Fonts/Consolas.ttf</file>
         <file>Fonts/EarlyTimesLight.otf</file>
+        <file>Fonts/Fa-Brands.ttf</file>
+        <file>Fonts/Fa-Solid.ttf</file>
     </qresource>
 </RCC>
