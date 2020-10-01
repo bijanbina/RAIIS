@@ -235,10 +235,14 @@ void ReClient::readyRead()
    }
    else if( read_data=="m" )
    {
-       exec->buttonStartChanged();
        if( isUiVisible() )
        {
             sendData("M", 1);
+            hideUI();
+       }
+       else
+       {
+           exec->buttonStartChanged();
        }
    }
    else if( read_data=="n" ) //Right Axis
@@ -287,7 +291,16 @@ void ReClient::readyRead()
    }
    else if( read_data=="s" )
    {
-       exec->buttonSelectChanged(0);
+       if( isUiVisible() )
+       {
+            hideUI();
+            system("xdotool key XF86AudioMute &");
+       }
+       else
+       {
+           exec->buttonStartChanged();
+       }
+       exec->buttonSelectChanged(0); // not native
    }
    else if( read_data=="u" )
    {
@@ -305,6 +318,12 @@ int ReClient::isUiVisible()
     int visible = QQmlProperty::read(ui, "visible").toInt();
     return visible;
 }
+
+void ReClient::hideUI()
+{
+    QQmlProperty::write(ui, "visible", 1);
+}
+
 
 void ReClient::sendData(const char *data, int size)
 {

@@ -191,11 +191,11 @@ Window {
 
             CommandButton
             {
-                id: mbutton
+                id: s_button
                 anchors.top: bbutton.bottom
                 anchors.left: parent.left
-                btn_id: "M"
-                cmd_text: "Put PC to sleep"
+                btn_id: "S"
+                cmd_text: "Mute/UnMute"
             }
         }
 
@@ -247,11 +247,12 @@ Window {
 
             CommandButton
             {
-                id: s_button
+                id: mbutton
                 anchors.top: lb_button.bottom
                 anchors.left: parent.left
-                btn_id: "S"
-                cmd_text: "Mute/UnMute"
+                anchors.leftMargin: 4
+                btn_id: "M"
+                cmd_text: "Put PC to sleep"
             }
         }
 
