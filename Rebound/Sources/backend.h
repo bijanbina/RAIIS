@@ -23,7 +23,7 @@
 #define RE_Live       100   //Live send interval
 #define RE_CHECK_BTN  4     //Live send interval
 #define RE_CHECK_IN   4     //check input(native mode)
-#define RE_TAB_TIME   1000  //check input(native mode)
+#define RE_TAB_TIME   500  //Alt pressed time
 
 struct screen_pos{
     int x;

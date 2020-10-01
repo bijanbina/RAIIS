@@ -9,7 +9,7 @@ ReExec::ReExec(QObject *item, QObject *parent) : QObject(parent)
 
     //switching tab
     timer_tab = new QTimer;
-    timer_tab->setSingleShot(true);
+//    timer_tab->setSingleShot(true);
     connect(timer_tab, SIGNAL(timeout()), this, SLOT(tab_timeout()));
 }
 
@@ -128,18 +128,19 @@ void ReExec::buttonStartChanged()
 //in native mode add sleep
 void ReExec::buttonSelectChanged(int isNative)
 {
-    qDebug() <<  "Next Window";
     if( !timer_tab->isActive() )
     {
          sendFakeEvent(1, XK_Alt_L); //ALT_L press
+         qDebug() <<  "Alt P" << isNative;
     }
-    timer_tab->start(RE_TAB_TIME);
 
     if( isNative )
     {
-        QThread::sleep(50);
+        QThread::msleep(100);
     }
+    qDebug() <<  "Next Window" << isNative;
     system("xdotool key Tab &");
+    timer_tab->start(RE_TAB_TIME);
 }
 
 void ReExec::buttonCenterChanged()
