@@ -131,11 +131,11 @@ void ReExec::buttonSelectChanged(int isNative)
     if( !timer_tab->isActive() )
     {
          sendFakeEvent(1, XK_Alt_L); //ALT_L press
-         qDebug() <<  "Alt P" << isNative;
     }
 
     if( isNative )
     {
+        qDebug() <<  "Alt P" << isNative;
         QThread::msleep(100);
     }
     qDebug() <<  "Next Window" << isNative;
