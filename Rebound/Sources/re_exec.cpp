@@ -34,13 +34,13 @@ void ReExec::buttonBPressed()
 void ReExec::buttonXPressed()
 {
     qDebug() <<  "Client: Go To Sleep";
-    system("xdotool click 1 &");
+    system("./Scripts/button_x &");
 }
 
 void ReExec::buttonYPressed()
 {
     qDebug() <<  "Change Workspace";
-    system("xdotool click 3 &");
+    system("./Scripts/button_y &");
 }
 
 void ReExec::buttonL1Pressed()
@@ -81,17 +81,19 @@ void ReExec::buttonR3Pressed()
 
 void ReExec::buttonLAxisRight()
 {
-
+    qDebug() <<  "laxis_right";
+    system("./Scripts/laxis_right &");
 }
 
 void ReExec::buttonLAxisLeft()
 {
-
+    system("./Scripts/laxis_left &");
 }
 
 void ReExec::buttonLAxisUp()
 {
-
+    qDebug() <<  "laxis_up";
+    system("./Scripts/laxis_up &");
 }
 
 void ReExec::buttonLAxisDown()

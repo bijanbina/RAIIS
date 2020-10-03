@@ -4,23 +4,9 @@ ACTIVE_WIN_ID=$(xdotool getwindowfocus)
 ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
 ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
 
-if [ "$ACTIVE_WIN_PROCESS" = "evince" ]; then
-	SCREEN_S=$(xrandr | grep "*" | awk '{print $1}') #Screen size
-	SCREEN_W=$(echo "$SCREEN_S" | awk -F 'x' '{print $1}')
-	SCREEN_H=$(echo "$SCREEN_S" | awk -F 'x' '{print $2}')
-	
-	SCREEN_HALF_W=$((SCREEN_W / 4))
-	SCREEN_HALF_H=$((SCREEN_H / 2))
-	
-	xdotool mousemove "$SCREEN_HALF_W" "$SCREEN_HALF_H"
-	xdotool click 3
-	xdotool key Up
-	xdotool key Up
-	xdotool key Up
-	xdotool key Return
-elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
-	xdotool key KP_Space
+if [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
+	xdotool key Ctrl+Page_Up
 else
-	echo "'$ACTIVE_WIN_PROCESS'"
+    xdotool click 1
 fi
 

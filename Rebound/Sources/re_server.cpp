@@ -163,7 +163,7 @@ void ReServer::live_timeout()
         if(connection_socket->state() == QAbstractSocket::ConnectedState)
         {
             int byte_count = connection_socket->write("Live");
-            connection_socket->waitForBytesWritten(1000);
+            connection_socket->waitForBytesWritten(50);
 
             if( byte_count!= 4)
             {
@@ -208,7 +208,7 @@ void ReServer::readyRead()
 
 //    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
 //    connection_socket->write("a",1);
-//    connection_socket->waitForBytesWritten();
+//    connection_socket->waitForBytesWritten(50);
 }
 
 void ReServer::displayError(QAbstractSocket::SocketError socketError)
@@ -417,7 +417,7 @@ void ReServer::buttonGuideChanged(bool value)
     if ( value==0 )
     {
         reboundSendKey("g",1);
-        QMetaObject::invokeMethod(ui, "uiToggle");
+//        QMetaObject::invokeMethod(ui, "uiToggle");
     }
 }
 
@@ -471,7 +471,7 @@ void ReServer::reboundSendKey(const char *data, int size)
             }
 
             connection_socket->write(data,size);
-            connection_socket->waitForBytesWritten();
+            connection_socket->waitForBytesWritten(50);
 
             qDebug() << "finisihed sending";
             live->start(RE_Live);//don't send live

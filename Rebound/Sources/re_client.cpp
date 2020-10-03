@@ -104,7 +104,7 @@ void ReClient::live_timeout()
         if(tcpClient.state() == QAbstractSocket::ConnectedState)
         {
             int byte_count = tcpClient.write("Live");
-            tcpClient.waitForBytesWritten(1000);
+            tcpClient.waitForBytesWritten(50);
 
             if( byte_count!= 4)
             {
@@ -180,9 +180,14 @@ void ReClient::readyRead()
 
    if( read_data.contains("Live") )
    {
+       qDebug() <<  "Client: Shitty Live=" << read_data << read_data.size();
        read_data.replace("Live", "");
    }
-   qDebug() <<  "Client: Received=" << read_data << read_data.size();
+
+   if( read_data.size() )
+   {
+       qDebug() <<  "Client: Received=" << read_data << read_data.size();
+   }
 
 #ifdef __linux__
    if( read_data=="a" )
@@ -321,7 +326,7 @@ int ReClient::isUiVisible()
 
 void ReClient::hideUI()
 {
-    QQmlProperty::write(ui, "visible", 1);
+    QQmlProperty::write(ui, "visible", 0);
 }
 
 
@@ -341,7 +346,7 @@ void ReClient::sendData(const char *data, int size)
         }
 
         tcpClient.write(data,size);
-        tcpClient.waitForBytesWritten();
+        tcpClient.waitForBytesWritten(50);
 
         qDebug() << "finisihed sending";
         live->start(RE_Live);//don't send live
