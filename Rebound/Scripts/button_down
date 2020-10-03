@@ -1,0 +1,22 @@
+#!/bin/bash
+
+ACTIVE_WIN_ID=$(xdotool getwindowfocus)
+ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
+ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
+
+DBUS_DEST="org.gnome.Shell"
+DBUS_PATH="/org/gnome/Shell"
+DBUS_PARAM="--session --print-reply --dest=$DBUS_DEST $DBUS_PATH"
+DBUS_CMD="$DBUS_DEST.Eval string:Main.overview.visible"
+
+DBUS_STATUS=$(dbus-send $DBUS_PARAM $DBUS_CMD | grep string)
+OVERVIEW_STATUS=$(echo "$DBUS_STATUS" | awk -F '"' '{print $2}')
+
+if [[ "$OVERVIEW_STATUS" = true ]];then
+    xdotool set_desktop --relative 1
+elif [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
+	xdotool key Down
+else
+    xdotool set_desktop --relative 1
+	echo "'$ACTIVE_WIN_PROCESS'"
+fi

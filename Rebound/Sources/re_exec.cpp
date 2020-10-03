@@ -160,13 +160,13 @@ void ReExec::buttonGuideChanged()
 void ReExec::buttonDownChanged()
 {
     qDebug() <<  "Down workspace";
-    system("xdotool set_desktop --relative 1 &");
+    system("./Scripts/button_down &");
 }
 
 void ReExec::buttonUpChanged()
 {
     qDebug() <<  "Up workspace";
-    system("xdotool set_desktop --relative 4 &");
+    system("./Scripts/button_up &");
 }
 
 void ReExec::buttonRightChanged()

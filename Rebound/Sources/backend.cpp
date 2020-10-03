@@ -85,7 +85,7 @@ void updateScreenInfo(QObject *item)
 //    QQmlProperty::write(item, "visible", 1);
 #endif
 
-    QMetaObject::invokeMethod(item, "show");
+//    QMetaObject::invokeMethod(item, "show");
 }
 
 assistant_options loadOptions()
