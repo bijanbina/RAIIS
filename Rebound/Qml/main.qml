@@ -159,7 +159,7 @@ Window {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 btn_id: "X"
-                cmd_text: "Quit"
+                cmd_text: "Close Ative Window"
             }
 
             CommandButton
@@ -177,7 +177,7 @@ Window {
                 anchors.top: ybutton.bottom
                 anchors.left: parent.left
                 btn_id: "A"
-                cmd_text: "Disable Axis"
+                cmd_text: "Switch to Spotify"
             }
 
             CommandButton

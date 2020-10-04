@@ -192,7 +192,15 @@ void ReClient::readyRead()
 #ifdef __linux__
    if( read_data=="a" )
    {
-       exec->buttonAPressed();
+       if( isUiVisible() )
+       {
+            hideUI();
+            system("wmctrl -a Spotify &");
+       }
+       else
+       {
+           exec->buttonAPressed();
+       }
    }
    else if( read_data=="b" )
    {
@@ -258,14 +266,6 @@ void ReClient::readyRead()
    {
        exec->buttonRAxisDown();
    }
-   else if( read_data=="x" )
-   {
-       exec->buttonXPressed();
-   }
-   else if( read_data=="y" )
-   {
-       exec->buttonYPressed();
-   }
    else if( read_data=="l1" )
    {
        exec->buttonL1Pressed();
@@ -303,13 +303,29 @@ void ReClient::readyRead()
        }
        else
        {
-           exec->buttonStartChanged();
+           exec->buttonSelectChanged(0); // not native
        }
-       exec->buttonSelectChanged(0); // not native
    }
    else if( read_data=="u" )
    {
        exec->buttonUpChanged();
+   }
+   else if( read_data=="x" )
+   {
+       if( isUiVisible() )
+       {
+            hideUI();
+            QThread::msleep(400);
+            system("xdotool key Alt+F4 &");
+       }
+       else
+       {
+           exec->buttonXPressed();
+       }
+   }
+   else if( read_data=="y" )
+   {
+       exec->buttonYPressed();
    }
    else
    {
