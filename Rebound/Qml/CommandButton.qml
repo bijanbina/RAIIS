@@ -29,9 +29,9 @@ Rectangle{
                         if( btn_id == "A" )
                             "#ace932"
                         else if( btn_id == "B" )
-                            "#2d90b7"
-                        else if( btn_id == "X" )
                             "#ff422a"
+                        else if( btn_id == "X" )
+                            "#2d90b7"
                         else if( btn_id == "Y" )
                             "#fced00"
                         else if( btn_id == "M" ) //Menu

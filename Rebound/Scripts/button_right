@@ -10,6 +10,8 @@ elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
 	xdotool key Ctrl+Up
 elif [ "$ACTIVE_WIN_PROCESS" = "firefox" ]; then
 	xdotool key d
+elif [ "$ACTIVE_WIN_PROCESS" = "qtcreator" ]; then
+	xdotool key Page_Down
 else
 	echo "'$ACTIVE_WIN_PROCESS'"
 fi

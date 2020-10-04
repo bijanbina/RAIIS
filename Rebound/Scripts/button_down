@@ -20,3 +20,4 @@ else
     xdotool set_desktop --relative 1
 	echo "'$ACTIVE_WIN_PROCESS'"
 fi
+

@@ -1,5 +1,6 @@
 #include "re_client.h"
 #include <string.h>
+#include "QThread"
 
 ReClient::ReClient(QObject *item, QObject *parent) : QObject(parent)
 {
