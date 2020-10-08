@@ -1,0 +1,18 @@
+#!/bin/bash
+
+WIN_ID=$(wmctrl -l | awk '{print $1}')
+PID_NAME=$1
+SUCCESS=0 #Become 1 in case of finding the window
+
+for id in ${WIN_ID}; do
+    xp=$(xprop -id $id | grep "$PID_NAME")
+    if [[ "$xp" ]]; then
+    	wmctrl -i -a $id
+    	SUCCESS=
+        echo "Windows Id: $id"
+    fi
+done
+
+if [[ "$SUCCESS" = "0" ]]; then
+	nohup $1 &
+fi

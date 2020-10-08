@@ -196,7 +196,7 @@ void ReClient::readyRead()
        if( isUiVisible() )
        {
             hideUI();
-            system("wmctrl -a Spotify &");
+            system("./Scripts/focus_window spotify");
        }
        else
        {
@@ -326,7 +326,15 @@ void ReClient::readyRead()
    }
    else if( read_data=="y" )
    {
-       exec->buttonYPressed();
+       if( isUiVisible() )
+       {
+            hideUI();
+            system("./Scripts/focus_window firefox");
+       }
+       else
+       {
+           exec->buttonYPressed();
+       }
    }
    else
    {
