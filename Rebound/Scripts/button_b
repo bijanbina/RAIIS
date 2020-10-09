@@ -13,6 +13,8 @@ elif [ "$ACTIVE_WIN_PROCESS" = "firefox" ]; then
 	xdotool key Ctrl+Shift+Tab
 elif [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
 	xdotool key Alt+Up
+elif [ "$ACTIVE_WIN_PROCESS" = "gedit" ]; then
+	xdotool key Ctrl+Alt+Page_Up
 else
 	echo "'$ACTIVE_WIN_PROCESS'"
 fi

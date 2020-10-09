@@ -9,7 +9,7 @@ if [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
 elif [ "$ACTIVE_WIN_PROCESS" = "spotify" ]; then
 	xdotool key Ctrl+Down
 elif [ "$ACTIVE_WIN_PROCESS" = "firefox" ]; then
-	xdotool key u
+	xdotool key Ctrl+T
 elif [ "$ACTIVE_WIN_PROCESS" = "qtcreator" ]; then
 	xdotool key Page_Up
 else

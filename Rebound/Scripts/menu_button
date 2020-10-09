@@ -25,12 +25,11 @@ elif [ "$ACTIVE_WIN_PROCESS" = "firefox" ]; then
 	SCREEN_HALF_H=$((SCREEN_H / 2))
 	xdotool mousemove "$SCREEN_HALF_W" "$SCREEN_HALF_H"
 	xdotool click 2
-	echo "$SCREEN_HALF_W" > /tmp/rbd
-	echo "$SCREEN_HALF_H" >> /tmp/rbd
-	
 	
 	sleep 0.1
 	xdotool mousemove_relative 0 13
+elif [ "$ACTIVE_WIN_PROCESS" = "gedit" ]; then
+	xdotool key Ctrl+s
 else
 	echo "$ACTIVE_WIN_PROCESS"
 fi

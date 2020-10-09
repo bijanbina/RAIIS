@@ -9,7 +9,7 @@ if [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
 elif [[ "$ACTIVE_WIN_PROCESS" = "firefox" ]]; then
 	xdotool key Ctrl+F4 &
 elif [[ "$ACTIVE_WIN_PROCESS" = "gedit" ]]; then
-	xdotool key Ctrl+F4 &
+	xdotool key Ctrl+w &
 else
     xdotool click 1
 fi

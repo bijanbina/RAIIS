@@ -16,13 +16,27 @@ elif [[ "$ACTIVE_WIN_PROCESS" = "firefox" ]]; then
 	eval $(xdotool getmouselocation --shell)
 	MOUSE_DIST=$((Y-SCREEN_H/2))
 
-	if [[ "$MOUSE_DIST" -lt "-12"
-       || "$MOUSE_DIST" -gt "11" ]]; then
+
+	if [[ "$MOUSE_DIST" -lt "-20"
+       || "$MOUSE_DIST" -gt  "19" ]]; then
+    	xdotool mousemove_relative 0 10
+	elif [[ "$MOUSE_DIST"  = "-20"
+         || "$MOUSE_DIST"  =  "16" ]]; then
+    	xdotool mousemove_relative 0 4
+	elif [[ "$MOUSE_DIST"  = "-16"
+         || "$MOUSE_DIST"  =  "14" ]]; then
+    	xdotool mousemove_relative 0 2
+	elif [[ "$MOUSE_DIST" -lt "-12"
+         || "$MOUSE_DIST"  =   "13" ]]; then
     	xdotool mousemove_relative 0 1
 	else
-		MOUSE_HALF_H=$((SCREEN_H / 2+13))
+		MOUSE_HALF_H=$((SCREEN_H/2 + 13))
 		xdotool mousemove "$X" "$MOUSE_HALF_H"
 	fi
+	
+	eval $(xdotool getmouselocation --shell)
+	MOUSE_DIST=$((Y-SCREEN_H/2))
+	echo "MOUSE_DIST=$MOUSE_DIST"
 else
 	xdotool key Right
 fi
