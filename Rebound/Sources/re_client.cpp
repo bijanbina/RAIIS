@@ -193,15 +193,7 @@ void ReClient::readyRead()
 #ifdef __linux__
    if( read_data=="a" )
    {
-       if( isUiVisible() )
-       {
-            hideUI();
-            system("./Scripts/focus_window spotify");
-       }
-       else
-       {
-           exec->buttonAPressed();
-       }
+       exec->buttonAPressed();
    }
    else if( read_data=="b" )
    {
@@ -297,15 +289,7 @@ void ReClient::readyRead()
    }
    else if( read_data=="s" )
    {
-       if( isUiVisible() )
-       {
-            hideUI();
-            system("xdotool key XF86AudioMute &");
-       }
-       else
-       {
-           exec->buttonSelectChanged(0); // not native
-       }
+       exec->buttonSelectChanged(0); // not native
    }
    else if( read_data=="u" )
    {
@@ -313,28 +297,11 @@ void ReClient::readyRead()
    }
    else if( read_data=="x" )
    {
-       if( isUiVisible() )
-       {
-            hideUI();
-            QThread::msleep(400);
-            system("xdotool key Alt+F4 &");
-       }
-       else
-       {
-           exec->buttonXPressed();
-       }
+       exec->buttonXPressed();
    }
    else if( read_data=="y" )
    {
-       if( isUiVisible() )
-       {
-            hideUI();
-            system("./Scripts/focus_window firefox");
-       }
-       else
-       {
-           exec->buttonYPressed();
-       }
+       exec->buttonYPressed();
    }
    else
    {

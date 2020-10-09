@@ -21,26 +21,47 @@ void ReExec::tab_timeout()
 
 void ReExec::buttonAPressed()
 {
-    qDebug() <<  "Client: Go Next Page";
-    system("./Scripts/button_a &");
+    if( isUiVisible() )
+    {
+         hideUI();
+         system("./Scripts/focus_window spotify");
+    }
+    else
+    {
+        system("./Scripts/button_a &");
+    }
 }
 
 void ReExec::buttonBPressed()
 {
-    qDebug() <<  "Client: Go Previous Page";
     system("./Scripts/button_b &");
 }
 
 void ReExec::buttonXPressed()
 {
-    qDebug() <<  "Client: Go To Sleep";
-    system("./Scripts/button_x &");
+    if( isUiVisible() )
+    {
+         hideUI();
+         QThread::msleep(200);
+         system("xdotool key Alt+F4 &");
+    }
+    else
+    {
+        system("./Scripts/button_x &");
+    }
 }
 
 void ReExec::buttonYPressed()
 {
-    qDebug() <<  "Change Workspace";
-    system("./Scripts/button_y &");
+    if( isUiVisible() )
+    {
+         hideUI();
+         system("./Scripts/focus_window firefox");
+    }
+    else
+    {
+        system("./Scripts/button_y &");
+    }
 }
 
 void ReExec::buttonL1Pressed()
@@ -81,19 +102,41 @@ void ReExec::buttonR3Pressed()
 
 void ReExec::buttonLAxisRight()
 {
-    qDebug() <<  "laxis_right";
-    system("./Scripts/laxis_right &");
+    if( isUiVisible() )
+    {
+         hideUI();
+         system("xdotool key Super+Right");
+    }
+    else
+    {
+        system("./Scripts/laxis_right &");
+    }
 }
 
 void ReExec::buttonLAxisLeft()
 {
-    system("./Scripts/laxis_left &");
+    if( isUiVisible() )
+    {
+         hideUI();
+         system("xdotool key Super+Left");
+    }
+    else
+    {
+        system("./Scripts/laxis_left &");
+    }
 }
 
 void ReExec::buttonLAxisUp()
 {
-    qDebug() <<  "laxis_up";
-    system("./Scripts/laxis_up &");
+    if( isUiVisible() )
+    {
+         hideUI();
+         system("xdotool key Alt+F10");
+    }
+    else
+    {
+        system("./Scripts/laxis_up &");
+    }
 }
 
 void ReExec::buttonLAxisDown()
@@ -130,19 +173,28 @@ void ReExec::buttonStartChanged()
 //in native mode add sleep
 void ReExec::buttonSelectChanged(int isNative)
 {
-    if( !timer_tab->isActive() )
-    {
-         sendFakeEvent(1, XK_Alt_L); //ALT_L press
-    }
 
-    if( isNative )
+    if( isUiVisible() )
     {
-        qDebug() <<  "Alt P" << isNative;
-        QThread::msleep(100);
+         hideUI();
+         system("xdotool key XF86AudioMute &");
     }
-    qDebug() <<  "Next Window" << isNative;
-    system("xdotool key Tab &");
-    timer_tab->start(RE_TAB_TIME);
+    else
+    {
+        if( !timer_tab->isActive() )
+        {
+             sendFakeEvent(1, XK_Alt_L); //ALT_L press
+        }
+
+        if( isNative )
+        {
+            qDebug() <<  "Alt P" << isNative;
+            QThread::msleep(100);
+        }
+        qDebug() <<  "Next Window" << isNative;
+        system("xdotool key Tab &");
+        timer_tab->start(RE_TAB_TIME);
+    }
 }
 
 void ReExec::buttonCenterChanged()
@@ -178,4 +230,25 @@ void ReExec::buttonLeftChanged()
 {
     qDebug() <<  "Previous Window";
     system("./Scripts/button_left &");
+}
+
+int ReExec::isUiVisible()
+{
+    if ( ui != NULL )
+    {
+        int visible = QQmlProperty::read(ui, "visible").toInt();
+        return visible;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void ReExec::hideUI()
+{
+    if ( ui != NULL )
+    {
+        QQmlProperty::write(ui, "visible", 0);
+    }
 }
