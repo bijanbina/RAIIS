@@ -6,6 +6,8 @@ ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
 
 if [ "$ACTIVE_WIN_PROCESS" = "nautilus" ]; then
 	xdotool key Ctrl+Page_Down
+elif [[ "$ACTIVE_WIN_PROCESS" = "firefox" ]]; then
+	xdotool key Ctrl+t
 else
     xdotool click 3
 fi

@@ -4,4 +4,16 @@ ACTIVE_WIN_ID=$(xdotool getwindowfocus)
 ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
 ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
 
-xdotool key Escape &
+#!/bin/bash
+
+ACTIVE_WIN_ID=$(xdotool getwindowfocus)
+ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
+ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
+
+if [[ "$ACTIVE_WIN_PROCESS" = "firefox" ]]; then
+	xdotool key Escape &
+else
+	xdotool key Escape &
+fi
+
+
