@@ -6,10 +6,12 @@
 #include "backend.h"
 #include <windows.h>
 
-class ReExecW
+class ReExecW: public QObject
 {
+    Q_OBJECT
+
 public:
-    ReExecW();
+    ReExecW(QObject *item, QObject *parent = 0);
 
     void buttonAPressed();
     void buttonBPressed();
@@ -43,6 +45,10 @@ public:
     void buttonLeftChanged();
 
     void executeAhk(QString name);
+    void executeUi(QString name);
+
+private:
+    QObject *ui;
 };
 
 #endif // RE_EXECW_H

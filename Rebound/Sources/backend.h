@@ -47,4 +47,7 @@ void changeLaguageBack();
 
 void updateScreenInfo(QObject *item);
 
+void hideUI(QObject *item);
+int isUiVisible(QObject *item);
+
 #endif // BACKEND_H

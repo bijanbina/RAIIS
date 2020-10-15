@@ -7,6 +7,9 @@
 #include <QDebug>
 #include <windows.h>
 #include <iostream>
+#include <xinput.h>
+
+#define XINPUT_GAMEPAD_GUIDE 0x0400
 
 struct ReXboxController
 {
@@ -35,7 +38,7 @@ signals:
     void buttonGuideChanged(bool);
 
 public slots:
-    int ReXbox_getGuideBtn();
+    void ReXbox_getGuideBtn();
 
 private:
     QTimer *guideTimer; //XBOX Guide Button check
@@ -43,6 +46,9 @@ private:
 
     typedef int(__stdcall * pICFUNC)(int, ReXboxController &);
     pICFUNC getControllerData;
+
+    typedef DWORD (WINAPI *XInputGetStateExProc)(DWORD dwUserIndex, XINPUT_STATE *pState);
+    XInputGetStateExProc XInputGetStateEx;
 
 };
 

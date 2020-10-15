@@ -1,48 +1,121 @@
 #include "re_execw.h"
+#include <QThread>
 
-ReExecW::ReExecW()
+ReExecW::ReExecW(QObject *item, QObject *parent) : QObject(parent)
 {
-
+    ui = item;
 }
 
 void ReExecW::buttonAPressed()
 {
-    executeAhk("button_a");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("a");
+    }
+    else
+    {
+        executeAhk("button_a");
+    }
 }
 
 void ReExecW::buttonBPressed()
 {
-    executeAhk("button_b");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("b");
+    }
+    else
+    {
+        executeAhk("button_b");
+    }
 }
 
 void ReExecW::buttonXPressed()
 {
-    executeAhk("button_x");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("x");
+    }
+    else
+    {
+        executeAhk("button_x");
+    }
 }
 
 void ReExecW::buttonYPressed()
 {
-    executeAhk("button_y");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("y");
+    }
+    else
+    {
+        executeAhk("button_y");
+    }
 }
 
 void ReExecW::buttonL1Pressed()
 {
-    executeAhk("button_l1");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("l1");
+    }
+    else
+    {
+        executeAhk("button_l1");
+    }
 }
 
 void ReExecW::buttonL2Pressed()
 {
-    executeAhk("button_l2");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("l2");
+    }
+    else
+    {
+        executeAhk("button_l2");
+    }
 }
 
 void ReExecW::buttonR1Pressed()
 {
-    executeAhk("button_r1");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("r1");
+    }
+    else
+    {
+        executeAhk("button_r1");
+    }
 }
 
 void ReExecW::buttonR2Pressed()
 {
-    executeAhk("button_r2");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("r2");
+    }
+    else
+    {
+        executeAhk("button_r2");
+    }
 }
 
 void ReExecW::buttonLAxisRight()
@@ -87,18 +160,35 @@ void ReExecW::buttonRAxisDown()
 
 void ReExecW::buttonStartChanged()
 {
-    executeAhk("menu_button");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("menu");
+    }
+    else
+    {
+        executeAhk("menu_button");
+    }
 }
 
 void ReExecW::buttonGuideChanged()
 {
-    ///FIXME
-//    executeAhk("button_a");
+    QMetaObject::invokeMethod(ui, "uiToggle");
 }
 
 void ReExecW::buttonSelectChanged()
 {
-    executeAhk("select_button");
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("select");
+    }
+    else
+    {
+        executeAhk("select_button");
+    }
 }
 
 void ReExecW::buttonDownChanged()
@@ -131,6 +221,31 @@ void ReExecW::executeAhk(QString name)
     ZeroMemory( &ProcessInfo, sizeof(ProcessInfo) );
 
     QString command = "\"C:\\Program Files\\AutoHotkey\\AutoHotkey.exe\" AHK\\" + name + ".ahk";
+    char app_cmd[200];
+    strcpy(app_cmd, command.toStdString().c_str());
+
+    int ret = CreateProcessA(NULL, app_cmd, NULL,
+                             NULL, FALSE, 0, NULL,
+                             NULL, &StartupInfo,
+                             &ProcessInfo);
+    if( ret == 0 )
+    {
+        long last_error = GetLastError();
+        qDebug() << "CreateProcess failed" << last_error;
+    }
+}
+
+void ReExecW::executeUi(QString name)
+{
+    PROCESS_INFORMATION ProcessInfo; //This is what we get as an [out] parameter
+    STARTUPINFOA StartupInfo; //This is an [in] parameter
+
+    ZeroMemory( &StartupInfo, sizeof(StartupInfo) );
+    StartupInfo.cb = sizeof(StartupInfo);
+    ZeroMemory( &ProcessInfo, sizeof(ProcessInfo) );
+
+    QString command = "\"C:\\Program Files\\AutoHotkey\\AutoHotkey.exe\" AHK\\button_ui.ahk ";
+    command += name;
     char app_cmd[200];
     strcpy(app_cmd, command.toStdString().c_str());
 

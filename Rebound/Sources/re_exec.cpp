@@ -1,4 +1,5 @@
 #include "re_exec.h"
+#include "backend.h"
 #include "QThread"
 
 ReExec::ReExec(QObject *item, QObject *parent) : QObject(parent)
@@ -21,9 +22,9 @@ void ReExec::tab_timeout()
 
 void ReExec::buttonAPressed()
 {
-    if( isUiVisible() )
+    if( isUiVisible(ui) )
     {
-         hideUI();
+         hideUI(ui);
          system("./Scripts/focus_window spotify");
     }
     else
@@ -39,9 +40,9 @@ void ReExec::buttonBPressed()
 
 void ReExec::buttonXPressed()
 {
-    if( isUiVisible() )
+    if( isUiVisible(ui) )
     {
-         hideUI();
+         hideUI(ui);
          QThread::msleep(200);
          system("xdotool key Alt+F4 &");
     }
@@ -53,9 +54,9 @@ void ReExec::buttonXPressed()
 
 void ReExec::buttonYPressed()
 {
-    if( isUiVisible() )
+    if( isUiVisible(ui) )
     {
-         hideUI();
+         hideUI(ui);
          system("./Scripts/focus_window firefox");
     }
     else
@@ -102,9 +103,9 @@ void ReExec::buttonR3Pressed()
 
 void ReExec::buttonLAxisRight()
 {
-    if( isUiVisible() )
+    if( isUiVisible(ui) )
     {
-         hideUI();
+         hideUI(ui);
          system("xdotool key Super+Right");
     }
     else
@@ -115,9 +116,9 @@ void ReExec::buttonLAxisRight()
 
 void ReExec::buttonLAxisLeft()
 {
-    if( isUiVisible() )
+    if( isUiVisible(ui) )
     {
-         hideUI();
+         hideUI(ui);
          system("xdotool key Super+Left");
     }
     else
@@ -128,9 +129,9 @@ void ReExec::buttonLAxisLeft()
 
 void ReExec::buttonLAxisUp()
 {
-    if( isUiVisible() )
+    if( isUiVisible(ui) )
     {
-         hideUI();
+         hideUI(ui);
          system("xdotool key Alt+F10");
     }
     else
@@ -174,9 +175,9 @@ void ReExec::buttonStartChanged()
 void ReExec::buttonSelectChanged(int isNative)
 {
 
-    if( isUiVisible() )
+    if( isUiVisible(ui) )
     {
-         hideUI();
+         hideUI(ui);
          system("xdotool key XF86AudioMute &");
     }
     else
@@ -232,23 +233,3 @@ void ReExec::buttonLeftChanged()
     system("./Scripts/button_left &");
 }
 
-int ReExec::isUiVisible()
-{
-    if ( ui != NULL )
-    {
-        int visible = QQmlProperty::read(ui, "visible").toInt();
-        return visible;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-void ReExec::hideUI()
-{
-    if ( ui != NULL )
-    {
-        QQmlProperty::write(ui, "visible", 0);
-    }
-}

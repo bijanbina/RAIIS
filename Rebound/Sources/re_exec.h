@@ -52,9 +52,6 @@ private slots:
     void tab_timeout();
 
 private:
-    void hideUI();
-    int isUiVisible();
-
     QObject *ui;
     QTimer  *timer_tab;
 };

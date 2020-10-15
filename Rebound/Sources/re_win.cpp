@@ -5,7 +5,7 @@ ReWin::ReWin(QObject *item, int native, QObject *parent) : QObject(parent)
     ui = item;
     tcp = new ReServer(item);
     isNative = native;
-    exec = new ReExecW;
+    exec = new ReExecW(item);
 
 #ifdef _WIN32
     pad = new QGamepad;
@@ -413,7 +413,7 @@ void ReWin::buttonCenterChanged(bool value)
 
 void ReWin::buttonGuideChanged(bool value)
 {
-    if ( value==0 )
+    if ( value )
     {
         if(isNative)
         {

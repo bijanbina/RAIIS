@@ -310,18 +310,6 @@ void ReClient::readyRead()
 #endif
 }
 
-int ReClient::isUiVisible()
-{
-    int visible = QQmlProperty::read(ui, "visible").toInt();
-    return visible;
-}
-
-void ReClient::hideUI()
-{
-    QQmlProperty::write(ui, "visible", 0);
-}
-
-
 void ReClient::sendData(const char *data, int size)
 {
     if ( tcpClient.isOpen() )

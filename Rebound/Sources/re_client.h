@@ -35,9 +35,7 @@ private slots:
     void sendBuffer();
     void disconnected();
     void readyRead();
-    void hideUI();
 private:
-    int isUiVisible();
     void sendData(const char *data, int size);
 
     QTcpSocket tcpClient;

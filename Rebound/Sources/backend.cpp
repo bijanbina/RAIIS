@@ -85,6 +85,10 @@ void updateScreenInfo(QObject *item)
 //    QQmlProperty::write(item, "visible", 1);
 #endif
 
+#ifdef _WIN32
+    QQmlProperty::write(item, "minimumHeight", 370);
+#endif
+
 //    QMetaObject::invokeMethod(item, "show");
 }
 
@@ -93,3 +97,23 @@ assistant_options loadOptions()
 
 }
 
+int isUiVisible(QObject *item)
+{
+    if ( item != NULL )
+    {
+        int visible = QQmlProperty::read(item, "visible").toInt();
+        return visible;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void hideUI(QObject *item)
+{
+    if ( item != NULL )
+    {
+        QQmlProperty::write(item, "visible", 0);
+    }
+}
