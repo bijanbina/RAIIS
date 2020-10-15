@@ -11,9 +11,7 @@
 #include <QTimer>
 #include <QQmlProperty>
 #ifdef _WIN32
-#include <QGamepad>
-#include "re_xbox_win32.h"
-#include "re_win.h"
+#include "re_execw.h"
 #endif
 #include "backend.h"
 
@@ -24,6 +22,9 @@ class ReServer : public QObject
 public:
     explicit ReServer(QObject *item, QObject *parent = 0);
     ~ReServer();
+
+    void reboundSendKey(const char *data, int size);
+
 signals:
     void errorConnection();
 
@@ -33,36 +34,8 @@ public slots:
     void live_timeout();
     void watchdog_timeout();
     void displayError(QAbstractSocket::SocketError socketError);
-    void buttonAChanged(bool);
-    void buttonBChanged(bool);
-    void buttonXChanged(bool);
-    void buttonYChanged(bool);
-
-    void buttonL1Changed(bool);
-    void buttonL2Changed(double);
-    void buttonL3Changed(bool);
-    void buttonR1Changed(bool);
-    void buttonR2Changed(double);
-    void buttonR3Changed(bool);
-
-    void buttonAxisLxChanged(double);
-    void buttonAxisLyChanged(double);
-    void buttonAxisRxChanged(double);
-    void buttonAxisRyChanged(double);
-
-    void buttonStartChanged(bool);
-    void buttonSelectChanged(bool);
-    void buttonCenterChanged(bool);
-    void buttonGuideChanged(bool);
-
-    void buttonLeftChanged(bool);
-    void buttonRightChanged(bool);
-    void buttonUpChanged(bool);
-    void buttonDownChanged(bool);
 
 private:
-    void reboundSendKey(const char *data, int size);
-
     long bytesReceived;
     QTcpServer *server;
     QTcpSocket *connection_socket;
@@ -82,16 +55,6 @@ private:
     QTimer *watchdog;
     QTimer *bufferTimer;
 
-    double last_la_x = 0; //last left axis x value
-    double last_la_y = 0; //last left axis y value
-    double last_ra_x = 0; //last right axis x value
-    double last_ra_y = 0; //last right axis y value
-
-#ifdef _WIN32
-    QGamepad    *pad;
-    ReWin       *win;
-    ReXboxWin32 *backup;
-#endif
 
     QObject *ui;
 };

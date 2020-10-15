@@ -1,166 +1,491 @@
 #include "re_win.h"
 
-ReWin::ReWin()
+ReWin::ReWin(QObject *item, int native, QObject *parent) : QObject(parent)
 {
+    ui = item;
+    tcp = new ReServer(item);
+    isNative = native;
+    exec = new ReExecW;
+
+#ifdef _WIN32
+    pad = new QGamepad;
+
+    connect(pad, SIGNAL(buttonAChanged(bool)),
+            this, SLOT(buttonAChanged(bool)));
+    connect(pad, SIGNAL(buttonBChanged(bool)),
+            this, SLOT(buttonBChanged(bool)));
+    connect(pad, SIGNAL(buttonXChanged(bool)),
+            this, SLOT(buttonXChanged(bool)));
+    connect(pad, SIGNAL(buttonYChanged(bool)),
+            this, SLOT(buttonYChanged(bool)));
+
+    connect(pad, SIGNAL(buttonL1Changed(bool)),
+            this, SLOT(buttonL1Changed(bool)));
+    connect(pad, SIGNAL(buttonL2Changed(double)),
+            this, SLOT(buttonL2Changed(double)));
+    connect(pad, SIGNAL(buttonL3Changed(bool)),
+            this, SLOT(buttonL3Changed(bool)));
+    connect(pad, SIGNAL(buttonR1Changed(bool)),
+            this, SLOT(buttonR1Changed(bool)));
+    connect(pad, SIGNAL(buttonR2Changed(double)),
+            this, SLOT(buttonR2Changed(double)));
+    connect(pad, SIGNAL(buttonR3Changed(bool)),
+            this, SLOT(buttonR3Changed(bool)));
+
+    connect(pad, SIGNAL(axisLeftXChanged(double)),
+            this, SLOT(buttonAxisLxChanged(double)));
+    connect(pad, SIGNAL(axisLeftYChanged(double)),
+            this, SLOT(buttonAxisLyChanged(double)));
+    connect(pad, SIGNAL(axisRightXChanged(double)),
+            this, SLOT(buttonAxisRxChanged(double)));
+    connect(pad, SIGNAL(axisRightYChanged(double)),
+            this, SLOT(buttonAxisRyChanged(double)));
+
+    connect(pad, SIGNAL(buttonStartChanged(bool)),
+            this, SLOT(buttonStartChanged(bool)));
+    connect(pad, SIGNAL(buttonSelectChanged(bool)),
+            this, SLOT(buttonSelectChanged(bool)));
+    connect(pad, SIGNAL(buttonCenterChanged(bool)),
+            this, SLOT(buttonCenterChanged(bool)));
+//    connect(pad, SIGNAL(buttonGuideChanged(bool)),
+//            this, SLOT(buttonGuideChanged(bool)));
+
+    connect(pad, SIGNAL(buttonLeftChanged(bool)),
+            this, SLOT(buttonLeftChanged(bool)));
+    connect(pad, SIGNAL(buttonRightChanged(bool)),
+            this, SLOT(buttonRightChanged(bool)));
+    connect(pad, SIGNAL(buttonUpChanged(bool)),
+            this, SLOT(buttonUpChanged(bool)));
+    connect(pad, SIGNAL(buttonDownChanged(bool)),
+            this, SLOT(buttonDownChanged(bool)));
+
+    //XBOX Guide Button check
+    backup = new ReXboxWin32;
+    connect(backup, SIGNAL(buttonGuideChanged(bool)), SLOT(buttonGuideChanged(bool)));
+
+#endif
 
 }
 
-void ReWin::buttonAPressed()
+ReWin::~ReWin()
 {
-    qDebug() << "Client: Go Next Page";
-    system("xdotool key Right &");
+    delete tcp;
 }
 
-void ReWin::buttonBPressed()
+void ReWin::buttonAChanged(bool value)
 {
-    qDebug() << "Client: Go Previous Page";
-    system("xdotool key Left");
-}
-
-void ReWin::buttonXPressed()
-{
-    qDebug() << "Client: Go To Sleep";
-    system("xdotool key Left &");
-}
-
-void ReWin::buttonYPressed()
-{
-    qDebug() << "Change Workspace";
-    system("xdotool key Left &");
-}
-
-void ReWin::buttonL1Pressed()
-{
-    qDebug() << "Reset F";
-    system("xdotool key Left &");
-}
-
-void ReWin::buttonL2Pressed()
-{
-    qDebug() << "Slower";
-    system("xdotool mousemove_relative 0 -20 &");
-}
-
-void ReWin::buttonR1Pressed()
-{
-//    qDebug() << "Faster";
-//#ifdef __linux__
-//       system("xdotool mousemove_relative 0 -20");
-//#endif
-}
-
-void ReWin::buttonR2Pressed()
-{
-    qDebug() << "Faster";
-    system("xdotool mousemove_relative 0 20 &");
-}
-
-void ReWin::buttonLAxisRight()
-{
-
-}
-
-void ReWin::buttonLAxisLeft()
-{
-
-}
-
-void ReWin::buttonLAxisUp()
-{
-
-}
-
-void ReWin::buttonLAxisDown()
-{
-
-}
-
-void ReWin::buttonRAxisRight()
-{
-
-}
-
-void ReWin::buttonRAxisLeft()
-{
-
-}
-
-void ReWin::buttonRAxisUp()
-{
-
-}
-
-void ReWin::buttonRAxisDown()
-{
-
-}
-
-void ReWin::buttonStartChanged()
-{
-    qDebug() << "Enable autoscroll";
-    system("xdotool key Menu");
-    system("xdotool key Up");
-    system("xdotool key Up");
-    system("xdotool key Up");
-    system("xdotool key Return");
-}
-
-void ReWin::buttonGuideChanged()
-{
-
-//    ZeroMemory(&StartupInfo, sizeof(StartupInfo));
-
-    qDebug() << "buttonGuideChanged";
-    PROCESS_INFORMATION ProcessInfo; //This is what we get as an [out] parameter
-    STARTUPINFOA StartupInfo; //This is an [in] parameter
-
-    ZeroMemory( &StartupInfo, sizeof(StartupInfo) );
-    StartupInfo.cb = sizeof(StartupInfo);
-    ZeroMemory( &ProcessInfo, sizeof(ProcessInfo) );
-
-    char app_name[200] = "C:\\Program Files\\AutoHotkey\\AutoHotkey.exe";
-    char app_cmd[200] = "\"C:\\Program Files\\AutoHotkey\\AutoHotkey.exe\" C:\\Softwares\\Rebound\\Suspend.ahk";
-
-    int ret = CreateProcessA(NULL, app_cmd, NULL,NULL,FALSE,0,NULL,
-            NULL,&StartupInfo,&ProcessInfo);
-
-    if( ret == 0 )
+    if ( value==1 )
     {
-        long last_error = GetLastError();
-        qDebug() << "CreateProcess failed" << last_error;
+        if(isNative)
+        {
+            exec->buttonAPressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("a",1);
+        }
     }
 }
 
-void ReWin::buttonSelectChanged()
+void ReWin::buttonBChanged(bool value)
 {
-    qDebug() << "Enable autoscroll";
-    system("xdotool key Escape &");
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonBPressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("b",1);
+        }
+    }
 }
 
-void ReWin::buttonDownChanged()
+void ReWin::buttonXChanged(bool value)
 {
-    qDebug() << "Down workspace";
-    system("xdotool set_desktop --relative 1 &");
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonXPressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("x",1);
+        }
+    }
 }
 
-void ReWin::buttonUpChanged()
+void ReWin::buttonYChanged(bool value)
 {
-    qDebug() << "Up workspace";
-    system("xdotool set_desktop --relative 4 &");
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonYPressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("y",1);
+        }
+    }
 }
 
-void ReWin::buttonRightChanged()
+void ReWin::buttonL1Changed(bool value)
 {
-    qDebug() << "Next Window";
-    system("xdotool key Alt+Escape &");
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonL1Pressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("l1",2);
+        }
+    }
 }
 
-void ReWin::buttonLeftChanged()
+void ReWin::buttonL2Changed(double value)
 {
-    qDebug() << "Previous Window";
-    system("xdotool key Shift+Alt+Escape &");
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonL2Pressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("l2",2);
+        }
+    }
 }
 
+void ReWin::buttonL3Changed(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            ///FIXME
+//            exec->buttonL3Pressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("l3",2);
+        }
+    }
+}
+
+void ReWin::buttonR1Changed(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonR1Pressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("r1",2);
+        }
+    }
+}
+
+void ReWin::buttonR2Changed(double value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonR2Pressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("r2",2);
+        }
+    }
+}
+
+void ReWin::buttonR3Changed(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            ///FIXME
+//            exec->buttonR3Pressed();
+        }
+        else
+        {
+            tcp->reboundSendKey("r3",2);
+        }
+    }
+}
+
+void ReWin::buttonAxisLxChanged(double value)
+{
+    if( last_la_x==0 )
+    {
+        if( value==1 )
+        {
+            last_la_x = 1;
+            if(isNative)
+            {
+                exec->buttonLAxisRight();
+            }
+            else
+            {
+                tcp->reboundSendKey("e",1);
+            }
+        }
+        else if( value==-1 )
+        {
+            last_la_x = 1;
+            if(isNative)
+            {
+                exec->buttonLAxisLeft();
+            }
+            else
+            {
+                tcp->reboundSendKey("f",1);
+            }
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_la_x = 0;
+    }
+}
+
+void ReWin::buttonAxisLyChanged(double value)
+{
+    if( last_la_y==0 )
+    {
+        if( value<-0.99 ) //up
+        {
+            last_la_y = 1;
+            if(isNative)
+            {
+                exec->buttonLAxisUp();
+            }
+            else
+            {
+                tcp->reboundSendKey("h",1);
+            }
+        }
+        else if( value>0.99 ) //down
+        {
+            last_la_y = 1;
+            if(isNative)
+            {
+                exec->buttonLAxisDown();
+            }
+            else
+            {
+                tcp->reboundSendKey("i",1);
+            }
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_la_y = 0;
+    }
+}
+
+void ReWin::buttonAxisRxChanged(double value)
+{
+    if( last_la_x==0 )
+    {
+        if( value==1 )//Right
+        {
+            last_la_x = 1;
+            if(isNative)
+            {
+                exec->buttonRAxisRight();
+            }
+            else
+            {
+                tcp->reboundSendKey("j",1);
+            }
+        }
+        else if( value==-1 )//Left
+        {
+            last_la_x = 1;
+            if(isNative)
+            {
+                exec->buttonRAxisLeft();
+            }
+            else
+            {
+                tcp->reboundSendKey("k",1);
+            }
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_la_x = 0;
+    }
+}
+
+void ReWin::buttonAxisRyChanged(double value)
+{
+//    qDebug() << value;
+    if( last_ra_y==0 )
+    {
+        if( value<-0.99 ) //up
+        {
+            last_ra_y = 1;
+            if(isNative)
+            {
+                exec->buttonRAxisUp();
+            }
+            else
+            {
+                tcp->reboundSendKey("n",1);
+            }
+        }
+        else if( value>0.99 ) //down
+        {
+            last_ra_y = 1;
+            if(isNative)
+            {
+                exec->buttonRAxisDown();
+            }
+            else
+            {
+                tcp->reboundSendKey("o",1);
+            }
+        }
+    }
+    else if( value<0.5 && value>-0.5 )
+    {
+        last_ra_y = 0;
+    }
+}
+
+void ReWin::buttonStartChanged(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonStartChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("m",1);
+        }
+    }
+}
+
+void ReWin::buttonSelectChanged(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonSelectChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("s",1);
+        }
+    }
+}
+
+void ReWin::buttonCenterChanged(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            ///FIXME
+//            exec->buttonCenterChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("c",1);
+        }
+    }
+}
+
+void ReWin::buttonGuideChanged(bool value)
+{
+    if ( value==0 )
+    {
+        if(isNative)
+        {
+            exec->buttonGuideChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("g",1);
+        }
+//        QMetaObject::invokeMethod(ui, "uiToggle");
+    }
+}
+
+void ReWin::buttonLeftChanged(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonLeftChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("l",1);
+        }
+    }
+}
+
+void ReWin::buttonRightChanged(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonRightChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("r",1);
+        }
+    }
+}
+
+void ReWin::buttonUpChanged(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonUpChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("u",1);
+        }
+    }
+}
+
+void ReWin::buttonDownChanged(bool value)
+{
+    if ( value==1 )
+    {
+        if(isNative)
+        {
+            exec->buttonDownChanged();
+        }
+        else
+        {
+            tcp->reboundSendKey("d",1);
+        }
+    }
+}
 
 
 

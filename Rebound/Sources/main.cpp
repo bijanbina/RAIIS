@@ -4,7 +4,7 @@
 #include <QQuickView>
 #include <QQuickItem>
 #ifdef _WIN32
-    #include "re_server.h"
+    #include "re_win.h"
     #ifdef RE_TEST_EN
     #include "re_client.h"
     #endif
@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     //or client mode
 
 #ifdef _WIN32
-    ReServer *channel_se;
-    channel_se = new ReServer(item);
+    ReWin *channel_se;
+    channel_se = new ReWin(item, 1);
 
 #ifdef RE_TEST_EN
     ReClient *channel_cl;

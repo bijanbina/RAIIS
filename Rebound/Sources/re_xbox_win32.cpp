@@ -28,14 +28,15 @@ ReXboxWin32::~ReXboxWin32()
 int ReXboxWin32::ReXbox_getGuideBtn()
 {
     ReXboxController buttons;
-    getControllerData(0, buttons);  //call the function with the controller number(zero based) and
-                    //the pointer to the ControllerStruct.
+    ///FIXME
+//    getControllerData(0, buttons);  //call the function with the controller number(zero based) and
+//                    //the pointer to the ControllerStruct.
 
-    int value = buttons.guideButton;
-    if (guide_last_val != value)
-    {
-        guide_last_val = value;
-        qDebug() << guide_last_val;
-        emit buttonGuideChanged(value);
-    }
+//    int value = buttons.guideButton;
+//    if (guide_last_val != value)
+//    {
+//        guide_last_val = value;
+//        qDebug() << guide_last_val;
+//        emit buttonGuideChanged(value);
+//    }
 }
