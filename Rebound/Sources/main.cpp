@@ -13,6 +13,7 @@
     #include "re_native.h"
 #endif
 
+//#define NATIBE_MODE
 
 int main(int argc, char *argv[])
 {
@@ -27,7 +28,11 @@ int main(int argc, char *argv[])
 
 #ifdef _WIN32
     ReWin *channel_se;
+#ifdef NATIBE_MODE
     channel_se = new ReWin(item, 1);
+#else
+    channel_se = new ReWin(item, 0);
+#endif
 
 #ifdef RE_TEST_EN
     ReClient *channel_cl;
