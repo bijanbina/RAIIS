@@ -159,7 +159,7 @@ Window {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 btn_id: "X"
-                cmd_text: "Close Ative Window"
+                cmd_text: "Close Active Window"
             }
 
             CommandButton
