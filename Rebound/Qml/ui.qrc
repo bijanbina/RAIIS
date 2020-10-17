@@ -9,5 +9,9 @@
         <file alias="XboxButton.qml">XboxButton.qml</file>
         <file alias="RButton.qml">RButton.qml</file>
         <file alias="CommandButton.qml">CommandButton.qml</file>
+        <file>ReController.qml</file>
+        <file>ReBottomBar.qml</file>
+        <file>ReAxis.qml</file>
+        <file>ReCircle.qml</file>
     </qresource>
 </RCC>

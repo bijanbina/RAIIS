@@ -86,10 +86,10 @@ void updateScreenInfo(QObject *item)
 #endif
 
 #ifdef _WIN32
-    QQmlProperty::write(item, "minimumHeight", 370);
+    QQmlProperty::write(item, "minimumHeight", 400);
 #endif
 
-//    QMetaObject::invokeMethod(item, "show");
+    QMetaObject::invokeMethod(item, "show");
 }
 
 assistant_options loadOptions()

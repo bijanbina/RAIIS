@@ -10,12 +10,12 @@ Window {
     id:page
     visible: false
     property alias miheight:page.width
-    minimumHeight: 330//500
-    minimumWidth: 700
+    minimumHeight: 400//500
+    minimumWidth: 1200
     color:"#2F343F"
     //minimumHeight: 565
     //minimumWidth: 360
-    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint// | Qt.SubWindow
+    flags: Qt.FramelessWindowHint //| Qt.WindowStaysOnTopHint// | Qt.SubWindow
 
     onVisibleChanged: {
         x = x_base + (Screen.width  - minimumWidth)  / 2;
@@ -130,132 +130,44 @@ Window {
         }
     }
 
-    Rectangle
+    ReController
     {
         id: buttonPane
         anchors.top: tabPane.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-//        color: "red"
+    //        color: "red"
         color: "transparent"
-        width: childrenRect.width
-        height: childrenRect.height
         anchors.topMargin: 20
+    }
+
+    ReAxis
+    {
+        id: axis_left
+        cntName: "L"
+        anchors.left: parent.left
+        anchors.bottom: bottomBar.top
+        anchors.bottomMargin: 25
+        anchors.leftMargin: 47
+    }
+
+    ReAxis
+    {
+        id: axis_right
+        cntName: "R"
+        anchors.right: parent.right
+        anchors.bottom: bottomBar.top
+        anchors.bottomMargin: axis_left.anchors.bottomMargin
+        anchors.rightMargin: 40
+    }
 
 
-        Rectangle
-        {
-            id: buttonPaneLeft
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.leftMargin: 5
-//            color: "red"
-            color: "transparent"
-            width: childrenRect.width
-            height: childrenRect.height
-
-            CommandButton
-            {
-                id: xbutton
-                anchors.top: parent.top
-                anchors.left: parent.left
-                btn_id: "X"
-                cmd_text: "Close Active Window"
-            }
-
-            CommandButton
-            {
-                id: ybutton
-                anchors.top: xbutton.bottom
-                anchors.left: parent.left
-                btn_id: "Y"
-                cmd_text: "Switch to firefox"
-            }
-
-            CommandButton
-            {
-                id: abutton
-                anchors.top: ybutton.bottom
-                anchors.left: parent.left
-                btn_id: "A"
-                cmd_text: "Switch to Spotify"
-            }
-
-            CommandButton
-            {
-                id: bbutton
-                anchors.top: abutton.bottom
-                anchors.left: parent.left
-                btn_id: "B"
-                cmd_text: "Open New Firefox Window"
-            }
-
-            CommandButton
-            {
-                id: s_button
-                anchors.top: bbutton.bottom
-                anchors.left: parent.left
-                btn_id: "S"
-                cmd_text: "Mute/UnMute"
-            }
-        }
-
-        Rectangle
-        {
-            id: buttonPaneRight
-            anchors.top: parent.top
-            anchors.left: buttonPaneLeft.right
-//            color: "red"
-            color: "transparent"
-            width: childrenRect.width
-            height: childrenRect.height
-
-            CommandButton
-            {
-                id: rt_button
-                anchors.top: parent.top
-                anchors.left: parent.left
-                btn_id: "RT"
-                cmd_text: "Swtich to book"
-            }
-
-            CommandButton
-            {
-                id: rb_button
-                anchors.top: rt_button.bottom
-                anchors.left: parent.left
-                btn_id: "RB"
-                cmd_text: "Switch to epub reader"
-            }
-
-            CommandButton
-            {
-                id: lt_button
-                anchors.top: rb_button.bottom
-                anchors.left: parent.left
-                btn_id: "LT"
-                cmd_text: "Switch to nautilus"
-            }
-
-            CommandButton
-            {
-                id: lb_button
-                anchors.top: lt_button.bottom
-                anchors.left: parent.left
-                btn_id: "LB"
-                cmd_text: "Put PC to sleep"
-            }
-
-            CommandButton
-            {
-                id: mbutton
-                anchors.top: lb_button.bottom
-                anchors.left: parent.left
-                anchors.leftMargin: 4
-                btn_id: "M"
-                cmd_text: "Put PC to sleep"
-            }
-        }
-
+    ReBottomBar
+    {
+        id: bottomBar
+        width: parent.width
+        height: 44
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
     }
 
     //properties

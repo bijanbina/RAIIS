@@ -38,12 +38,22 @@ Rectangle{
                             "#aaaaaa"
                         else if( btn_id == "S" ) //Select
                             "#aaaaaa"
+                        else if( btn_id == "left" )
+                            "#e8e9e3"
+                        else if( btn_id == "up" )
+                            "#e8e9e3"
+                        else if( btn_id == "down" )
+                            "#e8e9e3"
+                        else if( btn_id == "right" )
+                            "#e8e9e3"
                         else
                             "#2d90b7"
+
                     }
 
         visible: ( btn_id=="A" || btn_id=="B" || btn_id=="X" || btn_id=="Y" ||
-                   btn_id=="M" || btn_id=="S" )
+                   btn_id=="M" || btn_id=="S" || btn_id=="left" || btn_id=="up" ||
+                   btn_id=="down" || btn_id=="right")
 
         button_text: btn_id
     }
@@ -87,6 +97,7 @@ Rectangle{
         font.pixelSize: 14
         font.family: consolas.name
         visible: ( btn_id=="A" || btn_id=="B" || btn_id=="X" || btn_id=="Y" ||
-                   btn_id=="M" || btn_id=="S" )
+                   btn_id=="M" || btn_id=="S" || btn_id=="left" || btn_id=="up" ||
+                   btn_id=="down" || btn_id=="right" )
     }
 }

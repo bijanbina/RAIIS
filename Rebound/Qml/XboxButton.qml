@@ -32,13 +32,31 @@ Rectangle{
                {
                    "\uf2d2"
                }
+               else if ( button_text=="left" )
+               {
+                   "\uf053"
+               }
+               else if ( button_text=="up" )
+               {
+                   "\uf077"
+               }
+               else if ( button_text=="down" )
+               {
+                   "\uf078"
+               }
+               else if ( button_text=="right" )
+               {
+                   "\uf054"
+               }
                else
                {
                    button_text
                }
         color: text_color;
         font.pixelSize: 14
-        font.family: if ( button_text=="M" || button_text=="S")
+        font.family: if ( button_text=="M" || button_text=="S" ||
+                          button_text=="left" || button_text=="up" ||
+                          button_text=="down" || button_text=="right")
                      {
                          fontAwesome.name
                      }
