@@ -190,7 +190,7 @@ void ReExec::buttonSelectChanged(int isNative)
         if( isNative )
         {
             qDebug() <<  "Alt P" << isNative;
-            QThread::msleep(100);
+//            QThread::msleep(100);
         }
         qDebug() <<  "Next Window" << isNative;
         system("xdotool key Tab &");

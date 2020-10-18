@@ -50,7 +50,7 @@ void ReNative::readyData()
 
 void ReNative::keyParser(QString key, int value)
 {
-//    qDebug() << key << value;
+    qDebug() << key << value;
     if( key==RE_KEY_HOMEPAGE )
     {
         buttonGuideChanged(value);
@@ -329,7 +329,7 @@ void ReNative::buttonAxisRyChanged(double value)
 
 void ReNative::buttonStartChanged(bool value)
 {
-    if ( value==1 )
+    if ( value==0 )
     {
         exec->buttonStartChanged();
     }
@@ -337,7 +337,7 @@ void ReNative::buttonStartChanged(bool value)
 
 void ReNative::buttonSelectChanged(bool value)
 {
-    if ( value==1 )
+    if ( value==0 )
     {
         exec->buttonSelectChanged(1);
     }
@@ -345,7 +345,7 @@ void ReNative::buttonSelectChanged(bool value)
 
 void ReNative::buttonCenterChanged(bool value)
 {
-    if ( value==1 )
+    if ( value==0 )
     {
         qDebug() << "Center pressed";
         exec->buttonCenterChanged();

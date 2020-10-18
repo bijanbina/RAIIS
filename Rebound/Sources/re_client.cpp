@@ -241,10 +241,10 @@ void ReClient::readyRead()
    }
    else if( read_data=="m" )
    {
-       if( isUiVisible() )
+       if( isUiVisible(ui) )
        {
             sendData("M", 1);
-            hideUI();
+            hideUI(ui);
        }
        else
        {

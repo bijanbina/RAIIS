@@ -81,7 +81,7 @@ void updateScreenInfo(QObject *item)
 //    y:y_base + (Screen.height - minimumHeight) / 2
 
 #ifdef __linux__
-    QQmlProperty::write(item, "minimumHeight", 360);
+    QQmlProperty::write(item, "minimumHeight", 400);
 //    QQmlProperty::write(item, "visible", 1);
 #endif
 
