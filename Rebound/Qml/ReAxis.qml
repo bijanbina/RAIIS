@@ -7,23 +7,22 @@ Rectangle
     property string axisState: "1"
 
     color: "transparent"
-    width: childrenRect.width
-    height: childrenRect.height
+//    color: "red"
+    width: 300
+    height: 200
 
     ReCircle
     {
         id: gerdali
-        anchors.left: axis_left_label.right
-        anchors.top: axis_top_label.bottom
-        anchors.topMargin: 14
-        anchors.leftMargin: 13
+        anchors.centerIn: parent
         axisName: cntName
     }
 
     Rectangle
     {
         id: axis_top_label
-        anchors.top: parent.top
+        anchors.bottom: gerdali.top
+        anchors.bottomMargin: 13
         anchors.horizontalCenter: gerdali.horizontalCenter
         width: axis_top_label_c.width
         height: axis_top_label_f.height
@@ -104,7 +103,8 @@ Rectangle
     Rectangle
     {
         id: axis_left_label
-        anchors.left: parent.left
+        anchors.right: gerdali.left
+        anchors.rightMargin: 13
         anchors.verticalCenter: gerdali.verticalCenter
         width: axis_left_label_c.width
         height: axis_left_label_f.height
@@ -202,7 +202,7 @@ Rectangle
     {
         id: axis_down_label
         anchors.top: gerdali.bottom
-        anchors.topMargin: 14
+        anchors.topMargin: 13
         anchors.horizontalCenter: gerdali.horizontalCenter
         width: axis_down_label_c.width
         height: axis_down_label_f.height

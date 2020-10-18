@@ -146,8 +146,8 @@ Window {
         cntName: "L"
         anchors.left: parent.left
         anchors.bottom: bottomBar.top
-        anchors.bottomMargin: 25
-        anchors.leftMargin: 47
+        anchors.bottomMargin: 20
+        anchors.leftMargin: 23
     }
 
     ReAxis
@@ -157,9 +157,8 @@ Window {
         anchors.right: parent.right
         anchors.bottom: bottomBar.top
         anchors.bottomMargin: axis_left.anchors.bottomMargin
-        anchors.rightMargin: 40
+        anchors.rightMargin: 15
     }
-
 
     ReBottomBar
     {
