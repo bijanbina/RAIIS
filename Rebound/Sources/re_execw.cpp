@@ -4,6 +4,8 @@
 ReExecW::ReExecW(QObject *item, QObject *parent) : QObject(parent)
 {
     ui = item;
+    chapar = new ReChapar(item);
+    chapar->setMode(RE_MODE_APPLICATION);
 }
 
 void ReExecW::buttonAPressed()

@@ -36,7 +36,6 @@ struct assistant_options{
     int  currentLanguage;
 } ;
 
-
 assistant_options loadOptions();
 
 int getIntCommand(char *command);

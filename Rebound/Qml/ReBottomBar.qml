@@ -30,7 +30,7 @@ Rectangle
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "left"
-            cmd_text: "Switch to Workspace #1"
+            cmd_text: page.left_action
         }
 
     }
@@ -50,7 +50,7 @@ Rectangle
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "up"
-            cmd_text: "Switch to Workspace #2"
+            cmd_text: page.up_action
         }
 
     }
@@ -70,7 +70,7 @@ Rectangle
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "down"
-            cmd_text: "Switch to Workspace #3"
+            cmd_text: page.down_action
         }
 
     }
@@ -90,7 +90,7 @@ Rectangle
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "right"
-            cmd_text: "Switch to Workspace #4"
+            cmd_text: page.right_action
         }
 
     }

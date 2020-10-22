@@ -6,6 +6,7 @@ win32:QT += gamepad
 
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
+    Sources/re_chapar.cpp \
            Sources/re_client.cpp \
 
 
@@ -19,6 +20,7 @@ linux:SOURCES += Sources/re_exec.cpp \
                  Sources/re_x11.cpp
 
 HEADERS += Sources/backend.h \
+           Sources/re_chapar.h \
            Sources/re_keycode.h \
            Sources/re_client.h
 

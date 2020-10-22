@@ -3,8 +3,12 @@ import QtQuick 2.0
 Rectangle
 {
 
-    property string cntName: "" //Controller name
-    property string axisState: "1"
+    property string a_cntName: "" //Controller name
+    property string a_axisState: "1"
+    property string textUp: ""
+    property string textDown: ""
+    property string textLeft: ""
+    property string textRight: ""
 
     color: "transparent"
 //    color: "red"
@@ -15,272 +19,61 @@ Rectangle
     {
         id: gerdali
         anchors.centerIn: parent
-        axisName: cntName
+        axisName: a_cntName
     }
 
-    Rectangle
+    ReAxisLabel
     {
         id: axis_top_label
         anchors.bottom: gerdali.top
         anchors.bottomMargin: 13
         anchors.horizontalCenter: gerdali.horizontalCenter
-        width: axis_top_label_c.width
-        height: axis_top_label_f.height
-        color: parent.color
-
-        Text
-        {
-            id: axis_top_label_c
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "Win   #1"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "Win   Monitor"
-                    }
-                }
-            }
-            font.family: consolas.name
-            font.pixelSize: 10
-            color: "#e8e9e3"
-            anchors.left: parent.left
-            anchors.top: parent.top
-        }
-
-        Text
-        {
-            id: axis_top_label_f
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf061"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf061"
-                    }
-                }
-            }
-            font.family: fontAwesome.name
-            font.pixelSize: 11
-            color: "#e8e9e3"
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        3
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        -12
-                    }
-                }
-            }
-        }
+        text_cl: "Win   #1"
+        text_cr: "Win   Monitor"
+        text_fl: "\uf061"
+        text_fr: "\uf061"
+        text_norm: textUp
+        text_margin_l: 3
+        text_margin_r: -12
+        axisState: a_axisState
+        cntName: a_cntName
     }
 
-    Rectangle
+    ReAxisLabel
     {
         id: axis_left_label
         anchors.right: gerdali.left
         anchors.rightMargin: 13
         anchors.verticalCenter: gerdali.verticalCenter
-        width: axis_left_label_c.width
-        height: axis_left_label_f.height
-        color: parent.color
-
-        Text
-        {
-            id: axis_left_label_c
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "Win   #4"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "    + Left"
-                    }
-                }
-            }
-            font.family: consolas.name
-            font.pixelSize: 10
-            color: "#e8e9e3"
-            anchors.left: parent.left
-            anchors.top: parent.top
-        }
-
-        Text
-        {
-            id: axis_left_label_f
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf061"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf17a"
-                    }
-                }
-            }
-            font.family:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        fontAwesome.name
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        fontAwesome_brand.name
-                    }
-                }
-            }
-            font.pixelSize: 11
-            color: "#e8e9e3"
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        3
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        -18
-                    }
-                }
-            }
-        }
+        text_cl: "Win   #4"
+        text_cr: "    + Left"
+        text_fl: "\uf061"
+        text_fr: "\uf17a"
+        text_norm: textLeft
+        text_margin_l: 3
+        text_margin_r: -18
+        axisState: a_axisState
+        cntName: a_cntName
     }
 
-    Rectangle
+    ReAxisLabel
     {
         id: axis_down_label
         anchors.top: gerdali.bottom
         anchors.topMargin: 13
         anchors.horizontalCenter: gerdali.horizontalCenter
-        width: axis_down_label_c.width
-        height: axis_down_label_f.height
-        color: parent.color
-
-        Text
-        {
-            id: axis_down_label_c
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "Win   #3"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "Monitor   Win"
-                    }
-                }
-            }
-            font.family: consolas.name
-            font.pixelSize: 10
-            color: "#e8e9e3"
-            anchors.left: parent.left
-            anchors.top: parent.top
-        }
-
-        Text
-        {
-            id: axis_down_label_f
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf061"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf060"
-                    }
-                }
-            }
-            font.family: fontAwesome.name
-            font.pixelSize: 11
-            color: "#e8e9e3"
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        3
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        11
-                    }
-                }
-            }
-        }
+        text_cl: "Win   #3"
+        text_cr: "Monitor   Win"
+        text_fl: "\uf061"
+        text_fr: "\uf061"
+        text_norm: textDown
+        text_margin_l: 3
+        text_margin_r: 11
+        axisState: a_axisState
+        cntName: a_cntName
     }
 
-    Rectangle
+    ReAxisLabel
     {
         id: axis_right_label
         anchors.left: gerdali.right
@@ -292,106 +85,26 @@ Rectangle
                 {
                     13
                 }
-            }
-            else if(cntName==="R")
-            {
-                if(axisState==="1")
+                else
                 {
                     10
                 }
             }
+            else if(cntName==="R")
+            {
+                10
+            }
         }
         anchors.verticalCenter: gerdali.verticalCenter
-        width: axis_right_label_c.width
-        height: axis_right_label_f.height
-        color: parent.color
-
-        Text
-        {
-            id: axis_right_label_c
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "Win   #2"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "    + Right"
-                    }
-                }
-            }
-            font.family: consolas.name
-            font.pixelSize: 10
-            color: "#e8e9e3"
-            anchors.left: parent.left
-            anchors.top: parent.top
-        }
-
-        Text
-        {
-            id: axis_right_label_f
-            text:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf061"
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        "\uf17a"
-                    }
-                }
-            }
-            font.family:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        fontAwesome.name
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        fontAwesome_brand.name
-                    }
-                }
-            }
-            font.pixelSize: 11
-            color: "#e8e9e3"
-            anchors.top: parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset:
-            {
-                if(cntName==="L")
-                {
-                    if(axisState==="1")
-                    {
-                        3
-                    }
-                }
-                else if(cntName==="R")
-                {
-                    if(axisState==="1")
-                    {
-                        -20
-                    }
-                }
-            }
-        }
+        text_cl: "Win   #2"
+        text_cr: "    + Right"
+        text_fl: "\uf061"
+        text_fr: "\uf17a"
+        text_norm: textRight
+        text_margin_l: 3
+        text_margin_r: -20
+        axisState: a_axisState
+        cntName: a_cntName
     }
 
 }

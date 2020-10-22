@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QDebug>
-#include "backend.h"
 #include <windows.h>
+#include "backend.h"
+#include "re_chapar.h"
 
 class ReExecW: public QObject
 {
@@ -49,6 +50,7 @@ public:
 
 private:
     QObject *ui;
+    ReChapar *chapar;
 };
 
 #endif // RE_EXECW_H

@@ -6,8 +6,10 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 1.4
 import "qrc:/"
 
-Window {
-    id:page
+Window
+{
+    id: page
+
     visible: false
     property alias miheight:page.width
     minimumHeight: 400//500
@@ -31,6 +33,29 @@ Window {
     //Properties:
     property string ipAddress: "192.168.154.25"
     property string counterNumber: "21"
+    property string x_action: "Close Active Window"
+    property string y_action: "Switch to Firefox"
+    property string a_action: "Switch to Spotify"
+    property string b_action: "Open New Firefox Window"
+    property string m_action: "Put PC to Sleep"
+    property string s_action: "Mute/UnMute"
+    property string r1_action: "Switch to Book"
+    property string r2_action: "Switch to EPUB Reader"
+    property string l1_action: "Switch to Nautilus"
+    property string l2_action: "Put PC to Sleep"
+    property string lau_action: "1"
+    property string lad_action: "1"
+    property string lal_action: "1"
+    property string lar_action: "1"
+    property string rau_action: "1"
+    property string rad_action: "1"
+    property string ral_action: "1"
+    property string rar_action: "1"
+    property string left_action: "Switch to Workspace #1"
+    property string up_action: "Switch to Workspace #2"
+    property string down_action: "Switch to Workspace #3"
+    property string right_action: "Switch to Workspace #4"
+    property string axis_state: "1"
 
     //Signals:
     signal morabaSignal
@@ -143,21 +168,31 @@ Window {
     ReAxis
     {
         id: axis_left
-        cntName: "L"
+        a_cntName: "L"
+        a_axisState: page.axis_state
         anchors.left: parent.left
         anchors.bottom: bottomBar.top
         anchors.bottomMargin: 20
         anchors.leftMargin: 23
+        textUp: lau_action
+        textDown: lad_action
+        textLeft: lal_action
+        textRight: lar_action
     }
 
     ReAxis
     {
         id: axis_right
-        cntName: "R"
+        a_cntName: "R"
+        a_axisState: page.axis_state
         anchors.right: parent.right
         anchors.bottom: bottomBar.top
         anchors.bottomMargin: axis_left.anchors.bottomMargin
         anchors.rightMargin: 15
+        textUp: rau_action
+        textDown: rad_action
+        textLeft: ral_action
+        textRight: rar_action
     }
 
     ReBottomBar

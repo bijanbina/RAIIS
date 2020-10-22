@@ -23,7 +23,7 @@ Rectangle
             anchors.top: parent.top
             anchors.left: parent.left
             btn_id: "X"
-            cmd_text: "Close Active Window"
+            cmd_text: page.x_action
         }
 
         CommandButton
@@ -32,7 +32,7 @@ Rectangle
             anchors.top: xbutton.bottom
             anchors.left: parent.left
             btn_id: "Y"
-            cmd_text: "Switch to firefox"
+            cmd_text: page.y_action
         }
 
         CommandButton
@@ -41,7 +41,7 @@ Rectangle
             anchors.top: ybutton.bottom
             anchors.left: parent.left
             btn_id: "A"
-            cmd_text: "Switch to Spotify"
+            cmd_text: page.a_action
         }
 
         CommandButton
@@ -50,7 +50,7 @@ Rectangle
             anchors.top: abutton.bottom
             anchors.left: parent.left
             btn_id: "B"
-            cmd_text: "Open New Firefox Window"
+            cmd_text: page.b_action
         }
 
         CommandButton
@@ -59,7 +59,7 @@ Rectangle
             anchors.top: bbutton.bottom
             anchors.left: parent.left
             btn_id: "S"
-            cmd_text: "Mute/UnMute"
+            cmd_text: page.s_action
         }
     }
 
@@ -79,7 +79,7 @@ Rectangle
             anchors.top: parent.top
             anchors.left: parent.left
             btn_id: "RT"
-            cmd_text: "Swtich to book"
+            cmd_text: page.r1_action
         }
 
         CommandButton
@@ -88,7 +88,7 @@ Rectangle
             anchors.top: rt_button.bottom
             anchors.left: parent.left
             btn_id: "RB"
-            cmd_text: "Switch to epub reader"
+            cmd_text: page.r2_action
         }
 
         CommandButton
@@ -97,7 +97,7 @@ Rectangle
             anchors.top: rb_button.bottom
             anchors.left: parent.left
             btn_id: "LT"
-            cmd_text: "Switch to nautilus"
+            cmd_text: page.l1_action
         }
 
         CommandButton
@@ -106,7 +106,7 @@ Rectangle
             anchors.top: lt_button.bottom
             anchors.left: parent.left
             btn_id: "LB"
-            cmd_text: "Put PC to sleep"
+            cmd_text: page.l2_action
         }
 
         CommandButton
@@ -116,7 +116,7 @@ Rectangle
             anchors.left: parent.left
             anchors.leftMargin: 4
             btn_id: "M"
-            cmd_text: "Put PC to sleep"
+            cmd_text: page.m_action
         }
     }
 

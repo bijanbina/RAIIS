@@ -13,5 +13,6 @@
         <file>ReBottomBar.qml</file>
         <file>ReAxis.qml</file>
         <file>ReCircle.qml</file>
+        <file>ReAxisLabel.qml</file>
     </qresource>
 </RCC>
