@@ -118,6 +118,8 @@ void hideUI(QObject *item)
     }
 }
 
+#ifdef _WIN32
+
 void executeAhk(QString name)
 {
     PROCESS_INFORMATION ProcessInfo; //This is what we get as an [out] parameter
@@ -166,3 +168,5 @@ void executeUi(QString name)
         qDebug() << "CreateProcess failed" << last_error;
     }
 }
+
+#endif

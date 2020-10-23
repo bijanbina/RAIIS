@@ -3,9 +3,18 @@
 #include <QQmlProperty>
 
 
-ReChapar::ReChapar(QObject *item, QObject *parent) : QObject(parent)
+ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(parent)
 {
     ui = item;
+    state = new ReState;
+
+#ifdef _WIN32
+    controller = new ReXboxW(item, isNative);
+#else
+    controller = new ReXboxL(item, isNative);
+#endif
+
+
 }
 
 void ReChapar::setPage(RePage page)

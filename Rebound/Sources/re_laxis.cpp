@@ -1,9 +1,10 @@
 #include "re_laxis.h"
 #include <QThread>
 
-ReLAxis::ReLAxis(QObject *item, QObject *parent) : QObject(parent)
+ReLAxis::ReLAxis(QObject *item, ReState *st, QObject *parent) : QObject(parent)
 {
     ui = item;
+    state = st;
 }
 
 void ReLAxis::buttonRight()

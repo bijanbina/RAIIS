@@ -1,9 +1,10 @@
 #include "re_raxis.h"
 #include <QThread>
 
-ReRAxis::ReRAxis(QObject *item, QObject *parent) : QObject(parent)
+ReRAxis::ReRAxis(QObject *item, ReState *st, QObject *parent) : QObject(parent)
 {
     ui = item;
+    state = st;
 }
 
 void ReRAxis::buttonRight()

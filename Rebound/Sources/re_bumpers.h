@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include "backend.h"
+#include "re_state.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -14,7 +15,7 @@ class ReBumpers: public QObject
     Q_OBJECT
 
 public:
-    ReBumpers(QObject *item, QObject *parent = 0);
+    ReBumpers(QObject *item, ReState *st, QObject *parent = 0);
 
 public slots:
     void buttonL1Pressed();
@@ -24,6 +25,7 @@ public slots:
 
 private:
     QObject *ui;
+    ReState *state;
 };
 
 #endif // RE_BUMPERS_H

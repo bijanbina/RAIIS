@@ -3,6 +3,21 @@
 
 #include <QObject>
 #include "re_state.h"
+#include "re_bumpers.h"
+#include "re_buttons.h"
+#include "re_directions.h"
+#include "re_laxis.h"
+#include "re_raxis.h"
+
+#ifdef _WIN32
+    #include "re_xbox_w.h"
+    #ifdef RE_TEST_EN
+    #include "re_client.h"
+    #endif
+#else
+    #include "re_client.h"
+    #include "re_native.h"
+#endif
 
 typedef struct RePage
 {
@@ -35,7 +50,7 @@ class ReChapar : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReChapar(QObject *item, QObject *parent = nullptr);
+    explicit ReChapar(QObject *item, int isNative, QObject *parent = nullptr);
 
     void setPage(RePage page);
     void setMode(int mode);
@@ -43,8 +58,19 @@ public:
 signals:
 
 private:
-    QObject *ui;
+    QObject      *ui;
+    ReState      *state;
+    ReBumpers    *bumpers;
+    ReButtons    *buttons;
+    ReDirections *directions;
+    ReLAxis      *laxis;
+    ReRAxis      *raxis;
 
+#ifdef _WIN32
+    ReXboxW *controller;
+#else
+    ReXboxL *controller;
+#endif
 };
 
 #endif // RECHAPAR_H

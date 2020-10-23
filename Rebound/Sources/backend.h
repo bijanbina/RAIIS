@@ -54,9 +54,9 @@ void updateScreenInfo(QObject *item);
 void hideUI(QObject *item);
 int isUiVisible(QObject *item);
 
-
+#ifdef _WIN32
 void executeAhk(QString name);
 void executeUi(QString name);
-
+#endif
 
 #endif // BACKEND_H

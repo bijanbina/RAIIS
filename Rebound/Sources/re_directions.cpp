@@ -1,9 +1,10 @@
 #include "re_directions.h"
 #include <QThread>
 
-ReDirections::ReDirections(QObject *item, QObject *parent) : QObject(parent)
+ReDirections::ReDirections(QObject *item, ReState *st, QObject *parent) : QObject(parent)
 {
     ui = item;
+    state = st;
 }
 
 void ReDirections::buttonDownPressed()

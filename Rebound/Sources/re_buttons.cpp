@@ -1,9 +1,10 @@
 #include "re_buttons.h"
 #include <QThread>
 
-ReButtons::ReButtons(QObject *item, QObject *parent) : QObject(parent)
+ReButtons::ReButtons(QObject *item, ReState *st, QObject *parent) : QObject(parent)
 {
     ui = item;
+    state = st;
 }
 
 void ReButtons::buttonAPressed()

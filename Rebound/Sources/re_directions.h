@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include "backend.h"
+#include "re_state.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -14,7 +15,7 @@ class ReDirections: public QObject
     Q_OBJECT
 
 public:
-    ReDirections(QObject *item, QObject *parent = 0);
+    ReDirections(QObject *item, ReState *st, QObject *parent = 0);
 
 public slots:
     void buttonDownPressed();
@@ -24,6 +25,7 @@ public slots:
 
 private:
     QObject *ui;
+    ReState *state;
 };
 
 #endif // RE_DIRECTIONS_H
