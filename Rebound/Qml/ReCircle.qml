@@ -54,11 +54,10 @@ Rectangle
                 const ctx = canvas.getContext('2d')
                 ctx.beginPath()
                 ctx.strokeStyle = "#8e939e"
-                ctx.setLineDash([2, 1])
+//                ctx.setLineDash([2, 1])
                 ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2-1, 0, 2*Math.PI)
                 ctx.stroke()
             }
-
         }
 
     }

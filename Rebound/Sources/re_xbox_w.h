@@ -10,13 +10,13 @@
 #endif
 
 
-class ReWin : public QObject
+class ReXboxW : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ReWin(QObject *item, int native, QObject *parent = 0);
-    ~ReWin();
+    explicit ReXboxW(QObject *item, int native, QObject *parent = 0);
+    ~ReXboxW();
 
 public slots:
     void buttonAChanged(bool);

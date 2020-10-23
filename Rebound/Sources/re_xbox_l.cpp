@@ -1,9 +1,9 @@
-#include "re_native.h"
+#include "re_xbox_l.h"
 #include <string.h>
 
 #define JOYSTICK_DELAY 100
 
-ReNative::ReNative(QObject *item, QObject *parent) : QObject(parent)
+ReXboxL::ReXboxL(QObject *item, QObject *parent) : QObject(parent)
 {
     //init
     ui = item;
@@ -21,7 +21,7 @@ ReNative::ReNative(QObject *item, QObject *parent) : QObject(parent)
     stdin_file->open(stdin, QIODevice::ReadOnly);
 }
 
-void ReNative::readyData()
+void ReXboxL::readyData()
 {
     QString line = stdin_file->readLine();
     QStringList space_separated;
@@ -48,7 +48,7 @@ void ReNative::readyData()
     }
 }
 
-void ReNative::keyParser(QString key, int value)
+void ReXboxL::keyParser(QString key, int value)
 {
     qDebug() << key << value;
     if( key==RE_KEY_HOMEPAGE )
@@ -153,12 +153,12 @@ void ReNative::keyParser(QString key, int value)
     }
 }
 
-ReNative::~ReNative()
+ReXboxL::~ReXboxL()
 {
     qDebug() << "Closing Server";
 }
 
-void ReNative::buttonAChanged(bool value)
+void ReXboxL::buttonAChanged(bool value)
 {
     qDebug() << "A Pressed";
     if ( value==1 )
@@ -167,7 +167,7 @@ void ReNative::buttonAChanged(bool value)
     }
 }
 
-void ReNative::buttonBChanged(bool value)
+void ReXboxL::buttonBChanged(bool value)
 {
     if ( value==1 )
     {
@@ -175,7 +175,7 @@ void ReNative::buttonBChanged(bool value)
     }
 }
 
-void ReNative::buttonXChanged(bool value)
+void ReXboxL::buttonXChanged(bool value)
 {
     if ( value==1 )
     {
@@ -183,7 +183,7 @@ void ReNative::buttonXChanged(bool value)
     }
 }
 
-void ReNative::buttonYChanged(bool value)
+void ReXboxL::buttonYChanged(bool value)
 {
     if ( value==1 )
     {
@@ -191,7 +191,7 @@ void ReNative::buttonYChanged(bool value)
     }
 }
 
-void ReNative::buttonL1Changed(bool value)
+void ReXboxL::buttonL1Changed(bool value)
 {
     if ( value==1 )
     {
@@ -199,7 +199,7 @@ void ReNative::buttonL1Changed(bool value)
     }
 }
 
-void ReNative::buttonL2Changed(double value)
+void ReXboxL::buttonL2Changed(double value)
 {
     if ( value==1 )
     {
@@ -207,7 +207,7 @@ void ReNative::buttonL2Changed(double value)
     }
 }
 
-void ReNative::buttonL3Changed(bool value)
+void ReXboxL::buttonL3Changed(bool value)
 {
     qDebug() << "l3 pressed";
     if ( value==1 )
@@ -216,7 +216,7 @@ void ReNative::buttonL3Changed(bool value)
     }
 }
 
-void ReNative::buttonR1Changed(bool value)
+void ReXboxL::buttonR1Changed(bool value)
 {
     if ( value==1 )
     {
@@ -224,7 +224,7 @@ void ReNative::buttonR1Changed(bool value)
     }
 }
 
-void ReNative::buttonR2Changed(double value)
+void ReXboxL::buttonR2Changed(double value)
 {
     qDebug() << "r2 pressed";
     if ( value==1 )
@@ -233,7 +233,7 @@ void ReNative::buttonR2Changed(double value)
     }
 }
 
-void ReNative::buttonR3Changed(bool value)
+void ReXboxL::buttonR3Changed(bool value)
 {
     qDebug() << "r3 pressed";
     if ( value==1 )
@@ -242,7 +242,7 @@ void ReNative::buttonR3Changed(bool value)
     }
 }
 
-void ReNative::buttonAxisLxChanged(double value)
+void ReXboxL::buttonAxisLxChanged(double value)
 {
     if( last_la_x==0 )
     {
@@ -263,7 +263,7 @@ void ReNative::buttonAxisLxChanged(double value)
     }
 }
 
-void ReNative::buttonAxisLyChanged(double value)
+void ReXboxL::buttonAxisLyChanged(double value)
 {
     if( last_la_y==0 )
     {
@@ -284,7 +284,7 @@ void ReNative::buttonAxisLyChanged(double value)
     }
 }
 
-void ReNative::buttonAxisRxChanged(double value)
+void ReXboxL::buttonAxisRxChanged(double value)
 {
     if( last_la_x==0 )
     {
@@ -305,7 +305,7 @@ void ReNative::buttonAxisRxChanged(double value)
     }
 }
 
-void ReNative::buttonAxisRyChanged(double value)
+void ReXboxL::buttonAxisRyChanged(double value)
 {
 //    qDebug() << value;
     if( last_ra_y==0 )
@@ -327,7 +327,7 @@ void ReNative::buttonAxisRyChanged(double value)
     }
 }
 
-void ReNative::buttonStartChanged(bool value)
+void ReXboxL::buttonStartChanged(bool value)
 {
     if ( value==0 )
     {
@@ -335,7 +335,7 @@ void ReNative::buttonStartChanged(bool value)
     }
 }
 
-void ReNative::buttonSelectChanged(bool value)
+void ReXboxL::buttonSelectChanged(bool value)
 {
     if ( value==0 )
     {
@@ -343,7 +343,7 @@ void ReNative::buttonSelectChanged(bool value)
     }
 }
 
-void ReNative::buttonCenterChanged(bool value)
+void ReXboxL::buttonCenterChanged(bool value)
 {
     if ( value==0 )
     {
@@ -352,7 +352,7 @@ void ReNative::buttonCenterChanged(bool value)
     }
 }
 
-void ReNative::buttonGuideChanged(bool value)
+void ReXboxL::buttonGuideChanged(bool value)
 {
     qDebug() << "Guide pressed";
     if ( value==1 )
@@ -361,7 +361,7 @@ void ReNative::buttonGuideChanged(bool value)
     }
 }
 
-void ReNative::buttonLeftChanged(bool value)
+void ReXboxL::buttonLeftChanged(bool value)
 {
     if ( value==1 )
     {
@@ -369,7 +369,7 @@ void ReNative::buttonLeftChanged(bool value)
     }
 }
 
-void ReNative::buttonRightChanged(bool value)
+void ReXboxL::buttonRightChanged(bool value)
 {
     if ( value==1 )
     {
@@ -377,7 +377,7 @@ void ReNative::buttonRightChanged(bool value)
     }
 }
 
-void ReNative::buttonUpChanged(bool value)
+void ReXboxL::buttonUpChanged(bool value)
 {
     if ( value==1 )
     {
@@ -385,7 +385,7 @@ void ReNative::buttonUpChanged(bool value)
     }
 }
 
-void ReNative::buttonDownChanged(bool value)
+void ReXboxL::buttonDownChanged(bool value)
 {
     if ( value==1 )
     {

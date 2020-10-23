@@ -2,13 +2,7 @@
 #define RECHAPAR_H
 
 #include <QObject>
-
-#define RE_MODE_APPLICATION 1
-#define RE_MODE_SWITCH      2
-#define RE_MODE_MAIN        3
-#define RE_MODE_READING     4
-#define RE_MODE_FIREFOX     5
-
+#include "re_state.h"
 
 typedef struct RePage
 {

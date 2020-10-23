@@ -1,6 +1,6 @@
-#include "re_win.h"
+#include "re_xbox_w.h"
 
-ReWin::ReWin(QObject *item, int native, QObject *parent) : QObject(parent)
+ReXboxW::ReXboxW(QObject *item, int native, QObject *parent) : QObject(parent)
 {
     ui = item;
     tcp = new ReServer(item);
@@ -67,12 +67,12 @@ ReWin::ReWin(QObject *item, int native, QObject *parent) : QObject(parent)
 
 }
 
-ReWin::~ReWin()
+ReXboxW::~ReXboxW()
 {
     delete tcp;
 }
 
-void ReWin::buttonAChanged(bool value)
+void ReXboxW::buttonAChanged(bool value)
 {
     if ( value==1 )
     {
@@ -87,7 +87,7 @@ void ReWin::buttonAChanged(bool value)
     }
 }
 
-void ReWin::buttonBChanged(bool value)
+void ReXboxW::buttonBChanged(bool value)
 {
     if ( value==1 )
     {
@@ -102,7 +102,7 @@ void ReWin::buttonBChanged(bool value)
     }
 }
 
-void ReWin::buttonXChanged(bool value)
+void ReXboxW::buttonXChanged(bool value)
 {
     if ( value==1 )
     {
@@ -117,7 +117,7 @@ void ReWin::buttonXChanged(bool value)
     }
 }
 
-void ReWin::buttonYChanged(bool value)
+void ReXboxW::buttonYChanged(bool value)
 {
     if ( value==1 )
     {
@@ -132,7 +132,7 @@ void ReWin::buttonYChanged(bool value)
     }
 }
 
-void ReWin::buttonL1Changed(bool value)
+void ReXboxW::buttonL1Changed(bool value)
 {
     if ( value==1 )
     {
@@ -147,7 +147,7 @@ void ReWin::buttonL1Changed(bool value)
     }
 }
 
-void ReWin::buttonL2Changed(double value)
+void ReXboxW::buttonL2Changed(double value)
 {
     if ( value==1 )
     {
@@ -162,7 +162,7 @@ void ReWin::buttonL2Changed(double value)
     }
 }
 
-void ReWin::buttonL3Changed(bool value)
+void ReXboxW::buttonL3Changed(bool value)
 {
     if ( value==1 )
     {
@@ -178,7 +178,7 @@ void ReWin::buttonL3Changed(bool value)
     }
 }
 
-void ReWin::buttonR1Changed(bool value)
+void ReXboxW::buttonR1Changed(bool value)
 {
     if ( value==1 )
     {
@@ -193,7 +193,7 @@ void ReWin::buttonR1Changed(bool value)
     }
 }
 
-void ReWin::buttonR2Changed(double value)
+void ReXboxW::buttonR2Changed(double value)
 {
     if ( value==1 )
     {
@@ -208,7 +208,7 @@ void ReWin::buttonR2Changed(double value)
     }
 }
 
-void ReWin::buttonR3Changed(bool value)
+void ReXboxW::buttonR3Changed(bool value)
 {
     if ( value==1 )
     {
@@ -224,7 +224,7 @@ void ReWin::buttonR3Changed(bool value)
     }
 }
 
-void ReWin::buttonAxisLxChanged(double value)
+void ReXboxW::buttonAxisLxChanged(double value)
 {
     if( last_la_x==0 )
     {
@@ -259,7 +259,7 @@ void ReWin::buttonAxisLxChanged(double value)
     }
 }
 
-void ReWin::buttonAxisLyChanged(double value)
+void ReXboxW::buttonAxisLyChanged(double value)
 {
     if( last_la_y==0 )
     {
@@ -294,7 +294,7 @@ void ReWin::buttonAxisLyChanged(double value)
     }
 }
 
-void ReWin::buttonAxisRxChanged(double value)
+void ReXboxW::buttonAxisRxChanged(double value)
 {
     if( last_la_x==0 )
     {
@@ -329,7 +329,7 @@ void ReWin::buttonAxisRxChanged(double value)
     }
 }
 
-void ReWin::buttonAxisRyChanged(double value)
+void ReXboxW::buttonAxisRyChanged(double value)
 {
 //    qDebug() << value;
     if( last_ra_y==0 )
@@ -365,7 +365,7 @@ void ReWin::buttonAxisRyChanged(double value)
     }
 }
 
-void ReWin::buttonStartChanged(bool value)
+void ReXboxW::buttonStartChanged(bool value)
 {
     if ( value==1 )
     {
@@ -380,7 +380,7 @@ void ReWin::buttonStartChanged(bool value)
     }
 }
 
-void ReWin::buttonSelectChanged(bool value)
+void ReXboxW::buttonSelectChanged(bool value)
 {
     if ( value==1 )
     {
@@ -395,7 +395,7 @@ void ReWin::buttonSelectChanged(bool value)
     }
 }
 
-void ReWin::buttonCenterChanged(bool value)
+void ReXboxW::buttonCenterChanged(bool value)
 {
     if ( value==1 )
     {
@@ -411,7 +411,7 @@ void ReWin::buttonCenterChanged(bool value)
     }
 }
 
-void ReWin::buttonGuideChanged(bool value)
+void ReXboxW::buttonGuideChanged(bool value)
 {
     if ( value )
     {
@@ -427,7 +427,7 @@ void ReWin::buttonGuideChanged(bool value)
     }
 }
 
-void ReWin::buttonLeftChanged(bool value)
+void ReXboxW::buttonLeftChanged(bool value)
 {
     if ( value==1 )
     {
@@ -442,7 +442,7 @@ void ReWin::buttonLeftChanged(bool value)
     }
 }
 
-void ReWin::buttonRightChanged(bool value)
+void ReXboxW::buttonRightChanged(bool value)
 {
     if ( value==1 )
     {
@@ -457,7 +457,7 @@ void ReWin::buttonRightChanged(bool value)
     }
 }
 
-void ReWin::buttonUpChanged(bool value)
+void ReXboxW::buttonUpChanged(bool value)
 {
     if ( value==1 )
     {
@@ -472,7 +472,7 @@ void ReWin::buttonUpChanged(bool value)
     }
 }
 
-void ReWin::buttonDownChanged(bool value)
+void ReXboxW::buttonDownChanged(bool value)
 {
     if ( value==1 )
     {

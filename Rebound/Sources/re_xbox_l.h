@@ -18,13 +18,13 @@
 #include "re_exec.h"
 #endif
 
-class ReNative : public QObject
+class ReXboxL : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ReNative(QObject *item, QObject *parent = 0);
-    ~ReNative();
+    explicit ReXboxL(QObject *item, QObject *parent = 0);
+    ~ReXboxL();
 
 signals:
     void errorConnection();
