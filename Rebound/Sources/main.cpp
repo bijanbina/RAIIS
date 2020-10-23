@@ -13,7 +13,7 @@
     #include "re_native.h"
 #endif
 
-#define NATIBE_MODE
+//#define NATIBE_MODE
 
 int main(int argc, char *argv[])
 {

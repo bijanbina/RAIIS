@@ -1,9 +1,8 @@
-#ifndef RE_WIN_H
-#define RE_WIN_H
+#ifndef RE_XBOX_W_H
+#define RE_XBOX_W_H
 
 #include <QObject>
 #include "re_server.h"
-#include "re_execw.h"
 #ifdef _WIN32
 #include <QGamepad>
 #include "re_xbox_win32.h"
@@ -46,11 +45,42 @@ public slots:
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
 
+signals:
+    void buttonAPressed();
+    void buttonBPressed();
+    void buttonXPressed();
+    void buttonYPressed();
+
+    void buttonL1Pressed();
+    void buttonL2Pressed();
+    void buttonR1Pressed();
+    void buttonR2Pressed();
+
+    //Left Analog Axis
+    void buttonLAxisRight();
+    void buttonLAxisLeft();
+    void buttonLAxisUp();
+    void buttonLAxisDown();
+
+    //Right Analog Axis
+    void buttonRAxisRight();
+    void buttonRAxisLeft();
+    void buttonRAxisUp();
+    void buttonRAxisDown();
+
+    void buttonStartPressed();
+    void buttonSelectPressed();
+    void buttonGuidePressed();
+
+    void buttonDownPressed();
+    void buttonUpPressed();
+    void buttonRightPressed();
+    void buttonLeftPressed();
+
 private:
     QObject  *ui;
     ReServer *tcp;
     QGamepad *pad;
-    ReExecW  *exec;
 
     int isNative;
 
@@ -65,4 +95,4 @@ private:
 
 };
 
-#endif // RE_WIN_H
+#endif // RE_XBOX_W_H

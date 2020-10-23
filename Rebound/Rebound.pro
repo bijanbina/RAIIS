@@ -8,12 +8,16 @@ SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
            Sources/re_chapar.cpp \
            Sources/re_client.cpp \
-           Sources/re_state.cpp
+           Sources/re_state.cpp \
+           Sources/re_buttons.cpp \
+           Sources/re_directions.cpp \
+           Sources/re_laxis.cpp \
+           Sources/re_raxis.cpp \
+    Sources/re_bumpers.cpp
 
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_xbox_win32.cpp \
-                 Sources/re_execw.cpp \
                  Sources/re_xbox_w.cpp
 
 linux:SOURCES += Sources/re_exec.cpp \
@@ -24,12 +28,16 @@ HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
-           Sources/re_state.h
+           Sources/re_state.h \
+           Sources/re_buttons.h \
+           Sources/re_directions.h \
+           Sources/re_laxis.h \
+           Sources/re_raxis.h \
+    Sources/re_bumpers.h
 
 
 win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_win32.h \
-                 Sources/re_execw.h \
                  Sources/re_xbox_w.h
 
 linux:HEADERS += Sources/re_exec.h \

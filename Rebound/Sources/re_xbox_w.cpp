@@ -5,7 +5,6 @@ ReXboxW::ReXboxW(QObject *item, int native, QObject *parent) : QObject(parent)
     ui = item;
     tcp = new ReServer(item);
     isNative = native;
-    exec = new ReExecW(item);
 
 #ifdef _WIN32
     pad = new QGamepad;
@@ -78,7 +77,7 @@ void ReXboxW::buttonAChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonAPressed();
+            emit buttonAPressed();
         }
         else
         {
@@ -93,7 +92,7 @@ void ReXboxW::buttonBChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonBPressed();
+            emit buttonBPressed();
         }
         else
         {
@@ -108,7 +107,7 @@ void ReXboxW::buttonXChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonXPressed();
+            emit buttonXPressed();
         }
         else
         {
@@ -123,7 +122,7 @@ void ReXboxW::buttonYChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonYPressed();
+            emit buttonYPressed();
         }
         else
         {
@@ -138,7 +137,7 @@ void ReXboxW::buttonL1Changed(bool value)
     {
         if(isNative)
         {
-            exec->buttonL1Pressed();
+            emit buttonL1Pressed();
         }
         else
         {
@@ -153,7 +152,7 @@ void ReXboxW::buttonL2Changed(double value)
     {
         if(isNative)
         {
-            exec->buttonL2Pressed();
+            emit buttonL2Pressed();
         }
         else
         {
@@ -169,7 +168,7 @@ void ReXboxW::buttonL3Changed(bool value)
         if(isNative)
         {
             ///FIXME
-//            exec->buttonL3Pressed();
+//            emit buttonL3Pressed();
         }
         else
         {
@@ -184,7 +183,7 @@ void ReXboxW::buttonR1Changed(bool value)
     {
         if(isNative)
         {
-            exec->buttonR1Pressed();
+            emit buttonR1Pressed();
         }
         else
         {
@@ -199,7 +198,7 @@ void ReXboxW::buttonR2Changed(double value)
     {
         if(isNative)
         {
-            exec->buttonR2Pressed();
+            emit buttonR2Pressed();
         }
         else
         {
@@ -215,7 +214,7 @@ void ReXboxW::buttonR3Changed(bool value)
         if(isNative)
         {
             ///FIXME
-//            exec->buttonR3Pressed();
+//            emit buttonR3Pressed();
         }
         else
         {
@@ -233,7 +232,7 @@ void ReXboxW::buttonAxisLxChanged(double value)
             last_la_x = 1;
             if(isNative)
             {
-                exec->buttonLAxisRight();
+                emit buttonLAxisRight();
             }
             else
             {
@@ -245,7 +244,7 @@ void ReXboxW::buttonAxisLxChanged(double value)
             last_la_x = 1;
             if(isNative)
             {
-                exec->buttonLAxisLeft();
+                emit buttonLAxisLeft();
             }
             else
             {
@@ -268,7 +267,7 @@ void ReXboxW::buttonAxisLyChanged(double value)
             last_la_y = 1;
             if(isNative)
             {
-                exec->buttonLAxisUp();
+                emit buttonLAxisUp();
             }
             else
             {
@@ -280,7 +279,7 @@ void ReXboxW::buttonAxisLyChanged(double value)
             last_la_y = 1;
             if(isNative)
             {
-                exec->buttonLAxisDown();
+                emit buttonLAxisDown();
             }
             else
             {
@@ -303,7 +302,7 @@ void ReXboxW::buttonAxisRxChanged(double value)
             last_la_x = 1;
             if(isNative)
             {
-                exec->buttonRAxisRight();
+                emit buttonRAxisRight();
             }
             else
             {
@@ -315,7 +314,7 @@ void ReXboxW::buttonAxisRxChanged(double value)
             last_la_x = 1;
             if(isNative)
             {
-                exec->buttonRAxisLeft();
+                emit buttonRAxisLeft();
             }
             else
             {
@@ -339,7 +338,7 @@ void ReXboxW::buttonAxisRyChanged(double value)
             last_ra_y = 1;
             if(isNative)
             {
-                exec->buttonRAxisUp();
+                emit buttonRAxisUp();
             }
             else
             {
@@ -351,7 +350,7 @@ void ReXboxW::buttonAxisRyChanged(double value)
             last_ra_y = 1;
             if(isNative)
             {
-                exec->buttonRAxisDown();
+                emit buttonRAxisDown();
             }
             else
             {
@@ -371,7 +370,7 @@ void ReXboxW::buttonStartChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonStartChanged();
+            emit buttonStartPressed();
         }
         else
         {
@@ -386,7 +385,7 @@ void ReXboxW::buttonSelectChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonSelectChanged();
+            emit buttonSelectPressed();
         }
         else
         {
@@ -402,7 +401,7 @@ void ReXboxW::buttonCenterChanged(bool value)
         if(isNative)
         {
             ///FIXME
-//            exec->buttonCenterChanged();
+//            emit buttonCenterChanged();
         }
         else
         {
@@ -417,7 +416,7 @@ void ReXboxW::buttonGuideChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonGuideChanged();
+            emit buttonGuidePressed();
         }
         else
         {
@@ -433,7 +432,7 @@ void ReXboxW::buttonLeftChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonLeftChanged();
+            emit buttonLeftPressed();
         }
         else
         {
@@ -448,7 +447,7 @@ void ReXboxW::buttonRightChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonRightChanged();
+            emit buttonRightPressed();
         }
         else
         {
@@ -463,7 +462,7 @@ void ReXboxW::buttonUpChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonUpChanged();
+            emit buttonUpPressed();
         }
         else
         {
@@ -478,7 +477,7 @@ void ReXboxW::buttonDownChanged(bool value)
     {
         if(isNative)
         {
-            exec->buttonDownChanged();
+            emit buttonDownPressed();
         }
         else
         {

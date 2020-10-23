@@ -163,7 +163,7 @@ void ReXboxL::buttonAChanged(bool value)
     qDebug() << "A Pressed";
     if ( value==1 )
     {
-        exec->buttonAPressed();
+        emit buttonAPressed();
     }
 }
 
@@ -171,7 +171,7 @@ void ReXboxL::buttonBChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonBPressed();
+        emit buttonBPressed();
     }
 }
 
@@ -179,7 +179,7 @@ void ReXboxL::buttonXChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonXPressed();
+        emit buttonXPressed();
     }
 }
 
@@ -187,7 +187,7 @@ void ReXboxL::buttonYChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonYPressed();
+        emit buttonYPressed();
     }
 }
 
@@ -195,7 +195,7 @@ void ReXboxL::buttonL1Changed(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonL1Pressed();
+        emit buttonL1Pressed();
     }
 }
 
@@ -203,7 +203,7 @@ void ReXboxL::buttonL2Changed(double value)
 {
     if ( value==1 )
     {
-        exec->buttonL2Pressed();
+        emit buttonL2Pressed();
     }
 }
 
@@ -212,7 +212,7 @@ void ReXboxL::buttonL3Changed(bool value)
     qDebug() << "l3 pressed";
     if ( value==1 )
     {
-        exec->buttonL3Pressed();
+        emit buttonL3Pressed();
     }
 }
 
@@ -220,7 +220,7 @@ void ReXboxL::buttonR1Changed(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonR1Pressed();
+        emit buttonR1Pressed();
     }
 }
 
@@ -229,7 +229,7 @@ void ReXboxL::buttonR2Changed(double value)
     qDebug() << "r2 pressed";
     if ( value==1 )
     {
-        exec->buttonR2Pressed();
+        emit buttonR2Pressed();
     }
 }
 
@@ -238,7 +238,7 @@ void ReXboxL::buttonR3Changed(bool value)
     qDebug() << "r3 pressed";
     if ( value==1 )
     {
-        exec->buttonR3Pressed();
+        emit buttonR3Pressed();
     }
 }
 
@@ -249,12 +249,12 @@ void ReXboxL::buttonAxisLxChanged(double value)
         if( value<0.02 )
         {
             last_la_x = 1;
-            exec->buttonLAxisRight();
+            emit buttonLAxisRight();
         }
         else if( value>0.98  )
         {
             last_la_x = 1;
-            exec->buttonLAxisLeft();
+            emit buttonLAxisLeft();
         }
     }
     else if( value<0.5 && value>0.25 )
@@ -270,12 +270,12 @@ void ReXboxL::buttonAxisLyChanged(double value)
         if( value<0.02 ) //up
         {
             last_la_y = 1;
-            exec->buttonLAxisUp();
+            emit buttonLAxisUp();
         }
         else if( value>0.98 ) //down
         {
             last_la_y = 1;
-            exec->buttonLAxisDown();
+            emit buttonLAxisDown();
         }
     }
     else if( value<0.75 && value>0.25 )
@@ -291,12 +291,12 @@ void ReXboxL::buttonAxisRxChanged(double value)
         if( value<0.02 )
         {
             last_la_x = 1;
-            exec->buttonRAxisRight();
+            emit buttonRAxisRight();
         }
         else if( value>0.98 )
         {
             last_la_x = 1;
-            exec->buttonRAxisLeft();
+            emit buttonRAxisLeft();
         }
     }
     else if( value<0.75 && value>0.25 )
@@ -313,12 +313,12 @@ void ReXboxL::buttonAxisRyChanged(double value)
         if( value<0.02 ) //up
         {
             last_ra_y = 1;
-            exec->buttonRAxisUp();
+            emit buttonRAxisUp();
         }
         else if( value>0.98 ) //down
         {
             last_ra_y = 1;
-            exec->buttonRAxisDown();
+            emit buttonRAxisDown();
         }
     }
     else if( value<0.75 && value>0.25 )
@@ -331,7 +331,7 @@ void ReXboxL::buttonStartChanged(bool value)
 {
     if ( value==0 )
     {
-        exec->buttonStartChanged();
+        emit buttonStartPressed();
     }
 }
 
@@ -339,7 +339,7 @@ void ReXboxL::buttonSelectChanged(bool value)
 {
     if ( value==0 )
     {
-        exec->buttonSelectChanged(1);
+        emit buttonSelectChanged(1);
     }
 }
 
@@ -348,7 +348,7 @@ void ReXboxL::buttonCenterChanged(bool value)
     if ( value==0 )
     {
         qDebug() << "Center pressed";
-        exec->buttonCenterChanged();
+        emit buttonCenterPressed();
     }
 }
 
@@ -357,7 +357,7 @@ void ReXboxL::buttonGuideChanged(bool value)
     qDebug() << "Guide pressed";
     if ( value==1 )
     {
-        exec->buttonGuideChanged();
+        emit buttonGuidePressed();
     }
 }
 
@@ -365,7 +365,7 @@ void ReXboxL::buttonLeftChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonLeftChanged();
+        emit buttonLeftPressed();
     }
 }
 
@@ -373,7 +373,7 @@ void ReXboxL::buttonRightChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonRightChanged();
+        emit buttonRightPressed();
     }
 }
 
@@ -381,7 +381,7 @@ void ReXboxL::buttonUpChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonUpChanged();
+        emit buttonUpPressed();
     }
 }
 
@@ -389,7 +389,6 @@ void ReXboxL::buttonDownChanged(bool value)
 {
     if ( value==1 )
     {
-        exec->buttonDownChanged();
+        emit buttonDownPressed();
     }
 }
-

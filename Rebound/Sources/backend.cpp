@@ -117,3 +117,52 @@ void hideUI(QObject *item)
         QQmlProperty::write(item, "visible", 0);
     }
 }
+
+void executeAhk(QString name)
+{
+    PROCESS_INFORMATION ProcessInfo; //This is what we get as an [out] parameter
+    STARTUPINFOA StartupInfo; //This is an [in] parameter
+
+    ZeroMemory( &StartupInfo, sizeof(StartupInfo) );
+    StartupInfo.cb = sizeof(StartupInfo);
+    ZeroMemory( &ProcessInfo, sizeof(ProcessInfo) );
+
+    QString command = "\"C:\\Program Files\\AutoHotkey\\AutoHotkey.exe\" AHK\\" + name + ".ahk";
+    char app_cmd[200];
+    strcpy(app_cmd, command.toStdString().c_str());
+
+    int ret = CreateProcessA(NULL, app_cmd, NULL,
+                             NULL, FALSE, 0, NULL,
+                             NULL, &StartupInfo,
+                             &ProcessInfo);
+    if( ret == 0 )
+    {
+        long last_error = GetLastError();
+        qDebug() << "CreateProcess failed" << last_error;
+    }
+}
+
+void executeUi(QString name)
+{
+    PROCESS_INFORMATION ProcessInfo; //This is what we get as an [out] parameter
+    STARTUPINFOA StartupInfo; //This is an [in] parameter
+
+    ZeroMemory( &StartupInfo, sizeof(StartupInfo) );
+    StartupInfo.cb = sizeof(StartupInfo);
+    ZeroMemory( &ProcessInfo, sizeof(ProcessInfo) );
+
+    QString command = "\"C:\\Program Files\\AutoHotkey\\AutoHotkey.exe\" AHK\\button_ui.ahk ";
+    command += name;
+    char app_cmd[200];
+    strcpy(app_cmd, command.toStdString().c_str());
+
+    int ret = CreateProcessA(NULL, app_cmd, NULL,
+                             NULL, FALSE, 0, NULL,
+                             NULL, &StartupInfo,
+                             &ProcessInfo);
+    if( ret == 0 )
+    {
+        long last_error = GetLastError();
+        qDebug() << "CreateProcess failed" << last_error;
+    }
+}

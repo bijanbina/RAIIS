@@ -10,9 +10,6 @@
 #include <stdlib.h>
 #include <QTimer>
 #include <QQmlProperty>
-#ifdef _WIN32
-#include "re_execw.h"
-#endif
 #include "backend.h"
 
 class ReServer : public QObject

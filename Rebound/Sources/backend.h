@@ -3,8 +3,13 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlProperty>
+#include <QDebug>
 #include <stdio.h>
 #include <unistd.h>
+
+#ifdef _WIN32
+    #include <windows.h>
+#endif
 
 #define COM_NAME "com.binaee.assistant"
 #define ORG_NAME "org.binaee.assistant"
@@ -48,5 +53,10 @@ void updateScreenInfo(QObject *item);
 
 void hideUI(QObject *item);
 int isUiVisible(QObject *item);
+
+
+void executeAhk(QString name);
+void executeUi(QString name);
+
 
 #endif // BACKEND_H

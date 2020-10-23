@@ -1,5 +1,5 @@
-#ifndef ReNative_H
-#define ReNative_H
+#ifndef Re_XBOX_L
+#define Re_XBOX_L
 
 #include <QString>
 #include <QObject>
@@ -58,6 +58,39 @@ public slots:
     void buttonDownChanged(bool);
 
     void readyData();
+
+signals:
+    void buttonAPressed();
+    void buttonBPressed();
+    void buttonXPressed();
+    void buttonYPressed();
+
+    void buttonL1Pressed();
+    void buttonL2Pressed();
+    void buttonR1Pressed();
+    void buttonR2Pressed();
+
+    //Left Analog Axis
+    void buttonLAxisRight();
+    void buttonLAxisLeft();
+    void buttonLAxisUp();
+    void buttonLAxisDown();
+
+    //Right Analog Axis
+    void buttonRAxisRight();
+    void buttonRAxisLeft();
+    void buttonRAxisUp();
+    void buttonRAxisDown();
+
+    void buttonStartPressed();
+    void buttonSelectPressed();
+    void buttonGuidePressed();
+
+    void buttonDownPressed();
+    void buttonUpPressed();
+    void buttonRightPressed();
+    void buttonLeftPressed();
+
 private:
     void keyParser(QString key, int value);
 
@@ -87,4 +120,4 @@ private:
     QFile           *stdin_file;
 };
 
-#endif // ReNative_H
+#endif // Re_XBOX_L
