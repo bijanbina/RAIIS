@@ -7,6 +7,7 @@ ReDirections::ReDirections(QObject *item, ReState *st, QObject *parent) : QObjec
     state = st;
 }
 
+#ifdef _WIN32
 void ReDirections::buttonDownPressed()
 {
     executeAhk("button_down");
@@ -26,3 +27,27 @@ void ReDirections::buttonLeftPressed()
 {
     executeAhk("button_left");
 }
+#elif __linux__
+void ReExec::buttonDownPressed()
+{
+    qDebug() <<  "Down workspace";
+    system("./Scripts/button_down &");
+}
+
+void ReExec::buttonUpPressed()
+{
+    qDebug() <<  "Up workspace";
+    system("./Scripts/button_up &");
+}
+
+void ReExec::buttonRightPressed()
+{
+    system("./Scripts/button_right &");
+}
+
+void ReExec::buttonLeftPressed()
+{
+    qDebug() <<  "Previous Window";
+    system("./Scripts/button_left &");
+}
+#endif

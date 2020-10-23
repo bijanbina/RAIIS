@@ -8,6 +8,9 @@
 
 #ifdef _WIN32
     #include <windows.h>
+#elif __linux__
+#include "re_x11.h"
+#include <QTimer>
 #endif
 
 class ReButtons: public QObject
@@ -27,9 +30,18 @@ public slots:
     void buttonSelectPressed();
     void buttonGuidePressed();
 
+#ifdef __linux__
+private slots:
+    void tab_timeout();
+#endif
+
 private:
     QObject *ui;
     ReState *state;
+
+#ifdef __linux__
+    QTimer  *timer_tab;
+#endif
 };
 
 #endif // RE_BUTTONS_H

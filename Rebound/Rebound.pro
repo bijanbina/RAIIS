@@ -20,7 +20,7 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_xbox_win32.cpp \
                  Sources/re_xbox_w.cpp
 
-linux:SOURCES += Sources/re_exec.cpp \
+linux:SOURCES += \
                  Sources/re_x11.cpp \
                  Sources/re_xbox_l.cpp
 
@@ -40,7 +40,7 @@ win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_win32.h \
                  Sources/re_xbox_w.h
 
-linux:HEADERS += Sources/re_exec.h \
+linux:HEADERS += \
                  Sources/re_x11.h \
                  Sources/re_xbox_l.h
 

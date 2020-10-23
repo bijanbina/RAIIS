@@ -16,7 +16,7 @@
     #endif
 #else
     #include "re_client.h"
-    #include "re_native.h"
+    #include "re_xbox_l.h"
 #endif
 
 typedef struct RePage
