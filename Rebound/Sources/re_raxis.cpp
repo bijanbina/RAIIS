@@ -7,22 +7,22 @@ ReRAxis::ReRAxis(QObject *item, ReState *st, QObject *parent) : QObject(parent)
     state = st;
 }
 
-void ReRAxis::buttonRight()
+void ReRAxis::buttonRightPressed()
 {
     executeAhk("raxis_right");
 }
 
-void ReRAxis::buttonLeft()
+void ReRAxis::buttonLeftPressed()
 {
     executeAhk("raxis_left");
 }
 
-void ReRAxis::buttonUp()
+void ReRAxis::buttonUpPressed()
 {
     executeAhk("raxis_up");
 }
 
-void ReRAxis::buttonDown()
+void ReRAxis::buttonDownPressed()
 {
     executeAhk("raxis_down");
 }

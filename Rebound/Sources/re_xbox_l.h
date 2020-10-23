@@ -13,10 +13,7 @@
 #include <QDebug>
 #include "backend.h"
 #include "re_keycode.h"
-
-#ifdef __linux__
-#include "re_exec.h"
-#endif
+#include "re_client.h"
 
 class ReXboxL : public QObject
 {
@@ -91,6 +88,9 @@ signals:
     void buttonRightPressed();
     void buttonLeftPressed();
 
+private slots:
+    void keyTcpRead(QString key);
+
 private:
     void keyParser(QString key, int value);
 
@@ -111,7 +111,7 @@ private:
     double last_ra_y = 0; //last right axis y value
 
 #ifdef __linux__
-    ReExec *exec;
+    ReClient *client;
 #endif
 
     QObject         *ui;

@@ -18,10 +18,10 @@ public:
     ReRAxis(QObject *item, ReState *st, QObject *parent = 0);
 
 public slots:
-    void buttonRight();
-    void buttonLeft();
-    void buttonUp();
-    void buttonDown();
+    void buttonRightPressed();
+    void buttonLeftPressed();
+    void buttonUpPressed();
+    void buttonDownPressed();
 
 private:
     QObject *ui;

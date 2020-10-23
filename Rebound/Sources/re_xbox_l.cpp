@@ -10,7 +10,9 @@ ReXboxL::ReXboxL(QObject *item, QObject *parent) : QObject(parent)
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode = false;
-    exec = new ReExec(ui);
+    client = new ReClient(ui);
+
+    connect(client, SIGNAL(newKey(QString)), this, SLOT(keyTcpRead(QString)));
 
     //read from stdin
     stdin_notify = new QSocketNotifier(STDIN_FILENO, QSocketNotifier::Read, this);
@@ -19,6 +21,126 @@ ReXboxL::ReXboxL(QObject *item, QObject *parent) : QObject(parent)
 
     stdin_file = new QFile;
     stdin_file->open(stdin, QIODevice::ReadOnly);
+}
+
+void keyTcpRead(QString key)
+{
+    if( key=="a" )
+    {
+        emit buttonAPressed();
+    }
+    else if( key=="b" )
+    {
+        emit buttonBPressed();
+    }
+    else if( key=="c" )
+    {
+        emit buttonCenterChanged();
+    }
+    else if( key=="d" )
+    {
+        emit buttonDownChanged();
+    }
+    else if( key=="e" ) //Left Axis
+    {
+        emit buttonLAxisRight();
+    }
+    else if( key=="f" ) //Left Axis
+    {
+        emit buttonLAxisLeft();
+    }
+    else if( key=="g" )
+    {
+        emit buttonGuideChanged();
+    }
+    else if( key=="h" ) //Left Axis
+    {
+        emit buttonLAxisUp();
+    }
+    else if( key=="i" ) //Left Axis
+    {
+        emit buttonLAxisDown();
+    }
+    else if( key=="j" ) //Right Axis
+    {
+        emit buttonRAxisRight();
+    }
+    else if( key=="k" ) //Right Axis
+    {
+        emit buttonRAxisLeft();
+    }
+    else if( key=="l" )
+    {
+        emit buttonLeftChanged();
+    }
+    else if( key=="m" )
+    {
+        if( isUiVisible(ui) )
+        {
+             sendData("M", 1);
+             hideUI(ui);
+        }
+        else
+        {
+            emit buttonStartChanged();
+        }
+    }
+    else if( key=="n" ) //Right Axis
+    {
+        emit buttonRAxisUp();
+    }
+    else if( key=="o" ) //Right Axis
+    {
+        emit buttonRAxisDown();
+    }
+    else if( key=="l1" )
+    {
+        emit buttonL1Pressed();
+    }
+    else if( key=="l2" )
+    {
+        emit buttonL2Pressed();
+    }
+    else if( key=="l3" )
+    {
+        emit buttonL3Pressed();
+    }
+    else if( key=="r" )
+    {
+        emit buttonRightChanged();
+    }
+    else if( key=="r1" )
+    {
+        emit buttonR1Pressed();
+    }
+    else if( key=="r2" )
+    {
+        emit buttonR2Pressed();
+    }
+    else if( key=="r3" )
+    {
+        emit buttonR3Pressed();
+    }
+    else if( key=="s" )
+    {
+        emit buttonSelectChanged(0); // not native
+    }
+    else if( key=="u" )
+    {
+        emit buttonUpChanged();
+    }
+    else if( key=="x" )
+    {
+        emit buttonXPressed();
+    }
+    else if( key=="y" )
+    {
+        emit buttonYPressed();
+    }
+    else
+    {
+        qDebug() << "Unkdown packet:" << key << key.size();
+    }
 }
 
 void ReXboxL::readyData()

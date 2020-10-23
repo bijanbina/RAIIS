@@ -23,8 +23,11 @@ class ReClient : public QObject
 public:
     explicit ReClient(QObject *item, QObject *parent = 0);
     ~ReClient();
+
 signals:
     void errorConnection();
+    void newKey(QString key);
+
 private slots:
     void connected();
     void start();

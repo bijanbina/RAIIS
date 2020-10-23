@@ -7,22 +7,22 @@ ReLAxis::ReLAxis(QObject *item, ReState *st, QObject *parent) : QObject(parent)
     state = st;
 }
 
-void ReLAxis::buttonRight()
+void ReLAxis::buttonRightPressed()
 {
     executeAhk("laxis_right");
 }
 
-void ReLAxis::buttonLeft()
+void ReLAxis::buttonLeftPressed()
 {
     executeAhk("laxis_left");
 }
 
-void ReLAxis::buttonUp()
+void ReLAxis::buttonUpPressed()
 {
     executeAhk("laxis_up");
 }
 
-void ReLAxis::buttonDown()
+void ReLAxis::buttonDownPressed()
 {
     executeAhk("laxis_down");
 }
