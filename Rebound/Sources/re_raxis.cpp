@@ -28,22 +28,22 @@ void ReRAxis::buttonDownPressed()
     executeAhk("raxis_down");
 }
 #elif __linux__
-void ReRAxis::buttonRAxisRight()
+void ReRAxis::buttonRightPressed()
 {
 
 }
 
-void ReRAxis::buttonRAxisLeft()
+void ReRAxis::buttonLeftPressed()
 {
 
 }
 
-void ReRAxis::buttonRAxisUp()
+void ReRAxis::buttonUpPressed()
 {
     system("./Scripts/raxis_up &");
 }
 
-void ReRAxis::buttonRAxisDown()
+void ReRAxis::buttonDownPressed()
 {
     system("./Scripts/raxis_down &");
 }

@@ -5,7 +5,7 @@
 #include <QQuickItem>
 #include "re_chapar.h"
 
-//#define NATIBE_MODE
+//#define NATIVE_MODE
 
 int main(int argc, char *argv[])
 {
@@ -18,10 +18,14 @@ int main(int argc, char *argv[])
     //check if app should start in server
     //or client mode
 
-#ifdef NATIBE_MODE
+#ifdef NATIVE_MODE
     int isNative = 1;
 #else
     int isNative = 0;
+    if ( argc>1 )
+    {
+        isNative = 1;
+    }
 #endif
     ReChapar *chaper = new ReChapar(item, isNative);
 

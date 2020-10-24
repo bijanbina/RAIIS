@@ -20,7 +20,7 @@ class ReXboxL : public QObject
     Q_OBJECT
 
 public:
-    explicit ReXboxL(QObject *item, QObject *parent = 0);
+    explicit ReXboxL(QObject *item, int native, QObject *parent = 0);
     ~ReXboxL();
 
 signals:
@@ -118,6 +118,7 @@ private:
     QTimer          *std_timer;
     QSocketNotifier *stdin_notify;
     QFile           *stdin_file;
+    int              isNative;
 };
 
 #endif // Re_XBOX_L

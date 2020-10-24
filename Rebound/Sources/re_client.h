@@ -12,10 +12,6 @@
 #include <QQmlProperty>
 #include "backend.h"
 
-#ifdef __linux__
-#include "re_exec.h"
-#endif
-
 class ReClient : public QObject
 {
     Q_OBJECT
@@ -23,6 +19,8 @@ class ReClient : public QObject
 public:
     explicit ReClient(QObject *item, QObject *parent = 0);
     ~ReClient();
+
+    void sendData(const char *data, int size);
 
 signals:
     void errorConnection();
@@ -38,9 +36,8 @@ private slots:
     void sendBuffer();
     void disconnected();
     void readyRead();
-private:
-    void sendData(const char *data, int size);
 
+private:
     QTcpSocket tcpClient;
 
     QVector<QString> stack;
@@ -59,10 +56,6 @@ private:
     QTimer *watchdog;
 
     QObject *ui;
-
-#ifdef __linux__
-    ReExec *exec;
-#endif
 };
 
 #endif // ReClient_H

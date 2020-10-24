@@ -3,27 +3,33 @@
 
 #define JOYSTICK_DELAY 100
 
-ReXboxL::ReXboxL(QObject *item, QObject *parent) : QObject(parent)
+ReXboxL::ReXboxL(QObject *item, int native, QObject *parent) : QObject(parent)
 {
     //init
     ui = item;
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode = false;
-    client = new ReClient(ui);
+    isNative = native;
 
-    connect(client, SIGNAL(newKey(QString)), this, SLOT(keyTcpRead(QString)));
+    if (native)
+    {
+        //read from stdin
+        stdin_notify = new QSocketNotifier(STDIN_FILENO, QSocketNotifier::Read, this);
+        connect(stdin_notify, SIGNAL(activated(int)), this, SLOT(readyData()));
+        stdin_notify->setEnabled(true);
 
-    //read from stdin
-    stdin_notify = new QSocketNotifier(STDIN_FILENO, QSocketNotifier::Read, this);
-    connect(stdin_notify, SIGNAL(activated(int)), this, SLOT(readyData()));
-    stdin_notify->setEnabled(true);
-
-    stdin_file = new QFile;
-    stdin_file->open(stdin, QIODevice::ReadOnly);
+        stdin_file = new QFile;
+        stdin_file->open(stdin, QIODevice::ReadOnly);
+    }
+    else
+    {
+        client = new ReClient(ui);
+        connect(client, SIGNAL(newKey(QString)), this, SLOT(keyTcpRead(QString)));
+    }
 }
 
-void keyTcpRead(QString key)
+void ReXboxL::keyTcpRead(QString key)
 {
     if( key=="a" )
     {
@@ -35,11 +41,11 @@ void keyTcpRead(QString key)
     }
     else if( key=="c" )
     {
-        emit buttonCenterChanged();
+        //emit buttonCenterPressed();
     }
     else if( key=="d" )
     {
-        emit buttonDownChanged();
+        emit buttonDownPressed();
     }
     else if( key=="e" ) //Left Axis
     {
@@ -51,7 +57,7 @@ void keyTcpRead(QString key)
     }
     else if( key=="g" )
     {
-        emit buttonGuideChanged();
+        emit buttonGuidePressed();
     }
     else if( key=="h" ) //Left Axis
     {
@@ -71,18 +77,18 @@ void keyTcpRead(QString key)
     }
     else if( key=="l" )
     {
-        emit buttonLeftChanged();
+        emit buttonLeftPressed();
     }
     else if( key=="m" )
     {
         if( isUiVisible(ui) )
         {
-             sendData("M", 1);
+             client->sendData("M", 1);
              hideUI(ui);
         }
         else
         {
-            emit buttonStartChanged();
+            emit buttonStartPressed();
         }
     }
     else if( key=="n" ) //Right Axis
@@ -103,11 +109,11 @@ void keyTcpRead(QString key)
     }
     else if( key=="l3" )
     {
-        emit buttonL3Pressed();
+        //emit buttonL3Pressed();
     }
     else if( key=="r" )
     {
-        emit buttonRightChanged();
+        emit buttonRightPressed();
     }
     else if( key=="r1" )
     {
@@ -119,15 +125,16 @@ void keyTcpRead(QString key)
     }
     else if( key=="r3" )
     {
-        emit buttonR3Pressed();
+        ///FIXME
+        //emit buttonR3Pressed();
     }
     else if( key=="s" )
     {
-        emit buttonSelectChanged(0); // not native
+        emit buttonSelectPressed(); // not native
     }
     else if( key=="u" )
     {
-        emit buttonUpChanged();
+        emit buttonUpPressed();
     }
     else if( key=="x" )
     {
@@ -334,7 +341,7 @@ void ReXboxL::buttonL3Changed(bool value)
     qDebug() << "l3 pressed";
     if ( value==1 )
     {
-        emit buttonL3Pressed();
+        //emit buttonL3Pressed();
     }
 }
 
@@ -360,7 +367,7 @@ void ReXboxL::buttonR3Changed(bool value)
     qDebug() << "r3 pressed";
     if ( value==1 )
     {
-        emit buttonR3Pressed();
+        //emit buttonR3Pressed();
     }
 }
 
@@ -470,7 +477,7 @@ void ReXboxL::buttonCenterChanged(bool value)
     if ( value==0 )
     {
         qDebug() << "Center pressed";
-        emit buttonCenterPressed();
+        //emit buttonCenterPressed();
     }
 }
 

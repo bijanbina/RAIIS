@@ -16,6 +16,7 @@ ReButtons::ReButtons(QObject *item, ReState *st, QObject *parent) : QObject(pare
 #endif
 }
 
+#ifdef _WIN32
 void ReButtons::buttonAPressed()
 {
     if( isUiVisible(ui) )
@@ -30,7 +31,6 @@ void ReButtons::buttonAPressed()
     }
 }
 
-#ifdef _WIN32
 void ReButtons::buttonBPressed()
 {
     if( isUiVisible(ui) )
@@ -184,16 +184,10 @@ void ReButtons::buttonSelectPressed()
 //            qDebug() <<  "Alt P" << isNative;
 ////            QThread::msleep(100);
 //        }
-        qDebug() <<  "Next Window" << isNative;
+//        qDebug() <<  "Next Window" << isNative;
         system("xdotool key Tab &");
         timer_tab->start(RE_TAB_TIME);
     }
-}
-
-void ReButtons::buttonCenterPressed()
-{
-//    qDebug() <<  "Enable autoscroll";
-//    system("xdotool key Escape &");
 }
 
 void ReButtons::buttonGuidePressed()

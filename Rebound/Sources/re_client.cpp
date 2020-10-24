@@ -9,9 +9,6 @@ ReClient::ReClient(QObject *item, QObject *parent) : QObject(parent)
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode=false;
-#ifdef __linux__
-    exec = new ReExec(item);
-#endif
 
     connect(&tcpClient, SIGNAL(connected()), this, SLOT(connected()));
     connect(&tcpClient, SIGNAL(disconnected()), this, SLOT(disconnected()));

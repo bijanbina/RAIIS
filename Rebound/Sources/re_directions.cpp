@@ -28,24 +28,24 @@ void ReDirections::buttonLeftPressed()
     executeAhk("button_left");
 }
 #elif __linux__
-void ReExec::buttonDownPressed()
+void ReDirections::buttonDownPressed()
 {
     qDebug() <<  "Down workspace";
     system("./Scripts/button_down &");
 }
 
-void ReExec::buttonUpPressed()
+void ReDirections::buttonUpPressed()
 {
     qDebug() <<  "Up workspace";
     system("./Scripts/button_up &");
 }
 
-void ReExec::buttonRightPressed()
+void ReDirections::buttonRightPressed()
 {
     system("./Scripts/button_right &");
 }
 
-void ReExec::buttonLeftPressed()
+void ReDirections::buttonLeftPressed()
 {
     qDebug() <<  "Previous Window";
     system("./Scripts/button_left &");
