@@ -5,7 +5,7 @@
 #include <QQuickItem>
 #include "re_chapar.h"
 
-//#define NATIVE_MODE
+#define NATIVE_MODE
 
 int main(int argc, char *argv[])
 {

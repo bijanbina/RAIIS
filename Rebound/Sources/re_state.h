@@ -1,6 +1,13 @@
 #ifndef RESTATE_H
 #define RESTATE_H
 
+#include <QObject>
+#include <QString>
+
+#ifdef _WIN32
+#include "re_api_w.h"
+#endif
+
 #define RE_MODE_APPLICATION 1
 #define RE_MODE_SWITCH      2
 #define RE_MODE_MAIN        3
@@ -16,9 +23,6 @@
 #define RE_PROC_ATOM        6
 #define RE_PROC_GEDIT       7
 #define RE_PROC_OVERVIEW    8
-
-#include <QObject>
-#include <QString>
 
 class ReState : public QObject
 {
@@ -36,6 +40,7 @@ public:
 private:
     int i_mode;
     int i_proc;
+    ReApiW *api;
 };
 
 #endif // RESTATE_H

@@ -4,6 +4,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
 {
     i_mode = RE_MODE_APPLICATION;
     i_proc = RE_PROC_UNKNOWN;
+    api = new ReApiW;
 }
 
 void ReState::setMode(int mode)
@@ -41,6 +42,7 @@ int ReState::getProcess()
 void ReState::updateProcess()
 {
     QString name;
-    ///GET ACTIVE PROCESS NAME
+
+    name = api->reGetPNameA();
     setProcess(name);
 }

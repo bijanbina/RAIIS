@@ -89,6 +89,7 @@ void ReButtons::buttonStartPressed()
 
 void ReButtons::buttonGuidePressed()
 {
+    qDebug() << "salam";
     QMetaObject::invokeMethod(ui, "uiToggle");
 }
 

@@ -1,4 +1,5 @@
 #include "re_chapar.h"
+#include "re_api_w.h"
 #include <QDebug>
 #include <QQmlProperty>
 
@@ -13,7 +14,7 @@ ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(paren
     directions = new ReDirections(ui, state);
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
-
+    ReApiW *re_api_win = new ReApiW();
 
 #ifdef _WIN32
     controller = new ReXboxW(item, isNative);
