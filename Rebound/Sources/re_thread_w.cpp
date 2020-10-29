@@ -34,7 +34,7 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
                     new_win_spec.title = thread_win->makeTitleTidy(new_win_spec.title);
                     thread_win->wins_spec.push_back(new_win_spec);
 
-                    thread_win->thread_data->wins_title->push_back(new_win_spec.title);
+                    thread_win->wins_title.push_back(new_win_spec.title);
                 }
             }
         }
@@ -88,30 +88,30 @@ void ReThreadW::sortTitles()
 {
     QStringList sorted_apps, unsorted_apps;
     int clover_ind = 0, firefox_ind = 0, spotify_ind = 0;
-    for(int i=0; i<thread_data->wins_title->size(); i++)
+    for(int i=0; i<wins_title.size(); i++)
     {
-        if(thread_data->wins_title->at(i).contains("Clover", Qt::CaseInsensitive))
+        if(wins_title.at(i).contains("Clover", Qt::CaseInsensitive))
         {
-            sorted_apps.insert(clover_ind, thread_data->wins_title->at(i));
+            sorted_apps.insert(clover_ind, wins_title.at(i));
             clover_ind++; firefox_ind++; spotify_ind++;
         }
-        else if(thread_data->wins_title->at(i).contains("Firefox", Qt::CaseInsensitive))
+        else if(wins_title.at(i).contains("Firefox", Qt::CaseInsensitive))
         {
-            sorted_apps.insert(firefox_ind, thread_data->wins_title->at(i));
+            sorted_apps.insert(firefox_ind, wins_title.at(i));
             firefox_ind++; spotify_ind++;
         }
-        else if(thread_data->wins_title->at(i).contains("Spotify", Qt::CaseInsensitive))
+        else if(wins_title.at(i).contains("Spotify", Qt::CaseInsensitive))
         {
-            sorted_apps.insert(spotify_ind, thread_data->wins_title->at(i));
+            sorted_apps.insert(spotify_ind, wins_title.at(i));
             spotify_ind++;
         }
         else
         {
-            unsorted_apps.push_back(thread_data->wins_title->at(i));
+            unsorted_apps.push_back(wins_title.at(i));
         }
     }
     unsorted_apps.sort(Qt::CaseInsensitive);
-    *(thread_data->wins_title) = sorted_apps + unsorted_apps;
+    wins_title = sorted_apps + unsorted_apps;
 }
 
 void reListChildren(IAccessible *pAcc, QString path)
@@ -231,9 +231,9 @@ IAccessible* reGetPAcc(HWND hWnd)
 
 int ReThreadW::getIndex(QString app_name)
 {
-    for(int i=0; i<thread_data->wins_title->size(); i++)
+    for(int i=0; i<wins_title.size(); i++)
     {
-        if(thread_data->wins_title->at(i).contains(app_name, Qt::CaseInsensitive))
+        if(wins_title[i].contains(app_name, Qt::CaseInsensitive))
         {
             return i;
         }
@@ -279,9 +279,9 @@ ReWinSpec ReThreadW::getWinSpec(QString title)
 
 QString ReThreadW::getWinTitle(int index)
 {
-    if(index < thread_data->wins_title->size())
+    if(index < wins_title.size())
     {
-        return thread_data->wins_title->at(index);
+        return wins_title[index];
     }
     return "";
 }
@@ -348,7 +348,7 @@ void ReThreadW::updateElements(QString app_name, QString parent_path,
         qDebug() << "Error: can not found" << app_name;
         return;
     }
-    HWND app_hwnd = getHWND(thread_data->wins_title->at(index));
+    HWND app_hwnd = getHWND(wins_title[index]);
     if(app_hwnd == NULL)
     {
         qDebug() << "Error: can not found hWnd from titles";
@@ -393,24 +393,24 @@ void ReThreadW::updateElements(QString app_name, QString parent_path,
         elem_spec->pAcc = pChild;
         elem_spec->name = reGetAccName(pChild, CHILDID_SELF);
         elems_spec.push_back(elem_spec);
-        thread_data->elem_names->push_back(elem_spec->name);
+        elems_name.push_back(elem_spec->name);
     }
 }
 
 void ReThreadW::selectButton(QString name)
 {
     ReElemSpec *elem_spec = getElemSpec(name);
-    HWND app_hwnd = getHWND(thread_data->wins_title->at(2));
+    HWND app_hwnd = getHWND(wins_title[2]);
     HWND child_hWnd = NULL;
-    ReWinSpec app = getWinSpec(thread_data->wins_title->at(2));
+    ReWinSpec app = getWinSpec(wins_title[2]);
     IAccessible *app_pacc = reGetPAcc(app_hwnd);
     reListChildren(app_pacc, "");
 
-    for(int i=0; i<thread_data->wins_title->size(); i++)
+    for(int i=0; i<wins_title.size(); i++)
     {
-        qDebug() << thread_data->wins_title->at(i);
+        qDebug() << wins_title[i];
     }
-    updateElements(thread_data->wins_title->at(2),
+    updateElements(wins_title[2],
                    RE_SPOTIFY_ALBUM_PARENT, RE_SPOTIFY_ALBUM_CHILD);
 
 
@@ -439,6 +439,7 @@ ReThreadW::ReThreadW(threadStruct *thread_data)
 
 void ReThreadW::cleanWins()
 {
+    wins_title.clear();
     wins_spec.clear();
 }
 
@@ -449,6 +450,37 @@ void ReThreadW::cleanElems()
         delete e;
     }
     elems_spec.clear();
+    elems_name.clear();
+}
+
+void ReThreadW::syncWinsTitle()
+{
+    for(int i=0; i<wins_title.size(); i++)
+    {
+        if(i < thread_data->wins_title->size())
+        {
+            (*(thread_data->wins_title))[i] = wins_title[i];
+        }
+        else
+        {
+            thread_data->wins_title->push_back(wins_title[i]);
+        }
+    }
+}
+
+void ReThreadW::syncElemsName()
+{
+    for(int i=0; i<elems_name.size(); i++)
+    {
+        if(i < thread_data->elems_name->size())
+        {
+            (*(thread_data->elems_name))[i] = elems_name[i];
+        }
+        else
+        {
+            thread_data->elems_name->push_back(elems_name[i]);
+        }
+    }
 }
 
 void reRunThread(void *thread_struct_void)
@@ -467,16 +499,16 @@ void reRunThread(void *thread_struct_void)
             if(re_state_mode == RE_MODE_HIDDEN)
             {
                 priv->cleanWins();
-                thread_data->wins_title->clear();
                 EnumWindows(EnumWindowsProc, (LPARAM) priv);
                 priv->sortTitles();
+                priv->syncWinsTitle();
             }
             else if(re_state_mode == RE_MODE_MAIN)
             {
                 priv->cleanElems();
-                thread_data->elem_names->clear();
                 priv->updateElements("spotify", RE_SPOTIFY_ALBUM_PARENT,
                                      RE_SPOTIFY_ALBUM_CHILD);
+                priv->syncElemsName();
             }
             cntr = 0;
         }

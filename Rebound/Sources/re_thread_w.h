@@ -33,7 +33,7 @@ typedef struct threadStruct
     int *mode;
     QString message;
     QStringList *wins_title;
-    QStringList *elem_names;
+    QStringList *elems_name;
 }threadStruct;
 
 class ReThreadW
@@ -46,9 +46,14 @@ public:
     void selectButton(QString name);
     QString makeTitleTidy(QString title);
     void sortTitles();
+    void syncWinsTitle();
+    void syncElemsName();
+
 
     QVector<ReWinSpec> wins_spec;
     threadStruct *thread_data;
+    QStringList wins_title;
+    QStringList elems_name;
 
 private:
     ReElemSpec* getElemSpec(QString name);

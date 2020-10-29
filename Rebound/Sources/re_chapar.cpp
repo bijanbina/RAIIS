@@ -15,7 +15,7 @@ ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(paren
 
     thread_data = new threadStruct;
     thread_data->wins_title = &(state->api->wins_title);
-    thread_data->elem_names = &(state->api->elems_name);
+    thread_data->elems_name = &(state->api->elems_name);
     thread_data->mode = &(state->i_mode);
 
     sync_thread_timer = new QTimer(this);
