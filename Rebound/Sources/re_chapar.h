@@ -2,6 +2,8 @@
 #define RECHAPAR_H
 
 #include <QObject>
+#include <thread>         // std::thread
+#include <QTimer>
 #include "re_state.h"
 #include "re_bumpers.h"
 #include "re_buttons.h"
@@ -11,6 +13,7 @@
 
 #ifdef _WIN32
     #include "re_xbox_w.h"
+    #include "re_thread_w.h"
     #ifdef RE_TEST_EN
     #include "re_client.h"
     #endif
@@ -57,6 +60,9 @@ public:
 
 signals:
 
+private slots:
+    void updateMode();
+
 private:
     QObject      *ui;
     ReState      *state;
@@ -68,6 +74,9 @@ private:
 
 #ifdef _WIN32
     ReXboxW *controller;
+    std::thread *api_thread;
+    QTimer *sync_thread_timer;
+    threadStruct *thread_data;
 #else
     ReXboxL *controller;
 #endif

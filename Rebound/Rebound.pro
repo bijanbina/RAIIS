@@ -18,7 +18,8 @@ SOURCES += Sources/main.cpp \
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_xbox_win32.cpp \
                  Sources/re_xbox_w.cpp \
-                 Sources/re_api_w.cpp
+                 Sources/re_api_w.cpp \
+                 Sources/re_thread_w.cpp
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
@@ -38,7 +39,8 @@ HEADERS += Sources/backend.h \
 win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_win32.h \
                  Sources/re_xbox_w.h \
-                 Sources/re_api_w.h
+                 Sources/re_api_w.h \
+                 Sources/re_thread_w.h
 
 linux:HEADERS += \
                  Sources/re_x11.h \
