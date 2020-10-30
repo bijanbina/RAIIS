@@ -109,7 +109,8 @@ void ReButtons::buttonSelectPressed()
 void ReButtons::tab_timeout()
 {
     timer_tab->stop();
-    sendFakeEvent(0, XK_Alt_L); //A release
+//    sendFakeEvent(0, XK_Alt_L); //A release
+    qDebug() <<  "Release Window";
 }
 
 void ReButtons::buttonAPressed()
@@ -176,17 +177,20 @@ void ReButtons::buttonSelectPressed()
     {
         if( !timer_tab->isActive() )
         {
-             sendFakeEvent(1, XK_Alt_L); //ALT_L press
+//            qDebug() <<  "Alt P";
+//            sendFakeEvent(1, XK_Alt_L); //ALT_L press
+//            QThread::msleep(10);
         }
 
 //        if( isNative )
 //        {
-//            qDebug() <<  "Alt P" << isNative;
-////            QThread::msleep(100);
 //        }
-//        qDebug() <<  "Next Window" << isNative;
-        system("xdotool key Tab &");
-        timer_tab->start(RE_TAB_TIME);
+//        system("xdotool key Tab &");
+        sendFakeEvent(1, XK_BackSpace); //Tab press
+        QThread::msleep(1);
+        sendFakeEvent(0 , XK_BackSpace); //Tab release
+//        timer_tab->start(RE_TAB_TIME);
+//        qDebug() <<  "Next Window";
     }
 }
 

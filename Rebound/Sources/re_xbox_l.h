@@ -118,6 +118,7 @@ private:
     QTimer          *std_timer;
     QSocketNotifier *stdin_notify;
     QFile           *stdin_file;
+    QTextStream     *stdin_stream;
     int              isNative;
 };
 

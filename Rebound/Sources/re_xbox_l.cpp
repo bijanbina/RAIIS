@@ -21,6 +21,7 @@ ReXboxL::ReXboxL(QObject *item, int native, QObject *parent) : QObject(parent)
 
         stdin_file = new QFile;
         stdin_file->open(stdin, QIODevice::ReadOnly);
+        stdin_stream = new QTextStream(stdin_file);
     }
     else
     {
@@ -150,29 +151,66 @@ void ReXboxL::keyTcpRead(QString key)
     }
 }
 
+void KeyParser()
+{
+    char   buf_a[1024];
+    size_t max_len = 1024;
+    char  *buffer = buf_a; //need for POSIX?!
+
+    while( 1 )
+    {
+        getline(&buffer, &max_len, stdin);
+        QString line = QString(buffer);
+    //        QString line;
+        QStringList space_separated;
+        if( line.contains("type 1") || line.contains("type 3"))
+        {
+            space_separated = line.split(" ");
+
+            if( space_separated.count()>10 )
+            {
+                QString key_code = space_separated[8];
+                QString key_val = space_separated[10];
+
+                //clean string
+                key_code.chop(2);
+                key_code.remove(0, 1);
+
+                int key_val_int = key_val.toInt();
+                keyParser(key_code, key_val_int);
+            }
+        }
+    }
+}
+
 void ReXboxL::readyData()
 {
-    QString line = stdin_file->readLine();
-    QStringList space_separated;
-    if( line.contains("type 1") || line.contains("type 3"))
+    qDebug() << 0;
+    QString data = stdin_file->read(500);
+    QStringList lines = data.split('\n');
+
+//    qDebug() << lines.size();
+    for ( int i=0 ; i<lines.size() ; i++ )
     {
-        space_separated = line.split(" ");
-
-        if( space_separated.count()>10 )
+        QString line = lines[i];
+    //        QString line;
+        QStringList space_separated;
+        if( line.contains("type 1") || line.contains("type 3"))
         {
-            QString key_code = space_separated[8];
-            QString key_val = space_separated[10];
+            space_separated = line.split(" ");
 
-            //clean string
-            key_code.chop(2);
-            key_code.remove(0, 2);
+            if( space_separated.count()>10 )
+            {
+                QString key_code = space_separated[8];
+                QString key_val = space_separated[10];
 
-            key_val.chop(1);
+                //clean string
+                key_code.chop(2);
+                key_code.remove(0, 1);
 
-//                 qDebug() << key_code << key_val;
-
-            int key_val_int = key_val.toInt();
-            keyParser(key_code, key_val_int);
+                int key_val_int = key_val.toInt();
+                keyParser(key_code, key_val_int);
+            }
         }
     }
 }
@@ -468,7 +506,7 @@ void ReXboxL::buttonSelectChanged(bool value)
 {
     if ( value==0 )
     {
-        emit buttonSelectChanged(1);
+        emit buttonSelectPressed();
     }
 }
 
