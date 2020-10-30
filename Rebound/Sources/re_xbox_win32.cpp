@@ -59,5 +59,4 @@ void ReXboxWin32::ReXbox_getGuideBtn()
         qDebug() << guide_last_val;
         emit buttonGuideChanged(value);
     }
-
 }

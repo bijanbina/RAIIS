@@ -19,11 +19,9 @@ ReButtons::ReButtons(QObject *item, ReState *st, QObject *parent) : QObject(pare
 #ifdef _WIN32
 void ReButtons::buttonAPressed()
 {
-    if( isUiVisible(ui) )
+    if( state->ui_visible )
     {
-         hideUI(ui);
-         QThread::msleep(200);
-         executeUi("a");
+        state->propageteMode(RE_MODE_APPLICATION);
     }
     else
     {
@@ -33,11 +31,9 @@ void ReButtons::buttonAPressed()
 
 void ReButtons::buttonBPressed()
 {
-    if( isUiVisible(ui) )
+    if( state->ui_visible )
     {
-         hideUI(ui);
-         QThread::msleep(200);
-         executeUi("b");
+         state->propageteMode(RE_MODE_SPOTIFY);
     }
     else
     {
@@ -47,9 +43,9 @@ void ReButtons::buttonBPressed()
 
 void ReButtons::buttonXPressed()
 {
-    if( isUiVisible(ui) )
+    if( state->ui_visible )
     {
-         hideUI(ui);
+         state->toggleUi(ui);
          QThread::msleep(200);
          executeUi("x");
     }
@@ -61,11 +57,9 @@ void ReButtons::buttonXPressed()
 
 void ReButtons::buttonYPressed()
 {
-    if( isUiVisible(ui) )
+    if( state->ui_visible )
     {
-         hideUI(ui);
-         QThread::msleep(200);
-         executeUi("y");
+        state->propageteMode(RE_MODE_SWITCH);
     }
     else
     {
@@ -75,24 +69,10 @@ void ReButtons::buttonYPressed()
 
 void ReButtons::buttonStartPressed()
 {
-    if( isUiVisible(ui) )
-    {
-         hideUI(ui);
-         QThread::msleep(200);
-         executeUi("menu");
-    }
-    else
-    {
-        executeAhk("menu_button");
-    }
+    state->toggleUi(ui);
 }
 
 void ReButtons::buttonGuidePressed()
-{
-    QMetaObject::invokeMethod(ui, "uiToggle");
-}
-
-void ReButtons::buttonSelectPressed()
 {
     if( isUiVisible(ui) )
     {
@@ -103,6 +83,20 @@ void ReButtons::buttonSelectPressed()
     else
     {
         executeAhk("select_button");
+    }
+}
+
+void ReButtons::buttonSelectPressed()
+{
+    if( isUiVisible(ui) )
+    {
+         hideUI(ui);
+         QThread::msleep(200);
+         executeUi("menu");
+    }
+    else
+    {
+        executeAhk("menu_button");
     }
 }
 #elif __linux__

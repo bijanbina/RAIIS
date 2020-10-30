@@ -2,7 +2,6 @@
 #include <QDebug>
 #include <QQmlProperty>
 
-
 ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(parent)
 {
     ui = item;
@@ -14,6 +13,15 @@ ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(paren
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
 
+    thread_data = new threadStruct;
+    thread_data->wins_title = &(state->api->wins_title);
+    thread_data->elems_name = &(state->api->elems_name);
+    thread_data->mode = &(state->i_mode);
+
+    sync_thread_timer = new QTimer(this);
+//    connect(sync_thread_timer, SIGNAL(timeout()),
+//            this, SLOT(syncTimoutReach()));
+    api_thread = new std::thread(reRunThread, (void *)thread_data);
 
 #ifdef _WIN32
     controller = new ReXboxW(item, isNative);
@@ -49,6 +57,95 @@ ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(paren
     connect(controller, SIGNAL(buttonRAxisLeft())  , raxis, SLOT(buttonLeftPressed()));
     connect(controller, SIGNAL(buttonRAxisUp())    , raxis, SLOT(buttonUpPressed()));
 
+    connect(state, SIGNAL(updateMode()), this, SLOT(updateMode()));
+}
+
+void ReChapar::updateMode()
+{
+    RePage c_page; // current page
+    if( state->getMode()==RE_MODE_MAIN )
+    {
+        c_page.x_action = "Close Active Application";
+        c_page.y_action = "Switch Application";
+        c_page.a_action = "Open Application";
+        c_page.b_action = "Control Music";
+        c_page.s_action = "Open New Firefox Window";
+
+        c_page.r1_action = state->api->getWinTitle(0);
+        c_page.r2_action = state->api->getWinTitle(1);
+        c_page.l1_action = state->api->getWinTitle(2);
+        c_page.l2_action = state->api->getWinTitle(3);
+        c_page.m_action = "Close Super Mode";
+    }
+    else if( state->getMode()==RE_MODE_APPLICATION )
+    {
+        c_page.x_action = "Firefox";
+        c_page.y_action = "Spotify";
+        c_page.a_action = "PNA";
+        c_page.b_action = "GT6";
+        c_page.s_action = "DOA";
+
+        c_page.r1_action = "Qt Creator";
+        c_page.r2_action = "Git Kraken";
+        c_page.l1_action = "Allegro 17.4";
+        c_page.l2_action = "Allegro 17.2";
+    }
+    else if( state->getMode()==RE_MODE_SWITCH )
+    {
+        c_page.x_action = state->api->getWinTitle(0);
+        c_page.y_action = state->api->getWinTitle(1);
+        c_page.a_action = state->api->getWinTitle(2);
+        c_page.b_action = state->api->getWinTitle(3);
+        c_page.s_action = state->api->getWinTitle(4);
+
+        c_page.r1_action = state->api->getWinTitle(5);
+        c_page.r2_action = state->api->getWinTitle(6);
+        c_page.l1_action = state->api->getWinTitle(7);
+        c_page.l2_action = state->api->getWinTitle(8);
+
+        if(thread_data->message.isEmpty())
+        {
+            thread_data->message = "Launch Nuclear missiles";
+        }
+    }
+    /*if( state->getProcess()==RE_PROC_NAUTILUS )
+    {
+        ;
+    }
+    else if( state->getProcess()==RE_PROC_FIREFOX )
+    {
+        ;
+    }
+    else if( state->getProcess()==RE_PROC_QT )
+    {
+        ;
+    }
+    else if( state->getProcess()==RE_PROC_READING )
+    {
+        ;
+    }*/
+    else if( state->getMode()==RE_MODE_SPOTIFY )
+    {
+        c_page.x_action = "Play/Pause";
+        c_page.y_action = "Repeat Mode";
+        c_page.a_action = "Like Song";
+        c_page.b_action = "New Playlist";
+
+        c_page.r1_action = "Increase Volume";
+        c_page.l1_action = "Decrease Volume";
+        c_page.r2_action = "Next Music";
+        c_page.l2_action = "Previous Music";
+
+        c_page.lau_action = state->api->getElemName(0).split(" ")[0];
+        c_page.lar_action = state->api->getElemName(1).split(" ")[0];
+        c_page.lal_action = state->api->getElemName(2).split(" ")[0];
+        c_page.lad_action = state->api->getElemName(3).split(" ")[0];
+        c_page.rau_action = state->api->getElemName(4).split(" ")[0];
+        c_page.rar_action = state->api->getElemName(5).split(" ")[0];
+        c_page.ral_action = state->api->getElemName(6).split(" ")[0];
+        c_page.rad_action = state->api->getElemName(7).split(" ")[0];
+    }
+    setPage(c_page);
 }
 
 void ReChapar::setPage(RePage page)
@@ -148,4 +245,3 @@ void ReChapar::setMode(int mode)
 
     setPage(page);
 }
-

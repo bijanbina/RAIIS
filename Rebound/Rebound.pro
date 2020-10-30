@@ -13,12 +13,13 @@ SOURCES += Sources/main.cpp \
            Sources/re_directions.cpp \
            Sources/re_laxis.cpp \
            Sources/re_raxis.cpp \
-    Sources/re_bumpers.cpp
-
+           Sources/re_bumpers.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_xbox_win32.cpp \
-                 Sources/re_xbox_w.cpp
+                 Sources/re_xbox_w.cpp \
+                 Sources/re_api_w.cpp \
+                 Sources/re_thread_w.cpp
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
@@ -33,12 +34,13 @@ HEADERS += Sources/backend.h \
            Sources/re_directions.h \
            Sources/re_laxis.h \
            Sources/re_raxis.h \
-    Sources/re_bumpers.h
-
+           Sources/re_bumpers.h
 
 win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_win32.h \
-                 Sources/re_xbox_w.h
+                 Sources/re_xbox_w.h \
+                 Sources/re_api_w.h \
+                 Sources/re_thread_w.h
 
 linux:HEADERS += \
                  Sources/re_x11.h \
@@ -52,6 +54,15 @@ OTHER_FILES += Qml/*.qml
 
 linux:LIBS += -lX11 \
               -lXtst
+
+win32:LIBS += -lKernel32 \
+              -lUser32 \
+              -lole32 \
+              -luuid \
+              -loleaut32 \
+              -loleacc \
+              -lDwmapi \
+              -lPsapi
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += Qml/

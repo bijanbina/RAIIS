@@ -2,8 +2,10 @@
 
 ReState::ReState(QObject *parent) : QObject(parent)
 {
-    i_mode = RE_MODE_APPLICATION;
+    i_mode = RE_MODE_HIDDEN;
     i_proc = RE_PROC_UNKNOWN;
+    api = new ReApiW;
+    ui_visible = false;
 }
 
 void ReState::setMode(int mode)
@@ -16,6 +18,19 @@ int ReState::getMode()
     return i_mode;
 }
 
+void ReState::toggleUi(QObject *item)
+{
+    setMode(RE_MODE_MAIN);
+    updateProcess();
+
+    QMetaObject::invokeMethod(item, "uiToggle");
+    ui_visible = QQmlProperty::read(item, "visible").toInt();
+    if(!ui_visible)
+    {
+        i_mode = RE_MODE_HIDDEN;
+    }
+}
+
 void ReState::setProcess(QString name)
 {
     if( name.contains("qtcreator.exe") )
@@ -25,6 +40,26 @@ void ReState::setProcess(QString name)
     else if( name.contains("firefox.exe") )
     {
         setProcess(RE_PROC_FIREFOX);
+    }
+    else if( name.contains("Spotify.exe") )
+    {
+        setProcess(RE_PROC_SPOTIFY);
+    }
+    else if( name.contains("FoxitPhantomPDF.exe") )
+    {
+        setProcess(RE_PROC_READING);
+    }
+    else if( name.contains("FoxitPhantomPDF.exe") )
+    {
+        setProcess(RE_PROC_READING);
+    }
+    else if( name.contains("atom.exe") )
+    {
+        setProcess(RE_PROC_GEDIT);
+    }
+    else if( name.contains("Clover.exe") )
+    {
+        setProcess(RE_PROC_NAUTILUS);
     }
 }
 
@@ -41,6 +76,14 @@ int ReState::getProcess()
 void ReState::updateProcess()
 {
     QString name;
-    ///GET ACTIVE PROCESS NAME
+
+    name = api->getPNameA();
     setProcess(name);
+    emit updateMode();
+}
+
+void ReState::propageteMode(int mode)
+{
+    i_mode = mode;
+    emit updateMode();
 }
