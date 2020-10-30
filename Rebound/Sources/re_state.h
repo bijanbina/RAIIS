@@ -41,7 +41,9 @@ public:
     void toggleUi(QObject *item);
     void propageteMode(int mode);
 
+#ifdef _WIN32
     ReApiW *api;
+#endif
     int ui_visible;
     int i_mode;
 

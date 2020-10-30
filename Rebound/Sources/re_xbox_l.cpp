@@ -1,6 +1,11 @@
 #include "re_xbox_l.h"
 #include <string.h>
 
+
+ReXboxL *th_this;
+QString  th_keycode;
+int      th_keyval;
+
 #define JOYSTICK_DELAY 100
 
 ReXboxL::ReXboxL(QObject *item, int native, QObject *parent) : QObject(parent)
@@ -14,14 +19,8 @@ ReXboxL::ReXboxL(QObject *item, int native, QObject *parent) : QObject(parent)
 
     if (native)
     {
-        //read from stdin
-        stdin_notify = new QSocketNotifier(STDIN_FILENO, QSocketNotifier::Read, this);
-        connect(stdin_notify, SIGNAL(activated(int)), this, SLOT(readyData()));
-        stdin_notify->setEnabled(true);
-
-        stdin_file = new QFile;
-        stdin_file->open(stdin, QIODevice::ReadOnly);
-        stdin_stream = new QTextStream(stdin_file);
+        th_this = this;
+        key_thread = new std::thread(KeyParser_main);
     }
     else
     {
@@ -151,17 +150,31 @@ void ReXboxL::keyTcpRead(QString key)
     }
 }
 
-void KeyParser()
+void keyHandler(int sig)
+{
+    th_this->keyParser(th_keycode, th_keyval);
+}
+
+void KeyParser_main()
 {
     char   buf_a[1024];
     size_t max_len = 1024;
     char  *buffer = buf_a; //need for POSIX?!
 
+    pthread_t intf_thread = pthread_self();
+
+    // sigaction used for sending data on tcp when data received
+    // from high level
+    struct sigaction key_action;
+    key_action.sa_handler = keyHandler;
+    key_action.sa_flags = SA_RESTART;
+    sigaction(RE_SIG_KEY, &key_action, NULL);
+
     while( 1 )
     {
         getline(&buffer, &max_len, stdin);
         QString line = QString(buffer);
-    //        QString line;
+
         QStringList space_separated;
         if( line.contains("type 1") || line.contains("type 3"))
         {
@@ -169,47 +182,15 @@ void KeyParser()
 
             if( space_separated.count()>10 )
             {
-                QString key_code = space_separated[8];
+                th_keycode = space_separated[8];
                 QString key_val = space_separated[10];
 
                 //clean string
-                key_code.chop(2);
-                key_code.remove(0, 1);
+                th_keycode.chop(2);
+                th_keycode.remove(0, 1);
 
-                int key_val_int = key_val.toInt();
-                keyParser(key_code, key_val_int);
-            }
-        }
-    }
-}
-
-void ReXboxL::readyData()
-{
-    qDebug() << 0;
-    QString data = stdin_file->read(500);
-    QStringList lines = data.split('\n');
-
-//    qDebug() << lines.size();
-    for ( int i=0 ; i<lines.size() ; i++ )
-    {
-        QString line = lines[i];
-    //        QString line;
-        QStringList space_separated;
-        if( line.contains("type 1") || line.contains("type 3"))
-        {
-            space_separated = line.split(" ");
-
-            if( space_separated.count()>10 )
-            {
-                QString key_code = space_separated[8];
-                QString key_val = space_separated[10];
-
-                //clean string
-                key_code.chop(2);
-                key_code.remove(0, 1);
-
-                int key_val_int = key_val.toInt();
-                keyParser(key_code, key_val_int);
+                th_keyval = key_val.toInt();
+                pthread_kill(intf_thread, RE_SIG_KEY);
             }
         }
     }

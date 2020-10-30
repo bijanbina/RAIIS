@@ -13,17 +13,16 @@ ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(paren
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
 
+
+#ifdef _WIN32
     thread_data = new threadStruct;
     thread_data->wins_title = &(state->api->wins_title);
     thread_data->elems_name = &(state->api->elems_name);
     thread_data->mode = &(state->i_mode);
 
     sync_thread_timer = new QTimer(this);
-//    connect(sync_thread_timer, SIGNAL(timeout()),
-//            this, SLOT(syncTimoutReach()));
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 
-#ifdef _WIN32
     controller = new ReXboxW(item, isNative);
 #else
     controller = new ReXboxL(item, isNative);
@@ -62,6 +61,7 @@ ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(paren
 
 void ReChapar::updateMode()
 {
+#ifdef _WIN32
     RePage c_page; // current page
     if( state->getMode()==RE_MODE_MAIN )
     {
@@ -146,6 +146,7 @@ void ReChapar::updateMode()
         c_page.rad_action = state->api->getElemName(7).split(" ")[0];
     }
     setPage(c_page);
+#endif
 }
 
 void ReChapar::setPage(RePage page)

@@ -1,11 +1,13 @@
 #ifndef Re_XBOX_L
 #define Re_XBOX_L
 
-#include <QString>
-#include <QObject>
-#include <QVector>
 #include <stdio.h>
 #include <stdlib.h>
+#include <thread>         // std::thread
+#include <signal.h>
+#include <QVector>
+#include <QString>
+#include <QObject>
 #include <QTimer>
 #include <QQmlProperty>
 #include <QSocketNotifier>
@@ -14,6 +16,11 @@
 #include "backend.h"
 #include "re_keycode.h"
 #include "re_client.h"
+
+#define RE_SIG_KEY     10
+
+void KeyParser_main();
+void keyHandler(int sig);
 
 class ReXboxL : public QObject
 {
@@ -54,7 +61,7 @@ public slots:
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
 
-    void readyData();
+    void keyParser(QString key, int value);
 
 signals:
     void buttonAPressed();
@@ -92,8 +99,6 @@ private slots:
     void keyTcpRead(QString key);
 
 private:
-    void keyParser(QString key, int value);
-
     QVector<QString> stack;
     int code;
     char code_char[4];
@@ -110,9 +115,8 @@ private:
     double last_ra_x = 0; //last right axis x value
     double last_ra_y = 0; //last right axis y value
 
-#ifdef __linux__
     ReClient *client;
-#endif
+    std::thread *key_thread;
 
     QObject         *ui;
     QTimer          *std_timer;

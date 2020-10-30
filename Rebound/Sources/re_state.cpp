@@ -4,8 +4,11 @@ ReState::ReState(QObject *parent) : QObject(parent)
 {
     i_mode = RE_MODE_HIDDEN;
     i_proc = RE_PROC_UNKNOWN;
-    api = new ReApiW;
     ui_visible = false;
+
+#ifdef _WIN32
+    api = new ReApiW;
+#endif
 }
 
 void ReState::setMode(int mode)
@@ -77,9 +80,11 @@ void ReState::updateProcess()
 {
     QString name;
 
+#ifdef _WIN32
     name = api->getPNameA();
     setProcess(name);
     emit updateMode();
+#endif
 }
 
 void ReState::propageteMode(int mode)
