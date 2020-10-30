@@ -9,9 +9,9 @@ Window  *winfocus;
 void reX11_init()
 {
     winfocus = new Window;
-    display = XOpenDisplay(0);
-//    setbuf(stdout,NULL);
-//    printf("hi\n");
+//    display = XOpenDisplay(NULL);
+    setbuf(stdout,NULL);
+    printf("hi\n");
 }
 
 void sendKeyEvent(int isPress, int keysym)
@@ -39,8 +39,21 @@ void sendKeyEvent(int isPress, int keysym)
 
 void sendFakeEvent(int isPress, int keysym)
 {
-    int keycode = XKeysymToKeycode(display, keysym);
+    printf("44\n");
 
-    XTestFakeKeyEvent(display, keycode, isPress, 0);
+    printf("45\n");
+    display = XOpenDisplay(NULL);
+    printf("46\n");
+    int keycode = XKeysymToKeycode(display, keysym);
+    XTestFakeKeyEvent(display, keycode, isPress, CurrentTime);
+    printf("47\n");
+//    XFlush(display);
+    XCloseDisplay(display);
+    printf("48\n");
+}
+
+void sendXFlush()
+{
     XFlush(display);
 }
+

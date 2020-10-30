@@ -7,6 +7,7 @@ if [ "$#" = "1" ]; then
 	QUERY_CMD='{getline;{if(/kbd/==1){ print $3;exit 0;}}}}'
 	DEV_FILE="/proc/bus/input/devices"
 	EVENT_FILE=$(cat $DEV_FILE | awk '/Xbox/{for(a=0;a>=0;a++)'"$QUERY_CMD")
+		echo "$EVENT_FILE"
 
 	if [ "$EVENT_FILE" ]; then
 		evtest "/dev/input/$EVENT_FILE" | ./Rebound -native

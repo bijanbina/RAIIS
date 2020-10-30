@@ -7,5 +7,6 @@
 void reX11_init();
 void sendKeyEvent(int isPress, int keysym);
 void sendFakeEvent(int isPress, int keysym);
+void sendXFlush();
 
 #endif // RE_X11_H

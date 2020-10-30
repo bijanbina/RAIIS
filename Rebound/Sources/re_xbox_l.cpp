@@ -172,8 +172,14 @@ void KeyParser_main()
 
     while( 1 )
     {
-        getline(&buffer, &max_len, stdin);
+//        getline(&buffer, &max_len, stdin);
+        if (!fgets(buf_a, sizeof(buf_a), stdin))
+        {
+            continue;
+        }
+
         QString line = QString(buffer);
+//        qDebug();
 
         QStringList space_separated;
         if( line.contains("type 1") || line.contains("type 3"))

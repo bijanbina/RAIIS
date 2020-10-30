@@ -104,6 +104,7 @@ void ReButtons::tab_timeout()
 {
     timer_tab->stop();
 //    sendFakeEvent(0, XK_Alt_L); //A release
+    system("xdotool keyup 0xffea &");
     qDebug() <<  "Release Window";
 }
 
@@ -171,20 +172,30 @@ void ReButtons::buttonSelectPressed()
     {
         if( !timer_tab->isActive() )
         {
-//            qDebug() <<  "Alt P";
+            qDebug() <<  "Alt P";
 //            sendFakeEvent(1, XK_Alt_L); //ALT_L press
 //            QThread::msleep(10);
+            system("xdotool keydown 0xffea + key 0xff09");
+            qDebug() <<  "Alt P";
+        }
+        else
+        {
+            qDebug() <<  "Tab";
+            system("xdotool key Tab");
+            qDebug() <<  "Tab";
         }
 
 //        if( isNative )
 //        {
 //        }
-//        system("xdotool key Tab &");
-        sendFakeEvent(1, XK_BackSpace); //Tab press
-        QThread::msleep(1);
-        sendFakeEvent(0 , XK_BackSpace); //Tab release
-//        timer_tab->start(RE_TAB_TIME);
-//        qDebug() <<  "Next Window";
+//        qDebug() <<  "b_183";
+//        sendFakeEvent(1, XK_BackSpace); //Tab press
+//        qDebug() <<  "b_184";
+////        QThread::msleep(1);
+//        sendFakeEvent(0 , XK_BackSpace); //Tab release
+//        qDebug() <<  "b_185";
+//        sendXFlush()  ;
+        timer_tab->start(RE_TAB_TIME);
     }
 }
 
