@@ -17,10 +17,14 @@ ReXboxL::ReXboxL(QObject *item, int native, QObject *parent) : QObject(parent)
     commandMode = false;
     isNative = native;
 
+
     if (native)
     {
         th_this = this;
-        key_thread = new std::thread(KeyParser_main);
+
+        createProcess(QString::number(native));
+
+        //key_thread = new std::thread(KeyParser_main);
     }
     else
     {
@@ -147,6 +151,54 @@ void ReXboxL::keyTcpRead(QString key)
     else
     {
         qDebug() << "Unkdown packet:" << key << key.size();
+    }
+}
+
+void ReXboxL::createProcess(QString evnum)
+{
+    QString cmd_arg = "/dev/input/event" + evnum;
+
+    qDebug() << cmd_arg;
+
+    QString program = "evtest";
+    QStringList arguments;
+    arguments << cmd_arg;
+
+    ev_process = new QProcess(this);
+    connect(ev_process, SIGNAL(readyReadStandardOutput()), this, SLOT(readyData()));
+
+    ev_process->start(program, arguments);
+}
+
+void ReXboxL::readyData()
+{
+    QString data = ev_process->readAllStandardOutput();
+    QStringList lines = data.split('\n');
+
+//    qDebug() << lines.size();
+    for ( int i=0 ; i<lines.size() ; i++ )
+    {
+        QString line = lines[i];
+        qDebug() << line;
+
+        QStringList space_separated;
+        if( line.contains("type 1") || line.contains("type 3"))
+        {
+            space_separated = line.split(" ");
+
+            if( space_separated.count()>10 )
+            {
+                QString key_code = space_separated[8];
+                QString key_val = space_separated[10];
+
+                //clean string
+                key_code.chop(2);
+                key_code.remove(0, 1);
+
+                int key_val_int = key_val.toInt();
+                keyParser(key_code, key_val_int);
+            }
+        }
     }
 }
 

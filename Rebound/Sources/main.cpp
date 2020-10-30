@@ -20,6 +20,18 @@ int main(int argc, char *argv[])
 
 #ifdef NATIVE_MODE
     int isNative = 1;
+#ifdef __linux__
+    if ( argc>1 )
+    {
+        QString argv_1 = argv[1]; bool ok;
+        int argv_int = argv_1.toInt(&ok);
+
+        if(ok)
+        {
+            isNative = argv_int;
+        }
+    }
+#endif
 #else
     int isNative = 0;
     if ( argc>1 )

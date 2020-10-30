@@ -100,6 +100,9 @@ void ReButtons::buttonSelectPressed()
     }
 }
 #elif __linux__
+int sh_alt_down = 0;
+int sh_child_count = 0;
+
 void ReButtons::tab_timeout()
 {
     timer_tab->stop();
@@ -170,19 +173,41 @@ void ReButtons::buttonSelectPressed()
     }
     else
     {
-        if( !timer_tab->isActive() )
+        if( sh_alt_down )
         {
-            qDebug() <<  "Alt P";
-//            sendFakeEvent(1, XK_Alt_L); //ALT_L press
-//            QThread::msleep(10);
-            system("xdotool keydown 0xffea + key 0xff09");
-            qDebug() <<  "Alt P";
+            int is_parent = fork();
+            if ( is_parent==0 ) //in the child
+            {
+                sh_child_count++;
+                system("xdotool key Tab");
+                qDebug() <<  "Alt P";
+
+                usleep(400000);
+                sh_child_count--;
+
+                if( sh_child_count==0 )
+                {
+                    system("xdotool keyup 0xffea &");
+                }
+            }
         }
         else
         {
-            qDebug() <<  "Tab";
-            system("xdotool key Tab");
-            qDebug() <<  "Tab";
+            int is_parent = fork();
+            if ( is_parent==0 ) //in the child
+            {
+                sh_child_count++;
+                system("xdotool keydown 0xffea + key 0xff09");
+                qDebug() <<  "Tab";
+
+                usleep(400000);
+                sh_child_count--;
+
+                if( sh_child_count==0 )
+                {
+                    system("xdotool keyup 0xffea &");
+                }
+            }
         }
 
 //        if( isNative )

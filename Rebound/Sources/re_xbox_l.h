@@ -11,6 +11,7 @@
 #include <QTimer>
 #include <QQmlProperty>
 #include <QSocketNotifier>
+#include <QProcess>
 #include <QFile>
 #include <QDebug>
 #include "backend.h"
@@ -97,8 +98,11 @@ signals:
 
 private slots:
     void keyTcpRead(QString key);
+    void readyData();
 
 private:
+    void createProcess(QString evnum);
+
     QVector<QString> stack;
     int code;
     char code_char[4];
@@ -123,6 +127,7 @@ private:
     QSocketNotifier *stdin_notify;
     QFile           *stdin_file;
     QTextStream     *stdin_stream;
+    QProcess        *ev_process;
     int              isNative;
 };
 

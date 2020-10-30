@@ -1,4 +1,4 @@
-#ifndef RE_BUTTONS_H
+ #ifndef RE_BUTTONS_H
 #define RE_BUTTONS_H
 
 #include <QObject>
