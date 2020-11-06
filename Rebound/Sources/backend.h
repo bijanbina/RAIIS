@@ -22,6 +22,7 @@
 #define RE_IP        "192.168.88.25"
 
 //#define RE_TEST_EN
+//#define RE_DUBUG_TCP
 
 #define RE_TIMEOUT    1000
 #define RE_WATCHDOG   1000  //Watchdog interval

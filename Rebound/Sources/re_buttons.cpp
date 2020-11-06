@@ -107,7 +107,7 @@ void ReButtons::tab_timeout()
 {
     timer_tab->stop();
 //    sendFakeEvent(0, XK_Alt_L); //A release
-    system("xdotool keyup 0xffea &");
+//    system("xdotool keyup 0xffea &");
     qDebug() <<  "Release Window";
 }
 
@@ -180,33 +180,52 @@ void ReButtons::buttonSelectPressed()
             {
                 sh_child_count++;
                 system("xdotool key Tab");
-                qDebug() <<  "Alt P";
+                qDebug() << "Tab sh_child_count: " << sh_child_count;
 
-                usleep(400000);
+                usleep(4000000);
                 sh_child_count--;
 
                 if( sh_child_count==0 )
                 {
-                    system("xdotool keyup 0xffea &");
+                    qDebug() <<  "realese alt ";
+                    system("xdotool keyup 0xffea");
+                    sh_alt_down = 0;
                 }
+                usleep(4000000);
+                qDebug() << "exit child: " << is_parent;
+                exit(0);
             }
         }
         else
         {
             int is_parent = fork();
+            sh_alt_down = 1;
+
             if ( is_parent==0 ) //in the child
             {
                 sh_child_count++;
-                system("xdotool keydown 0xffea + key 0xff09");
-                qDebug() <<  "Tab";
+                Display *display = reX11_init();
+//                system("xdotool keydown 0xffea + key 0xff09");
+                sendFakePress(XK_Alt_L, display); //ALT_L press
+                qDebug() << "Alt Tab sh_child_count: " << sh_child_count;
+                usleep(4000000);
+                qDebug() << "Tab send ";
+                system("xdotool key Tab");
 
-                usleep(400000);
+                usleep(4000000);
                 sh_child_count--;
 
                 if( sh_child_count==0 )
                 {
-                    system("xdotool keyup 0xffea &");
+                    qDebug() <<  "realese alt ";
+//                    system("xdotool keyup 0xffea");
+                    sendFakeRelase(XK_Alt_L, display); //A release
+                    sh_alt_down = 0;
                 }
+                usleep(4000000);
+                qDebug() << "exit child: " << is_parent;
+                reX11_exit(display);
+                exit(0);
             }
         }
 
@@ -220,7 +239,7 @@ void ReButtons::buttonSelectPressed()
 //        sendFakeEvent(0 , XK_BackSpace); //Tab release
 //        qDebug() <<  "b_185";
 //        sendXFlush()  ;
-        timer_tab->start(RE_TAB_TIME);
+//        timer_tab->start(RE_TAB_TIME);
     }
 }
 

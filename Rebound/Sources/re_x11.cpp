@@ -1,58 +1,73 @@
 #include "re_x11.h"
-#include <X11/Xlib.h>
-#include <stdio.h>
-#include <X11/extensions/XTest.h>
 
-Display *display;
+//Display *display;
 Window  *winfocus;
 
-void reX11_init()
+Display *reX11_init()
 {
-    winfocus = new Window;
+//    winfocus = new Window;
 //    display = XOpenDisplay(NULL);
+    XInitThreads();
+    Display *display = XOpenDisplay(NULL);
+
     setbuf(stdout,NULL);
     printf("hi\n");
+
+    return display;
+}
+
+void reX11_exit(Display *display)
+{
+//    XFlush(display);
+    XCloseDisplay(display);
+    printf("48\n");
 }
 
 void sendKeyEvent(int isPress, int keysym)
 {
     XEvent event;
     int    revert;
-    XGetInputFocus(display, winfocus, &revert);
+//    XGetInputFocus(display, winfocus, &revert);
 
-    if( isPress )
-    {
-      event.type=KeyPress;
-    }
-    else
-    {
-      event.type=KeyRelease;
-    }
+//    if( isPress )
+//    {
+//      event.type=KeyPress;
+//    }
+//    else
+//    {
+//      event.type=KeyRelease;
+//    }
 
-    event.xkey.keycode=XKeysymToKeycode(display, keysym);
-    event.xkey.display=display;
-    event.xkey.window=*winfocus;
+//    event.xkey.keycode=XKeysymToKeycode(display, keysym);
+//    event.xkey.display=display;
+//    event.xkey.window=*winfocus;
 
-    XSendEvent(display, InputFocus,True,KeyPressMask,&event);
-    XFlush(display);
+//    XSendEvent(display, InputFocus,True,KeyPressMask,&event);
+//    XFlush(display);
 }
 
-void sendFakeEvent(int isPress, int keysym)
+void sendFakePress(int keysym, Display *display)
 {
-    printf("44\n");
+    sendFakeEvent(0, keysym, display);
+}
 
+void sendFakeRelase(int keysym, Display *display)
+{
+    sendFakeEvent(0, keysym, display);
+}
+
+void sendFakeEvent(int isPress, int keysym, Display *display)
+{
     printf("45\n");
-    display = XOpenDisplay(NULL);
+    XInitThreads();
     printf("46\n");
     int keycode = XKeysymToKeycode(display, keysym);
     XTestFakeKeyEvent(display, keycode, isPress, CurrentTime);
+    XFlush(display);
     printf("47\n");
-//    XFlush(display);
-    XCloseDisplay(display);
-    printf("48\n");
 }
 
-void sendXFlush()
+void sendXFlush(Display *display)
 {
     XFlush(display);
 }

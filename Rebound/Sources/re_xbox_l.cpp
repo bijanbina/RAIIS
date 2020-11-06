@@ -455,12 +455,12 @@ void ReXboxL::buttonAxisLxChanged(double value)
         if( value<0.02 )
         {
             last_la_x = 1;
-            emit buttonLAxisRight();
+            emit buttonLAxisLeft();
         }
         else if( value>0.98  )
         {
             last_la_x = 1;
-            emit buttonLAxisLeft();
+            emit buttonLAxisRight();
         }
     }
     else if( value<0.5 && value>0.25 )

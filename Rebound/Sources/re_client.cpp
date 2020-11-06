@@ -178,16 +178,18 @@ void ReClient::readyRead()
 
    if( read_data.contains("Live") )
    {
+#ifdef RE_DUBUG_TCP
        qDebug() <<  "Client: Shitty Live=" << read_data << read_data.size();
+#endif
        read_data.replace("Live", "");
    }
 
    if( read_data.size() )
    {
        qDebug() <<  "Client: Received=" << read_data << read_data.size();
+       emit newKey(read_data);
    }
 
-   emit newKey(read_data);
 }
 
 void ReClient::sendData(const char *data, int size)
