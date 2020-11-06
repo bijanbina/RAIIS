@@ -173,73 +173,7 @@ void ReButtons::buttonSelectPressed()
     }
     else
     {
-        if( sh_alt_down )
-        {
-            int is_parent = fork();
-            if ( is_parent==0 ) //in the child
-            {
-                sh_child_count++;
-                system("xdotool key Tab");
-                qDebug() << "Tab sh_child_count: " << sh_child_count;
-
-                usleep(4000000);
-                sh_child_count--;
-
-                if( sh_child_count==0 )
-                {
-                    qDebug() <<  "realese alt ";
-                    system("xdotool keyup 0xffea");
-                    sh_alt_down = 0;
-                }
-                usleep(4000000);
-                qDebug() << "exit child: " << is_parent;
-                exit(0);
-            }
-        }
-        else
-        {
-            int is_parent = fork();
-            sh_alt_down = 1;
-
-            if ( is_parent==0 ) //in the child
-            {
-                sh_child_count++;
-                Display *display = reX11_init();
-//                system("xdotool keydown 0xffea + key 0xff09");
-                sendFakePress(XK_Alt_L, display); //ALT_L press
-                qDebug() << "Alt Tab sh_child_count: " << sh_child_count;
-                usleep(4000000);
-                qDebug() << "Tab send ";
-                system("xdotool key Tab");
-
-                usleep(4000000);
-                sh_child_count--;
-
-                if( sh_child_count==0 )
-                {
-                    qDebug() <<  "realese alt ";
-//                    system("xdotool keyup 0xffea");
-                    sendFakeRelase(XK_Alt_L, display); //A release
-                    sh_alt_down = 0;
-                }
-                usleep(4000000);
-                qDebug() << "exit child: " << is_parent;
-                reX11_exit(display);
-                exit(0);
-            }
-        }
-
-//        if( isNative )
-//        {
-//        }
-//        qDebug() <<  "b_183";
-//        sendFakeEvent(1, XK_BackSpace); //Tab press
-//        qDebug() <<  "b_184";
-////        QThread::msleep(1);
-//        sendFakeEvent(0 , XK_BackSpace); //Tab release
-//        qDebug() <<  "b_185";
-//        sendXFlush()  ;
-//        timer_tab->start(RE_TAB_TIME);
+        re_getWindowList();
     }
 }
 
