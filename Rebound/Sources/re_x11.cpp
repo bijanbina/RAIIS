@@ -1,14 +1,14 @@
 #include "re_x11.h"
 
-//Display *display;
+Display *display;
 Window  *winfocus;
 
 Display *reX11_init()
 {
 //    winfocus = new Window;
-//    display = XOpenDisplay(NULL);
-    XInitThreads();
-    Display *display = XOpenDisplay(NULL);
+    display = XOpenDisplay(NULL);
+//    XInitThreads();
+//    Display *display = XOpenDisplay(NULL);
 
     setbuf(stdout,NULL);
     printf("hi\n");
@@ -16,34 +16,54 @@ Display *reX11_init()
     return display;
 }
 
-void reX11_exit(Display *display)
+void reX11_exit()
 {
 //    XFlush(display);
     XCloseDisplay(display);
     printf("48\n");
 }
 
-void sendKeyEvent(int isPress, int keysym)
+
+QStringList re_getWindowList()
 {
-    XEvent event;
-    int    revert;
-//    XGetInputFocus(display, winfocus, &revert);
+    Window root = DefaultRootWindow(display);
 
-//    if( isPress )
-//    {
-//      event.type=KeyPress;
-//    }
-//    else
-//    {
-//      event.type=KeyRelease;
-//    }
+    Window* root_return;
+    Window* parent_return;
+    Window* children;
+    unsigned int nchildren;
 
-//    event.xkey.keycode=XKeysymToKeycode(display, keysym);
-//    event.xkey.display=display;
-//    event.xkey.window=*winfocus;
+    XQueryTree(dpy, root, root_return, parent_return,
+               &children, &nchildren);
 
-//    XSendEvent(display, InputFocus,True,KeyPressMask,&event);
-//    XFlush(display);
+    XWindowAttributes attributes;
+    char *name;
+
+    if (!children)
+        return 0;
+
+    while (nchildren--)
+    {
+        XGetWindowAttributes(display, children[nchildren],
+                          &attributes);
+        if (attributes.map_state == IsViewable)
+        {
+            if (names)
+            {
+                if (XFetchName(display, children[nchildren], &name) && name)
+                {
+                    printf("%s ", name);
+                    XFree(name);
+                }
+                else
+                {
+                    printf("Unknown ");
+                }
+            }
+        }
+    }
+
+    XFree(children);
 }
 
 void sendFakePress(int keysym, Display *display)

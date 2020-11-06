@@ -14,3 +14,5 @@ Rebound/object_script.Rebound.Release
 Rebound/Rebound.pro.user
 
 Rebound/debug/
+
+*.autosave
