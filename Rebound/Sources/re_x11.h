@@ -13,6 +13,10 @@ Display *reX11_init();
 void reX11_exit();
 void re_getWindowList();
 void re_listProperty(Window window);
+
+int x11_currentDesktop();
+int x11_getDesktop(Window window);
+Window *x11_getWinList (unsigned long *size);
 char *x11_getProperty (Window win, Atom xa_prop_type,
                     char *prop_name, unsigned long *size);
 void sendFakePress(int keysym, Display *display);

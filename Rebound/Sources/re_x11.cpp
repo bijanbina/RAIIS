@@ -26,70 +26,70 @@ void reX11_exit()
     printf("48\n");
 }
 
-
-//QStringList re_getWindowList()
 void re_getWindowList()
 {
-    Window root = DefaultRootWindow(display);
-    Window root_return;
-    Window parent_return;
     Window* children;
-    unsigned int nchildren;
-    Atom *atoms;
+    unsigned long nchildren;
 
-    XQueryTree(display, root, &root_return, &parent_return,
-               &children, &nchildren);
-    XWindowAttributes attributes;
+    children = x11_getWinList(&nchildren);
+    int desktop_id = x11_currentDesktop();
+
+    printf("Desktop: %d\n", desktop_id);
     char *name;
 
     if (!children)
         return;
 
-    for (int i=0 ; i<nchildren ; i++ )
+    for ( unsigned long i=0 ; i<nchildren ; i++ )
     {
-        XGetWindowAttributes(display, children[i],
-                          &attributes);
-        atoms=NULL;
-
-
-        if (attributes.map_state == IsViewable)
+        XFetchName(display, children[i], &name);
+        if ( name )
         {
-            //Filter out fake windows of gnome
-            if ( attributes.width!=1 && attributes.c_class==1 )
+            int win_desktop = x11_getDesktop(children[i]);
+
+            if ( win_desktop==desktop_id)
             {
-                XFetchName(display, children[i], &name);
-                if ( name )
-                {
-                    printf("<%s> %lx w:%d h:%d\n", name,
-                           children[i], attributes.width,
-                           attributes.height);
-                    XFree(name);
-                }
-                else
-                {
-                    printf("Unknown 0x%lx\n", children[i]);
-                    re_listProperty(children[i]);
-                }
+                printf("%d: <%s>\n", win_desktop, name);
+                XFree(name);
             }
-            else
-            {
-                printf("Unknown 0x%lx\n", children[i]);
-            }
-        }
-        else
-        {
-            printf("Not Viewable 0x%lx\n", children[i]);
         }
     }
 
     XFree(children);
 }
 
+int x11_getDesktop(Window window)
+{
+    unsigned long *desktop_id;
+    char propperty_name[40] = "_NET_WM_DESKTOP";
+
+    desktop_id = (unsigned long *)x11_getProperty(window, XA_CARDINAL,
+                              propperty_name, NULL);
+
+    int ret = *desktop_id;
+    return ret;
+
+}
+
+int x11_currentDesktop()
+{
+    unsigned long *desktop_id;
+    Window root = DefaultRootWindow(display);
+    char propperty_name[40] = "_NET_CURRENT_DESKTOP";
+
+    desktop_id = (unsigned long *)x11_getProperty(root, XA_CARDINAL,
+                              propperty_name, NULL);
+
+    int ret = *desktop_id;
+    return ret;
+}
+
 Window *x11_getWinList (unsigned long *size)
 {
     Window *client_list;
     Window root = DefaultRootWindow(display);
-    char propperty_name[30] = "_NET_CLIENT_LIST";
+//    char propperty_name[40] = "_NET_CLIENT_LIST";
+    char propperty_name[40] = "_NET_CLIENT_LIST_STACKING";
 
     client_list = (Window *)x11_getProperty(root, XA_WINDOW,
                               propperty_name, size);
@@ -107,13 +107,14 @@ char *x11_getProperty (Window win, Atom xa_prop_type,
     unsigned long ret_bytes_after;
     unsigned long tmp_size;
     unsigned char *ret_prop;
-    char *ret;
+    char *ret_data;
 
     xa_prop_name = XInternAtom(display, prop_name, False);
 
-    if (XGetWindowProperty(display, win, xa_prop_name, 0, 1024, False,
-            xa_prop_type, &xa_ret_type, &ret_format,
-            &ret_nitems, &ret_bytes_after, &ret_prop) != Success)
+    int ret = XGetWindowProperty(display, win, xa_prop_name, 0, 1024, False,
+                                xa_prop_type, &xa_ret_type, &ret_format,
+                                &ret_nitems, &ret_bytes_after, &ret_prop);
+    if ( ret!=Success )
     {
         return NULL;
     }
@@ -126,9 +127,9 @@ char *x11_getProperty (Window win, Atom xa_prop_type,
 
     /* null terminate the result to make string handling easier */
     tmp_size = (ret_format / (32 / sizeof(long))) * ret_nitems;
-    ret = (char *)malloc(tmp_size + 1);
-    memcpy(ret, ret_prop, tmp_size);
-    ret[tmp_size] = '\0';
+    ret_data = (char *)malloc(tmp_size + 1);
+    memcpy(ret_data, ret_prop, tmp_size);
+    ret_data[tmp_size] = '\0';
 
     if (size)
     {
@@ -136,7 +137,7 @@ char *x11_getProperty (Window win, Atom xa_prop_type,
     }
 
     XFree(ret_prop);
-    return ret;
+    return ret_data;
 }
 
 void sendFakePress(int keysym, Display *display)
