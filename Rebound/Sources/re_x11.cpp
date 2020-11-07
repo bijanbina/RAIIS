@@ -1,6 +1,7 @@
 #include "re_x11.h"
 #include <string.h>
 #include <stdlib.h>
+#include <QStringList>
 #include <X11/Xatom.h>
 
 Display *display;
@@ -26,10 +27,11 @@ void reX11_exit()
     printf("48\n");
 }
 
-void re_getWindowList()
+QVector<ReXWindow> re_getWindowList()
 {
     Window* children;
     unsigned long nchildren;
+    QVector<ReXWindow> retlist;
 
     children = x11_getWinList(&nchildren);
     int desktop_id = x11_currentDesktop();
@@ -38,24 +40,72 @@ void re_getWindowList()
     char *name;
 
     if (!children)
-        return;
+        return retlist;
 
     for ( unsigned long i=0 ; i<nchildren ; i++ )
     {
         XFetchName(display, children[i], &name);
         if ( name )
         {
-            int win_desktop = x11_getDesktop(children[i]);
-
-            if ( win_desktop==desktop_id)
+            if(!strcmp(name, "Desktop"))
             {
-                printf("%d: <%s>\n", win_desktop, name);
+                continue;
+            }
+            int win_desktop = x11_getDesktop(children[i]);
+            if ( win_desktop==desktop_id )
+            {
+                ReXWindow buf;
+                buf.desktop_id = win_desktop;
+                buf.title = name;
+                buf.pid = x11_getPid(children[i]);
+                buf.process_name = x11_getPname(buf.pid);
+                printf("%d: <%s> pid=%d pname=%s\n", win_desktop, name,
+                       buf.pid, buf.process_name.toStdString().c_str());
+                retlist.push_back(buf);
                 XFree(name);
             }
         }
     }
 
     XFree(children);
+
+    return retlist;
+}
+
+QString x11_getPname(int pid)
+{
+    char buffer[1024];
+    QString name = "/proc/" + QString::number(pid);
+    name += "/cmdline";
+
+    FILE* f = fopen(name.toStdString().c_str(),"r");
+    if(f)
+    {
+        size_t size;
+        size = fread(buffer, sizeof(char), 1024, f);
+        if(size>0)
+        {
+            if('\n'==buffer[size-1])
+            {
+                buffer[size-1]='\0';
+            }
+        }
+        fclose(f);
+    }
+
+    return buffer;
+}
+
+int x11_getPid(Window window)
+{
+    unsigned long *desktop_id;
+    char propperty_name[40] = "_NET_WM_PID";
+
+    desktop_id = (unsigned long *)x11_getProperty(window, XA_CARDINAL,
+                              propperty_name, NULL);
+
+    int ret = *desktop_id;
+    return ret;
 }
 
 int x11_getDesktop(Window window)
@@ -138,27 +188,6 @@ char *x11_getProperty (Window win, Atom xa_prop_type,
 
     XFree(ret_prop);
     return ret_data;
-}
-
-void sendFakePress(int keysym, Display *display)
-{
-    sendFakeEvent(0, keysym, display);
-}
-
-void sendFakeRelase(int keysym, Display *display)
-{
-    sendFakeEvent(0, keysym, display);
-}
-
-void sendFakeEvent(int isPress, int keysym, Display *display)
-{
-    printf("45\n");
-    XInitThreads();
-    printf("46\n");
-    int keycode = XKeysymToKeycode(display, keysym);
-    XTestFakeKeyEvent(display, keycode, isPress, CurrentTime);
-    XFlush(display);
-    printf("47\n");
 }
 
 void sendXFlush(Display *display)

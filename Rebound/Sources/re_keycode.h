@@ -8,6 +8,7 @@
 #define RE_KEY_WEST     "BTN_WEST"
 #define RE_KEY_START    "BTN_START"
 #define RE_KEY_BACK     "KEY_BACK"
+//#define RE_KEY_BACK     "BTN_SELECT"
 #define RE_KEY_HAT0Y    "ABS_HAT0Y"
 #define RE_KEY_HAT0X    "ABS_HAT0X"
 #define RE_KEY_TR       "BTN_TR"         //RB

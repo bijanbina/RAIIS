@@ -179,7 +179,7 @@ void ReXboxL::readyData()
     for ( int i=0 ; i<lines.size() ; i++ )
     {
         QString line = lines[i];
-        qDebug() << line;
+//        qDebug() << line;
 
         QStringList space_separated;
         if( line.contains("type 1") || line.contains("type 3"))

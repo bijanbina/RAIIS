@@ -52,8 +52,7 @@ RESOURCES += Qml/ui.qrc \
 
 OTHER_FILES += Qml/*.qml
 
-linux:LIBS += -lX11 \
-              -lXtst
+linux:LIBS += -lX11
 
 win32:LIBS += -lKernel32 \
               -lUser32 \
