@@ -85,10 +85,10 @@ void ReXboxL::keyTcpRead(QString key)
     }
     else if( key=="m" )
     {
-        if( isUiVisible(ui) )
+        if( isItemVisible(ui) )
         {
              client->sendData("M", 1);
-             hideUI(ui);
+             hideItem(ui);
         }
         else
         {

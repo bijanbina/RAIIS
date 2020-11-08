@@ -14,5 +14,7 @@
         <file>ReAxis.qml</file>
         <file>ReCircle.qml</file>
         <file>ReAxisLabel.qml</file>
+        <file>ReSwitcher.qml</file>
+        <file>ReSwitchElement.qml</file>
     </qresource>
 </RCC>

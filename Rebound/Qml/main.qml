@@ -9,6 +9,7 @@ import "qrc:/"
 Window
 {
     id: page
+    objectName: "Rebound"
 
     visible: false
     property alias miheight:page.width

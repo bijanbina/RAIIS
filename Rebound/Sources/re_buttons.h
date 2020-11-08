@@ -18,7 +18,7 @@ class ReButtons: public QObject
     Q_OBJECT
 
 public:
-    ReButtons(QObject *item, ReState *st, QObject *parent = 0);
+    ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *parent = 0);
 
 public slots:
     void buttonAPressed();
@@ -30,6 +30,8 @@ public slots:
     void buttonSelectPressed();
     void buttonGuidePressed();
 
+    void setTitles(QStringList titles);
+
 #ifdef __linux__
 private slots:
     void tab_timeout();
@@ -37,6 +39,7 @@ private slots:
 
 private:
     QObject *ui;
+    QObject *uiSwitcher;
     ReState *state;
 
 #ifdef __linux__

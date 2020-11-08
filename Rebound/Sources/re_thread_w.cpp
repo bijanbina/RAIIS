@@ -169,7 +169,7 @@ QString reGetPName(long pid)
     processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
     if(processHandle == NULL)
     {
-        qDebug() << "Warning: couldn't get process handle from pid" << pid;
+//        qDebug() << "Warning: couldn't get process handle from pid" << pid;
         return "";
     }
 

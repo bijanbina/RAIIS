@@ -37,7 +37,7 @@ QString ReApiW::getPName(long pid)
     char filename[MAX_PATH];
     if(GetModuleFileNameExA(processHandle, NULL, filename, MAX_PATH) == 0)
     {
-        qDebug("Warning: couldn't get name of process handle");
+//        qDebug("Warning: couldn't get name of process handle");
         return "";
     }
     return QString(filename);

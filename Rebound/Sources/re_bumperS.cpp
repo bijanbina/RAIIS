@@ -10,9 +10,9 @@ ReBumpers::ReBumpers(QObject *item, ReState *st, QObject *parent) : QObject(pare
 #ifdef _WIN32
 void ReBumpers::buttonL1Pressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          QThread::msleep(200);
          executeUi("l1");
     }
@@ -24,9 +24,9 @@ void ReBumpers::buttonL1Pressed()
 
 void ReBumpers::buttonL2Pressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          QThread::msleep(200);
          executeUi("l2");
     }
@@ -38,9 +38,9 @@ void ReBumpers::buttonL2Pressed()
 
 void ReBumpers::buttonR1Pressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          QThread::msleep(200);
          executeUi("r1");
     }
@@ -52,9 +52,9 @@ void ReBumpers::buttonR1Pressed()
 
 void ReBumpers::buttonR2Pressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          QThread::msleep(200);
          executeUi("r2");
     }

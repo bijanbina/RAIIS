@@ -52,8 +52,8 @@ void changeLaguageBack();
 
 void updateScreenInfo(QObject *item);
 
-void hideUI(QObject *item);
-int isUiVisible(QObject *item);
+void hideItem(QObject *item);
+int isItemVisible(QObject *item);
 
 #ifdef _WIN32
 void executeAhk(QString name);

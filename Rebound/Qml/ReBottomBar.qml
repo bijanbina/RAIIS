@@ -3,6 +3,11 @@ import QtQuick 2.0
 Rectangle
 {
 
+    property string text_work1: page.left_action
+    property string text_work2: page.up_action
+    property string text_work3: page.down_action
+    property string text_work4: page.right_action
+
     color: "transparent"
 
     Rectangle
@@ -27,10 +32,11 @@ Rectangle
         CommandButton
         {
             id: work1
+            width: 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "left"
-            cmd_text: page.left_action
+            cmd_text: text_work1
         }
 
     }
@@ -47,10 +53,11 @@ Rectangle
         CommandButton
         {
             id: work2
+            width: 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "up"
-            cmd_text: page.up_action
+            cmd_text: text_work2
         }
 
     }
@@ -67,10 +74,11 @@ Rectangle
         CommandButton
         {
             id: work3
+            width: 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "down"
-            cmd_text: page.down_action
+            cmd_text: text_work3
         }
 
     }
@@ -87,10 +95,11 @@ Rectangle
         CommandButton
         {
             id: work4
+            width: 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "right"
-            cmd_text: page.right_action
+            cmd_text: text_work4
         }
 
     }

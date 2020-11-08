@@ -1,9 +1,10 @@
 #include "re_buttons.h"
 #include <QThread>
 
-ReButtons::ReButtons(QObject *item, ReState *st, QObject *parent) : QObject(parent)
+ReButtons::ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *parent) : QObject(parent)
 {
     ui = item;
+    uiSwitcher = switcher;
     state = st;
 
 #if __linux__
@@ -14,6 +15,23 @@ ReButtons::ReButtons(QObject *item, ReState *st, QObject *parent) : QObject(pare
 //    timer_tab->setSingleShot(true);
     connect(timer_tab, SIGNAL(timeout()), this, SLOT(tab_timeout()));
 #endif
+}
+
+void ReButtons::setTitles(QStringList titles)
+{
+    for(int i=0; i<6; i++)
+    {
+        QQmlProperty::write(uiSwitcher, "process_id", i+1);
+        if(i<titles.length())
+        {
+            QQmlProperty::write(uiSwitcher, "process_title", titles[i]);
+        }
+        else
+        {
+            QQmlProperty::write(uiSwitcher, "process_title", "");
+        }
+        QMetaObject::invokeMethod(uiSwitcher, "updateProcessTitle");
+    }
 }
 
 #ifdef _WIN32
@@ -74,9 +92,9 @@ void ReButtons::buttonStartPressed()
 
 void ReButtons::buttonGuidePressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          QThread::msleep(200);
          executeUi("select");
     }
@@ -88,15 +106,14 @@ void ReButtons::buttonGuidePressed()
 
 void ReButtons::buttonSelectPressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(uiSwitcher) )
     {
-         hideUI(ui);
-         QThread::msleep(200);
-         executeUi("menu");
+        QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
     }
     else
     {
-        executeAhk("menu_button");
+        QQmlProperty::write(uiSwitcher, "visible", 1);
+        QQmlProperty::write(uiSwitcher, "active_process", 2);
     }
 }
 #elif __linux__
@@ -113,9 +130,9 @@ void ReButtons::tab_timeout()
 
 void ReButtons::buttonAPressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          system("./Scripts/focus_window spotify");
     }
     else
@@ -131,9 +148,9 @@ void ReButtons::buttonBPressed()
 
 void ReButtons::buttonXPressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          QThread::msleep(200);
          system("xdotool key Alt+F4 &");
     }
@@ -145,9 +162,9 @@ void ReButtons::buttonXPressed()
 
 void ReButtons::buttonYPressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          system("./Scripts/focus_window firefox");
     }
     else
@@ -166,9 +183,9 @@ void ReButtons::buttonStartPressed()
 void ReButtons::buttonSelectPressed()
 {
 
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          system("xdotool key XF86AudioMute &");
     }
     else

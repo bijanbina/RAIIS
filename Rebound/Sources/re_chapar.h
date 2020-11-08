@@ -53,7 +53,7 @@ class ReChapar : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReChapar(QObject *item, int isNative, QObject *parent = nullptr);
+    explicit ReChapar(QObject *item, QObject *switcher, int isNative, QObject *parent = nullptr);
 
     void setPage(RePage page);
     void setMode(int mode);
@@ -62,9 +62,11 @@ signals:
 
 private slots:
     void updateMode();
+    void switchWindow(int activeProcessId);
 
 private:
     QObject      *ui;
+    QObject      *uiSwitcher;
     ReState      *state;
     ReBumpers    *bumpers;
     ReButtons    *buttons;

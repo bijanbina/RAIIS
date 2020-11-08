@@ -2,13 +2,14 @@
 #include <QDebug>
 #include <QQmlProperty>
 
-ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(parent)
+ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *parent) : QObject(parent)
 {
     ui = item;
+    uiSwitcher = switcher;
 
     state = new ReState;
     bumpers = new ReBumpers(ui, state);
-    buttons = new ReButtons(ui, state);
+    buttons = new ReButtons(ui, switcher, state);
     directions = new ReDirections(ui, state);
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
@@ -57,6 +58,9 @@ ReChapar::ReChapar(QObject *item, int isNative, QObject *parent) : QObject(paren
     connect(controller, SIGNAL(buttonRAxisUp())    , raxis, SLOT(buttonUpPressed()));
 
     connect(state, SIGNAL(updateMode()), this, SLOT(updateMode()));
+
+    connect(uiSwitcher, SIGNAL(selectWindow(int)), this, SLOT(switchWindow(int)));
+
 }
 
 void ReChapar::updateMode()
@@ -147,6 +151,11 @@ void ReChapar::updateMode()
     }
     setPage(c_page);
 #endif
+}
+
+void ReChapar::switchWindow(int activeProcessId)
+{
+    qDebug() << "switchWindow: active process id" << activeProcessId;
 }
 
 void ReChapar::setPage(RePage page)

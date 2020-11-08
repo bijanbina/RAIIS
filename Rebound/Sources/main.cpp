@@ -13,8 +13,12 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:main.qml")));
     QObject *item = engine.rootObjects().first();
-    updateScreenInfo(item);
 
+    QQmlApplicationEngine engineSwitcher;
+    engineSwitcher.load(QUrl(QStringLiteral("qrc:ReSwitcher.qml")));
+    QObject *itemSwitcher = engineSwitcher.rootObjects().first();
+
+    updateScreenInfo(item);
     //check if app should start in server
     //or client mode
 
@@ -39,7 +43,7 @@ int main(int argc, char *argv[])
         isNative = 1;
     }
 #endif
-    ReChapar *chaper = new ReChapar(item, isNative);
+    ReChapar *chaper = new ReChapar(item, itemSwitcher, isNative);
 
 #ifdef RE_TEST_EN
     ReClient *channel_cl;

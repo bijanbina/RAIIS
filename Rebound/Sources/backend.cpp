@@ -97,7 +97,7 @@ assistant_options loadOptions()
 
 }
 
-int isUiVisible(QObject *item)
+int isItemVisible(QObject *item)
 {
     if ( item != NULL )
     {
@@ -110,7 +110,7 @@ int isUiVisible(QObject *item)
     }
 }
 
-void hideUI(QObject *item)
+void hideItem(QObject *item)
 {
     if ( item != NULL )
     {

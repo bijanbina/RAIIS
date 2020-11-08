@@ -30,9 +30,9 @@ void ReLAxis::buttonDownPressed()
 #elif __linux__
 void ReLAxis::buttonRightPressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          system("xdotool key Super+Right");
     }
     else
@@ -43,9 +43,9 @@ void ReLAxis::buttonRightPressed()
 
 void ReLAxis::buttonLeftPressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          system("xdotool key Super+Left");
     }
     else
@@ -56,9 +56,9 @@ void ReLAxis::buttonLeftPressed()
 
 void ReLAxis::buttonUpPressed()
 {
-    if( isUiVisible(ui) )
+    if( isItemVisible(ui) )
     {
-         hideUI(ui);
+         hideItem(ui);
          system("xdotool key Alt+F10");
     }
     else
