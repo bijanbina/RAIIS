@@ -169,7 +169,7 @@ QString reGetPName(long pid)
     processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
     if(processHandle == NULL)
     {
-//        qDebug() << "Warning: couldn't get process handle from pid" << pid;
+        qDebug() << "Warning: couldn't get process handle from pid" << pid;
         return "";
     }
 
@@ -310,8 +310,8 @@ IAccessible* reFindAcc(QString path, IAccessible *pAcc)
         int indx = QString(path.at(0)).toInt();
         vtChild = pArray[indx];
 
-//        qDebug() << QString("--path:") + path + " childCount:" + QString::number(childCount) + " " +
-//                 getAccName(pAcc, CHILDID_SELF) + " indx:" + QString::number(indx) + " " + QString::number(returnCount);
+        qDebug() << QString("--path:") + path + " childCount:" + QString::number(childCount) + " " +
+                 reGetAccName(pAcc, CHILDID_SELF) + " indx:" + QString::number(indx) + " " + QString::number(returnCount);
 
         // return if path is not correct
         if(indx > childCount)

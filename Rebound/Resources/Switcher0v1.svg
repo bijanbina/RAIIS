@@ -26,10 +26,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.2064946"
-     inkscape:cx="452.30717"
-     inkscape:cy="206.99031"
+     inkscape:cx="597.34348"
+     inkscape:cy="163.10753"
      inkscape:document-units="px"
-     inkscape:current-layer="layer8"
+     inkscape:current-layer="layer7"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1053"
@@ -58,7 +58,8 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-79.240051,-163.33135)"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <rect
        style="fill:#2f343f;fill-opacity:1;stroke:none"
        id="rect4147"
@@ -328,7 +329,8 @@
      inkscape:groupmode="layer"
      id="layer8"
      inkscape:label="TitleBackground"
-     transform="translate(0,-50.000004)">
+     transform="translate(0,-50.000004)"
+     style="display:inline">
     <rect
        style="fill:#373e4b;fill-opacity:1;stroke:none"
        id="rect4229"

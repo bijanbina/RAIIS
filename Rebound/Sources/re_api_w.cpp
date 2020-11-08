@@ -20,7 +20,11 @@ long ReApiW::getPid(HWND hWnd)
 
 QString ReApiW::getPNameA()
 {
-    return getPName(getPid(GetActiveWindow())).split("\\").last();
+    long active_pid = getPid(GetForegroundWindow());
+    QString app_path = getPName(active_pid);
+    QString app_name = app_path.split("\\").last();
+
+    return app_name;
 }
 
 QString ReApiW::getPName(long pid)
