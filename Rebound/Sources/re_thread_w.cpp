@@ -12,45 +12,55 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
     int written = GetWindowTextA(hwnd, buffer, 128);
     if(written && strlen(buffer) != 0 && strstr(buffer, "Rebound") == NULL)
     {
-        if(IsWindowVisible(hwnd))
-        {
-            int cloaked;
-            DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, &cloaked, 4);
-            if(cloaked == 0)
-            {
-                HWND shell_window = GetShellWindow();
-                if(hwnd != shell_window)
-                {
-                    QString pname = reGetPName(reGetPid(hwnd));
-
-                    ReWinSpec new_win_spec;
-                    new_win_spec.hWnd = hwnd;
-                    new_win_spec.title = buffer;
-                    // spotify title doesnt include "spotify" so we add it :D
-                    if(pname.contains("spotify", Qt::CaseInsensitive))
-                    {
-                        new_win_spec.title += " - spotify";
-                    }
-                    new_win_spec.title = thread_win->makeTitleTidy(new_win_spec.title);
-                    thread_win->wins_spec.push_back(new_win_spec);
-
-                    thread_win->wins_title.push_back(new_win_spec.title);
-                }
-            }
-        }
+        re_AddHwnd(hwnd, thread_win);
     }
     return TRUE;
 }
 
-QString ReThreadW::makeTitleTidy(QString app_title)
+//Add a new Hwnd to wins_title vector
+void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
 {
-    QStringList app_title_split = app_title.split('-', QString::SkipEmptyParts);
-    QString app_name = renameAppName(app_title_split.last().simplified());
-    QStringList file_name_split = app_title_split[0].split(" ", QString::SkipEmptyParts);
-    app_title = app_name + ": " + file_name_split[0].simplified();
-    if(file_name_split.size()>1)
+    char buffer[128];
+
+    if(IsWindowVisible(hwnd))
     {
-        app_title += " " + file_name_split[1].simplified();
+        int cloaked;
+        DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, &cloaked, 4);
+        if(cloaked)
+        {
+            HWND shell_window = GetShellWindow();
+            if(hwnd != shell_window)
+            {
+                GetWindowTextA(hwnd, buffer, 128); //get title
+                QString pname = reGetPName(reGetPid(hwnd));
+
+                ReWinSpec win_spec;
+                win_spec.hWnd = hwnd;
+                win_spec.title = buffer;
+                // spotify title doesnt include "spotify" so we add it :D
+                if(pname.contains("spotify", Qt::CaseInsensitive))
+                {
+                    win_spec.title += " - spotify";
+                }
+                win_spec.title = thread_win->cleanTitle(win_spec.title);
+                thread_win->wins_spec.push_back(win_spec);
+
+                thread_win->wins_title.push_back(win_spec.title);
+                qDebug() << win_spec.title;
+            }
+        }
+    }
+}
+
+QString ReThreadW::cleanTitle(QString app_title)
+{
+    QStringList title_split = app_title.split('-', QString::SkipEmptyParts);
+    QString app_name = renameAppName(title_split.last().simplified());
+    QStringList filename_split = title_split[0].split(" ", QString::SkipEmptyParts);
+    app_title = app_name + ": " + title_split[0].simplified();
+    if(filename_split.size()>1)
+    {
+        app_title += " " + filename_split[1].simplified();
     }
     return app_title;
 }
@@ -166,7 +176,7 @@ void reListChildren(IAccessible *pAcc, QString path)
 QString reGetPName(long pid)
 {
     HANDLE processHandle = NULL;
-    processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
+    processHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
     if(processHandle == NULL)
     {
         qDebug() << "Warning: couldn't get process handle from pid" << pid;

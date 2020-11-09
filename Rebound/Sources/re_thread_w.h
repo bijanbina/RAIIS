@@ -44,7 +44,7 @@ public:
     void cleanElems();
     void updateElements(QString app_name, QString parent_path, QString child_path);
     void selectButton(QString name);
-    QString makeTitleTidy(QString title);
+    QString cleanTitle(QString title);
     void sortTitles();
     void syncWinsTitle();
     void syncElemsName();
@@ -67,6 +67,7 @@ private:
     QString getWinTitle(int index);
 };
 
+void re_AddHwnd(HWND hwnd, ReThreadW *thread_win);
 long reGetPid(HWND hWnd);
 QString reGetPName(long pid);
 IAccessible* reGetPAcc(HWND hWnd);

@@ -50,6 +50,9 @@ private:
     typedef DWORD (WINAPI *XInputGetStateExProc)(DWORD dwUserIndex, XINPUT_STATE *pState);
     XInputGetStateExProc XInputGetStateEx;
 
+    typedef DWORD (WINAPI *XInputPowerOffProc)(DWORD dwUserIndex);
+    XInputPowerOffProc XInputPowerOff;
+
 };
 
 #endif // RE_XBOX_WIN32_H

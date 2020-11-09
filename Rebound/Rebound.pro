@@ -2,6 +2,8 @@ TEMPLATE = app
 
 QT += qml quick
 
+CONFIG += console
+
 win32:QT += gamepad
 
 SOURCES += Sources/main.cpp \

@@ -6,15 +6,15 @@
 ReXboxWin32::ReXboxWin32(QObject *parent) : QObject(parent)
 {
     guide_last_val = 0;
-    HINSTANCE hGetProcIDDLL = LoadLibraryA("C:/Windows/System32/xinput1_3.dll");  //In Visual Studio replace this
+    HINSTANCE hXboxDll = LoadLibraryA("C:/Windows/System32/xinput1_3.dll");  //In Visual Studio replace this
 
-    if(hGetProcIDDLL == NULL)
+    if(hXboxDll == NULL)
     {
         qDebug() << "Could not load xinput1_3. Windows 10 detected trying xinput1_4.";
 
-        hGetProcIDDLL = LoadLibraryA("C:/Windows/System32/xinput1_4.dll");
+        hXboxDll = LoadLibraryA("C:/Windows/System32/xinput1_4.dll");
 
-        if(hGetProcIDDLL == NULL)
+        if(hXboxDll == NULL)
         {
             qDebug() << "Could not load any xinput library";
             return;
@@ -24,7 +24,8 @@ ReXboxWin32::ReXboxWin32(QObject *parent) : QObject(parent)
 //    FARPROC lpfnGetProcessID = GetProcAddress(HMODULE(hGetProcIDDLL), (LPCSTR)100);
 //    getControllerData = pICFUNC(lpfnGetProcessID);
 
-    XInputGetStateEx = (XInputGetStateExProc) GetProcAddress(HMODULE(hGetProcIDDLL), (LPCSTR) 100);
+    XInputGetStateEx = (XInputGetStateExProc) GetProcAddress(HMODULE(hXboxDll), (LPCSTR) 100);
+    XInputPowerOff = (XInputPowerOffProc) GetProcAddress(HMODULE(hXboxDll), (LPCSTR) 103);
 
     guideTimer = new QTimer;
     guideTimer->start(RE_CHECK_BTN);
@@ -48,6 +49,7 @@ void ReXboxWin32::ReXbox_getGuideBtn()
 //        guide_last_val = value;
 //        emit buttonGuideChanged(value);
 //    }
+//    XInputPowerOff(0);
     XINPUT_STATE state;
     XInputGetStateEx(0, &state);
     bool value = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_GUIDE) != 0);
