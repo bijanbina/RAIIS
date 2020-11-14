@@ -10,7 +10,7 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
     char buffer[128];
     ReThreadW *thread_win = (ReThreadW *)lParam;
     int written = GetWindowTextA(hwnd, buffer, 128);
-    if(written && strlen(buffer) != 0 && strstr(buffer, "Rebound") == NULL)
+    if(written && strlen(buffer) != 0 && strcmp(buffer, "Rebound") != 0)
     {
         re_AddHwnd(hwnd, thread_win);
     }
@@ -21,6 +21,7 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
 {
     char buffer[128];
+    RECT rc;
 
     if(IsWindowVisible(hwnd))
     {
@@ -29,9 +30,18 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
         if(cloaked)
         {
             HWND shell_window = GetShellWindow();
-            if(hwnd != shell_window)
+            GetWindowRect(hwnd, &rc);
+            int width = rc.right - rc.left;
+
+            if((hwnd!=shell_window) && (rc.bottom>0) && (width>100) )
             {
-                GetWindowTextA(hwnd, buffer, 128); //get title
+                int success = GetWindowTextA(hwnd, buffer, 128); //get title
+
+                if ( success==0 )
+                {
+                    qDebug() << hwnd << "Failed to GetWindowTextA";
+                }
+
                 QString pname = reGetPName(reGetPid(hwnd));
 
                 ReWinSpec win_spec;
@@ -46,6 +56,11 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
                 thread_win->wins_spec.push_back(win_spec);
 
                 thread_win->wins_title.push_back(win_spec.title);
+
+                int a = 0;
+                DwmGetWindowAttribute(hwnd, DWMWA_DISALLOW_PEEK, &a, 4);
+
+
                 qDebug() << win_spec.title;
             }
         }
@@ -176,7 +191,8 @@ void reListChildren(IAccessible *pAcc, QString path)
 QString reGetPName(long pid)
 {
     HANDLE processHandle = NULL;
-    processHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+//    processHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+    processHandle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
     if(processHandle == NULL)
     {
         qDebug() << "Warning: couldn't get process handle from pid" << pid;
@@ -185,9 +201,9 @@ QString reGetPName(long pid)
 
     // get name of process handle
     char filename[MAX_PATH];
-    if(GetModuleFileNameExA(processHandle, NULL, filename, MAX_PATH) == 0)
+    if(GetProcessImageFileNameA(processHandle, filename, MAX_PATH) == 0)
     {
-        qDebug("Warning: couldn't get name of process handle");
+        qDebug() << "Error" << GetLastError() << " : Fail to get Pname of " << pid;
         return "";
     }
     return QString(filename);
