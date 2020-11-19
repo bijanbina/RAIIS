@@ -255,3 +255,20 @@ void ReChapar::setMode(int mode)
 
     setPage(page);
 }
+
+void ReChapar::updateTitles(QStringList titles)
+{
+    for(int i=0; i<6; i++)
+    {
+        QQmlProperty::write(uiSwitcher, "process_id", i+1);
+        if(i<titles.length())
+        {
+            QQmlProperty::write(uiSwitcher, "process_title", titles[i]);
+        }
+        else
+        {
+            QQmlProperty::write(uiSwitcher, "process_title", "");
+        }
+        QMetaObject::invokeMethod(uiSwitcher, "updateProcessTitle");
+    }
+}

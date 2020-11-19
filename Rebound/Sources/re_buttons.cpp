@@ -17,23 +17,6 @@ ReButtons::ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *par
 #endif
 }
 
-void ReButtons::setTitles(QStringList titles)
-{
-    for(int i=0; i<6; i++)
-    {
-        QQmlProperty::write(uiSwitcher, "process_id", i+1);
-        if(i<titles.length())
-        {
-            QQmlProperty::write(uiSwitcher, "process_title", titles[i]);
-        }
-        else
-        {
-            QQmlProperty::write(uiSwitcher, "process_title", "");
-        }
-        QMetaObject::invokeMethod(uiSwitcher, "updateProcessTitle");
-    }
-}
-
 #ifdef _WIN32
 void ReButtons::buttonAPressed()
 {
@@ -87,6 +70,7 @@ void ReButtons::buttonYPressed()
 
 void ReButtons::buttonStartPressed()
 {
+    qDebug() << "buttonStartPressed";
     state->toggleUi(ui);
 }
 
@@ -106,14 +90,17 @@ void ReButtons::buttonGuidePressed()
 
 void ReButtons::buttonSelectPressed()
 {
+    qDebug() << "Switch butn ui";
     if( isItemVisible(uiSwitcher) )
     {
         QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
+        qDebug() << "Switch next ui";
     }
     else
     {
-        QQmlProperty::write(uiSwitcher, "visible", 1);
+        qDebug() << "Switch slut ui";
         QQmlProperty::write(uiSwitcher, "active_process", 2);
+        QQmlProperty::write(uiSwitcher, "visible", 1);
     }
 }
 #elif __linux__

@@ -366,6 +366,7 @@ void ReXboxW::buttonAxisRyChanged(double value)
 
 void ReXboxW::buttonStartChanged(bool value)
 {
+    qDebug() << "buttonStartChanged";
     if ( value==1 )
     {
         if(isNative)

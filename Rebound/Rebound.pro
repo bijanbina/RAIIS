@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick
 
-CONFIG += console
+#CONFIG += console
 
 win32:QT += gamepad
 

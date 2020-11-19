@@ -15,10 +15,15 @@
 #define RE_SPOTIFY_ALBUM_CHILD  "0000"
 #define RE_SPOTIFY_ALBUM_PARENT "301000000201201"
 
+#define RE_EXPLORER_ID 0
+#define RE_FIREFOX_ID  1
+#define RE_SPOTIFY_ID  2
+
 typedef struct ReWinSpec
 {
     HWND hWnd;
     QString title;
+    QString pname;
     IAccessible *pAcc;
 }ReWinSpec;
 
@@ -45,7 +50,7 @@ public:
     void updateElements(QString app_name, QString parent_path, QString child_path);
     void selectButton(QString name);
     QString cleanTitle(QString title);
-    void sortTitles();
+    void sortApp();
     void syncWinsTitle();
     void syncElemsName();
 

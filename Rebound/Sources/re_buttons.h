@@ -30,8 +30,6 @@ public slots:
     void buttonSelectPressed();
     void buttonGuidePressed();
 
-    void setTitles(QStringList titles);
-
 #ifdef __linux__
 private slots:
     void tab_timeout();

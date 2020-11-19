@@ -16,7 +16,8 @@ Window
     visible: false
     x: (Screen.width  - minimumWidth )/ 2
     y: (Screen.height - minimumHeight)/ 2
-    flags: Qt.FramelessWindowHint //| Qt.WindowStaysOnTopHint// | Qt.SubWindow
+//    flags: Qt.FramelessWindowHint //| Qt.WindowStaysOnTopHint// | Qt.SubWindow
+    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint// | Qt.SubWindow
 
     //Properties:
     property int height_rect_process: 50
@@ -95,6 +96,7 @@ Window
             repeat: true
             onTriggered:
             {
+//                console.log("triggered")
                 var value_time = parseInt(label_timer.text) - interval
                 if(value_time>0)
                 {

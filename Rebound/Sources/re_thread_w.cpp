@@ -27,7 +27,7 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
     {
         int cloaked;
         DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, &cloaked, 4);
-        if(cloaked)
+        if(cloaked==0)
         {
             HWND shell_window = GetShellWindow();
             GetWindowRect(hwnd, &rc);
@@ -42,26 +42,26 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
                     qDebug() << hwnd << "Failed to GetWindowTextA";
                 }
 
-                QString pname = reGetPName(reGetPid(hwnd));
 
-                ReWinSpec win_spec;
-                win_spec.hWnd = hwnd;
-                win_spec.title = buffer;
+                ReWinSpec current_win;
+                current_win.hWnd = hwnd;
+                current_win.title = buffer;
+                current_win.pname = reGetPName(reGetPid(hwnd));
                 // spotify title doesnt include "spotify" so we add it :D
-                if(pname.contains("spotify", Qt::CaseInsensitive))
+                if(current_win.pname.contains("spotify", Qt::CaseInsensitive))
                 {
-                    win_spec.title += " - spotify";
+                    current_win.title += " - spotify";
                 }
-                win_spec.title = thread_win->cleanTitle(win_spec.title);
-                thread_win->wins_spec.push_back(win_spec);
+                current_win.title = thread_win->cleanTitle(current_win.title);
 
-                thread_win->wins_title.push_back(win_spec.title);
+                thread_win->wins_spec.push_back(current_win);
+                thread_win->wins_title.push_back(current_win.title);
 
                 int a = 0;
                 DwmGetWindowAttribute(hwnd, DWMWA_DISALLOW_PEEK, &a, 4);
 
 
-                qDebug() << win_spec.title;
+                qDebug() << buffer;
             }
         }
     }
@@ -109,18 +109,18 @@ QString ReThreadW::renameAppName(QString app_name)
     return app_name;
 }
 
-void ReThreadW::sortTitles()
+void ReThreadW::sortApp()
 {
-    QStringList sorted_apps, unsorted_apps;
+    QVector<ReWinSpec> sorted_apps, unsorted_apps;
     int clover_ind = 0, firefox_ind = 0, spotify_ind = 0;
-    for(int i=0; i<wins_title.size(); i++)
+    for( int i=0 ; i<wins_title.size() ; i++)
     {
-        if(wins_title.at(i).contains("Clover", Qt::CaseInsensitive))
+        if(wins_spec[i].pname.contains("Clover", Qt::CaseInsensitive))
         {
             sorted_apps.insert(clover_ind, wins_title.at(i));
             clover_ind++; firefox_ind++; spotify_ind++;
         }
-        else if(wins_title.at(i).contains("Firefox", Qt::CaseInsensitive))
+        else if(wins_spec[i].pname.contains("Firefox", Qt::CaseInsensitive))
         {
             sorted_apps.insert(firefox_ind, wins_title.at(i));
             firefox_ind++; spotify_ind++;
@@ -257,7 +257,7 @@ IAccessible* reGetPAcc(HWND hWnd)
 
 int ReThreadW::getIndex(QString app_name)
 {
-    for(int i=0; i<wins_title.size(); i++)
+    for( int i=0 ; i<wins_title.size() ; i++ )
     {
         if(wins_title[i].contains(app_name, Qt::CaseInsensitive))
         {
@@ -365,28 +365,33 @@ IAccessible* reFindAcc(QString path, IAccessible *pAcc)
 }
 
 void ReThreadW::updateElements(QString app_name, QString parent_path,
-                                         QString child_path)
+                               QString child_path)
 {
+    qDebug() << "updateElements" << app_name;
+
     VARIANT vtChild;
     int index = getIndex(app_name);
-    if(index < 0)
+    if( index<0 )
     {
-        qDebug() << "Error: can not found" << app_name;
+        //Requested app_name not found
+//        qDebug() << "Error: can not found" << app_name;
         return;
     }
     HWND app_hwnd = getHWND(wins_title[index]);
-    if(app_hwnd == NULL)
+    if( app_hwnd==NULL )
     {
-        qDebug() << "Error: can not found hWnd from titles";
+        qDebug() << "Error: getHWND return null, title:" << wins_title[index];
         return;
     }
+
     IAccessible *app_pacc = reGetPAcc(app_hwnd);
-    if(app_pacc == NULL)
+    if( app_pacc==NULL )
     {
         return;
     }
+
     IAccessible *parent_pacc = reFindAcc(parent_path, app_pacc);
-    if(parent_pacc == NULL)
+    if( parent_pacc==NULL )
     {
         return;
     }
@@ -411,7 +416,7 @@ void ReThreadW::updateElements(QString app_name, QString parent_path,
         IAccessible *pChild = NULL;
         pDisp->QueryInterface(IID_IAccessible, (void**) &pChild);
         pChild = reFindAcc(child_path, pChild);
-        if(pChild == NULL)
+        if( pChild==NULL )
         {
             continue;
         }
@@ -421,41 +426,6 @@ void ReThreadW::updateElements(QString app_name, QString parent_path,
         elems_spec.push_back(elem_spec);
         elems_name.push_back(elem_spec->name);
     }
-}
-
-void ReThreadW::selectButton(QString name)
-{
-    ReElemSpec *elem_spec = getElemSpec(name);
-    HWND app_hwnd = getHWND(wins_title[2]);
-    HWND child_hWnd = NULL;
-    ReWinSpec app = getWinSpec(wins_title[2]);
-    IAccessible *app_pacc = reGetPAcc(app_hwnd);
-    reListChildren(app_pacc, "");
-
-    for(int i=0; i<wins_title.size(); i++)
-    {
-        qDebug() << wins_title[i];
-    }
-    updateElements(wins_title[2],
-                   RE_SPOTIFY_ALBUM_PARENT, RE_SPOTIFY_ALBUM_CHILD);
-
-
-    VARIANT varChild;
-    varChild.vt = VT_I4;
-    varChild.lVal = CHILDID_SELF;
-    int selector = 0;
-    long cmd_x, cmd_y, cmd_w, cmd_h;
-
-    counter = 0;
-    child_num = 0;
-    SetForegroundWindow(app_hwnd);
-    SetActiveWindow(app_hwnd);
-
-    elems_spec[selector]->pAcc->accDoDefaultAction(varChild);
-    elems_spec[selector]->pAcc->accLocation(&cmd_x, &cmd_y, &cmd_w, &cmd_h, varChild);
-    SetCursorPos(cmd_x + cmd_w/2, cmd_y + cmd_h/2);
-    mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-    mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
 }
 
 ReThreadW::ReThreadW(threadStruct *thread_data)
@@ -507,6 +477,11 @@ void ReThreadW::syncElemsName()
             thread_data->elems_name->push_back(elems_name[i]);
         }
     }
+
+    while( elems_name.size()<thread_data->elems_name->size() )
+    {
+        thread_data->elems_name->pop_front();
+    }
 }
 
 void reRunThread(void *thread_struct_void)
@@ -520,7 +495,7 @@ void reRunThread(void *thread_struct_void)
 
     while(1)
     {
-        if(cntr == 200)
+        if(cntr > 200)
         {
             if(re_state_mode == RE_MODE_HIDDEN)
             {
@@ -532,7 +507,7 @@ void reRunThread(void *thread_struct_void)
             else if(re_state_mode == RE_MODE_MAIN)
             {
                 priv->cleanElems();
-                priv->updateElements("spotify", RE_SPOTIFY_ALBUM_PARENT,
+                priv->updateElements("spotifys", RE_SPOTIFY_ALBUM_PARENT,
                                      RE_SPOTIFY_ALBUM_CHILD);
                 priv->syncElemsName();
             }

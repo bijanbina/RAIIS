@@ -58,10 +58,12 @@ public:
     void setPage(RePage page);
     void setMode(int mode);
 
+
 signals:
 
 private slots:
     void updateMode();
+    void updateTitles(QStringList titles);
     void switchWindow(int activeProcessId);
 
 private:
