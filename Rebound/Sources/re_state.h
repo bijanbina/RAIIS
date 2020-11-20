@@ -40,6 +40,8 @@ public:
     void updateProcess();
     void toggleUi(QObject *item);
     void propageteMode(int mode);
+    void updateTitles(QObject *item);
+    void showSwither(QObject *item);
 
 #ifdef _WIN32
     ReApiW *api;

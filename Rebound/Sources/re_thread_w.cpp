@@ -8,17 +8,17 @@ int child_num = 3;
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 {
     char buffer[128];
-    ReThreadW *thread_win = (ReThreadW *)lParam;
+    ReThreadW *thread_w = (ReThreadW *)lParam;
     int written = GetWindowTextA(hwnd, buffer, 128);
     if(written && strlen(buffer) != 0 && strcmp(buffer, "Rebound") != 0)
     {
-        re_AddHwnd(hwnd, thread_win);
+        re_AddHwnd(hwnd, thread_w);
     }
     return TRUE;
 }
 
 //Add a new Hwnd to wins_title vector
-void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
+void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
 {
     char buffer[128];
     RECT rc;
@@ -27,13 +27,14 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
     {
         int cloaked;
         DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, &cloaked, 4);
-        if(cloaked==0)
+//        if(cloaked==0)
+        if(1)
         {
             HWND shell_window = GetShellWindow();
             GetWindowRect(hwnd, &rc);
             int width = rc.right - rc.left;
 
-            if((hwnd!=shell_window) && (rc.bottom>0) && (width>100) )
+            if((hwnd!=shell_window) && (width>100) ) //&& (rc.bottom>0)
             {
                 int success = GetWindowTextA(hwnd, buffer, 128); //get title
 
@@ -47,24 +48,77 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_win)
                 current_win.hWnd = hwnd;
                 current_win.title = buffer;
                 current_win.pname = reGetPName(reGetPid(hwnd));
+                current_win.verify = 1; //always new windows are verified
                 // spotify title doesnt include "spotify" so we add it :D
                 if(current_win.pname.contains("spotify", Qt::CaseInsensitive))
                 {
                     current_win.title += " - spotify";
                 }
-                current_win.title = thread_win->cleanTitle(current_win.title);
+                current_win.title = thread_w->cleanTitle(current_win.title);
 
-                thread_win->wins_spec.push_back(current_win);
-                thread_win->wins_title.push_back(current_win.title);
-
-                int a = 0;
-                DwmGetWindowAttribute(hwnd, DWMWA_DISALLOW_PEEK, &a, 4);
-
-
-                qDebug() << buffer;
+                re_InsertWindow(thread_w, current_win);
+            }
+            else
+            {
+//                int success = GetWindowTextA(hwnd, buffer, 128); //get title
+//                qDebug() << "----------" << buffer << rc.bottom << width;
             }
         }
     }
+    else
+    {
+//        int success = GetWindowTextA(hwnd, buffer, 128); //get title
+//        qDebug() << "not vis" << buffer << IsWindowVisible(hwnd);
+    }
+}
+
+void re_InsertWindow(ReThreadW *thread_w, ReWinSpec win)
+{
+    //push active window to front
+    if ( win.hWnd == thread_w->HwndA )
+    {
+        if ( thread_w->windows.size()>0 )
+        {
+            if ( thread_w->windows[0].hWnd != win.hWnd )
+            {
+                thread_w->windows.push_front(win);
+                qDebug() << "Active Changed" << win.title;
+            }
+            else
+            {
+                thread_w->windows[0].verify = 1;
+                thread_w->windows[0].title = win.title;
+            }
+        }
+        else
+        {
+            thread_w->windows.push_front(win);
+            qDebug() << "First Time" << win.title;
+            return;
+        }
+    }
+
+    for( int i=1 ; i<thread_w->windows.size() ; i++ )
+    {
+        if ( thread_w->windows[i].hWnd==thread_w->HwndA )
+        {
+            thread_w->windows.remove(i);
+            i--;
+        }
+        if ( thread_w->windows[i].hWnd==win.hWnd )
+        {
+            thread_w->windows[i].verify = 1;
+            thread_w->windows[i].title = win.title;
+            return;
+        }
+    }
+
+    if ( win.hWnd != thread_w->HwndA )
+    {
+        thread_w->windows.push_back(win);
+        qDebug() << "New Window" << win.title;
+    }
+
 }
 
 QString ReThreadW::cleanTitle(QString app_title)
@@ -113,30 +167,29 @@ void ReThreadW::sortApp()
 {
     QVector<ReWinSpec> sorted_apps, unsorted_apps;
     int clover_ind = 0, firefox_ind = 0, spotify_ind = 0;
-    for( int i=0 ; i<wins_title.size() ; i++)
+    for( int i=0 ; i<windows.size() ; i++)
     {
-        if(wins_spec[i].pname.contains("Clover", Qt::CaseInsensitive))
+        if(windows[i].pname.contains("Clover", Qt::CaseInsensitive))
         {
-            sorted_apps.insert(clover_ind, wins_title.at(i));
+            sorted_apps.insert(clover_ind, windows[i]);
             clover_ind++; firefox_ind++; spotify_ind++;
         }
-        else if(wins_spec[i].pname.contains("Firefox", Qt::CaseInsensitive))
+        else if(windows[i].pname.contains("Firefox", Qt::CaseInsensitive))
         {
-            sorted_apps.insert(firefox_ind, wins_title.at(i));
+            sorted_apps.insert(firefox_ind, windows[i]);
             firefox_ind++; spotify_ind++;
         }
-        else if(wins_title.at(i).contains("Spotify", Qt::CaseInsensitive))
+        else if(windows[i].pname.contains("Spotify", Qt::CaseInsensitive))
         {
-            sorted_apps.insert(spotify_ind, wins_title.at(i));
+            sorted_apps.insert(spotify_ind, windows[i]);
             spotify_ind++;
         }
         else
         {
-            unsorted_apps.push_back(wins_title.at(i));
+            unsorted_apps.push_back(windows[i]);
         }
     }
-    unsorted_apps.sort(Qt::CaseInsensitive);
-    wins_title = sorted_apps + unsorted_apps;
+    windows = sorted_apps + unsorted_apps;
 }
 
 void reListChildren(IAccessible *pAcc, QString path)
@@ -209,13 +262,13 @@ QString reGetPName(long pid)
     return QString(filename);
 }
 
-HWND ReThreadW::getHWND(QString title)
+HWND ReThreadW::getHWND(QString appname)
 {
-    for(int i=0; i<wins_spec.size(); i++)
+    for(int i=0; i<windows.size(); i++)
     {
-        if(title == wins_spec[i].title)
+        if(appname == windows[i].pname)
         {
-            return wins_spec[i].hWnd;
+            return windows[i].hWnd;
         }
     }
     return NULL;
@@ -257,9 +310,9 @@ IAccessible* reGetPAcc(HWND hWnd)
 
 int ReThreadW::getIndex(QString app_name)
 {
-    for( int i=0 ; i<wins_title.size() ; i++ )
+    for( int i=0 ; i<windows.size() ; i++ )
     {
-        if(wins_title[i].contains(app_name, Qt::CaseInsensitive))
+        if(windows[i].pname.contains(app_name, Qt::CaseInsensitive))
         {
             return i;
         }
@@ -291,11 +344,11 @@ ReElemSpec* ReThreadW::getElemSpec(QString name)
 
 ReWinSpec ReThreadW::getWinSpec(QString title)
 {
-    for(int i=0; i<wins_spec.size(); i++)
+    for(int i=0; i<windows.size(); i++)
     {
-        if(title == wins_spec[i].title)
+        if(title == windows[i].title)
         {
-            return wins_spec[i];
+            return windows[i];
         }
     }
 
@@ -305,9 +358,9 @@ ReWinSpec ReThreadW::getWinSpec(QString title)
 
 QString ReThreadW::getWinTitle(int index)
 {
-    if(index < wins_title.size())
+    if( index<windows.size() )
     {
-        return wins_title[index];
+        return windows[index].title;
     }
     return "";
 }
@@ -377,10 +430,10 @@ void ReThreadW::updateElements(QString app_name, QString parent_path,
 //        qDebug() << "Error: can not found" << app_name;
         return;
     }
-    HWND app_hwnd = getHWND(wins_title[index]);
+    HWND app_hwnd = getHWND(app_name);
     if( app_hwnd==NULL )
     {
-        qDebug() << "Error: getHWND return null, title:" << wins_title[index];
+        qDebug() << "Error: getHWND return null, pName:" << app_name;
         return;
     }
 
@@ -433,10 +486,27 @@ ReThreadW::ReThreadW(threadStruct *thread_data)
     this->thread_data = thread_data;
 }
 
+//clear verify flag
+void ReThreadW::clearWins()
+{
+    for( int i=0 ; i<windows.size() ; i++ )
+    {
+        windows[i].verify = 0;
+    }
+}
+
+//clean-up windows
 void ReThreadW::cleanWins()
 {
-    wins_title.clear();
-    wins_spec.clear();
+    for( int i=0 ; i<windows.size() ; i++ )
+    {
+        if( windows[i].verify==0 )
+        {
+            qDebug() << "Remove Window" << windows[i].title;
+            windows.remove(i);
+            i--;
+        }
+    }
 }
 
 void ReThreadW::cleanElems()
@@ -451,15 +521,17 @@ void ReThreadW::cleanElems()
 
 void ReThreadW::syncWinsTitle()
 {
-    for(int i=0; i<wins_title.size(); i++)
+    for(int i=0; i<windows.size(); i++)
     {
         if(i < thread_data->wins_title->size())
         {
-            (*(thread_data->wins_title))[i] = wins_title[i];
+            (*(thread_data->wins_title))[i] = windows[i].title;
+            thread_data->windows[i] = windows[i];
         }
         else
         {
-            thread_data->wins_title->push_back(wins_title[i]);
+            thread_data->wins_title->push_back(windows[i].title);
+            thread_data->windows.push_back(windows[i]);
         }
     }
 }
@@ -484,6 +556,15 @@ void ReThreadW::syncElemsName()
     }
 }
 
+void ReThreadW::updateActiveWindow()
+{
+    char buffer[128];
+    HwndA = GetForegroundWindow();
+    int written = GetWindowTextA(HwndA, buffer, 128);
+
+    titleA = buffer;
+}
+
 void reRunThread(void *thread_struct_void)
 {
     qDebug() << "thread start";
@@ -499,9 +580,12 @@ void reRunThread(void *thread_struct_void)
         {
             if(re_state_mode == RE_MODE_HIDDEN)
             {
-                priv->cleanWins();
+                //Get Active Window Name
+                priv->updateActiveWindow();
+
+                priv->clearWins();
                 EnumWindows(EnumWindowsProc, (LPARAM) priv);
-                priv->sortTitles();
+                priv->cleanWins();
                 priv->syncWinsTitle();
             }
             else if(re_state_mode == RE_MODE_MAIN)

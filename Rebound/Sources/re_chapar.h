@@ -59,12 +59,9 @@ public:
     void setMode(int mode);
 
 
-signals:
-
 private slots:
     void updateMode();
-    void updateTitles(QStringList titles);
-    void switchWindow(int activeProcessId);
+    void switchWindow(int index);
 
 private:
     QObject      *ui;

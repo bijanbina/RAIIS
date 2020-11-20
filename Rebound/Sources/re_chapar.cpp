@@ -60,7 +60,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     connect(state, SIGNAL(updateMode()), this, SLOT(updateMode()));
 
     connect(uiSwitcher, SIGNAL(selectWindow(int)), this, SLOT(switchWindow(int)));
-
 }
 
 void ReChapar::updateMode()
@@ -153,9 +152,16 @@ void ReChapar::updateMode()
 #endif
 }
 
-void ReChapar::switchWindow(int activeProcessId)
+void ReChapar::switchWindow(int index)
 {
-    qDebug() << "switchWindow: active process id" << activeProcessId;
+    state->setMode(RE_MODE_HIDDEN);
+    int i = index - 1;
+
+    if ( i<thread_data->windows.size() )
+    {
+        qDebug() << "switchWindow" << i << thread_data->windows[i].title;
+        state->api->setActiveWindow(thread_data->windows[i].hWnd);
+    }
 }
 
 void ReChapar::setPage(RePage page)
@@ -254,21 +260,4 @@ void ReChapar::setMode(int mode)
     }
 
     setPage(page);
-}
-
-void ReChapar::updateTitles(QStringList titles)
-{
-    for(int i=0; i<6; i++)
-    {
-        QQmlProperty::write(uiSwitcher, "process_id", i+1);
-        if(i<titles.length())
-        {
-            QQmlProperty::write(uiSwitcher, "process_title", titles[i]);
-        }
-        else
-        {
-            QQmlProperty::write(uiSwitcher, "process_title", "");
-        }
-        QMetaObject::invokeMethod(uiSwitcher, "updateProcessTitle");
-    }
 }

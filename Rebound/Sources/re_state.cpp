@@ -34,6 +34,15 @@ void ReState::toggleUi(QObject *item)
     }
 }
 
+void ReState::showSwither(QObject *item)
+{
+    setMode(RE_MODE_SWITCH);
+
+    updateTitles(item);
+    QQmlProperty::write(item, "active_process", 2);
+    QQmlProperty::write(item, "visible", 1);
+}
+
 void ReState::setProcess(QString name)
 {
     if( name.contains("qtcreator.exe") )
@@ -91,4 +100,21 @@ void ReState::propageteMode(int mode)
 {
     i_mode = mode;
     emit updateMode();
+}
+
+void ReState::updateTitles(QObject *item)
+{
+    for(int i=0; i<6; i++)
+    {
+        QQmlProperty::write(item, "process_id", i+1);
+        if(i<api->wins_title.length())
+        {
+            QQmlProperty::write(item, "process_title", api->wins_title[i]);
+        }
+        else
+        {
+            QQmlProperty::write(item, "process_title", "");
+        }
+        QMetaObject::invokeMethod(item, "updateProcessTitle");
+    }
 }

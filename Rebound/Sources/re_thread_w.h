@@ -21,6 +21,8 @@
 
 typedef struct ReWinSpec
 {
+    // verify clear on each enumeration to
+    int  verify; //verify hwnd still exist
     HWND hWnd;
     QString title;
     QString pname;
@@ -39,6 +41,7 @@ typedef struct threadStruct
     QString message;
     QStringList *wins_title;
     QStringList *elems_name;
+    QVector<ReWinSpec> windows;
 }threadStruct;
 
 class ReThreadW
@@ -46,6 +49,7 @@ class ReThreadW
 public:
     ReThreadW(threadStruct *thread_data);
     void cleanWins();
+    void clearWins();
     void cleanElems();
     void updateElements(QString app_name, QString parent_path, QString child_path);
     void selectButton(QString name);
@@ -53,12 +57,14 @@ public:
     void sortApp();
     void syncWinsTitle();
     void syncElemsName();
+    void updateActiveWindow();
 
 
-    QVector<ReWinSpec> wins_spec;
+    QVector<ReWinSpec> windows;
     threadStruct *thread_data;
-    QStringList wins_title;
     QStringList elems_name;
+    QString titleA;
+    HWND HwndA;
 
 private:
     ReElemSpec* getElemSpec(QString name);
@@ -72,7 +78,9 @@ private:
     QString getWinTitle(int index);
 };
 
-void re_AddHwnd(HWND hwnd, ReThreadW *thread_win);
+void re_AddHwnd(HWND hwnd, ReThreadW *thread_w);
+void re_InsertWindow(ReThreadW *thread_w, ReWinSpec win);
+
 long reGetPid(HWND hWnd);
 QString reGetPName(long pid);
 IAccessible* reGetPAcc(HWND hWnd);

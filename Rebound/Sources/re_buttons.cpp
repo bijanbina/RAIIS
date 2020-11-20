@@ -90,17 +90,15 @@ void ReButtons::buttonGuidePressed()
 
 void ReButtons::buttonSelectPressed()
 {
-    qDebug() << "Switch butn ui";
     if( isItemVisible(uiSwitcher) )
     {
         QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
-        qDebug() << "Switch next ui";
+//        qDebug() << "Switch next ui";
     }
     else
     {
-        qDebug() << "Switch slut ui";
-        QQmlProperty::write(uiSwitcher, "active_process", 2);
-        QQmlProperty::write(uiSwitcher, "visible", 1);
+//        qDebug() << "Switch slut ui";
+        state->showSwither(uiSwitcher);
     }
 }
 #elif __linux__

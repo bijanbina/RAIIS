@@ -75,3 +75,27 @@ QString ReApiW::getAccName(IAccessible *pAcc, long childId)
     /*HRESULT hr = */pAcc->get_accName(varChild, &bstrName);
     return QString::fromWCharArray(bstrName);
 }
+
+void ReApiW::setActiveWindow(HWND hWnd)
+{
+    DWORD dwCurrentThread = GetCurrentThreadId();
+    DWORD dwFGThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
+    AttachThreadInput(dwCurrentThread, dwFGThread, TRUE);
+
+    //Actions
+//    AllowSetForegroundWindow(ASFW_ANY);
+    SetForegroundWindow(hWnd);
+//    SetCapture(hWnd);
+//    SetFocus(hWnd);
+    SetActiveWindow(hWnd);
+//    SetWindowPos(hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE);
+//    SetWindowPos(hWnd,HWND_NOTOPMOST,0,0,0,0,SWP_SHOWWINDOW | SWP_NOMOVE | SWP_NOSIZE);
+
+    // If window is minimzed
+    if( IsIconic(hWnd) )
+    {
+        ShowWindow(hWnd, SW_RESTORE);
+    }
+
+    AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
+}

@@ -22,6 +22,7 @@ public:
     QString getAccName(IAccessible *pAcc, long childId);
     QString getWinTitle(int index);
     QString getElemName(int index);
+    void setActiveWindow(HWND hWnd);
 
     QStringList wins_title;
     QStringList elems_name;
