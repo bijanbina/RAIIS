@@ -1,3 +1,5 @@
+#NoTrayIcon
+
 Send, {Volume_Down}
 sleep, 200
 Send, {Volume_Down}

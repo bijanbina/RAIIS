@@ -19,16 +19,6 @@
 #define RE_FIREFOX_ID  1
 #define RE_SPOTIFY_ID  2
 
-typedef struct ReWinSpec
-{
-    // verify clear on each enumeration to
-    int  verify; //verify hwnd still exist
-    HWND hWnd;
-    QString title;
-    QString pname;
-    IAccessible *pAcc;
-}ReWinSpec;
-
 typedef struct ReElemSpec
 {
     IAccessible *pAcc;
@@ -37,8 +27,8 @@ typedef struct ReElemSpec
 
 typedef struct threadStruct
 {
-    int *mode;
-    QString message;
+    QString  message;
+    ReState *state;
     QStringList *wins_title;
     QStringList *elems_name;
     QVector<ReWinSpec> windows;

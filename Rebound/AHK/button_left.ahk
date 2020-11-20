@@ -1,9 +1,24 @@
-;[Acc functions]
-;Acc library (MSAA) and AccViewer download links - AutoHotkey Community
-;https://autohotkey.com/boards/viewtopic.php?f=6&t=26201
+#NoTrayIcon
 
-;tested on Windows 7
-
-MsgBox, Done
-
+WinGet, WinProcessName, ProcessName, A
+if (WinProcessName = "Spotify.exe")
+{
+  Send, ^{Left}
+}
+else if (WinProcessName = "firefox.exe")
+{
+  Send, ^+{Tab}
+}
+else if (WinProcessName = "Explorer.EXE")
+{
+  Send, !{Up}
+}
+else if (WinProcessName = "atom.exe")
+{
+  Send, ^{PgUp}
+}
+else
+{
+  MsgBox, ProcessName = %WinProcessName%
+}
 Return

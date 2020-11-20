@@ -62,6 +62,7 @@ void ReServer::acceptConnection()
 
     live->start(RE_Live);
     watchdog->start(RE_WATCHDOG);
+    emit clientConnected();
 }
 
 void ReServer::watchdog_timeout()
@@ -91,6 +92,7 @@ void ReServer::watchdog_timeout()
     watchdog->stop();
     delete connection_socket;
     connection_socket = NULL;
+    emit clientDisconnected();
 
 //    qDebug() << QString("Ack, Receive Byte: %1").arg(bytesReceived);
 //    connection_socket->write("a",1);
@@ -160,7 +162,6 @@ void ReServer::displayError(QAbstractSocket::SocketError socketError)
 
      qDebug() <<  QString("Error Happened");
 }
-
 
 void ReServer::reboundSendKey(const char *data, int size)
 {

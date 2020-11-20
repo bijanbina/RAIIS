@@ -24,6 +24,8 @@ public:
 
 signals:
     void errorConnection();
+    void clientDisconnected();
+    void clientConnected();
 
 public slots:
     void acceptConnection();

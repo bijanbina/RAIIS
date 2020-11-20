@@ -24,11 +24,10 @@ int ReState::getMode()
 void ReState::toggleUi(QObject *item)
 {
     setMode(RE_MODE_MAIN);
-    updateProcess();
 
     QMetaObject::invokeMethod(item, "uiToggle");
     ui_visible = QQmlProperty::read(item, "visible").toInt();
-    if(!ui_visible)
+    if( !ui_visible )
     {
         i_mode = RE_MODE_HIDDEN;
     }
@@ -85,13 +84,12 @@ int ReState::getProcess()
     return i_proc;
 }
 
-void ReState::updateProcess()
+void ReState::updateApp(ReWinSpec active_window)
 {
-    QString name;
+    app = active_window;
 
 #ifdef _WIN32
-    name = api->getPNameA();
-    setProcess(name);
+    setProcess(app.pname);
     emit updateMode();
 #endif
 }
@@ -104,6 +102,8 @@ void ReState::propageteMode(int mode)
 
 void ReState::updateTitles(QObject *item)
 {
+    qDebug() << "updateTitles" << api->wins_title.size();
+
     for(int i=0; i<6; i++)
     {
         QQmlProperty::write(item, "process_id", i+1);

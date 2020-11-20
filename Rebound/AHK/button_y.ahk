@@ -1,7 +1,9 @@
+#NoTrayIcon
+
 WinGet, WinProcessName, ProcessName, A
 if (WinProcessName = "firefox.exe")
 {
-  Send, ^t
+  Send, ^l
 }
 else if (WinProcessName = "Explorer.EXE")
 {

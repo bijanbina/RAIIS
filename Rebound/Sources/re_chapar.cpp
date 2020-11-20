@@ -19,12 +19,12 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     thread_data = new threadStruct;
     thread_data->wins_title = &(state->api->wins_title);
     thread_data->elems_name = &(state->api->elems_name);
-    thread_data->mode = &(state->i_mode);
+    thread_data->state = state;
 
     sync_thread_timer = new QTimer(this);
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 
-    controller = new ReXboxW(item, isNative);
+    controller = new ReXboxW(item);
 #else
     controller = new ReXboxL(item, isNative);
 #endif
@@ -159,8 +159,18 @@ void ReChapar::switchWindow(int index)
 
     if ( i<thread_data->windows.size() )
     {
-        qDebug() << "switchWindow" << i << thread_data->windows[i].title;
-        state->api->setActiveWindow(thread_data->windows[i].hWnd);
+        ReWinSpec buffer = thread_data->windows[i];
+        thread_data->windows.remove(i);
+        thread_data->windows.push_front(buffer);
+
+        state->updateApp(buffer);
+
+        QString buffer_t = state->api->wins_title[i];
+        state->api->wins_title.removeAt(i);
+        state->api->wins_title.push_front(buffer_t);
+
+        qDebug() << "switchWindow" << i << thread_data->windows[0].title;
+        state->api->setActiveWindow(thread_data->windows[0].hWnd);
     }
 }
 

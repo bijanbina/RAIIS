@@ -14,7 +14,7 @@ class ReXboxW : public QObject
     Q_OBJECT
 
 public:
-    explicit ReXboxW(QObject *item, int native, QObject *parent = 0);
+    explicit ReXboxW(QObject *item, QObject *parent = 0);
     ~ReXboxW();
 
 public slots:
@@ -44,6 +44,9 @@ public slots:
     void buttonRightChanged(bool);
     void buttonUpChanged(bool);
     void buttonDownChanged(bool);
+
+    void clientDisconnected();
+    void clientConnected();
 
 signals:
     void buttonAPressed();

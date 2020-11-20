@@ -1,3 +1,5 @@
+#NoTrayIcon
+
 WinGet, WinProcessName, ProcessName, A
 if (WinProcessName = "Spotify.exe")
 {
@@ -5,7 +7,7 @@ if (WinProcessName = "Spotify.exe")
 }
 else if (WinProcessName = "firefox.exe")
 {
-  Send, ^+{Tab}
+  Send, d
 }
 else if (WinProcessName = "Explorer.EXE")
 {

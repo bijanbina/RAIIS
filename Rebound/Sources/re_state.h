@@ -26,6 +26,16 @@
 #define RE_PROC_GEDIT       6
 #define RE_PROC_OVERVIEW    7
 
+typedef struct ReWinSpec
+{
+    // verify clear on each enumeration to
+    int  verify; //verify hwnd still exist
+    HWND hWnd;
+    QString title;
+    QString pname;
+    IAccessible *pAcc;
+}ReWinSpec;
+
 class ReState : public QObject
 {
     Q_OBJECT
@@ -37,7 +47,7 @@ public:
     void setProcess(QString name);
     void setProcess(int proc);
     int getProcess();
-    void updateProcess();
+    void updateApp(ReWinSpec active_window);
     void toggleUi(QObject *item);
     void propageteMode(int mode);
     void updateTitles(QObject *item);
@@ -48,6 +58,7 @@ public:
 #endif
     int ui_visible;
     int i_mode;
+    ReWinSpec app; //Active Window
 
 signals:
     void updateMode();

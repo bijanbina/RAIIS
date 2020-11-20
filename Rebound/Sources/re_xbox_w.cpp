@@ -1,10 +1,10 @@
 #include "re_xbox_w.h"
 
-ReXboxW::ReXboxW(QObject *item, int native, QObject *parent) : QObject(parent)
+ReXboxW::ReXboxW(QObject *item, QObject *parent) : QObject(parent)
 {
     ui = item;
     tcp = new ReServer(item);
-    isNative = native;
+    isNative = true;
 
 #ifdef _WIN32
     pad = new QGamepad;
@@ -58,9 +58,12 @@ ReXboxW::ReXboxW(QObject *item, int native, QObject *parent) : QObject(parent)
     connect(pad, SIGNAL(buttonDownChanged(bool)),
             this, SLOT(buttonDownChanged(bool)));
 
-    //XBOX Guide Button check
+    //XBox Guide Button check
     backup = new ReXboxWin32;
     connect(backup, SIGNAL(buttonGuideChanged(bool)), SLOT(buttonGuideChanged(bool)));
+
+    connect(tcp, SIGNAL(clientDisconnected()), this, SLOT(clientDisconnected()));
+    connect(tcp, SIGNAL(clientConnected()), SLOT(clientConnected()));
 
 #endif
 
@@ -69,6 +72,16 @@ ReXboxW::ReXboxW(QObject *item, int native, QObject *parent) : QObject(parent)
 ReXboxW::~ReXboxW()
 {
     delete tcp;
+}
+
+void ReXboxW::clientDisconnected()
+{
+    isNative = true;
+}
+
+void ReXboxW::clientConnected()
+{
+    isNative = false;
 }
 
 void ReXboxW::buttonAChanged(bool value)

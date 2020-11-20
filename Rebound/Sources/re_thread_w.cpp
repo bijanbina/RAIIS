@@ -1,6 +1,6 @@
 #include "re_thread_w.h"
 
-#define re_state_mode *(thread_data->mode)
+#define re_state_mode thread_data->state->i_mode
 
 int counter = 0;
 int child_num = 3;
@@ -82,6 +82,7 @@ void re_InsertWindow(ReThreadW *thread_w, ReWinSpec win)
             if ( thread_w->windows[0].hWnd != win.hWnd )
             {
                 thread_w->windows.push_front(win);
+                thread_w->thread_data->state->updateApp(win);
                 qDebug() << "Active Changed" << win.title;
             }
             else
@@ -93,6 +94,7 @@ void re_InsertWindow(ReThreadW *thread_w, ReWinSpec win)
         else
         {
             thread_w->windows.push_front(win);
+            thread_w->thread_data->state->updateApp(win);
             qDebug() << "First Time" << win.title;
             return;
         }
@@ -105,10 +107,11 @@ void re_InsertWindow(ReThreadW *thread_w, ReWinSpec win)
             thread_w->windows.remove(i);
             i--;
         }
-        if ( thread_w->windows[i].hWnd==win.hWnd )
+        else if ( thread_w->windows[i].hWnd==win.hWnd )
         {
             thread_w->windows[i].verify = 1;
             thread_w->windows[i].title = win.title;
+//            qDebug() << "Ver Window" << i << win.title;
             return;
         }
     }
@@ -523,7 +526,7 @@ void ReThreadW::syncWinsTitle()
 {
     for(int i=0; i<windows.size(); i++)
     {
-        if(i < thread_data->wins_title->size())
+        if( i<thread_data->wins_title->size() )
         {
             (*(thread_data->wins_title))[i] = windows[i].title;
             thread_data->windows[i] = windows[i];
@@ -533,6 +536,12 @@ void ReThreadW::syncWinsTitle()
             thread_data->wins_title->push_back(windows[i].title);
             thread_data->windows.push_back(windows[i]);
         }
+    }
+
+    for(int i=windows.size(); i<thread_data->wins_title->size(); i++)
+    {
+        thread_data->wins_title->removeAt(i);
+        i--;
     }
 }
 
