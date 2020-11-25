@@ -90,15 +90,22 @@ void ReButtons::buttonGuidePressed()
 
 void ReButtons::buttonSelectPressed()
 {
-    if( isItemVisible(uiSwitcher) )
+    if( isItemVisible(ui) )
     {
-        QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
-//        qDebug() << "Switch next ui";
+         hideItem(ui);
+         QThread::msleep(20);
+         executeUi("button_select");
     }
     else
     {
-//        qDebug() << "Switch slut ui";
-        state->showSwither(uiSwitcher);
+        if( isItemVisible(uiSwitcher) )
+        {
+            QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
+        }
+        else
+        {
+            state->showSwither(uiSwitcher);
+        }
     }
 }
 #elif __linux__

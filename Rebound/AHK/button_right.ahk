@@ -19,6 +19,7 @@ else if (WinProcessName = "atom.exe")
 }
 else
 {
-  MsgBox, ProcessName = %WinProcessName%
+  ; MsgBox, ProcessName = %WinProcessName%
+  MsgBox, %1%, %2%
 }
 Return

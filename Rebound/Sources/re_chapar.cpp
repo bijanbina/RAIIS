@@ -62,6 +62,27 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     connect(uiSwitcher, SIGNAL(selectWindow(int)), this, SLOT(switchWindow(int)));
 }
 
+QString ReChapar::getShortTitle(int index)
+{
+    QString title = state->api->getWinTitle(index);
+
+    for ( int i=0 ; i<title.length() ; i++ )
+    {
+        if ( title[i].unicode() == 65533 )
+        {
+            return title.left(i);
+        }
+    }
+
+    if ( title.length()>20 )
+    {
+        qDebug() << title[19].unicode() << title[18] << title[17];
+        return  title.left(20);
+    }
+
+    return title;
+}
+
 void ReChapar::updateMode()
 {
 #ifdef _WIN32
@@ -74,11 +95,18 @@ void ReChapar::updateMode()
         c_page.b_action = "Control Music";
         c_page.s_action = "Open New Firefox Window";
 
-        c_page.r1_action = state->api->getWinTitle(0);
-        c_page.r2_action = state->api->getWinTitle(1);
-        c_page.l1_action = state->api->getWinTitle(2);
-        c_page.l2_action = state->api->getWinTitle(3);
+        c_page.r1_action = getShortTitle(0);
+        c_page.r2_action = getShortTitle(1);
+        c_page.l1_action = getShortTitle(2);
+        c_page.l2_action = getShortTitle(3);
         c_page.m_action = "Close Super Mode";
+
+        c_page.left_action = "Switch to Workspace #1";
+        c_page.up_action = "Switch to Workspace #2";
+        c_page.down_action = "Switch to Workspace #3";
+        c_page.right_action = "Switch to Workspace #4";
+
+        c_page.axis_state = "1";
     }
     else if( state->getMode()==RE_MODE_APPLICATION )
     {
@@ -92,6 +120,20 @@ void ReChapar::updateMode()
         c_page.r2_action = "Git Kraken";
         c_page.l1_action = "Allegro 17.4";
         c_page.l2_action = "Allegro 17.2";
+
+        c_page.lau_action = "Sajad jooOon";
+        c_page.lad_action = "Bijan Joon";
+        c_page.lal_action = "Karim joon";
+        c_page.lar_action = "Ehsan Joon";
+        c_page.rau_action = "Abdi joooon";
+        c_page.rad_action = "Aflatoon joon";
+        c_page.ral_action = "Narges joon";
+        c_page.rar_action = "Sepehr joon";
+        c_page.left_action = "Switch to Workspace #1";
+        c_page.up_action = "Switch to Workspace #2";
+        c_page.down_action = "Switch to Workspace #3";
+        c_page.right_action = "Switch to Workspace #4";
+        c_page.axis_state = "0";
     }
     else if( state->getMode()==RE_MODE_SWITCH )
     {
@@ -199,75 +241,4 @@ void ReChapar::setPage(RePage page)
     QQmlProperty::write(ui, "down_action", page.down_action);
     QQmlProperty::write(ui, "right_action", page.right_action);
     QQmlProperty::write(ui, "axis_state", page.axis_state);
-}
-
-void ReChapar::setMode(int mode)
-{
-    RePage page;
-    if(mode == RE_MODE_APPLICATION)
-    {
-        page.x_action = "Firefox";
-        page.y_action = "Spotify";
-        page.a_action = "Qt";
-        page.b_action = "Explorer";
-        page.m_action = "PDF";
-        page.s_action = "Home";
-        page.r1_action = "PNA";
-        page.r2_action = "GT6";
-        page.l1_action = "DOA";
-        page.l2_action = "Put PC to Sleep";
-        page.lau_action = "Sajad jooOon";
-        page.lad_action = "Bijan Joon";
-        page.lal_action = "Karim joon";
-        page.lar_action = "Ehsan Joon";
-        page.rau_action = "Abdi joooon";
-        page.rad_action = "Aflatoon joon";
-        page.ral_action = "Narges joon";
-        page.rar_action = "Sepehr joon";
-        page.left_action = "Switch to Workspace #1";
-        page.up_action = "Switch to Workspace #2";
-        page.down_action = "Switch to Workspace #3";
-        page.right_action = "Switch to Workspace #4";
-        page.axis_state = "0";
-    }
-    else if(mode == RE_MODE_SWITCH)
-    {
-
-    }
-    else if(mode == RE_MODE_MAIN)
-    {
-        page.x_action = "Close Active Window";
-        page.y_action = "Switch to Firefox";
-        page.a_action = "Switch to Spotify";
-        page.b_action = "Open New Firefox Window";
-        page.m_action = "Put PC to Sleep";
-        page.s_action = "Mute/UnMute";
-        page.r1_action = "Switch to Book";
-        page.r2_action = "Switch to EPUB Reader";
-        page.l1_action = "Switch to Nautilus";
-        page.l2_action = "Put PC to Sleep";
-        page.lau_action = QString::number(RE_MODE_MAIN);
-        page.lad_action = QString::number(RE_MODE_MAIN);
-        page.lal_action = QString::number(RE_MODE_MAIN);
-        page.lar_action = QString::number(RE_MODE_MAIN);
-        page.rau_action = QString::number(RE_MODE_MAIN);
-        page.rad_action = QString::number(RE_MODE_MAIN);
-        page.ral_action = QString::number(RE_MODE_MAIN);
-        page.rar_action = QString::number(RE_MODE_MAIN);
-        page.left_action = "Switch to Workspace #1";
-        page.up_action = "Switch to Workspace #2";
-        page.down_action = "Switch to Workspace #3";
-        page.right_action = "Switch to Workspace #4";
-        page.axis_state = "1";
-    }
-    else if(mode == RE_MODE_READING)
-    {
-
-    }
-    else if(mode == RE_MODE_FIREFOX)
-    {
-
-    }
-
-    setPage(page);
 }

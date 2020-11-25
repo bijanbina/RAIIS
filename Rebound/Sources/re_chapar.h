@@ -56,7 +56,7 @@ public:
     explicit ReChapar(QObject *item, QObject *switcher, int isNative, QObject *parent = nullptr);
 
     void setPage(RePage page);
-    void setMode(int mode);
+    QString getShortTitle(int index);
 
 
 private slots:

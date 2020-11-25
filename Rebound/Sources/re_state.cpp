@@ -23,7 +23,7 @@ int ReState::getMode()
 
 void ReState::toggleUi(QObject *item)
 {
-    setMode(RE_MODE_MAIN);
+    propageteMode(RE_MODE_MAIN);
 
     QMetaObject::invokeMethod(item, "uiToggle");
     ui_visible = QQmlProperty::read(item, "visible").toInt();
@@ -90,7 +90,6 @@ void ReState::updateApp(ReWinSpec active_window)
 
 #ifdef _WIN32
     setProcess(app.pname);
-    emit updateMode();
 #endif
 }
 

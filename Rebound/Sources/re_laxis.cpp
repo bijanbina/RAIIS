@@ -10,12 +10,30 @@ ReLAxis::ReLAxis(QObject *item, ReState *st, QObject *parent) : QObject(parent)
 #ifdef _WIN32
 void ReLAxis::buttonRightPressed()
 {
-    executeAhk("laxis_right");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("laxis_right");
+    }
+    else
+    {
+        executeAhk("laxis_right");
+    }
 }
 
 void ReLAxis::buttonLeftPressed()
 {
-    executeAhk("laxis_left");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("laxis_left");
+    }
+    else
+    {
+        executeAhk("laxis_left");
+    }
 }
 
 void ReLAxis::buttonUpPressed()

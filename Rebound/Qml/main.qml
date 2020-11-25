@@ -18,7 +18,7 @@ Window
     color:"#2F343F"
     //minimumHeight: 565
     //minimumWidth: 360
-    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint// | Qt.SubWindow
+    flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint // | Qt.SubWindow
 
     onVisibleChanged: {
         x = x_base + (Screen.width  - minimumWidth)  / 2;

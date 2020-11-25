@@ -10,22 +10,58 @@ ReRAxis::ReRAxis(QObject *item, ReState *st, QObject *parent) : QObject(parent)
 #ifdef _WIN32
 void ReRAxis::buttonRightPressed()
 {
-    executeAhk("raxis_right");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("raxis_right");
+    }
+    else
+    {
+        executeAhk("raxis_right");
+    }
 }
 
 void ReRAxis::buttonLeftPressed()
 {
-    executeAhk("raxis_left");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("raxis_left");
+    }
+    else
+    {
+        executeAhk("raxis_left");
+    }
 }
 
 void ReRAxis::buttonUpPressed()
 {
-    executeAhk("raxis_up");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("raxis_up");
+    }
+    else
+    {
+        executeAhk("raxis_up");
+    }
 }
 
 void ReRAxis::buttonDownPressed()
 {
-    executeAhk("raxis_down");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("raxis_down");
+    }
+    else
+    {
+        executeAhk("raxis_down");
+    }
 }
 #elif __linux__
 void ReRAxis::buttonRightPressed()

@@ -20,12 +20,30 @@ void ReDirections::buttonUpPressed()
 
 void ReDirections::buttonRightPressed()
 {
-    executeAhk("button_right");
+    if( isItemVisible(ui) )
+    {
+         hideItem(ui);
+         QThread::msleep(20);
+         executeUi("button_right");
+    }
+    else
+    {
+        executeAhk("button_right");
+    }
 }
 
 void ReDirections::buttonLeftPressed()
 {
-    executeAhk("button_left");
+    if( isItemVisible(ui) )
+    {
+         hideItem(ui);
+         QThread::msleep(20);
+         executeUi("button_left");
+    }
+    else
+    {
+        executeAhk("button_left");
+    }
 }
 #elif __linux__
 void ReDirections::buttonDownPressed()
