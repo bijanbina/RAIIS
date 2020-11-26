@@ -10,19 +10,37 @@ ReDirections::ReDirections(QObject *item, ReState *st, QObject *parent) : QObjec
 #ifdef _WIN32
 void ReDirections::buttonDownPressed()
 {
-    executeAhk("button_down");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("button_down");
+    }
+    else
+    {
+        executeAhk("button_down");
+    }
 }
 
 void ReDirections::buttonUpPressed()
 {
-    executeAhk("button_up");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("button_up");
+    }
+    else
+    {
+        executeAhk("button_up");
+    }
 }
 
 void ReDirections::buttonRightPressed()
 {
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
+         state->toggleUi(ui);
          QThread::msleep(20);
          executeUi("button_right");
     }
@@ -34,9 +52,9 @@ void ReDirections::buttonRightPressed()
 
 void ReDirections::buttonLeftPressed()
 {
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
+         state->toggleUi(ui);
          QThread::msleep(20);
          executeUi("button_left");
     }

@@ -32,7 +32,7 @@ Rectangle
         CommandButton
         {
             id: work1
-            width: 116
+            width: 200 //Windows 10 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "left"
@@ -53,7 +53,7 @@ Rectangle
         CommandButton
         {
             id: work2
-            width: 116
+            width: 200 //Windows 10 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "up"
@@ -74,7 +74,7 @@ Rectangle
         CommandButton
         {
             id: work3
-            width: 116
+            width: 200 //Windows 10 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "down"
@@ -95,7 +95,7 @@ Rectangle
         CommandButton
         {
             id: work4
-            width: 116
+            width: 200 //Windows 10 116
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             btn_id: "right"

@@ -19,7 +19,6 @@ Rectangle{
     width: 250
     color: "transparent"
 
-
     XboxButton
     {
         id: cmd_btn

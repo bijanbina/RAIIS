@@ -3,7 +3,7 @@
 WinGet, WinProcessName, ProcessName, A
 if (WinProcessName = "firefox.exe")
 {
-  Send, ^l
+  Send, ^t
 }
 else if (WinProcessName = "Explorer.EXE")
 {

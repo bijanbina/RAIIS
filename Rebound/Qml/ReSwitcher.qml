@@ -129,10 +129,10 @@ Window
             height: height_rect_process
             anchors.left: parent.left
             anchors.top: parent.top
-            text_process_id: "1"
+            text_id: "1"
             color:
             {
-                if(active_process===parseInt(text_process_id))
+                if(active_process===parseInt(text_id))
                 {
                     color_background_active
                 }
@@ -150,10 +150,10 @@ Window
             height: height_rect_process
             anchors.left: parent.left
             anchors.top: process1.bottom
-            text_process_id: "2"
+            text_id: "2"
             color:
             {
-                if(active_process===parseInt(text_process_id))
+                if(active_process===parseInt(text_id))
                 {
                     color_background_active
                 }
@@ -171,10 +171,10 @@ Window
             height: height_rect_process
             anchors.left: parent.left
             anchors.top: process2.bottom
-            text_process_id: "3"
+            text_id: "3"
             color:
             {
-                if(active_process===parseInt(text_process_id))
+                if(active_process===parseInt(text_id))
                 {
                     color_background_active
                 }
@@ -192,10 +192,10 @@ Window
             height: height_rect_process
             anchors.left: parent.left
             anchors.top: process3.bottom
-            text_process_id: "4"
+            text_id: "4"
             color:
             {
-                if(active_process===parseInt(text_process_id))
+                if(active_process===parseInt(text_id))
                 {
                     color_background_active
                 }
@@ -213,10 +213,10 @@ Window
             height: height_rect_process
             anchors.left: parent.left
             anchors.top: process4.bottom
-            text_process_id: "5"
+            text_id: "5"
             color:
             {
-                if(active_process===parseInt(text_process_id))
+                if(active_process===parseInt(text_id))
                 {
                     color_background_active
                 }
@@ -234,10 +234,10 @@ Window
             height: height_rect_process
             anchors.left: parent.left
             anchors.top: process5.bottom
-            text_process_id: "6"
+            text_id: "6"
             color:
             {
-                if(active_process===parseInt(text_process_id))
+                if(active_process===parseInt(text_id))
                 {
                     color_background_active
                 }
@@ -267,33 +267,70 @@ Window
     {
         if(process_id === 1)
         {
-            process1.text_process_title = process_title
+            process1.text_title = process_title
         }
         else if(process_id === 2)
         {
-            process2.text_process_title = process_title
+            process2.text_title = process_title
         }
         else if(process_id === 3)
         {
-            process3.text_process_title = process_title
+            process3.text_title = process_title
         }
         else if(process_id === 4)
         {
-            process4.text_process_title = process_title
+            process4.text_title = process_title
         }
         else if(process_id === 5)
         {
-            process5.text_process_title = process_title
+            process5.text_title = process_title
         }
         else if(process_id === 6)
         {
-            process6.text_process_title = process_title
+            process6.text_title = process_title
         }
     }
 
     function activeNextProcess()
     {
         active_process += 1
+
+        if ( active_process==2 )
+        {
+            if ( process2.text_title.length==0 )
+            {
+                active_process = 1;
+            }
+        }
+        if ( active_process==3 )
+        {
+            if ( process3.text_title.length==0 )
+            {
+                active_process = 1;
+            }
+        }
+        if ( active_process==4 )
+        {
+            if ( process4.text_title.length==0 )
+            {
+                active_process = 1;
+            }
+        }
+        if ( active_process==5 )
+        {
+            if ( process5.text_title.length==0 )
+            {
+                active_process = 1;
+            }
+        }
+        if ( active_process==6 )
+        {
+            if ( process6.text_title.length==0 )
+            {
+                active_process = 1;
+            }
+        }
+
         if(active_process>6)
         {
             active_process = 1

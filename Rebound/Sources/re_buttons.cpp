@@ -47,7 +47,7 @@ void ReButtons::buttonXPressed()
     if( state->ui_visible )
     {
          state->toggleUi(ui);
-         QThread::msleep(200);
+         QThread::msleep(20);
          executeUi("x");
     }
     else
@@ -76,10 +76,10 @@ void ReButtons::buttonStartPressed()
 
 void ReButtons::buttonGuidePressed()
 {
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
-         QThread::msleep(200);
+        state->toggleUi(ui);
+         QThread::msleep(20);
          executeUi("select");
     }
     else
@@ -90,11 +90,11 @@ void ReButtons::buttonGuidePressed()
 
 void ReButtons::buttonSelectPressed()
 {
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
-         QThread::msleep(20);
-         executeUi("button_select");
+        state->toggleUi(ui);
+        QThread::msleep(20);
+        executeUi("button_select");
     }
     else
     {

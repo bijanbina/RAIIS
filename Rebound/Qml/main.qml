@@ -13,7 +13,7 @@ Window
 
     visible: false
     property alias miheight:page.width
-    minimumHeight: 400//500
+    minimumHeight: 360//400
     minimumWidth: 1200
     color:"#2F343F"
     //minimumHeight: 565

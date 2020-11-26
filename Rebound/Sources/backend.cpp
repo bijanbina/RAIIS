@@ -86,7 +86,8 @@ void updateScreenInfo(QObject *item)
 #endif
 
 #ifdef _WIN32
-    QQmlProperty::write(item, "minimumHeight", 400);
+//    QQmlProperty::write(item, "minimumHeight", 400);
+    QQmlProperty::write(item, "minimumHeight", 300);
 #endif
 
 //    QMetaObject::invokeMethod(item, "show");
@@ -107,14 +108,6 @@ int isItemVisible(QObject *item)
     else
     {
         return 0;
-    }
-}
-
-void hideItem(QObject *item)
-{
-    if ( item != NULL )
-    {
-        QQmlProperty::write(item, "visible", 0);
     }
 }
 

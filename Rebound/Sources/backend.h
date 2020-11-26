@@ -52,7 +52,6 @@ void changeLaguageBack();
 
 void updateScreenInfo(QObject *item);
 
-void hideItem(QObject *item);
 int isItemVisible(QObject *item);
 
 #ifdef _WIN32

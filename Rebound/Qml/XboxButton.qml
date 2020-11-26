@@ -18,7 +18,6 @@ Rectangle{
 
     anchors.margins: height/5
 
-
     Label
     {
         anchors.horizontalCenter: parent.horizontalCenter

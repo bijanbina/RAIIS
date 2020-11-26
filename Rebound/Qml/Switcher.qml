@@ -7,9 +7,9 @@ Rectangle{
     property color foreground_color: "#3a3b36"
     property color text_color: "#e8e9e3"
 
-    property string button1_text: "WiFi"
+    property string button1_text: "App"
     property string button2_text: "Terminal"
-    property string button3_text: "Option"
+    property string button3_text: "Spotify"
 
     property int enabled_tab: 2
 
