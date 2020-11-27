@@ -18,8 +18,9 @@
     #include "re_client.h"
     #endif
 #else
-    #include "re_client.h"
     #include "re_xbox_l.h"
+    #include "re_thread_l.h"
+    #include "re_client.h"
 #endif
 
 typedef struct RePage
@@ -81,6 +82,8 @@ private:
     threadStruct *thread_data;
 #else
     ReXboxL *controller;
+    std::thread *api_thread;
+    threadStruct *thread_data;
 #endif
 };
 

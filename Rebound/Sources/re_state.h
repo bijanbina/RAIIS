@@ -9,6 +9,9 @@
 #include "re_api_w.h"
 #include "re_hardware_w.h"
 #endif
+#ifdef __linux__
+#include "re_api_l.h"
+#endif
 
 typedef struct ReWinSpec
 {
@@ -19,6 +22,9 @@ typedef struct ReWinSpec
 #ifdef _WIN32
     HWND hWnd;
     IAccessible *pAcc;
+#endif
+#ifdef __linux__
+    long hWnd;
 #endif
 }ReWinSpec;
 
@@ -42,6 +48,9 @@ public:
 #ifdef _WIN32
     ReApiW *api;
     ReHardwareW *hardware;
+#endif
+#ifdef __linux__
+    ReApiL *api;
 #endif
     int ui_visible;
     int i_mode;

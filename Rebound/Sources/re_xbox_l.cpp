@@ -60,6 +60,10 @@ void ReXboxL::keyTcpRead(QString key)
     }
     else if( key=="g" )
     {
+        if( isItemVisible(ui) )
+        {
+             client->sendData("M", 1);
+        }
         emit buttonGuidePressed();
     }
     else if( key=="h" ) //Left Axis
@@ -84,10 +88,6 @@ void ReXboxL::keyTcpRead(QString key)
     }
     else if( key=="m" )
     {
-        if( isItemVisible(ui) )
-        {
-             client->sendData("M", 1);
-        }
         emit buttonStartPressed();
     }
     else if( key=="n" ) //Right Axis

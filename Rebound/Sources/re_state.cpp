@@ -10,6 +10,9 @@ ReState::ReState(QObject *parent) : QObject(parent)
     api = new ReApiW;
     hardware = new ReHardwareW;
 #endif
+#ifdef __linux__
+    api = new ReApiL;
+#endif
 }
 
 void ReState::setMode(int mode)

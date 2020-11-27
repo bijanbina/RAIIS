@@ -3,7 +3,6 @@
 #include <QQuickView>
 #include <QQuickItem>
 #include "re_chapar.h"
-#define NATIVE_MODE
 
 int main(int argc, char *argv[])
 {
@@ -34,9 +33,8 @@ int main(int argc, char *argv[])
     //check if app should start in server
     //or client mode
 
-#ifdef NATIVE_MODE
-    int isNative = 1;
-#ifdef __linux__
+
+    int isNative = 0;
     if ( argc>1 )
     {
         QString argv_1 = argv[1]; bool ok;
@@ -47,14 +45,6 @@ int main(int argc, char *argv[])
             isNative = argv_int;
         }
     }
-#endif
-#else
-    int isNative = 0;
-    if ( argc>1 )
-    {
-        isNative = 1;
-    }
-#endif
     ReChapar *chaper = new ReChapar(item, itemSwitcher, isNative);
 
 #ifdef RE_TEST_EN

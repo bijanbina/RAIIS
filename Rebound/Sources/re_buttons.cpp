@@ -1,6 +1,5 @@
 #include "re_buttons.h"
 #include <QThread>
-#include "re_hardware_w.h"
 
 ReButtons::ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *parent) : QObject(parent)
 {
@@ -184,14 +183,17 @@ void ReButtons::buttonYPressed()
 
 void ReButtons::buttonStartPressed()
 {
-    qDebug() <<  "Enable autoscroll";
-    system("./Scripts/menu_button &");
+    if( state->ui_visible )
+    {
+//         system("xdotool key XF86AudioMute &");
+         system("./Scripts/menu_button &");
+    }
+    state->toggleUi(ui);
 }
 
 //in native mode add sleep
 void ReButtons::buttonSelectPressed()
 {
-
     if( state->ui_visible )
     {
          state->toggleUi(ui);
@@ -205,8 +207,10 @@ void ReButtons::buttonSelectPressed()
 
 void ReButtons::buttonGuidePressed()
 {
-//    system("xdotool key Escape &");
-    QMetaObject::invokeMethod(ui, "uiToggle");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+    }
 }
 
 #endif

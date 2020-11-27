@@ -26,7 +26,9 @@ win32:SOURCES += Sources/re_server.cpp \
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
-                 Sources/re_xbox_l.cpp \
+                 Sources/re_xbox_l.cpp  \
+                 Sources/re_api_l.cpp \
+                 Sources/re_thread_l.cpp
 
 HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
@@ -48,7 +50,9 @@ win32:HEADERS += Sources/re_server.h \
 
 linux:HEADERS += \
                  Sources/re_x11.h \
-                 Sources/re_xbox_l.h
+                 Sources/re_xbox_l.h \
+                 Sources/re_api_l.h \
+                 Sources/re_thread_l.h
 
 RESOURCES += Qml/ui.qrc \
              Resources/images.qrc \
