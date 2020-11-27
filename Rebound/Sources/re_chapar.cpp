@@ -21,7 +21,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     thread_data->elems_name = &(state->api->elems_name);
     thread_data->state = state;
 
-    sync_thread_timer = new QTimer(this);
+    sync_thread_timer = new QTimer(this); //FIXME: This line is
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 
     controller = new ReXboxW(item);

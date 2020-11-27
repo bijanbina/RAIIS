@@ -8,6 +8,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
 
 #ifdef _WIN32
     api = new ReApiW;
+    hardware = new ReHardwareW;
 #endif
 }
 

@@ -1,5 +1,6 @@
 #include "re_buttons.h"
 #include <QThread>
+#include "re_hardware_w.h"
 
 ReButtons::ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *parent) : QObject(parent)
 {
@@ -70,7 +71,6 @@ void ReButtons::buttonYPressed()
 
 void ReButtons::buttonStartPressed()
 {
-    qDebug() << "Mode" << state->getMode();
     if( state->ui_visible )
     {
         if ( state->getMode()==RE_MODE_APPLICATION )
@@ -94,9 +94,10 @@ void ReButtons::buttonGuidePressed()
 {
     if( state->ui_visible )
     {
-        state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("select");
+//        state->toggleUi(ui);
+//        QThread::msleep(20);
+//        executeUi("select");
+        state->hardware->disconnectXbox();
     }
     else
     {

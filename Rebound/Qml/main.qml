@@ -9,11 +9,11 @@ import "qrc:/"
 Window
 {
     id: page
-    objectName: "Rebound"
+//    objectName: "Rebound" //FIXME: A bug lies in here
 
     visible: false
     property alias miheight:page.width
-    minimumHeight: 360//400
+    minimumHeight: 400
     minimumWidth: 1200
     color:"#2F343F"
     //minimumHeight: 565

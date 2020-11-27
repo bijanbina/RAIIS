@@ -7,6 +7,7 @@
 
 #ifdef _WIN32
 #include "re_api_w.h"
+#include "re_hardware_w.h"
 #endif
 
 typedef struct ReWinSpec
@@ -38,6 +39,7 @@ public:
 
 #ifdef _WIN32
     ReApiW *api;
+    ReHardwareW *hardware;
 #endif
     int ui_visible;
     int i_mode;

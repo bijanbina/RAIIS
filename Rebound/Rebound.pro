@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick
 
-#CONFIG += console
+CONFIG += console
 
 win32:QT += gamepad
 
@@ -21,11 +21,12 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_xbox_win32.cpp \
                  Sources/re_xbox_w.cpp \
                  Sources/re_api_w.cpp \
-                 Sources/re_thread_w.cpp
+                 Sources/re_thread_w.cpp \
+                 Sources/re_hardware_w.cpp
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
-                 Sources/re_xbox_l.cpp
+                 Sources/re_xbox_l.cpp \
 
 HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
@@ -42,7 +43,8 @@ win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_win32.h \
                  Sources/re_xbox_w.h \
                  Sources/re_api_w.h \
-                 Sources/re_thread_w.h
+                 Sources/re_thread_w.h \
+                 Sources/re_hardware_w.h
 
 linux:HEADERS += \
                  Sources/re_x11.h \
@@ -63,8 +65,14 @@ win32:LIBS += -lKernel32 \
               -loleaut32 \
               -loleacc \
               -lDwmapi \
-              -lPsapi
+              -lPsapi \
+              -lSetupapi
+
+win32:RC_FILE = rebound.rc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH += Qml/
+
+DISTFILES += \
+    Rebound.exe.manifest
 
