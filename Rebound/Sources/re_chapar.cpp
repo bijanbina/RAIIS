@@ -120,6 +120,7 @@ void ReChapar::updateMode()
         c_page.r2_action = "Git Kraken";
         c_page.l1_action = "Allegro 17.4";
         c_page.l2_action = "Allegro 17.2";
+        c_page.m_action = "Telegram";
 
         c_page.lau_action = "Sajad jooOon";
         c_page.lad_action = "Bijan Joon";

@@ -20,6 +20,9 @@ int main(int argc, char *argv[])
         HWND hwnd = (HWND)window->winId();
         SetWindowLongPtrA(hwnd, GWL_EXSTYLE, WS_EX_NOACTIVATE);
     }
+
+    //Use for lnk resolve
+    CoInitialize(NULL);   //<< add
 #endif
 
     QQmlApplicationEngine engineSwitcher;

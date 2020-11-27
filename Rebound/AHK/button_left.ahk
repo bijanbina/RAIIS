@@ -17,6 +17,10 @@ else if (WinProcessName = "atom.exe")
 {
   Send, ^{PgUp}
 }
+else if (WinProcessName = "Telegram.exe")
+{
+  Send, ^{PgUp}
+}
 else
 {
   MsgBox, ProcessName = %WinProcessName%

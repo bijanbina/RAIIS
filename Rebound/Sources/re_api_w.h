@@ -10,6 +10,26 @@
 #include <QStringList>
 #include <oleacc.h>
 #include <dwmapi.h>
+#include <shobjidl.h>
+#include <shlguid.h>
+
+#define RE_MODE_APPLICATION 1
+#define RE_MODE_SWITCH      2
+#define RE_MODE_MAIN        3
+#define RE_MODE_READING     4
+#define RE_MODE_FIREFOX     5
+#define RE_MODE_SPOTIFY     6
+#define RE_MODE_HIDDEN      7
+
+#define RE_PROC_UNKNOWN     1
+#define RE_PROC_SPOTIFY     1
+#define RE_PROC_FIREFOX     2
+#define RE_PROC_NAUTILUS    3
+#define RE_PROC_READING     4
+#define RE_PROC_QT          5
+#define RE_PROC_GEDIT       6
+#define RE_PROC_OVERVIEW    7
+#define RE_PROC_TELEGRAM    8
 
 class ReApiW : public QObject
 {
@@ -23,6 +43,8 @@ public:
     QString getWinTitle(int index);
     QString getElemName(int index);
     void setActiveWindow(HWND hWnd);
+    void openApp(int appid);
+    QString getLinkPath(QString path);
 
     QStringList wins_title;
     QStringList elems_name;

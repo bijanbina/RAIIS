@@ -70,8 +70,24 @@ void ReButtons::buttonYPressed()
 
 void ReButtons::buttonStartPressed()
 {
-    qDebug() << "buttonStartPressed";
-    state->toggleUi(ui);
+    qDebug() << "Mode" << state->getMode();
+    if( state->ui_visible )
+    {
+        if ( state->getMode()==RE_MODE_APPLICATION )
+        {
+            state->toggleUi(ui);
+            state->api->openApp(RE_PROC_TELEGRAM);
+            qDebug() << "openApp";
+        }
+        else
+        {
+            state->toggleUi(ui);
+        }
+    }
+    else
+    {
+        state->toggleUi(ui);
+    }
 }
 
 void ReButtons::buttonGuidePressed()

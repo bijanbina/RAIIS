@@ -3,7 +3,7 @@
 WinGet, WinProcessName, ProcessName, A
 if (WinProcessName = "Spotify.exe")
 {
-  Send, ^{Left}
+  Send, ^{Up}
 }
 else if (WinProcessName = "firefox.exe")
 {
@@ -16,6 +16,10 @@ else if (WinProcessName = "Explorer.EXE")
 else if (WinProcessName = "atom.exe")
 {
   Send, ^{PgUp}
+}
+else if (WinProcessName = "Telegram.exe")
+{
+  Send, {PgUp}
 }
 else
 {
