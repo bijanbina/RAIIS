@@ -62,6 +62,7 @@ public:
 private slots:
     void updateMode();
     void switchWindow(int index);
+    void requstSuspend();
 
 private:
     QObject      *ui;

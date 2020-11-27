@@ -115,7 +115,7 @@ void ReButtons::buttonSelectPressed()
     }
     else
     {
-        if( isItemVisible(uiSwitcher) )
+        if( state->ui_visible )
         {
             QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
         }
@@ -139,9 +139,9 @@ void ReButtons::tab_timeout()
 
 void ReButtons::buttonAPressed()
 {
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
+         state->toggleUi(ui);
          system("./Scripts/focus_window spotify");
     }
     else
@@ -157,9 +157,9 @@ void ReButtons::buttonBPressed()
 
 void ReButtons::buttonXPressed()
 {
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
+         state->toggleUi(ui);
          QThread::msleep(200);
          system("xdotool key Alt+F4 &");
     }
@@ -171,9 +171,9 @@ void ReButtons::buttonXPressed()
 
 void ReButtons::buttonYPressed()
 {
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
+         state->toggleUi(ui);
          system("./Scripts/focus_window firefox");
     }
     else
@@ -192,9 +192,9 @@ void ReButtons::buttonStartPressed()
 void ReButtons::buttonSelectPressed()
 {
 
-    if( isItemVisible(ui) )
+    if( state->ui_visible )
     {
-         hideItem(ui);
+         state->toggleUi(ui);
          system("xdotool key XF86AudioMute &");
     }
     else

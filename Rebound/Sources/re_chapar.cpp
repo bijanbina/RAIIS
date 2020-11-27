@@ -25,6 +25,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 
     controller = new ReXboxW(item);
+    connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
 #else
     controller = new ReXboxL(item, isNative);
 #endif
@@ -215,6 +216,11 @@ void ReChapar::switchWindow(int index)
         qDebug() << "switchWindow" << i << thread_data->windows[0].title;
         state->api->setActiveWindow(thread_data->windows[0].hWnd);
     }
+}
+
+void ReChapar::requstSuspend()
+{
+    state->hardware->disconnectXbox();
 }
 
 void ReChapar::setPage(RePage page)

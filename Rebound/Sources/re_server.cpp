@@ -146,6 +146,7 @@ void ReServer::readyRead()
     if( data=="M" )
     {
         ///FIXME
+        emit clientReqSusspend();
 //        win->buttonGuideChanged();
     }
 #endif

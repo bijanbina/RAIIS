@@ -14,10 +14,12 @@ typedef struct ReWinSpec
 {
     // verify clear on each enumeration to
     int  verify; //verify hwnd still exist
-    HWND hWnd;
     QString title;
     QString pname;
+#ifdef _WIN32
+    HWND hWnd;
     IAccessible *pAcc;
+#endif
 }ReWinSpec;
 
 class ReState : public QObject

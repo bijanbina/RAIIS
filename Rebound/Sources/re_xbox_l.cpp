@@ -1,7 +1,6 @@
 #include "re_xbox_l.h"
 #include <string.h>
 
-
 ReXboxL *th_this;
 QString  th_keycode;
 int      th_keyval;
@@ -88,12 +87,8 @@ void ReXboxL::keyTcpRead(QString key)
         if( isItemVisible(ui) )
         {
              client->sendData("M", 1);
-             hideItem(ui);
         }
-        else
-        {
-            emit buttonStartPressed();
-        }
+        emit buttonStartPressed();
     }
     else if( key=="n" ) //Right Axis
     {

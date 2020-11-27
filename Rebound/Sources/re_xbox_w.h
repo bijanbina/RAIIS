@@ -47,6 +47,7 @@ public slots:
 
     void clientDisconnected();
     void clientConnected();
+    void clientReqSusspend();
 
 signals:
     void buttonAPressed();
@@ -79,6 +80,8 @@ signals:
     void buttonUpPressed();
     void buttonRightPressed();
     void buttonLeftPressed();
+
+    void requstSuspend();
 
 private:
     QObject  *ui;

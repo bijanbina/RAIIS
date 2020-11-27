@@ -20,12 +20,14 @@ Window
     //minimumWidth: 360
     flags: Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint // | Qt.SubWindow
 
-    onVisibleChanged: {
+    onVisibleChanged:
+    {
         x = x_base + (Screen.width  - minimumWidth)  / 2;
         y =y_base + (Screen.height - minimumHeight) / 2;
     }
 
-    onFocusObjectChanged: {
+    onFocusObjectChanged:
+    {
         //terminalPane.refreshFocus() //set active focus to terminal
     }
 

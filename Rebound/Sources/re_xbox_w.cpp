@@ -64,6 +64,7 @@ ReXboxW::ReXboxW(QObject *item, QObject *parent) : QObject(parent)
 
     connect(tcp, SIGNAL(clientDisconnected()), this, SLOT(clientDisconnected()));
     connect(tcp, SIGNAL(clientConnected()), SLOT(clientConnected()));
+    connect(tcp, SIGNAL(clientReqSusspend()), SLOT(clientReqSusspend()));
 
 #endif
 
@@ -82,6 +83,11 @@ void ReXboxW::clientDisconnected()
 void ReXboxW::clientConnected()
 {
     isNative = false;
+}
+
+void ReXboxW::clientReqSusspend()
+{
+    emit requstSuspend();
 }
 
 void ReXboxW::buttonAChanged(bool value)
