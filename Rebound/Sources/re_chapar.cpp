@@ -24,7 +24,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     sync_thread_timer = new QTimer(this); //FIXME: This line is
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 
-    controller = new ReXboxW(item);
+    controller = new ReXboxW(state);
     connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
 #else
     controller = new ReXboxL(item, isNative);

@@ -1,9 +1,9 @@
 #include "re_xbox_w.h"
 
-ReXboxW::ReXboxW(QObject *item, QObject *parent) : QObject(parent)
+ReXboxW::ReXboxW(ReState *st, QObject *parent) : QObject(parent)
 {
-    ui = item;
-    tcp = new ReServer(item);
+    state = st;
+    tcp = new ReServer(state);
     isNative = true;
 
 #ifdef _WIN32
@@ -432,17 +432,21 @@ void ReXboxW::buttonCenterChanged(bool value)
 
 void ReXboxW::buttonGuideChanged(bool value)
 {
-    if ( value )
+    //Filter out all unwanted guide press
+    if ( state->hardware->timer_state==RE_TIMER_STATE_INIT )
     {
-        if(isNative)
+        if ( value )
         {
-            emit buttonGuidePressed();
+            if(isNative)
+            {
+                emit buttonGuidePressed();
+            }
+            else
+            {
+                tcp->reboundSendKey("g",1);
+            }
+    //        QMetaObject::invokeMethod(ui, "uiToggle");
         }
-        else
-        {
-            tcp->reboundSendKey("g",1);
-        }
-//        QMetaObject::invokeMethod(ui, "uiToggle");
     }
 }
 

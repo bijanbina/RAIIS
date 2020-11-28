@@ -39,19 +39,14 @@ ReXboxWin32::~ReXboxWin32()
 
 void ReXboxWin32::ReXbox_getGuideBtn()
 {
-//    ReXboxController buttons;
-//    getControllerData(0, buttons); //call the function with the controller number(zero based) and
-//                                   //the pointer to the ControllerStruct.
-
-//    int value = buttons.guideButton;
-//    if (guide_last_val != value)
-//    {
-//        guide_last_val = value;
-//        emit buttonGuideChanged(value);
-//    }
-//    XInputPowerOff(0);
     XINPUT_STATE state;
-    XInputGetStateEx(0, &state);
+    DWORD res = XInputGetStateEx(0, &state);
+
+    if( res==ERROR_DEVICE_NOT_CONNECTED )
+    {
+        return;
+    }
+
     bool value = ((state.Gamepad.wButtons & XINPUT_GAMEPAD_GUIDE) != 0);
 //    int value = buttons.guideButton;
 

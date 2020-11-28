@@ -11,13 +11,14 @@
 #include <QTimer>
 #include <QQmlProperty>
 #include "backend.h"
+#include "re_state.h"
 
 class ReServer : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ReServer(QObject *item, QObject *parent = 0);
+    explicit ReServer(ReState *st, QObject *parent = 0);
     ~ReServer();
 
     void reboundSendKey(const char *data, int size);
@@ -56,7 +57,7 @@ private:
     QTimer *bufferTimer;
 
 
-    QObject *ui;
+    ReState *state;
 };
 
 #endif // ReServer_H

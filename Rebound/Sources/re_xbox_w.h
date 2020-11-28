@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "re_server.h"
+#include "re_state.h"
 #ifdef _WIN32
 #include <QGamepad>
 #include "re_xbox_win32.h"
@@ -14,7 +15,7 @@ class ReXboxW : public QObject
     Q_OBJECT
 
 public:
-    explicit ReXboxW(QObject *item, QObject *parent = 0);
+    explicit ReXboxW(ReState *st, QObject *parent = 0);
     ~ReXboxW();
 
 public slots:
@@ -84,7 +85,7 @@ signals:
     void requstSuspend();
 
 private:
-    QObject  *ui;
+    ReState  *state;
     ReServer *tcp;
     QGamepad *pad;
 

@@ -20,6 +20,8 @@ public:
     ReHardwareW(QObject *parent = 0);
     void disconnectXbox();
 
+    int timer_state;
+
 public slots:
     void timerTimeout();
 
@@ -30,7 +32,6 @@ private:
 
     QObject *ui;
     QTimer  *timer;
-    int timer_state;
     HDEVINFO hDevInfo;
     SP_DEVINFO_DATA DeviceInfoData;
 };

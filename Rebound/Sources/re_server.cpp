@@ -3,10 +3,10 @@
 
 #define JOYSTICK_DELAY 100
 
-ReServer::ReServer(QObject *item, QObject *parent) : QObject(parent)
+ReServer::ReServer(ReState *st, QObject *parent) : QObject(parent)
 {
     //init
-    ui = item;
+    state = st;
     charBuffer = '0';
     isBufferEmpty = true;
     commandMode=false;
