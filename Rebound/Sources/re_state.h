@@ -1,6 +1,9 @@
 #ifndef RESTATE_H
 #define RESTATE_H
 
+#ifdef __linux__
+#endif
+
 #include <QObject>
 #include <QString>
 #include <QQmlProperty>
@@ -11,9 +14,10 @@
 #endif
 #ifdef __linux__
 #include "re_api_l.h"
+#include <X11/Xlib.h>
 #endif
 
-typedef struct ReWinSpec
+typedef struct ReWindow
 {
     // verify clear on each enumeration to
     int  verify; //verify hwnd still exist
@@ -24,9 +28,11 @@ typedef struct ReWinSpec
     IAccessible *pAcc;
 #endif
 #ifdef __linux__
-    long hWnd;
+    Window hWnd; //pid
+    int pid;
+    int desktop_id;
 #endif
-}ReWinSpec;
+}ReWindow;
 
 class ReState : public QObject
 {
@@ -39,7 +45,7 @@ public:
     void setProcess(QString name);
     void setProcess(int proc);
     int getProcess();
-    void updateApp(ReWinSpec active_window);
+    void updateApp(ReWindow active_window);
     void toggleUi(QObject *item);
     void propageteMode(int mode);
     void updateTitles(QObject *item);
@@ -54,7 +60,7 @@ public:
 #endif
     int ui_visible;
     int i_mode;
-    ReWinSpec app; //Active Window
+    ReWindow app; //Active Window
 
 signals:
     void updateMode();

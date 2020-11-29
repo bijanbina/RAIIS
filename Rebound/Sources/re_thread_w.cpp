@@ -44,7 +44,7 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
                 }
 
 
-                ReWinSpec current_win;
+                ReWindow current_win;
                 current_win.hWnd = hwnd;
                 current_win.title = buffer;
                 current_win.pname = reGetPName(reGetPid(hwnd));
@@ -72,7 +72,7 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
     }
 }
 
-void re_InsertWindow(ReThreadW *thread_w, ReWinSpec win)
+void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
 {
     //push active window to front
     if ( win.hWnd == thread_w->HwndA )
@@ -168,7 +168,7 @@ QString ReThreadW::renameAppName(QString app_name)
 
 void ReThreadW::sortApp()
 {
-    QVector<ReWinSpec> sorted_apps, unsorted_apps;
+    QVector<ReWindow> sorted_apps, unsorted_apps;
     int clover_ind = 0, firefox_ind = 0, spotify_ind = 0;
     for( int i=0 ; i<windows.size() ; i++)
     {
@@ -345,7 +345,7 @@ ReElemSpec* ReThreadW::getElemSpec(QString name)
     return NULL;
 }
 
-ReWinSpec ReThreadW::getWinSpec(QString title)
+ReWindow ReThreadW::getWinSpec(QString title)
 {
     for(int i=0; i<windows.size(); i++)
     {
@@ -355,7 +355,7 @@ ReWinSpec ReThreadW::getWinSpec(QString title)
         }
     }
 
-    ReWinSpec shit;
+    ReWindow shit;
     return shit;
 }
 

@@ -6,13 +6,57 @@
 int counter = 0;
 int child_num = 3;
 
-//Add a new Hwnd to wins_title vector
-void re_AddHwnd(ReThreadL *thread_w)
+void ReThreadL::enumWindows()
 {
-    ;
+    Window* children;
+    unsigned long nchildren;
+
+    children = x11_getWinList(&nchildren);
+    int desktop_id = x11_currentDesktop();
+
+    printf("Desktop: %d\n", desktop_id);
+    char *name;
+
+    if (!children)
+        return;
+
+    for ( unsigned long i=0 ; i<nchildren ; i++ )
+    {
+        XFetchName(display, children[i], &name);
+        if ( name )
+        {
+            if(!strcmp(name, "Desktop"))
+            {
+                continue;
+            }
+            int win_desktop = x11_getDesktop(children[i]);
+            if ( win_desktop==desktop_id )
+            {
+                addWindow(children[i]);
+            }
+        }
+    }
+
+    XFree(children);
 }
 
-void re_InsertWindow(ReThreadL *thread_w, ReWinSpec win)
+//Add a new Hwnd to wins_title vector
+void ReThreadL::addWindow(Window window)
+{
+    ReWindow buf;
+    char *name;
+
+    XFetchName(display, window, &name);
+    buf.desktop_id = x11_getDesktop(window);
+    buf.title = name;
+    buf.pid = x11_getPid(window);
+    buf.pname = x11_getPname(buf.pid);
+    printf("%d: <%s> pid=%d pname=%s\n", buf.desktop_id, name,
+           buf.pid, buf.pname.toStdString().c_str());
+    XFree(name);
+}
+
+void re_InsertWindow(ReThreadL *thread_w, ReWindow win)
 {
     ;
 }
@@ -61,7 +105,7 @@ QString ReThreadL::renameAppName(QString app_name)
 
 void ReThreadL::sortApp()
 {
-    QVector<ReWinSpec> sorted_apps, unsorted_apps;
+    QVector<ReWindow> sorted_apps, unsorted_apps;
     int clover_ind = 0, firefox_ind = 0, spotify_ind = 0;
     for( int i=0 ; i<windows.size() ; i++)
     {
@@ -151,7 +195,7 @@ ReElemSpec* ReThreadL::getElemSpec(QString name)
     return NULL;
 }
 
-ReWinSpec ReThreadL::getWinSpec(QString title)
+ReWindow ReThreadL::getWinSpec(QString title)
 {
     for(int i=0; i<windows.size(); i++)
     {
@@ -161,7 +205,7 @@ ReWinSpec ReThreadL::getWinSpec(QString title)
         }
     }
 
-    ReWinSpec shit;
+    ReWindow shit;
     return shit;
 }
 
@@ -198,6 +242,7 @@ void ReThreadL::updateElements(QString app_name, QString parent_path,
 ReThreadL::ReThreadL(threadStruct *thread_data)
 {
     this->thread_data = thread_data;
+    display = XOpenDisplay(NULL);
 }
 
 //clear verify flag

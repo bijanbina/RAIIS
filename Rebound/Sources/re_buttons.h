@@ -3,15 +3,15 @@
 
 #include <QObject>
 #include <QDebug>
+#if __linux__
+#include <QTimer>
+#endif
 #include "backend.h"
 #include "re_state.h"
 
 #ifdef _WIN32
     #include <windows.h>
     #include "re_hardware_w.h"
-#elif __linux__
-#include "re_x11.h"
-#include <QTimer>
 #endif
 
 class ReButtons: public QObject

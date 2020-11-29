@@ -4,7 +4,6 @@
 #include <QObject>
 #include <thread>         // std::thread
 #include <QTimer>
-#include "re_state.h"
 #include "re_bumpers.h"
 #include "re_buttons.h"
 #include "re_directions.h"
@@ -15,13 +14,17 @@
     #include "re_xbox_w.h"
     #include "re_thread_w.h"
     #ifdef RE_TEST_EN
-    #include "re_client.h"
+        #include "re_client.h"
     #endif
-#else
+#endif
+
+#ifdef __linux__
     #include "re_xbox_l.h"
     #include "re_thread_l.h"
     #include "re_client.h"
 #endif
+
+#include "re_state.h"
 
 typedef struct RePage
 {

@@ -31,7 +31,7 @@ typedef struct threadStruct
     ReState *state;
     QStringList *wins_title;
     QStringList *elems_name;
-    QVector<ReWinSpec> windows;
+    QVector<ReWindow> windows;
 }threadStruct;
 
 class ReThreadW
@@ -50,7 +50,7 @@ public:
     void updateActiveWindow();
 
 
-    QVector<ReWinSpec> windows;
+    QVector<ReWindow> windows;
     threadStruct *thread_data;
     QStringList elems_name;
     QString titleA;
@@ -58,7 +58,7 @@ public:
 
 private:
     ReElemSpec* getElemSpec(QString name);
-    ReWinSpec getWinSpec(QString title);
+    ReWindow getWinSpec(QString title);
     int getIndex(QString app_name);
     HWND getHWND(QString title);
     QString renameAppName(QString app_name);
@@ -69,7 +69,7 @@ private:
 };
 
 void re_AddHwnd(HWND hwnd, ReThreadW *thread_w);
-void re_InsertWindow(ReThreadW *thread_w, ReWinSpec win);
+void re_InsertWindow(ReThreadW *thread_w, ReWindow win);
 
 long reGetPid(HWND hWnd);
 QString reGetPName(long pid);

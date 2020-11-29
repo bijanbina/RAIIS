@@ -8,8 +8,6 @@ ReButtons::ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *par
     state = st;
 
 #if __linux__
-    reX11_init();
-
     //switching tab
     timer_tab = new QTimer;
 //    timer_tab->setSingleShot(true);
@@ -185,10 +183,13 @@ void ReButtons::buttonStartPressed()
 {
     if( state->ui_visible )
     {
-//         system("xdotool key XF86AudioMute &");
-         system("./Scripts/menu_button &");
+        state->toggleUi(ui);
+        system("./Scripts/menu_button &");
     }
-    state->toggleUi(ui);
+    else
+    {
+        state->toggleUi(ui);
+    }
 }
 
 //in native mode add sleep
@@ -201,7 +202,14 @@ void ReButtons::buttonSelectPressed()
     }
     else
     {
-        re_getWindowList();
+        if( state->ui_visible )
+        {
+            QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
+        }
+        else
+        {
+            state->showSwither(uiSwitcher);
+        }
     }
 }
 

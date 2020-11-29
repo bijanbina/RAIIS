@@ -88,7 +88,7 @@ int ReState::getProcess()
     return i_proc;
 }
 
-void ReState::updateApp(ReWinSpec active_window)
+void ReState::updateApp(ReWindow active_window)
 {
     app = active_window;
 

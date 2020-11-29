@@ -1,6 +1,7 @@
 #ifndef RE_THREAD_L_H
 #define RE_THREAD_L_H
 
+#include "re_x11.h"
 #include <QStringList>
 
 #include "re_state.h"
@@ -23,13 +24,15 @@ typedef struct threadStruct
     ReState *state;
     QStringList *wins_title;
     QStringList *elems_name;
-    QVector<ReWinSpec> windows;
+    QVector<ReWindow> windows;
 }threadStruct;
 
 class ReThreadL
 {
 public:
     ReThreadL(threadStruct *thread_data);
+    void enumWindows();
+    void addWindow(Window window);
     void cleanWins();
     void clearWins();
     void cleanElems();
@@ -42,7 +45,7 @@ public:
     void updateActiveWindow();
 
 
-    QVector<ReWinSpec> windows;
+    QVector<ReWindow> windows;
     threadStruct *thread_data;
     QStringList elems_name;
     QString titleA;
@@ -50,7 +53,7 @@ public:
 
 private:
     ReElemSpec* getElemSpec(QString name);
-    ReWinSpec getWinSpec(QString title);
+    ReWindow getWinSpec(QString title);
     int getIndex(QString app_name);
     void getHWND(QString title);
     QString renameAppName(QString app_name);
@@ -58,10 +61,11 @@ private:
     QVector<ReElemSpec*> elems_spec;
     QString getElemName(int index);
     QString getWinTitle(int index);
+    Display *display;
 };
 
 void re_AddHwnd(ReThreadL *thread_w);
-void re_InsertWindow(ReThreadL *thread_w, ReWinSpec win);
+void re_InsertWindow(ReThreadL *thread_w, ReWindow win);
 
 long reGetPid();
 QString reGetPName(long pid);

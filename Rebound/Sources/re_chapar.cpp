@@ -34,6 +34,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     thread_data->elems_name = &(state->api->elems_name);
     thread_data->state = state;
 
+    reX11_init();
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 #endif
 
@@ -210,7 +211,7 @@ void ReChapar::switchWindow(int index)
 
     if ( i<thread_data->windows.size() )
     {
-        ReWinSpec buffer = thread_data->windows[i];
+        ReWindow buffer = thread_data->windows[i];
         thread_data->windows.remove(i);
         thread_data->windows.push_front(buffer);
 
