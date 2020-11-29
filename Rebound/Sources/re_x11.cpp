@@ -134,6 +134,20 @@ int x11_currentDesktop()
     return ret;
 }
 
+Window x11_currentWindow()
+{
+    Window *window_id;
+    Window root = DefaultRootWindow(display);
+    char propperty_name[40] = "_NET_ACTIVE_WINDOW";
+
+    window_id = (Window *)x11_getProperty(root, XA_WINDOW,
+                              propperty_name, NULL);
+
+    Window ret = *window_id;
+
+    return ret;
+}
+
 Window *x11_getWinList (unsigned long *size)
 {
     Window *client_list;

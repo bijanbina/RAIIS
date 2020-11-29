@@ -24,6 +24,7 @@ QVector<ReXWindow> re_getWindowList();
 void re_listProperty(Window window);
 
 int x11_currentDesktop();
+Window x11_currentWindow();
 QString x11_getPname(int pid);
 int x11_getPid(Window window);
 int x11_getDesktop(Window window);

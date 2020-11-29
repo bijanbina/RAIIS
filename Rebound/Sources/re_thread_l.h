@@ -33,6 +33,7 @@ public:
     ReThreadL(threadStruct *thread_data);
     void enumWindows();
     void addWindow(Window window);
+    void insertWindow(ReWindow win);
     void cleanWins();
     void clearWins();
     void cleanElems();
@@ -49,7 +50,7 @@ public:
     threadStruct *thread_data;
     QStringList elems_name;
     QString titleA;
-    long HwndA;
+    Window HwndA;
 
 private:
     ReElemSpec* getElemSpec(QString name);

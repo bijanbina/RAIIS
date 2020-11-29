@@ -40,9 +40,31 @@ QString ReApiL::getAccName(long childId)
     return QString("accName");
 }
 
-void ReApiL::setActiveWindow(long hWnd)
+void ReApiL::setActiveWindow(Window win)
 {
-    ;
+    XEvent event;
+    long mask = SubstructureRedirectMask | SubstructureNotifyMask;
+
+    event.xclient.type = ClientMessage;
+    event.xclient.serial = 0;
+    event.xclient.send_event = True;
+    event.xclient.message_type = XInternAtom(disp, "_NET_ACTIVE_WINDOW", False);
+    event.xclient.window = win;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = 0;
+    event.xclient.data.l[1] = 0;
+    event.xclient.data.l[2] = 0;
+    event.xclient.data.l[3] = 0;
+    event.xclient.data.l[4] = 0;
+
+    XSendEvent(disp, DefaultRootWindow(disp), False, mask, &event);
+
+    XMapRaised(disp, win);
+}
+
+void ReApiL::setDisplay(Display *display)
+{
+    disp = display;
 }
 
 void ResolveIt(char *target)

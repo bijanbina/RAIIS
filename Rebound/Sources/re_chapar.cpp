@@ -14,7 +14,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
 
-
 #ifdef _WIN32
     thread_data = new threadStruct;
     thread_data->wins_title = &(state->api->wins_title);
@@ -34,7 +33,8 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     thread_data->elems_name = &(state->api->elems_name);
     thread_data->state = state;
 
-    reX11_init();
+    Display *disp = reX11_init();
+    state->api->setDisplay(disp);
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 #endif
 

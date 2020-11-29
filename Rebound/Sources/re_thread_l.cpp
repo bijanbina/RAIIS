@@ -14,7 +14,6 @@ void ReThreadL::enumWindows()
     children = x11_getWinList(&nchildren);
     int desktop_id = x11_currentDesktop();
 
-    printf("Desktop: %d\n", desktop_id);
     char *name;
 
     if (!children)
@@ -51,14 +50,63 @@ void ReThreadL::addWindow(Window window)
     buf.title = name;
     buf.pid = x11_getPid(window);
     buf.pname = x11_getPname(buf.pid);
-    printf("%d: <%s> pid=%d pname=%s\n", buf.desktop_id, name,
-           buf.pid, buf.pname.toStdString().c_str());
+    buf.hWnd = window;
+//    printf("%d: <%s> pid=%d pname=%s\n", buf.desktop_id, name,
+//           buf.pid, buf.pname.toStdString().c_str());
+    insertWindow(buf);
     XFree(name);
 }
 
-void re_InsertWindow(ReThreadL *thread_w, ReWindow win)
+void ReThreadL::insertWindow(ReWindow win)
 {
-    ;
+    //push active window to front
+    if ( win.hWnd==HwndA )
+    {
+        if ( windows.size()>0 )
+        {
+            if ( windows[0].hWnd != win.hWnd )
+            {
+                windows.push_front(win);
+                thread_data->state->updateApp(win);
+                qDebug() << "Active Changed" << win.title;
+            }
+            else
+            {
+                windows[0].verify = 1;
+                windows[0].title = win.title;
+            }
+        }
+        else
+        {
+            windows.push_front(win);
+            thread_data->state->updateApp(win);
+            qDebug() << "First Time" << win.title;
+            return;
+        }
+    }
+
+    for( int i=1 ; i<windows.size() ; i++ )
+    {
+        if ( windows[i].hWnd==HwndA )
+        {
+            windows.remove(i);
+            i--;
+        }
+        else if ( windows[i].hWnd==win.hWnd )
+        {
+            windows[i].verify = 1;
+            windows[i].title = win.title;
+//            qDebug() << "Ver Window" << i << win.title;
+            return;
+        }
+    }
+
+    if ( win.hWnd != HwndA )
+    {
+        windows.push_back(win);
+        qDebug() << "New Window" << win.hWnd;
+    }
+
 }
 
 QString ReThreadL::cleanTitle(QString app_title)
@@ -323,7 +371,10 @@ void ReThreadL::syncElemsName()
 
 void ReThreadL::updateActiveWindow()
 {
-    char buffer[128];
+    char *buffer;
+    HwndA = x11_currentWindow();
+    int written = XFetchName(display, HwndA, &buffer);
+
     titleA = buffer;
 }
 
@@ -338,17 +389,17 @@ void reRunThread(void *thread_struct_void)
     {
         if(cntr > 200)
         {
-            if(re_state_mode == RE_MODE_HIDDEN)
+            if( re_state_mode==RE_MODE_HIDDEN )
             {
                 //Get Active Window Name
                 priv->updateActiveWindow();
 
                 priv->clearWins();
-//                EnumWindows(EnumWindowsProc, (LPARAM) priv);
+                priv->enumWindows();
                 priv->cleanWins();
                 priv->syncWinsTitle();
             }
-            else if(re_state_mode == RE_MODE_MAIN)
+            else if( re_state_mode==RE_MODE_MAIN )
             {
                 priv->cleanElems();
                 priv->updateElements("spotifys", RE_SPOTIFY_ALBUM_PARENT,
@@ -366,6 +417,6 @@ void reRunThread(void *thread_struct_void)
             thread_data->message.clear();
         }
         cntr++;
-        QThread::msleep(500);
+        QThread::msleep(2);
     }
 }

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtDebug>
 #include <QStringList>
+#include <X11/Xlib.h>
 
 #define RE_MODE_APPLICATION 1
 #define RE_MODE_SWITCH      2
@@ -34,7 +35,8 @@ public:
     QString getAccName(long childId);
     QString getWinTitle(int index);
     QString getElemName(int index);
-    void setActiveWindow(long hWnd);
+    void setActiveWindow(Window win);
+    void setDisplay(Display *display);
     void openApp(int appid);
     QString getLinkPath(QString path);
 
@@ -44,6 +46,7 @@ public:
 private slots:
 
 private:
+    Display *disp;
 };
 
 #endif // ReApiL_H
