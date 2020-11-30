@@ -446,7 +446,8 @@ void ReThreadW::updateElements(QString app_name, QString parent_path,
         return;
     }
 
-    IAccessible *parent_pacc = reFindAcc(parent_path, app_pacc);
+    IAccessible *parent_pacc = NULL;
+    parent_pacc = reFindAcc(parent_path, app_pacc);
     if( parent_pacc==NULL )
     {
         return;
@@ -602,7 +603,7 @@ void reRunThread(void *thread_struct_void)
                 priv->cleanElems();
                 priv->updateElements("spotifys", RE_SPOTIFY_ALBUM_PARENT,
                                      RE_SPOTIFY_ALBUM_CHILD);
-                priv->syncElemsName();
+//                priv->syncElemsName();
             }
             cntr = 0;
         }

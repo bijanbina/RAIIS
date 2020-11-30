@@ -45,15 +45,13 @@ Window
 
     onActive_processChanged:
     {
-        label_timer.text = max_timer
+        start_timer()
     }
 
-    onVisibleChanged:
+    function start_timer()
     {
-        if(visible)
-        {
-            label_timer.text = max_timer
-        }
+        label_timer.text = max_timer
+        timer.running = true
     }
 
     Rectangle
@@ -87,30 +85,31 @@ Window
             font.pixelSize: 30
             color: "#e8e9e3"
         }
+    }
 
-        Timer
+    Timer
+    {
+        id: timer
+        interval: 50
+        running: true
+        repeat: true
+        onTriggered:
         {
-            id: timer
-            interval: 50
-            running: true
-            repeat: true
-            onTriggered:
+            var value_time = parseInt(label_timer.text)
+            if(value_time>50)
             {
-//                console.log("triggered")
-                var value_time = parseInt(label_timer.text) - interval
-                if(value_time>0)
-                {
-                    label_timer.text = value_time
-                }
-                else if(value_time===0)
-                {
-                    label_timer.text = 0
-                    selectWindow(active_process)
-                    window_switcher.visible = false
-                }
+                label_timer.text = value_time - interval
             }
-        }
+            else
+            {
+                label_timer.text = 0
+                selectWindow(active_process)
+                running = false
+                window_switcher.visible = false
+            }
 
+            console.log(value_time)
+        }
     }
 
     Rectangle
@@ -302,36 +301,35 @@ Window
                 active_process = 1;
             }
         }
-        if ( active_process==3 )
+        else if ( active_process==3 )
         {
             if ( process3.text_title.length==0 )
             {
                 active_process = 1;
             }
         }
-        if ( active_process==4 )
+        else if ( active_process==4 )
         {
             if ( process4.text_title.length==0 )
             {
                 active_process = 1;
             }
         }
-        if ( active_process==5 )
+        else if ( active_process==5 )
         {
             if ( process5.text_title.length==0 )
             {
                 active_process = 1;
             }
         }
-        if ( active_process==6 )
+        else if ( active_process==6 )
         {
             if ( process6.text_title.length==0 )
             {
                 active_process = 1;
             }
         }
-
-        if(active_process>6)
+        else
         {
             active_process = 1
         }

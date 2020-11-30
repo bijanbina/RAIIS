@@ -42,7 +42,7 @@ void ReState::showSwither(QObject *item)
     setMode(RE_MODE_SWITCH);
 
     updateTitles(item);
-    QQmlProperty::write(item, "active_process", 2);
+    QQmlProperty::write(item, "active_process", 1);
     QQmlProperty::write(item, "visible", 1);
 }
 

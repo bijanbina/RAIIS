@@ -112,7 +112,7 @@ void ReButtons::buttonSelectPressed()
     }
     else
     {
-        if( state->ui_visible )
+        if( isItemVisible(uiSwitcher) )
         {
             QMetaObject::invokeMethod(uiSwitcher, "activeNextProcess");
         }
