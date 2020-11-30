@@ -149,7 +149,15 @@ void ReButtons::buttonAPressed()
 
 void ReButtons::buttonBPressed()
 {
-    system("./Scripts/button_b &");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         system("firefox &");
+    }
+    else
+    {
+        system("./Scripts/button_b &");
+    }
 }
 
 void ReButtons::buttonXPressed()

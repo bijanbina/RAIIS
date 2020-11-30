@@ -40,7 +40,7 @@ Window
     property string y_action: "Switch to Firefox"
     property string a_action: "Switch to Spotify"
     property string b_action: "Open New Firefox Window"
-    property string m_action: "Put PC to Sleep"
+    property string m_action: "Exit Super Mode"
     property string s_action: "Mute/UnMute"
     property string r1_action: "Switch to Book"
     property string r2_action: "Switch to EPUB Reader"

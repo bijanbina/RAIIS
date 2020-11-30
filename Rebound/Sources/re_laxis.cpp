@@ -77,7 +77,7 @@ void ReLAxis::buttonUpPressed()
     if( state->ui_visible )
     {
          state->toggleUi(ui);
-         system("xdotool key Alt+F10");
+         system("xdotool key Super+Shift+Up");
     }
     else
     {
@@ -87,6 +87,14 @@ void ReLAxis::buttonUpPressed()
 
 void ReLAxis::buttonDownPressed()
 {
-
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         system("xdotool key Super+Shift+Down");
+    }
+    else
+    {
+        system("./Scripts/laxis_down &");
+    }
 }
 #endif
