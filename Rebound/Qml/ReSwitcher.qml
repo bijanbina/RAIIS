@@ -48,6 +48,8 @@ Window
         start_timer()
     }
 
+    onVisibleChanged: timer.running = false
+
     function start_timer()
     {
         label_timer.text = max_timer
@@ -107,8 +109,6 @@ Window
                 running = false
                 window_switcher.visible = false
             }
-
-            console.log(value_time)
         }
     }
 
@@ -256,10 +256,10 @@ Window
         height: 44
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        text_work1: "Move to #1"
-        text_work2: "Move to #2"
-        text_work3: "Move to #3"
-        text_work4: "Move to #4"
+        text_work1: "Move to Worksapce 1"
+        text_work2: "Move to Worksapce 2"
+        text_work3: "Move to Worksapce 3"
+        text_work4: "Move to Worksapce 4"
     }
 
     function updateProcessTitle()

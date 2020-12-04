@@ -8,7 +8,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     uiSwitcher = switcher;
 
     state = new ReState;
-    bumpers = new ReBumpers(ui, state);
+    bumpers = new ReBumpers(ui, switcher, state);
     buttons = new ReButtons(ui, switcher, state);
     directions = new ReDirections(ui, state);
     laxis = new ReLAxis(ui, state);
@@ -163,19 +163,19 @@ void ReChapar::updateMode()
             thread_data->message = "Launch Nuclear missiles";
         }
     }
-    /*if( state->getProcess()==RE_PROC_NAUTILUS )
+    /*if( state->getProcess()==RE_WIN_EXPLORER )
     {
         ;
     }
-    else if( state->getProcess()==RE_PROC_FIREFOX )
+    else if( state->getProcess()==RE_WIN_FIREFOX )
     {
         ;
     }
-    else if( state->getProcess()==RE_PROC_QT )
+    else if( state->getProcess()==RE_WIN_QT )
     {
         ;
     }
-    else if( state->getProcess()==RE_PROC_READING )
+    else if( state->getProcess()==RE_WIN_READING )
     {
         ;
     }*/

@@ -15,7 +15,7 @@ class ReBumpers: public QObject
     Q_OBJECT
 
 public:
-    ReBumpers(QObject *item, ReState *st, QObject *parent = 0);
+    ReBumpers(QObject *item, QObject *switcher, ReState *st, QObject *parent = 0);
 
 public slots:
     void buttonL1Pressed();
@@ -26,6 +26,7 @@ public slots:
 private:
     QObject *ui;
     ReState *state;
+    QObject *uiSwitcher;
 };
 
 #endif // RE_BUMPERS_H

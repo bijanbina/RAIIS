@@ -53,8 +53,7 @@ public:
     QVector<ReWindow> windows;
     threadStruct *thread_data;
     QStringList elems_name;
-    QString titleA;
-    HWND HwndA;
+    ReWindow win_active;
 
 private:
     ReElemSpec* getElemSpec(QString name);
@@ -69,6 +68,7 @@ private:
 };
 
 void re_AddHwnd(HWND hwnd, ReThreadW *thread_w);
+void re_getType(ReWindow *win);
 void re_InsertWindow(ReThreadW *thread_w, ReWindow win);
 
 long reGetPid(HWND hWnd);

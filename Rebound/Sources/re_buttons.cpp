@@ -73,7 +73,7 @@ void ReButtons::buttonStartPressed()
         if ( state->getMode()==RE_MODE_APPLICATION )
         {
             state->toggleUi(ui);
-            state->api->openApp(RE_PROC_TELEGRAM);
+            state->api->openApp(RE_WIN_TELEGRAM);
             qDebug() << "openApp";
         }
         else

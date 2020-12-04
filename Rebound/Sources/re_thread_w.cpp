@@ -17,6 +17,23 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
     return TRUE;
 }
 
+BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam)
+{
+    char buffer[128];
+    GetClassNameA(hwnd, buffer, 128);
+    QString class_name = buffer;
+
+    if ( class_name=="CabinetWClass" )
+    {
+        *(HWND*)lParam = hwnd;
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+}
+
 //Add a new Hwnd to wins_title vector
 void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
 {
@@ -49,12 +66,7 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
                 current_win.title = buffer;
                 current_win.pname = reGetPName(reGetPid(hwnd));
                 current_win.verify = 1; //always new windows are verified
-                // spotify title doesnt include "spotify" so we add it :D
-                if(current_win.pname.contains("spotify", Qt::CaseInsensitive))
-                {
-                    current_win.title += " - spotify";
-                }
-                current_win.title = thread_w->cleanTitle(current_win.title);
+//                current_win.title = thread_w->cleanTitle(current_win.title);
 
                 re_InsertWindow(thread_w, current_win);
             }
@@ -72,10 +84,75 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
     }
 }
 
+void re_getType(ReWindow *win)
+{
+    char buffer[128];
+    GetClassNameA(win->hWnd, buffer, 128);
+    QString class_name = buffer;
+
+    if( class_name.contains("Clover_WidgetWin") )
+    {
+        HWND ret = NULL;
+        EnumChildWindows(win->hWnd, EnumChildProc, (LPARAM) &ret);
+        win->hWnd = ret;
+        win->type = RE_WIN_EXPLORER;
+
+        if ( win->title.contains(" - Clover"))
+        {
+            QString title = "Explor: ";
+            title += win->title.split(" - Clover").at(0);
+            win->title = title;
+        }
+    }
+    else if( class_name.contains("Qt") && class_name.contains("QWindowIcon") )
+    {
+        win->type = RE_WIN_QT;
+
+        if ( win->title.contains(" - Qt Creator"))
+        {
+            QString title = "Qt Cre: ";
+            title += win->title.split(" (").at(0);
+            win->title = title;
+        }
+    }
+    else if( class_name.contains("Chrome_WidgetWin") )
+    {
+        if ( win->pname.contains("Spotify.exe") )
+        {
+            win->type = RE_WIN_SPOTIFY;
+
+            QString title = "Spotiy: ";
+            title += win->title;
+            win->title = title;
+        }
+        else if ( win->pname.contains("atom.exe") )
+        {
+            win->type = RE_WIN_TEXTEDITOR;
+
+            QString title = "Atom : ";
+            title += win->title.split("\ufffd").at(0);
+            win->title = title;
+        }
+        else
+        {
+            win->type = RE_WIN_UNKNOWN;
+            qDebug() << class_name << win->pname ;
+        }
+    }
+    else
+    {
+        win->type = RE_WIN_UNKNOWN;
+        qDebug() << class_name << win->pname;
+    }
+}
+
 void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
 {
+    //Get clover child
+    re_getType(&win);
+
     //push active window to front
-    if ( win.hWnd == thread_w->HwndA )
+    if ( win.hWnd == thread_w->win_active.hWnd )
     {
         if ( thread_w->windows.size()>0 )
         {
@@ -102,7 +179,7 @@ void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
 
     for( int i=1 ; i<thread_w->windows.size() ; i++ )
     {
-        if ( thread_w->windows[i].hWnd==thread_w->HwndA )
+        if ( thread_w->windows[i].hWnd==thread_w->win_active.hWnd )
         {
             thread_w->windows.remove(i);
             i--;
@@ -116,7 +193,7 @@ void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
         }
     }
 
-    if ( win.hWnd != thread_w->HwndA )
+    if ( win.hWnd != thread_w->win_active.hWnd )
     {
         thread_w->windows.push_back(win);
         qDebug() << "New Window" << win.title;
@@ -569,10 +646,34 @@ void ReThreadW::syncElemsName()
 void ReThreadW::updateActiveWindow()
 {
     char buffer[128];
-    HwndA = GetForegroundWindow();
-    int written = GetWindowTextA(HwndA, buffer, 128);
+    win_active.hWnd = GetForegroundWindow();
+    GetWindowTextA(win_active.hWnd, buffer, 128);
 
-    titleA = buffer;
+    win_active.title = buffer;
+
+    if ( win_active.title.length()==0 ) //No active window
+    {
+        if ( windows.size()>0 )
+        {
+            win_active.hWnd = windows[0].hWnd; //Set last active window
+        }
+    }
+
+    re_getType(&win_active);
+//    char class_name[128];
+//    GetClassNameA(HwndA, class_name, 128);
+//    QString class_a = class_name;
+//    if ( class_a=="CabinetWClass" )
+//    {
+//        HWND parent = GetAncestor(HwndA, GA_PARENT);
+//        HwndA = parent;
+//        char buffer_p[128];
+//        char class_name_p[128];
+//        GetWindowTextA(HwndA, buffer_p, 128);
+//        GetClassNameA(HwndA, class_name_p, 128);
+//        qDebug() << "Active Window" << titleA.length() << titleA << class_name << buffer_p << class_name_p << parent;
+//    }
+
 }
 
 void reRunThread(void *thread_struct_void)

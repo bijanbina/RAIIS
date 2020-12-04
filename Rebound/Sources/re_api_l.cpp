@@ -89,7 +89,7 @@ void ReApiL::openApp(int appid)
 {
     QString link_path;
 
-    if ( appid==RE_PROC_TELEGRAM )
+    if ( appid==RE_WIN_TELEGRAM )
     {
         link_path = getLinkPath("Telegram Desktop\\Telegram.lnk");
 //        lunnchExe(link_path);

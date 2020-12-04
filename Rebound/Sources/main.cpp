@@ -4,14 +4,8 @@
 #include <QQuickItem>
 #include "re_chapar.h"
 
-int main(int argc, char *argv[])
+void setNoActivable(QObject *item)
 {
-    QGuiApplication app(argc, argv);
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:main.qml")));
-    QObject *item = engine.rootObjects().first();
-
-#ifdef _WIN32
     //Set NoActivable Flag on UI
     QWindow *window = qobject_cast<QWindow *>(item);
     if(window)
@@ -20,6 +14,17 @@ int main(int argc, char *argv[])
         SetWindowLongPtrA(hwnd, GWL_EXSTYLE, WS_EX_NOACTIVATE);
     }
 
+}
+
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QStringLiteral("qrc:main.qml")));
+    QObject *item = engine.rootObjects().first();
+    setNoActivable(item);
+
+#ifdef _WIN32
     //Use for lnk resolve
     CoInitialize(NULL);   //<< add
 #endif
@@ -27,6 +32,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engineSwitcher;
     engineSwitcher.load(QUrl(QStringLiteral("qrc:ReSwitcher.qml")));
     QObject *itemSwitcher = engineSwitcher.rootObjects().first();
+    setNoActivable(itemSwitcher);
+
 
 
     updateScreenInfo(item);

@@ -1,10 +1,11 @@
 #include "re_bumpers.h"
 #include <QThread>
 
-ReBumpers::ReBumpers(QObject *item, ReState *st, QObject *parent) : QObject(parent)
+ReBumpers::ReBumpers(QObject *item, QObject *switcher, ReState *st, QObject *parent) : QObject(parent)
 {
     ui = item;
     state = st;
+    uiSwitcher = switcher;
 }
 
 #ifdef _WIN32
@@ -18,7 +19,14 @@ void ReBumpers::buttonL1Pressed()
     }
     else
     {
-        executeAhk("button_l1");
+        if( isItemVisible(uiSwitcher) )
+        {
+            QQmlProperty::write(uiSwitcher, "visible", 0);
+        }
+        else
+        {
+            executeAhk("button_l1");
+        }
     }
 }
 
@@ -32,7 +40,7 @@ void ReBumpers::buttonL2Pressed()
     }
     else
     {
-        executeAhk("button_l2");
+         executeAhk("button_l2");
     }
 }
 

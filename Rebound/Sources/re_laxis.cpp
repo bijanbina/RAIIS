@@ -38,12 +38,30 @@ void ReLAxis::buttonLeftPressed()
 
 void ReLAxis::buttonUpPressed()
 {
-    executeAhk("laxis_up");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("laxis_up");
+    }
+    else
+    {
+        executeAhk("laxis_up");
+    }
 }
 
 void ReLAxis::buttonDownPressed()
 {
-    executeAhk("laxis_down");
+    if( state->ui_visible )
+    {
+         state->toggleUi(ui);
+         QThread::msleep(20);
+         executeUi("laxis_down");
+    }
+    else
+    {
+        executeAhk("laxis_down");
+    }
 }
 #elif __linux__
 void ReLAxis::buttonRightPressed()

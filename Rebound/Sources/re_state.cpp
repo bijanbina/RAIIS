@@ -3,7 +3,7 @@
 ReState::ReState(QObject *parent) : QObject(parent)
 {
     i_mode = RE_MODE_HIDDEN;
-    i_proc = RE_PROC_UNKNOWN;
+    i_proc = RE_WIN_UNKNOWN;
     ui_visible = false;
 
 #ifdef _WIN32
@@ -50,31 +50,31 @@ void ReState::setProcess(QString name)
 {
     if( name.contains("qtcreator.exe") )
     {
-        setProcess(RE_PROC_QT);
+        setProcess(RE_WIN_QT);
     }
     else if( name.contains("firefox.exe") )
     {
-        setProcess(RE_PROC_FIREFOX);
+        setProcess(RE_WIN_FIREFOX);
     }
     else if( name.contains("Spotify.exe") )
     {
-        setProcess(RE_PROC_SPOTIFY);
+        setProcess(RE_WIN_SPOTIFY);
     }
     else if( name.contains("FoxitPhantomPDF.exe") )
     {
-        setProcess(RE_PROC_READING);
+        setProcess(RE_WIN_READING);
     }
     else if( name.contains("FoxitPhantomPDF.exe") )
     {
-        setProcess(RE_PROC_READING);
+        setProcess(RE_WIN_READING);
     }
     else if( name.contains("atom.exe") )
     {
-        setProcess(RE_PROC_GEDIT);
+        setProcess(RE_WIN_TEXTEDITOR);
     }
     else if( name.contains("Clover.exe") )
     {
-        setProcess(RE_PROC_NAUTILUS);
+        setProcess(RE_WIN_EXPLORER);
     }
 }
 

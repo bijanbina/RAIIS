@@ -21,6 +21,7 @@ typedef struct ReWindow
 {
     // verify clear on each enumeration to
     int  verify; //verify hwnd still exist
+    int  type;
     QString title;
     QString pname;
 #ifdef _WIN32
