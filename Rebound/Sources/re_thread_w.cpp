@@ -1,4 +1,5 @@
 #include "re_thread_w.h"
+#include "backend.h"
 
 #define re_state_mode thread_data->state->i_mode
 
@@ -139,10 +140,48 @@ void re_getType(ReWindow *win)
             qDebug() << class_name << win->pname ;
         }
     }
+    else if( class_name.contains("MozillaWindowClass") )
+    {
+        win->type = RE_WIN_FIREFOX;
+
+        QString title = "Firef : ";
+        title += win->title.split("\ufffd").at(0);
+        win->title = title;
+
+        if ( win->title.contains(" - YouTube"))
+        {
+            qDebug() << "FFF" << class_name << win->pname ;
+            win->type = RE_WIN_YOUTUBE;
+        }
+
+    }
+    else if( class_name.contains("ConsoleWindowClass") )
+    {
+        win->type = RE_WIN_TERMINAL;
+
+        QString title = "CMD  : ";
+        title += win->title.split("\ufffd").at(0);
+//        win->title = title;
+
+    }
     else
     {
         win->type = RE_WIN_UNKNOWN;
         qDebug() << class_name << win->pname;
+    }
+}
+
+int re_isVpnConnected()
+{
+    QString output = getStrCommand("netsh interface ipv4 show config | find \"MK2\"");
+
+    if ( output.length() )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
     }
 }
 
@@ -660,6 +699,15 @@ void ReThreadW::updateActiveWindow()
     }
 
     re_getType(&win_active);
+
+    if( win_active.type==RE_WIN_YOUTUBE )
+    {
+        thread_data->state->youtube_mode = 1;
+    }
+    else
+    {
+        thread_data->state->youtube_mode = 0;
+    }
 //    char class_name[128];
 //    GetClassNameA(HwndA, class_name, 128);
 //    QString class_a = class_name;
@@ -707,6 +755,7 @@ void reRunThread(void *thread_struct_void)
 //                priv->syncElemsName();
             }
             cntr = 0;
+            thread_data->state->vpn_connected = re_isVpnConnected();
         }
         if(!thread_data->message.isEmpty())
         {

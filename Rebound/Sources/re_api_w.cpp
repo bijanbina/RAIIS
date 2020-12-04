@@ -190,6 +190,19 @@ QString ReApiW::getLinkPath(QString path)
     return target;
 }
 
+//retreive link from ProgramData instead of user account
+QString ReApiW::getLinkPathB(QString path)
+{
+    char target[MAX_PATH];
+
+    QString lnk = getenv("PROGRAMDATA");
+    lnk += "\\Microsoft\\Windows\\Start Menu\\Programs\\";
+    lnk += path;
+
+    ResolveIt(lnk.toStdString().c_str(), target);
+
+    return target;
+}
 
 void lunnchExe(QString name)
 {
@@ -221,6 +234,16 @@ void ReApiW::openApp(int appid)
     if ( appid==RE_WIN_TELEGRAM )
     {
         link_path = getLinkPath("Telegram Desktop\\Telegram.lnk");
+        lunnchExe(link_path);
+    }
+    else if ( appid==RE_WIN_FIREFOX )
+    {
+        link_path = getLinkPathB("Firefox Developer Edition.lnk");
+        lunnchExe(link_path);
+    }
+    else if ( appid==RE_WIN_SPOTIFY )
+    {
+        link_path = getLinkPath("Spotify.lnk");
         lunnchExe(link_path);
     }
 }

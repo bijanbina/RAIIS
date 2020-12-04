@@ -61,6 +61,8 @@ public:
 #endif
     int ui_visible;
     int i_mode;
+    int vpn_connected = 0;
+    int youtube_mode  = 0;
     ReWindow app; //Active Window
 
 signals:

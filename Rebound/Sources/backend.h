@@ -45,7 +45,7 @@ struct assistant_options{
 assistant_options loadOptions();
 
 int getIntCommand(char *command);
-QString getStrCommand(QString *command);
+QString getStrCommand(QString command);
 
 screen_pos getPrimaryScreen();
 void changeLaguageBack();
@@ -57,6 +57,7 @@ int isItemVisible(QObject *item);
 #ifdef _WIN32
 void executeAhk(QString name);
 void executeUi(QString name);
+void executeYoutube(QString name);
 #endif
 
 #endif // BACKEND_H

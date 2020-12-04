@@ -1,3 +1,5 @@
+#NoTrayIcon
+
 WinGet, WinProcessName, ProcessName, A
 if (WinProcessName = "firefox.exe")
 {

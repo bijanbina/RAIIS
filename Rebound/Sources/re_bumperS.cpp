@@ -25,7 +25,15 @@ void ReBumpers::buttonL1Pressed()
         }
         else
         {
-            executeAhk("button_l1");
+            if( state->youtube_mode )
+            {
+                qDebug() << "fuck";
+                executeYoutube("l1");
+            }
+            else
+            {
+                executeAhk("button_l1");
+            }
         }
     }
 }

@@ -21,6 +21,10 @@ else if (WinProcessName = "Telegram.exe")
 {
   Send, {PgDn}
 }
+else if (WinProcessName = "qtcreator.exe")
+{
+  Send, {PgDn}
+}
 else
 {
   MsgBox, ProcessName = %WinProcessName%

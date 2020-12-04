@@ -11,6 +11,10 @@ else if (WinProcessName = "atom.exe")
 {
   Send, ^w
 }
+else if (WinProcessName = "Spotify.exe")
+{
+  Send, {Space}
+}
 else
 {
   MsgBox, ProcessName = %WinProcessName%

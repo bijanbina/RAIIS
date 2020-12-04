@@ -30,6 +30,8 @@
 #define RE_WIN_TEXTEDITOR  6
 #define RE_WIN_OVERVIEW    7
 #define RE_WIN_TELEGRAM    8
+#define RE_WIN_TERMINAL    9
+#define RE_WIN_YOUTUBE     10
 
 class ReApiW : public QObject
 {
@@ -45,6 +47,7 @@ public:
     void setActiveWindow(HWND hWnd);
     void openApp(int appid);
     QString getLinkPath(QString path);
+    QString getLinkPathB(QString path);
 
     QStringList wins_title;
     QStringList elems_name;

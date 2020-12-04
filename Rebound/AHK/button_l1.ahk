@@ -1,9 +1,13 @@
-;[Acc functions]
-;Acc library (MSAA) and AccViewer download links - AutoHotkey Community
-;https://autohotkey.com/boards/viewtopic.php?f=6&t=26201
+#NoTrayIcon
 
-;tested on Windows 7
+WinGet, WinProcessName, ProcessName, A
+if ( WinProcessName="firefox.exe" )
+{
+  Send, {Escape}
+}
+else
+{
 
-MsgBox, Done
+}
 
 Return

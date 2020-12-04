@@ -20,7 +20,16 @@ void ReButtons::buttonAPressed()
 {
     if( state->ui_visible )
     {
-        state->propageteMode(RE_MODE_APPLICATION);
+        if ( state->getMode()==RE_MODE_APPLICATION )
+        {
+            state->toggleUi(ui);
+            state->api->openApp(RE_WIN_TELEGRAM);
+            qDebug() << "openApp";
+        }
+        else
+        {
+            state->propageteMode(RE_MODE_APPLICATION);
+        }
     }
     else
     {
@@ -32,7 +41,23 @@ void ReButtons::buttonBPressed()
 {
     if( state->ui_visible )
     {
-         state->propageteMode(RE_MODE_SPOTIFY);
+         if ( state->getMode()==RE_MODE_APPLICATION )
+         {
+             state->toggleUi(ui);
+
+             if( state->vpn_connected )
+             {
+                 system("rasdial MK2 /DISCONNECT");
+             }
+             else
+             {
+                 system("rasdial MK2 km93057 48868");
+             }
+         }
+         else
+         {
+             state->propageteMode(RE_MODE_SPOTIFY);
+         }
     }
     else
     {
@@ -44,9 +69,18 @@ void ReButtons::buttonXPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("x");
+        if ( state->getMode()==RE_MODE_APPLICATION )
+        {
+            state->toggleUi(ui);
+            state->api->openApp(RE_WIN_FIREFOX);
+            qDebug() << "openApp";
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executeUi("x");
+        }
     }
     else
     {
@@ -58,7 +92,16 @@ void ReButtons::buttonYPressed()
 {
     if( state->ui_visible )
     {
-        state->propageteMode(RE_MODE_SWITCH);
+        if ( state->getMode()==RE_MODE_APPLICATION )
+        {
+            state->toggleUi(ui);
+            state->api->openApp(RE_WIN_SPOTIFY);
+            qDebug() << "openApp";
+        }
+        else
+        {
+            state->propageteMode(RE_MODE_SWITCH);
+        }
     }
     else
     {
@@ -70,16 +113,7 @@ void ReButtons::buttonStartPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_APPLICATION )
-        {
-            state->toggleUi(ui);
-            state->api->openApp(RE_WIN_TELEGRAM);
-            qDebug() << "openApp";
-        }
-        else
-        {
-            state->toggleUi(ui);
-        }
+        state->toggleUi(ui);
     }
     else
     {
@@ -91,8 +125,8 @@ void ReButtons::buttonGuidePressed()
 {
     if( state->ui_visible )
     {
-//        state->toggleUi(ui);
-//        QThread::msleep(20);
+        state->toggleUi(ui);
+        QThread::msleep(20);
 //        executeUi("select");
         state->hardware->disconnectXbox();
     }

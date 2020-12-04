@@ -27,7 +27,7 @@ Window
     property int process_id: 1
     property string process_title: ""
     property int active_process: 1
-    property int max_timer: 900
+    property int max_timer: 700
 
     //Signals:
     signal selectWindow(int activeProcessId)

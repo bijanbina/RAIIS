@@ -9,6 +9,10 @@ else if (WinProcessName = "Explorer.EXE")
 {
   Send, ^+{Tab}
 }
+else if (WinProcessName = "Spotify.exe")
+{
+  Send, ^r
+}
 else
 {
   MsgBox, ProcessName = %WinProcessName%

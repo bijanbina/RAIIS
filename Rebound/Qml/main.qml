@@ -22,8 +22,8 @@ Window
 
     onVisibleChanged:
     {
-        x = x_base + (Screen.width  - minimumWidth)  / 2;
-        y =y_base + (Screen.height - minimumHeight) / 2;
+        x = x_base + (Screen.width  - minimumWidth ) / 2;
+        y = y_base + (Screen.height - minimumHeight) / 2;
     }
 
     onFocusObjectChanged:

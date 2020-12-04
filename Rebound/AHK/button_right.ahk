@@ -7,7 +7,7 @@ if (WinProcessName = "Spotify.exe")
 }
 else if (WinProcessName = "firefox.exe")
 {
-  Send, ^{Tab}
+  Send, {Right}
 }
 else if (WinProcessName = "Explorer.EXE")
 {

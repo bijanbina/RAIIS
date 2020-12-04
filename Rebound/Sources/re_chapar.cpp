@@ -119,17 +119,17 @@ void ReChapar::updateMode()
     }
     else if( state->getMode()==RE_MODE_APPLICATION )
     {
-        c_page.x_action = "Firefox";
-        c_page.y_action = "Spotify";
-        c_page.a_action = "PNA";
-        c_page.b_action = "GT6";
+        c_page.x_action = "Open Firefox";
+        c_page.y_action = "Open Spotify";
+        c_page.a_action = "Open Telegram";
+        c_page.b_action = "Connect VPN";
         c_page.s_action = "DOA";
 
         c_page.r1_action = "Qt Creator";
         c_page.r2_action = "Git Kraken";
         c_page.l1_action = "Allegro 17.4";
         c_page.l2_action = "Allegro 17.2";
-        c_page.m_action = "Telegram";
+        c_page.m_action = "Close Super Mode";
 
         c_page.lau_action = "Sajad jooOon";
         c_page.lad_action = "Bijan Joon";
@@ -144,6 +144,12 @@ void ReChapar::updateMode()
         c_page.down_action = "Switch to Workspace #3";
         c_page.right_action = "Switch to Workspace #4";
         c_page.axis_state = "0";
+
+
+        if ( state->vpn_connected )
+        {
+            c_page.b_action = "Disconnect VPN";
+        }
     }
     else if( state->getMode()==RE_MODE_SWITCH )
     {
