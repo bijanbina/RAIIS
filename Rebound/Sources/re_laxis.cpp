@@ -12,9 +12,16 @@ void ReLAxis::buttonRightPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("laxis_right");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("laxis_right", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("laxis_right", RE_SCR_UI);
+        }
     }
     else
     {
@@ -26,9 +33,16 @@ void ReLAxis::buttonLeftPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("laxis_left");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("laxis_left", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("laxis_left", RE_SCR_UI);
+        }
     }
     else
     {
@@ -40,9 +54,16 @@ void ReLAxis::buttonUpPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("laxis_up");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("laxis_up", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("laxis_up", RE_SCR_UI);
+        }
     }
     else
     {
@@ -54,9 +75,16 @@ void ReLAxis::buttonDownPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("laxis_down");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("laxis_down", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("laxis_down", RE_SCR_UI);
+        }
     }
     else
     {

@@ -14,7 +14,7 @@ void ReDirections::buttonDownPressed()
     {
          state->toggleUi(ui);
          QThread::msleep(20);
-         executeUi("button_down");
+         executScript("button_down", RE_SCR_UI);
     }
     else
     {
@@ -28,7 +28,7 @@ void ReDirections::buttonUpPressed()
     {
          state->toggleUi(ui);
          QThread::msleep(20);
-         executeUi("button_up");
+         executScript("button_up", RE_SCR_UI);
     }
     else
     {
@@ -42,7 +42,7 @@ void ReDirections::buttonRightPressed()
     {
          state->toggleUi(ui);
          QThread::msleep(20);
-         executeUi("button_right");
+         executScript("button_right", RE_SCR_UI);
     }
     else
     {
@@ -56,7 +56,7 @@ void ReDirections::buttonLeftPressed()
     {
          state->toggleUi(ui);
          QThread::msleep(20);
-         executeUi("button_left");
+         executScript("button_left", RE_SCR_UI);
     }
     else
     {

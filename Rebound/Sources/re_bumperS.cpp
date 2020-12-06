@@ -13,9 +13,16 @@ void ReBumpers::buttonL1Pressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("l1");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("l1", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("l1", RE_SCR_UI);
+        }
     }
     else
     {
@@ -28,7 +35,7 @@ void ReBumpers::buttonL1Pressed()
             if( state->youtube_mode )
             {
                 qDebug() << "fuck";
-                executeYoutube("l1");
+                executScript("l1", RE_SCR_YOUTUBE);
             }
             else
             {
@@ -42,9 +49,16 @@ void ReBumpers::buttonL2Pressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("l2");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("l2", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("l2", RE_SCR_UI);
+        }
     }
     else
     {
@@ -56,9 +70,16 @@ void ReBumpers::buttonR1Pressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(00);
-         executeUi("r1");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("r1", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("r1", RE_SCR_UI);
+        }
     }
     else
     {
@@ -70,9 +91,16 @@ void ReBumpers::buttonR2Pressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("r2");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("r2", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("r2", RE_SCR_UI);
+        }
     }
     else
     {

@@ -190,21 +190,32 @@ void ReChapar::updateMode()
         c_page.x_action = "Play/Pause";
         c_page.y_action = "Repeat Mode";
         c_page.a_action = "Like Song";
-        c_page.b_action = "New Playlist";
+        c_page.b_action = "Stop Music";
+        c_page.m_action = "Close Super Mode";
+        c_page.s_action = "Mute/UnMute";
 
-        c_page.r1_action = "Increase Volume";
-        c_page.l1_action = "Decrease Volume";
-        c_page.r2_action = "Next Music";
-        c_page.l2_action = "Previous Music";
+        c_page.r1_action = "Next Music";
+        c_page.l1_action = "Prev Music";
+        c_page.r2_action = "Increase Volume";
+        c_page.l2_action = "Decrease Volume";
 
-        c_page.lau_action = state->api->getElemName(0).split(" ")[0];
-        c_page.lar_action = state->api->getElemName(1).split(" ")[0];
-        c_page.lal_action = state->api->getElemName(2).split(" ")[0];
-        c_page.lad_action = state->api->getElemName(3).split(" ")[0];
-        c_page.rau_action = state->api->getElemName(4).split(" ")[0];
-        c_page.rar_action = state->api->getElemName(5).split(" ")[0];
-        c_page.ral_action = state->api->getElemName(6).split(" ")[0];
-        c_page.rad_action = state->api->getElemName(7).split(" ")[0];
+        c_page.lau_action = "-40% Volume";
+        c_page.lar_action = "-30% Volume";
+        c_page.lal_action = "-20% Volume";
+        c_page.lad_action = "-10% Volume";
+        c_page.rau_action = "+40% Volume";
+        c_page.rar_action = "+30% Volume";
+        c_page.ral_action = "+20% Volume";
+        c_page.rad_action = "+10% Volume";
+
+//        c_page.lau_action = state->api->getElemName(0).split(" ")[0];
+//        c_page.lar_action = state->api->getElemName(1).split(" ")[0];
+//        c_page.lal_action = state->api->getElemName(2).split(" ")[0];
+//        c_page.lad_action = state->api->getElemName(3).split(" ")[0];
+//        c_page.rau_action = state->api->getElemName(4).split(" ")[0];
+//        c_page.rar_action = state->api->getElemName(5).split(" ")[0];
+//        c_page.ral_action = state->api->getElemName(6).split(" ")[0];
+//        c_page.rad_action = state->api->getElemName(7).split(" ")[0];
     }
     setPage(c_page);
 #endif

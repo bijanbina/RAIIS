@@ -15,7 +15,7 @@ else if (WinProcessName = "Explorer.EXE")
 }
 else if (WinProcessName = "atom.exe")
 {
-  Send, ^{PgDn}
+  Send, {PgDn}
 }
 else if (WinProcessName = "Telegram.exe")
 {

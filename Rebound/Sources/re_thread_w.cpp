@@ -143,17 +143,14 @@ void re_getType(ReWindow *win)
     else if( class_name.contains("MozillaWindowClass") )
     {
         win->type = RE_WIN_FIREFOX;
+        if ( win->title.contains(" - YouTube"))
+        {
+            win->type = RE_WIN_YOUTUBE;
+        }
 
         QString title = "Firef : ";
         title += win->title.split("\ufffd").at(0);
         win->title = title;
-
-        if ( win->title.contains(" - YouTube"))
-        {
-            qDebug() << "FFF" << class_name << win->pname ;
-            win->type = RE_WIN_YOUTUBE;
-        }
-
     }
     else if( class_name.contains("ConsoleWindowClass") )
     {

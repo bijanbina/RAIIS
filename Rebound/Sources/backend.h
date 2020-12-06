@@ -31,6 +31,10 @@
 #define RE_CHECK_IN   4     //check input(native mode)
 #define RE_TAB_TIME   900   //Alt pressed time
 
+#define RE_SCR_UI      1     //Alt pressed time
+#define RE_SCR_YOUTUBE 2     //Alt pressed time
+#define RE_SCR_SPOTIFY 3     //Alt pressed time
+
 struct screen_pos{
     int x;
     int y;
@@ -56,8 +60,7 @@ int isItemVisible(QObject *item);
 
 #ifdef _WIN32
 void executeAhk(QString name);
-void executeUi(QString name);
-void executeYoutube(QString name);
+void executScript(QString name, int id);
 #endif
 
 #endif // BACKEND_H

@@ -54,6 +54,10 @@ void ReButtons::buttonBPressed()
                  system("rasdial MK2 km93057 48868");
              }
          }
+         else if ( state->getMode()==RE_MODE_SPOTIFY )
+         {
+             executScript("b", RE_SCR_SPOTIFY);
+         }
          else
          {
              state->propageteMode(RE_MODE_SPOTIFY);
@@ -75,11 +79,15 @@ void ReButtons::buttonXPressed()
             state->api->openApp(RE_WIN_FIREFOX);
             qDebug() << "openApp";
         }
+        else if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("x", RE_SCR_SPOTIFY);
+        }
         else
         {
             state->toggleUi(ui);
             QThread::msleep(20);
-            executeUi("x");
+            executScript("x", RE_SCR_UI);
         }
     }
     else
@@ -97,6 +105,10 @@ void ReButtons::buttonYPressed()
             state->toggleUi(ui);
             state->api->openApp(RE_WIN_SPOTIFY);
             qDebug() << "openApp";
+        }
+        else if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("y", RE_SCR_SPOTIFY);
         }
         else
         {
@@ -127,7 +139,7 @@ void ReButtons::buttonGuidePressed()
     {
         state->toggleUi(ui);
         QThread::msleep(20);
-//        executeUi("select");
+//        executScript("select");
         state->hardware->disconnectXbox();
     }
     else
@@ -140,9 +152,16 @@ void ReButtons::buttonSelectPressed()
 {
     if( state->ui_visible )
     {
-        state->toggleUi(ui);
-        QThread::msleep(20);
-        executeUi("button_select");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("button_select", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("button_select", RE_SCR_UI);
+        }
     }
     else
     {

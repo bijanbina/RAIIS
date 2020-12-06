@@ -12,9 +12,16 @@ void ReRAxis::buttonRightPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("raxis_right");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("raxis_right", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("raxis_right", RE_SCR_UI);
+        }
     }
     else
     {
@@ -26,9 +33,16 @@ void ReRAxis::buttonLeftPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("raxis_left");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("raxis_left", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("raxis_left", RE_SCR_UI);
+        }
     }
     else
     {
@@ -40,9 +54,16 @@ void ReRAxis::buttonUpPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("raxis_up");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("raxis_up", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("raxis_up", RE_SCR_UI);
+        }
     }
     else
     {
@@ -54,9 +75,16 @@ void ReRAxis::buttonDownPressed()
 {
     if( state->ui_visible )
     {
-         state->toggleUi(ui);
-         QThread::msleep(20);
-         executeUi("raxis_down");
+        if ( state->getMode()==RE_MODE_SPOTIFY )
+        {
+            executScript("raxis_down", RE_SCR_SPOTIFY);
+        }
+        else
+        {
+            state->toggleUi(ui);
+            QThread::msleep(20);
+            executScript("raxis_down", RE_SCR_UI);
+        }
     }
     else
     {
