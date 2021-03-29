@@ -156,6 +156,10 @@ void ReButtons::buttonSelectPressed()
         {
             executScript("button_select", RE_SCR_SPOTIFY);
         }
+        else if ( state->getMode()==RE_MODE_APPLICATION )
+        {
+            executeAhk("suspend");
+        }
         else
         {
             state->toggleUi(ui);

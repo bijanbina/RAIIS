@@ -123,7 +123,7 @@ void ReChapar::updateMode()
         c_page.y_action = "Open Spotify";
         c_page.a_action = "Open Telegram";
         c_page.b_action = "Connect VPN";
-        c_page.s_action = "DOA";
+        c_page.s_action = "Suspend the PC";
 
         c_page.r1_action = "Qt Creator";
         c_page.r2_action = "Git Kraken";

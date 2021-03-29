@@ -16,3 +16,7 @@ Rebound/Rebound.pro.user
 Rebound/debug/
 
 *.autosave
+
+*.o
+
+Rebound/release/
