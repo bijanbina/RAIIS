@@ -4,6 +4,7 @@ ReXboxW::ReXboxW(ReState *st, QObject *parent) : QObject(parent)
 {
     state = st;
     tcp = new ReServer(state);
+    admin = new ReAdminWin(7611);
     isNative = true;
 
 #ifdef _WIN32

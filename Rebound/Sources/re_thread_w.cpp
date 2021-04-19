@@ -5,6 +5,7 @@
 
 int counter = 0;
 int child_num = 3;
+int win_thread_debug = 0;
 
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 {
@@ -137,7 +138,10 @@ void re_getType(ReWindow *win)
         else
         {
             win->type = RE_WIN_UNKNOWN;
-            qDebug() << class_name << win->pname ;
+            if( win_thread_debug )
+            {
+                qDebug() << class_name << win->pname;
+            }
         }
     }
     else if( class_name.contains("MozillaWindowClass") )
@@ -164,7 +168,10 @@ void re_getType(ReWindow *win)
     else
     {
         win->type = RE_WIN_UNKNOWN;
-        qDebug() << class_name << win->pname;
+        if( win_thread_debug )
+        {
+            qDebug() << class_name << win->pname;
+        }
     }
 }
 

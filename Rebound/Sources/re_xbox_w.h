@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "re_server.h"
+#include "re_admin_win.h"
 #include "re_state.h"
 #ifdef _WIN32
 #include <QGamepad>
@@ -88,6 +89,7 @@ private:
     ReState  *state;
     ReServer *tcp;
     QGamepad *pad;
+    ReAdminWin *admin;
 
     int isNative;
 

@@ -8,7 +8,6 @@ win32:QT += gamepad
 
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
-           Sources/re_admin_win.cpp \
            Sources/re_chapar.cpp \
            Sources/re_client.cpp \
            Sources/re_state.cpp \
@@ -23,7 +22,8 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_xbox_w.cpp \
                  Sources/re_api_w.cpp \
                  Sources/re_thread_w.cpp \
-                 Sources/re_hardware_w.cpp
+                 Sources/re_hardware_w.cpp \
+                 Sources/re_admin_win.cpp
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
@@ -32,7 +32,6 @@ linux:SOURCES += \
                  Sources/re_thread_l.cpp
 
 HEADERS += Sources/backend.h \
-           Sources/re_admin_win.h \
            Sources/re_chapar.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
@@ -48,6 +47,7 @@ win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_w.h \
                  Sources/re_api_w.h \
                  Sources/re_thread_w.h \
+                 Sources/re_admin_win.h \
                  Sources/re_hardware_w.h
 
 linux:HEADERS += \

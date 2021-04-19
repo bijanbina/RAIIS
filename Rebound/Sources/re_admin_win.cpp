@@ -1,5 +1,6 @@
 #include "re_admin_win.h"
 #include <string.h>
+#include <shellapi.h>
 
 #define JOYSTICK_DELAY 100
 
@@ -31,7 +32,7 @@ ReAdminWin::~ReAdminWin()
 
 void ReAdminWin::acceptConnection()
 {
-    qDebug() << "Server: Accepted connection";
+    qDebug() << "Admin Server: Accepted connection";
     connection_socket = server->nextPendingConnection();
     connection_socket->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(connection_socket, SIGNAL(readyRead()),
@@ -45,14 +46,16 @@ void ReAdminWin::acceptConnection()
 void ReAdminWin::readyRead()
 {
     QByteArray data = connection_socket->readAll();
+    qDebug() << "received data:" << data;
+
+
 
 #ifdef _WIN32
-    if( data=="M" )
-    {
-        ///FIXME
-        emit clientReqSusspend();
-//        win->buttonGuideChanged();
-    }
+    QString command = "O:\\Projects\\AccJoon\\release\\AccJoon.exe";
+
+    qDebug() << "Execute command:" << command << data;
+
+    ShellExecuteA(0, "open", command.toStdString().c_str(), data.toStdString().c_str(), 0, SW_HIDE);
 #endif
 }
 
