@@ -25,6 +25,10 @@ else if (WinProcessName = "qtcreator.exe")
 {
   Send, {PgDn}
 }
+else if (WinProcessName = "gallery.exe")
+{
+  Send, {Down}
+}
 else
 {
   MsgBox, ProcessName = %WinProcessName%

@@ -24,19 +24,19 @@ else if (input = "button_select")
 }
 else if (input = "button_left")
 {
-  Send, {Ctrl down}{Alt down}{1}{Alt up}{Ctrl up}
+  Send, {Ctrl down}{Shift down}{Alt down}1{Shift up}{Alt Up}{Ctrl Up}
 }
 else if (input = "button_up")
 {
-  Send, {Ctrl down}{Alt down}{2}{Alt up}{Ctrl up}
+  Send, {Ctrl down}{Shift down}{Alt down}2{Shift up}{Alt Up}{Ctrl Up}
 }
 else if (input = "button_down")
 {
-  Send, {Ctrl down}{Alt down}{3}{Alt up}{Ctrl up}
+  Send, {Ctrl down}{Shift down}{Alt down}3{Shift up}{Alt Up}{Ctrl Up}
 }
 else if (input = "button_right")
 {
-  Send, {Ctrl down}{Alt down}{4}{Alt up}{Ctrl up}
+  Send, {Ctrl down}{Shift down}{Alt down}4{Shift up}{Alt Up}{Ctrl Up}
 }
 else if (input = "laxis_left")
 {

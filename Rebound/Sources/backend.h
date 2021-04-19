@@ -31,9 +31,9 @@
 #define RE_CHECK_IN   4     //check input(native mode)
 #define RE_TAB_TIME   900   //Alt pressed time
 
-#define RE_SCR_UI      1     //Alt pressed time
-#define RE_SCR_YOUTUBE 2     //Alt pressed time
-#define RE_SCR_SPOTIFY 3     //Alt pressed time
+#define RE_SCR_UI      1     //UI Mode
+#define RE_SCR_YOUTUBE 2     //YouTube Mode
+#define RE_SCR_SPOTIFY 3     //Spotify Mode
 
 struct screen_pos{
     int x;
