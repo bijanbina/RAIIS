@@ -20,3 +20,5 @@ Rebound/debug/
 *.o
 
 Rebound/release/
+
+*.log
