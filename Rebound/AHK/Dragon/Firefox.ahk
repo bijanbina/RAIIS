@@ -3,7 +3,7 @@
 arg1=%1%
 arg2=%2%
 
-if ( arg1="CopyLeft" )
+if ( arg1="FoxScroll" )
 {
     count := re_getNum(arg2)
     Send, {Ctrl down}{Shift down}{Left %count%}{Shift up}{Ctrl up}

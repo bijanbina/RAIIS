@@ -3,7 +3,8 @@ arg1=%1%
 
 if (arg1 = "1")
 {
-    Run, O:\Projects\AccJoon\release\AccJoon.exe "L" "4.33.4.1", ,Min
+    EnvGet, ReboundPath, RE_PATH
+    Run, %ReboundPath%\release\AccJoon.exe "L" "4.33.4.1", ,Min
     Sleep, 100
 }
 
