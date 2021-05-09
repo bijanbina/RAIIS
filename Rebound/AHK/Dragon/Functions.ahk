@@ -36,9 +36,49 @@ re_getNum(text)
     {
         return 9
     }
-    else if (arg1 = "ten" )
+    else if( text=="ten" )
     {
         return 10
+    }
+    else if( text=="eleven" )
+    {
+        return 11
+    }
+    else if( text=="twelve" )
+    {
+        return 12
+    }
+    else if( text=="thirteen" )
+    {
+        return 13
+    }
+    else if( text=="fourteen" )
+    {
+        return 14
+    }
+    else if( text=="fifteen" )
+    {
+        return 15
+    }
+    else if( text=="sixteen" )
+    {
+        return 16
+    }
+    else if( text=="seventeen" )
+    {
+        return 17
+    }
+    else if( text=="eighteen" )
+    {
+        return 18
+    }
+    else if( text=="nineteen" )
+    {
+        return 19
+    }
+    else if( text=="twenty" )
+    {
+        return 20
     }
     else
     {
