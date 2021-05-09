@@ -1,90 +1,8 @@
+#Include Functions.ahk
+
 arg1=%1%
 
-if (arg1 = "one")
-{
-  MouseMove, 180, 100
-  Sleep, 50
-  Click
-}
-else if (arg1 = "two")
-{
-  MouseMove, 180, 165
-  Sleep, 50
-  Click
-}
-else if (arg1 = "three")
-{
-  MouseMove, 180, 230
-  Sleep, 50
-  Click
-}
-else if (arg1 = "four")
-{
-  MouseMove, 180, 300
-  Sleep, 50
-  Click
-}
-else if (arg1 = "five")
-{
-  MouseMove, 180, 365
-  Sleep, 50
-  Click
-}
-else if (arg1 = "six")
-{
-  MouseMove, 180, 430
-  Sleep, 50
-  Click
-}
-else if (arg1 = "seven")
-{
-  MouseMove, 180, 500
-  Sleep, 50
-  Click
-}
-else if (arg1 = "eight")
-{
-  MouseMove, 180, 560
-  Sleep, 50
-  Click
-}
-else if (arg1 = "nine")
-{
-  MouseMove, 180, 620
-  Sleep, 50
-  Click
-}
-else if (arg1 = "ten")
-{
-  MouseMove, 180, 680
-  Sleep, 50
-  Click
-}
-else if (arg1 = "eleven")
-{
-  MouseMove, 180, 740
-  Sleep, 50
-  Click
-}
-else if (arg1 = "twelve")
-{
-  MouseMove, 180, 800
-  Sleep, 50
-  Click
-}
-else if (arg1 = "thirteen")
-{
-  MouseMove, 180, 860
-  Sleep, 50
-  Click
-}
-else if (arg1 = "fourteen")
-{
-  MouseMove, 180, 920
-  Sleep, 50
-  Click
-}
-else if (arg1 = "settings")
+if (arg1 = "settings")
 {
   MouseMove, 20, 50
   Sleep, 50
@@ -145,5 +63,10 @@ else if (arg1 = "bottom")
 }
 else
 {
+    count := re_getNum(arg1)
+    position_y := count*67 + 35
 
+    MouseMove, 180, %position_y%
+    Sleep, 50
+    Click
 }

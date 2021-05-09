@@ -9,13 +9,13 @@ if ( arg1="CopyLeft" )
     Send, {Ctrl down}{Shift down}{Left %count%}{Shift up}{Ctrl up}
     Send, {Ctrl down}c{Ctrl up}
 }
-else if (arg1 = "CopyRight")
+else if( arg1 =="CopyRight" )
 {
     count := re_getNum(arg2)
     Send, {Ctrl down}{Shift down}{Right %count%}{Shift up}{Ctrl up}
     Send, {Ctrl down}c{Ctrl up}
 }
-else if (arg1 = "CopyFromLine")
+else if( arg1 =="CopyFromLine" )
 {
     count := re_getNum(arg2)
     Send, {Home}
@@ -24,7 +24,7 @@ else if (arg1 = "CopyFromLine")
     Send, {End}{Up %count%}{Enter}
     Send, {Ctrl down}v{Ctrl up}
 }
-else if (arg1 = "GoEndOfLine")
+else if( arg1 =="GoEndOfLine" )
 {
     count := re_getNum(arg2)
 
@@ -36,6 +36,20 @@ else if (arg1 = "GoEndOfLine")
     else
     {
         Send, {Down %count%}{End}
+    }
+}
+else if( arg1 =="GoStartOfLine" )
+{
+    count := re_getNum(arg2)
+
+    if ( count>10 )
+    {
+        count := count - 10
+        Send, {Up %count%}{Home}
+    }
+    else
+    {
+        Send, {Down %count%}{Home}
     }
 }
 else if( arg1="GoLeft" )
