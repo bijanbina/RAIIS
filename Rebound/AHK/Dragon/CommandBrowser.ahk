@@ -3,11 +3,10 @@
 CoordMode, Mouse, Relative
 arg1=%1%
 
-if ( arg1="1" )
+if ( arg1="export" )
 {
     EnvGet, ReboundPath, RE_PATH
-    ; Run, %ReboundPath%\release\AccJoon.exe "L" "4.33.4.1", ,Min
-    Run, O:\Projects\AccJoon\release\AccJoon.exe "L" "4.33.4.1", ,Min
+    Run, %ReboundPath%\..\..\AccJoon\release\AccJoon.exe "L" "4.33.4.1", ,Min
     Sleep, 200 ;wait for run to finish
     Click, 400, 200
 

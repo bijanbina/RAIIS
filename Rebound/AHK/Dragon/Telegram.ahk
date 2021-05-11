@@ -64,7 +64,7 @@ else if (arg1 = "bottom")
 else
 {
     count := re_getNum(arg1)
-    position_y := count*67 + 35
+    position_y := count*65 + 30
 
     MouseMove, 180, %position_y%
     Sleep, 50

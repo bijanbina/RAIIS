@@ -1,4 +1,5 @@
 arg1=%1%
+EnvGet, ReboundPath, RE_PATH
 
 if (arg1 = "headers")
 {
@@ -30,7 +31,7 @@ else if (arg1 = "qml")
 }
 else if (arg1 = "one")
 {
-    Run, O:\Projects\AccJoon\release\AccJoon.exe "AD" "4.1.3.2.1.2.2.1.1" "0" "0" "Headers", ,Min
+    Run, %ReboundPath%\..\..\AccJoon\release\AccJoon.exe "AD" "4.1.3.2.1.2.2.1.1" "0" "0" "Headers", ,Min
 }
 else if (arg1 = "delta")
 {

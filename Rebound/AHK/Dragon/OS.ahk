@@ -2,48 +2,9 @@
 
 arg1=%1%
 arg2=%2%
+EnvGet, ReboundPath, RE_PATH
 
-if ( arg1="ApplicationSwitcher" )
-{
-    if( arg2="atom" )
-    {
-        WinActivate, ahk_exe atom.exe
-    }
-    else if( arg2="BitTorrent" )
-    {
-        WinActivate, ahk_exe BitTorrent.exe
-    }
-    else if( arg2="spy" )
-    {
-        ;WinActivate, ahk_exe BitTorrent.exe
-    }
-    else if( arg2="VLC" )
-    {
-      	WinActivate, ahk_exe vlc.exe
-    }
-    else if( arg2="delta" )
-    {
-      	;Send, {Ctrl down}{Shift down}{Alt down}4{Shift up}{Alt Up}{Ctrl Up}
-    }
-    else if( arg2="cute" )
-    {
-      	WinActivate, ahk_exe qtcreator.exe
-    }
-    else if( arg2="file" )
-    {
-      	;WinActivate, ahk_exe explorer.exe
-      	WinActivate, ahk_exe clover.exe
-    }
-    else if( arg2="telegram" )
-    {
-      	WinActivate, ahk_exe Telegram.exe
-    }
-    else if( arg2="spotify" )
-    {
-      	WinActivate, ahk_exe Spotify.exe
-    }
-}
-else if( arg1="WorkspaceSwitcher" )
+if( arg1="WorkspaceSwitcher" )
 {
     if( arg2="work" )
     {
@@ -75,5 +36,35 @@ else if( arg1="PdfSetPage" )
 {
     Send, {Ctrl down}g{Ctrl up}
     Send, %arg2%
+    Send, {Enter}
+}
+else if( arg1="OpenSound" )
+{
+    Run, C:\Windows\System32\mmsys.cpl sounds,/e`
+    Sleep, 1000
+    Click, 100, 50
+    Sleep, 100
+
+    Run, %ReboundPath%\..\..\AccJoon\release\AccJoon.exe "D" "4.1.4.2.4" 0 0 "Header Control", ,Min
+    Sleep, 500
+
+    MouseMove, 135, 50
+    Click
+
+    Sleep, 500
+    ControlGet, AgcValue, Checked,, AGC, Microphone
+    if ErrorLevel
+        MsgBox There was a problem.
+    else if (AgcValue = 1)
+    {
+        ;MsgBox Tab #%AgcValue% is active.
+    }
+    if (AgcValue = 0)
+    {
+        Send, {Space}
+    }
+    Sleep, 500
+    Send, {Enter}
+    Sleep, 500
     Send, {Enter}
 }
