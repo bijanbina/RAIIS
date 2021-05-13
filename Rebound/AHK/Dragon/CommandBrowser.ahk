@@ -22,6 +22,16 @@ if ( arg1="export" )
     Sleep, 500
     Send, {Enter}
 }
+else if ( arg1="editor" )
+{
+    Send, {Enter}
+    Sleep, 500
+    Send, {Alt down}{m}{Alt up}
+    Sleep, 500
+    MouseMove, 130, 125
+    Sleep, 500
+    Click, 2
+}
 else
 {
     count := re_getNum(arg1)

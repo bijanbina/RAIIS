@@ -25,6 +25,10 @@ else if( arg1=="file" )
   	;WinActivate, ahk_exe explorer.exe
   	WinActivate, ahk_exe clover.exe
 }
+else if( arg1=="github" )
+{
+  	WinActivate, ahk_exe gitkraken.exe
+}
 else if( arg1=="telegram" )
 {
   	WinActivate, ahk_exe Telegram.exe
