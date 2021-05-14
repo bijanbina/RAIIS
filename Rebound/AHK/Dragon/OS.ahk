@@ -68,3 +68,7 @@ else if( arg1="OpenSound" )
     Sleep, 500
     Send, {Enter}
 }
+else if( arg1="Numbers" )
+{
+    Send, %arg2%
+}
