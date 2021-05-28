@@ -46,3 +46,7 @@ else if( arg1=="vlc" )
 {
   	WinActivate, ahk_exe vlc.exe
 }
+else if( arg1=="words" )
+{
+  	WinActivate, ahk_exe gallery.exe
+}

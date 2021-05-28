@@ -43,10 +43,10 @@ else if( arg1="OpenSound" )
     Run, C:\Windows\System32\mmsys.cpl sounds,/e`
     Sleep, 1000
     Click, 100, 50
-    Sleep, 100
+    Sleep, 500
 
     Run, %ReboundPath%\..\..\AccJoon\release\AccJoon.exe "D" "4.1.4.2.4" 0 0 "Header Control", ,Min
-    Sleep, 500
+    Sleep, 1000
 
     MouseMove, 135, 50
     Click
@@ -71,4 +71,40 @@ else if( arg1="OpenSound" )
 else if( arg1="Numbers" )
 {
     Send, %arg2%
+}
+else if( arg1="PutLeft" )
+{
+    WinGetClass, vWinClass, A
+    if (vWinClass = "CabinetWClass")
+    {
+    	WinActivate, ahk_exe clover.exe
+      Sleep, 200
+      Send, {LWin Down}{LShift Down}{Left}{LShift Up}{LWin Up}
+    }
+    else
+    {
+      Send, {LWin Down}{LShift Down}{Left}{LShift Up}{LWin Up}
+    }
+}
+else if( arg1="PutRight" )
+{
+    WinGetClass, vWinClass, A
+    if (vWinClass = "CabinetWClass")
+    {
+    	WinActivate, ahk_exe clover.exe
+      Sleep, 200
+      Send, {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
+    }
+    else
+    {
+      Send, {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
+    }
+}
+else if( arg1="Explorer" )
+{
+    Run, %ReboundPath%\..\..\AccJoon\Tools\AccExplorer32.exe
+    Sleep, 1000
+    Click, 70, 60
+    Sleep, 1000
+    MouseMove, 260, 60
 }

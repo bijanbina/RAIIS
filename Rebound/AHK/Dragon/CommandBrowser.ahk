@@ -22,6 +22,16 @@ if ( arg1="export" )
     Sleep, 500
     Send, {Enter}
 }
+else if ( arg1="import" )
+{
+    Send, {Ctrl down}{i}{Ctrl up}
+    Sleep, 500
+    Send, %ReboundPath%\AHK\Dragon\Commands.dat
+    Sleep, 1000
+    Send, {Enter}
+    Sleep, 500
+    Send, {Enter}
+}
 else if ( arg1="editor" )
 {
     Send, {Enter}

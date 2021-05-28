@@ -22,3 +22,5 @@ Rebound/debug/
 Rebound/release/
 
 *.log
+
+Rebound/AHK/Dragon/Commands.dat
