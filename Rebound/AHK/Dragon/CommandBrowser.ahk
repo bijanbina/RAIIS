@@ -4,9 +4,18 @@
 CoordMode, Mouse, Relative
 arg1=%1%
 
-if ( arg1="export" )
+if( arg1=="export" )
 {
     EnvGet, ReboundPath, RE_PATH
+
+    MajorVersion := DllCall("GetVersion") & 0xFF
+
+    if( MajorVersion=="10" )
+    {
+        Run, %ReboundPath%\..\..\AccJoon\release\AccJoon.exe "L" "4.32.4.1", ,Min
+        ; MsgBox, This command is not r hello %MajorVersion%
+    }
+
     Run, %ReboundPath%\..\..\AccJoon\release\AccJoon.exe "L" "4.33.4.1", ,Min
     Sleep, 700 ;wait for run to finish
     Click, 400, 200
@@ -18,12 +27,12 @@ if ( arg1="export" )
     Send, {Ctrl down}{x}{Ctrl up}
     Sleep, 400
     Send, %ReboundPath%\AHK\Dragon\Commands.dat
-    Sleep, 1000
+    Sleep, 800
     Send, {Enter}
-    Sleep, 500
+    Sleep, 800
     Send, {Enter}
 }
-else if ( arg1="import" )
+else if( arg1=="import" )
 {
     Send, {Ctrl down}{i}{Ctrl up}
     Sleep, 500
@@ -40,7 +49,7 @@ else if ( arg1="import" )
     Sleep, 1800
     Send, {Enter}
 }
-else if ( arg1="upload" )
+else if( arg1=="upload" )
 {
     EnvGet, ReboundPath, RE_PATH
     FilePath = %ReboundPath%\AHK\Dragon\Commands.dat
@@ -54,7 +63,7 @@ else if ( arg1="upload" )
     SplashTextOn, 200 , 20, Upload Finished, Upload Finished
     Sleep 2000
 }
-else if ( arg1="download" )
+else if( arg1=="download" )
 {
     EnvGet, ReboundPath, RE_PATH
     FilePath = %ReboundPath%\AHK\Dragon\Commands.dat
@@ -68,7 +77,7 @@ else if ( arg1="download" )
     SplashTextOn, 200 , 20, Download Completed, Download Completed
     Sleep 2000
 }
-else if ( arg1="editor" )
+else if( arg1=="editor" )
 {
     Send, {Enter}
     Sleep, 500
@@ -77,6 +86,11 @@ else if ( arg1="editor" )
     MouseMove, 130, 125
     Sleep, 500
     Click, 2
+}
+else if( arg1=="explorer" )
+{
+    EnvGet, ReboundPath, RE_PATH
+    Run, %ReboundPath%\..\..\AccJoon\Tools\AccExplorer32.exe
 }
 else
 {

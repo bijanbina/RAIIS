@@ -1,6 +1,7 @@
 #Include Functions.ahk
 
 arg1=%1%
+EnvGet, UserPath, USERPROFILE
 
 if ( arg1="cute" )
 {
@@ -12,11 +13,11 @@ else if ( arg1="router" )
 }
 else if ( arg1="editor" )
 {
-    Run, "C:\Users\Bijan\AppData\Local\atom\atom.exe", ,
+    Run, %UserPath%\AppData\Local\atom\atom.exe, ,
 }
 else if ( arg1="github" )
 {
-    Run, C:\Users\Bijan\AppData\Local\gitkraken\Update.exe --processStart gitkraken.exe, ,
+    Run, %UserPath%\AppData\Local\gitkraken\Update.exe --processStart gitkraken.exe, ,
 }
 else if ( arg1="skype" )
 {
@@ -24,15 +25,15 @@ else if ( arg1="skype" )
 }
 else if ( arg1="telegram" )
 {
-    Run, "C:\Users\Bijan\AppData\Roaming\Telegram Desktop\Telegram.exe", ,
+    Run, "%UserPath%\AppData\Roaming\Telegram Desktop\Telegram.exe", ,
 }
 else if ( arg1="torrent" )
 {
-    Run, "C:\Users\Bijan\AppData\Roaming\BitTorrent\BitTorrent.exe", ,
+    Run, %UserPath%\AppData\Roaming\BitTorrent\BitTorrent.exe, ,
 }
 else if ( arg1="spotify" )
 {
-    Run, "C:\Users\Bijan\AppData\Roaming\Spotify\Spotify.exe", ,
+    Run, %UserPath%\AppData\Roaming\Spotify\Spotify.exe, ,
 }
 else if ( arg1="virtual" )
 {
