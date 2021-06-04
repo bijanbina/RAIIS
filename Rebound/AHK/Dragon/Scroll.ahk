@@ -9,17 +9,21 @@ wheel_dir := 0
 Send, {Esc}
 sleep, 300
 
+RegWrite, REG_SZ, HKEY_CURRENT_USER\Software\WBT\Rebound, Direction, %arg1%
+
 if (arg1 = "down")
 {
     wheel_dir := 1
+    RegWrite, REG_SZ, HKEY_CURRENT_USER\Software\WBT\Rebound, Speed, %arg2%
 }
 else if (arg1 = "up")
 {
     wheel_dir := -1
+    RegWrite, REG_SZ, HKEY_CURRENT_USER\Software\WBT\Rebound, Speed, %arg2%
 }
 else if (arg1 = "stop")
 {
-	wheeling := 0
+  	wheeling := 0
 }
 
 if (arg2 = "one")
