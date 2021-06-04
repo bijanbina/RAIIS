@@ -1,0 +1,14 @@
+#viewerContainer > #viewer > .page > .canvasWrapper > canvas
+{
+    filter: saturate(50%) invert(90%);
+}
+
+#viewerContainer > #viewer
+{
+    background-color: #222 !important;
+}
+
+.toolbar
+{
+    filter: invert(80%);
+}
