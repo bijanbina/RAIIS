@@ -108,3 +108,8 @@ else if( arg1="Explorer" )
     Sleep, 1000
     MouseMove, 260, 60
 }
+else if( arg1="Escape" )
+{
+    RegWrite, REG_SZ, HKEY_CURRENT_USER\Software\WBT\Rebound, Direction, stop
+    Send, {Esc}
+}

@@ -25,11 +25,52 @@ else if( arg1=="open" )
     }
     else if( arg2=="amazon" )
     {
-        URL := "https://www.amazon.com/"
+        URL := "https://www.amazon.com"
     }
-    ;Send, {LCtrl Down}r{LCtrl Up}
+    else if( arg2=="github" )
+    {
+        URL := "https://github.com/bijanbina"
+    }
+    else if( arg2=="bijan" )
+    {
+        URL := "http://bijan.binaee.com"
+    }
+    else if( arg2=="corona" )
+    {
+        URL := "https://www.worldometers.info/coronavirus"
+    }
+    else if( arg2=="thesaurus" )
+    {
+        URL := "https://www.thesaurus.com"
+    }
+    else if( arg2=="translate" )
+    {
+        URL := "https://translate.google.com"
+    }
 
     Send, ^t
     Send, %URL%
     Send, {Enter}
+}
+if ( arg1=="PdfSetPage" )
+{
+    RegRead, Direction, HKEY_CURRENT_USER\Software\WBT\Rebound, Direction
+    RegRead, Speed, HKEY_CURRENT_USER\Software\WBT\Rebound, Speed
+    Send, {Escape}
+    Sleep, 50
+
+    Send, ^!g
+    Sleep, 50
+    arg2=%2%
+    Send, %arg2%
+    Sleep, 100
+    Send, {Enter}
+    Sleep, 100
+    Click
+    Sleep, 100
+
+    if ( Direction!="stop" )
+    {
+        Run Scroll.ahk %Direction% %Speed%
+    }
 }
