@@ -74,3 +74,29 @@ if ( arg1=="PdfSetPage" )
         Run Scroll.ahk %Direction% %Speed%
     }
 }
+else if( arg1=="duplicate" )
+{
+    Send, ^!g
+    Sleep, 100
+    Send, ^c
+    Sleep, 100
+    page = %clipboard%
+    Send, ^l
+    Sleep, 100
+    Send, ^c
+    Sleep, 100
+    Send, ^n
+    Sleep, 400
+    Send, {LWin Down}{LShift Down}{Left}{LShift Up}{LWin Up}
+    Sleep, 100
+    Send, ^v
+    Sleep, 50
+    Send, {Enter}
+    Sleep, 500
+    Send, ^!g
+    Sleep, 100
+    Send, %page%
+    Sleep, 100
+    Send, {Enter}
+    Send, ^{= 5}
+}

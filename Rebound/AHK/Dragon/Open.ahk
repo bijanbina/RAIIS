@@ -3,9 +3,17 @@
 arg1=%1%
 EnvGet, UserPath, USERPROFILE
 
-if ( arg1="cute" )
+if ( arg1="audacity" )
+{
+    Run, C:\Program Files (x86)\Audacity\audacity.exe, C:\Program Files (x86)\Audacity,
+}
+else if ( arg1="cute" )
 {
     Run, "C:\Qt\Qt5.12.10\Tools\QtCreator\bin\qtcreator.exe", ,
+}
+else if ( arg1="element" )
+{
+    Run, C:\Users\Bijan\AppData\Local\element-desktop\Element.exe, C:\Users\Bijan\AppData\Local\element-desktop\app-1.7.29,
 }
 else if ( arg1="router" )
 {
