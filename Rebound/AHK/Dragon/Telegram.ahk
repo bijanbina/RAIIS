@@ -2,55 +2,64 @@
 
 arg1=%1%
 
-if (arg1 = "settings")
+if (arg1="settings")
 {
   MouseMove, 20, 50
   Sleep, 50
   Click
 }
-else if (arg1 = "search")
+else if (arg1="search")
 {
   MouseMove, 100, 50
   Sleep, 50
   Click
 }
-else if (arg1 = "contacts")
+else if (arg1="contacts")
 {
   MouseMove, 180, 430
   Sleep, 50
   Click
 }
-else if (arg1 = "chat")
+else if (arg1="chat")
 {
   MouseMove, 600, 430
   Sleep, 50
   Click
 }
-else if (arg1 = "voice")
+else if (arg1="voice")
 {
     TelegramHeight = 1050
     TelegramWidth  = 1050
     ;Click, 135, 825
     WinGetPos,  ,  ,  TelegramWidth, TelegramHeight, A
-    TelegramHeightc := TelegramHeight - 25
-    TelegramWidthc := TelegramWidth - 25
+    TelegramHeightA := TelegramHeight - 25
+    TelegramWidthA := TelegramWidth - 25
+    TelegramHeightB := TelegramHeight - 200
 
-    MouseMove, %TelegramWidthc%, %TelegramHeightc%
-  	Send % "{Click " . ( GetKeyState("LButton") ? "Up}" : "Down}" )
+    MouseMove, %TelegramWidthA%, %TelegramHeightA%
+    Sleep, 100
+    Click down
+    Sleep, 500
+    TelegramHeightB := TelegramHeight - 100
+    MouseMove, %TelegramWidthA%, %TelegramHeightB%
+    Sleep, 100
+    TelegramHeightB := TelegramHeightB - 50
+    MouseMove, %TelegramWidthA%, %TelegramHeightB%
+    Sleep, 100
+    TelegramHeightB := TelegramHeightB - 50
+    MouseMove, %TelegramWidthA%, %TelegramHeightB%
+    Sleep, 500
+    Click up
 }
-else if (arg1 = "voice")
+else if (arg1="dive")
 {
   send, {Wheeldown 6}
 }
-else if (arg1 = "dive")
-{
-  send, {Wheeldown 6}
-}
-else if (arg1 = "sky")
+else if (arg1="sky")
 {
   send, {Wheelup 6}
 }
-else if (arg1 = "bottom")
+else if (arg1="bottom")
 {
   TelegramHeight = 1050
   TelegramWidth  = 1050

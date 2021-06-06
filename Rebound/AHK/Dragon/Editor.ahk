@@ -86,13 +86,13 @@ else if( arg1="ScrollDown" )
 {
     count := re_getNum(arg2)
     Loop, %count%
-      MouseClick, WheelDown
+    MouseClick, WheelDown
 }
 else if( arg1="ScrollUp" )
 {
     count := re_getNum(arg2)
     Loop, %count%
-      MouseClick, WheelUp
+    MouseClick, WheelUp
 }
 else if( arg1="Open" )
 {
@@ -100,4 +100,5 @@ else if( arg1="Open" )
     position_y := count*24 + 95
     MouseMove, 130, %position_y%
     Click, 2
+    Click, 400, 200
 }

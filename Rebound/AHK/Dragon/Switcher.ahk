@@ -1,4 +1,5 @@
 arg1=%1%
+arg2=%2%
 
 if( arg1=="atom" )
 {
@@ -49,4 +50,12 @@ else if( arg1=="vlc" )
 else if( arg1=="words" )
 {
   	WinActivate, ahk_exe gallery.exe
+}
+
+if( arg2=="close" )
+{
+    Sleep, 100
+    Click, 300, 300
+    Sleep, 100
+    Send, {Alt down}{F4}{Alt up}
 }
