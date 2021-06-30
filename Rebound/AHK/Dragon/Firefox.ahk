@@ -1,3 +1,5 @@
+#NoTrayIcon
+
 #Include Functions.ahk
 
 arg1=%1%

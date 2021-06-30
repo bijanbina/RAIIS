@@ -21,9 +21,9 @@ while ( i<count )
 
 if ( arg1=="next" )
 {
-  Send, {Media_Prev}
+    Send, {Media_Prev}
 }
 else if( arg1=="prev" )
 {
-  Send, {Media_Prev}
+    Send, {Media_Prev}
 }

@@ -100,6 +100,14 @@ else if( arg1="PutRight" )
       Send, {LWin Down}{LShift Down}{Right}{LShift Up}{LWin Up}
     }
 }
+else if( arg1="WinLeft" )
+{
+    Send, {LWin Down}{Left}{LWin Up}
+}
+else if( arg1="WinRight" )
+{
+    Send, {LWin Down}{Right}{LWin Up}
+}
 else if( arg1="Explorer" )
 {
     Run, %ReboundPath%\..\..\AccJoon\Tools\AccExplorer32.exe
@@ -107,4 +115,15 @@ else if( arg1="Explorer" )
     Click, 70, 60
     Sleep, 1000
     MouseMove, 260, 60
+}
+else if( arg1=="vpn" )
+{
+    if( arg2=="off" )
+    {
+        Run, C:\Windows\System32\rasdial.exe /DISCONNECT
+    }
+    else if( arg2=="on" )
+    {
+        Run, C:\Windows\System32\rasdial.exe "MK2" km93057 48868
+    }
 }

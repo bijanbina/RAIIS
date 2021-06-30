@@ -13,6 +13,10 @@ else if( arg1=="editor" )
 {
     WinActivate, ahk_exe atom.exe
 }
+else if( arg1=="element" )
+{
+    WinActivate, ahk_exe element.exe
+}
 else if( arg1=="delta" )
 {
   	;Send, {Ctrl down}{Shift down}{Alt down}4{Shift up}{Alt Up}{Ctrl Up}
