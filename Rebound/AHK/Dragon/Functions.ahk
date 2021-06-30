@@ -85,3 +85,51 @@ re_getNum(text)
         return -1
     }
 }
+
+re_getWheelSpeed(text)
+{
+    if( text=="one" )
+    {
+        return 14
+    }
+    else if( text=="two" )
+    {
+        return 16
+    }
+    else if( text=="three" )
+    {
+        return 20
+    }
+    else if( text=="four" )
+    {
+        return 24
+    }
+    else if( text=="five" )
+    {
+        return 30
+    }
+    else if( text=="six" )
+    {
+        return 36
+    }
+    else if( text=="seven" )
+    {
+        return 42
+    }
+    else if( text=="eight" )
+    {
+        return 50
+    }
+    else if( text=="nine" )
+    {
+        return 60
+    }
+    else if( text=="ten" )
+    {
+        return 70
+    }
+    else
+    {
+        MsgBox This command is not recognized %arg1% %text%.
+    }
+}
