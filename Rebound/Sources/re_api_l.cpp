@@ -79,7 +79,6 @@ QString ReApiL::getLinkPath(QString path)
     return lnk;
 }
 
-
 void lunnchExe(QString name)
 {
 

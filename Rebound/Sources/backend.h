@@ -3,6 +3,7 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlProperty>
+#include <QtDBus>
 #include <QDebug>
 #include <stdio.h>
 #include <unistd.h>
@@ -11,9 +12,10 @@
     #include <windows.h>
 #endif
 
-#define COM_NAME "com.binaee.assistant"
-#define ORG_NAME "org.binaee.assistant"
-#define ASSISTANT_PATH "/home/bijan/Project/Assistant/"
+#define COM_NAME "com.binaee.rebound"
+#define ORG_NAME "org.binaee.rebound"
+
+#define RE_DEBUG_WIN //show window detection debug info
 
 #define RE_CLIENT 0
 #define RE_SERVER 1
@@ -39,14 +41,6 @@ struct screen_pos{
     int x;
     int y;
 };
-
-struct assistant_options{
-    bool strictLoad;
-    int  timeout;
-    int  currentLanguage;
-} ;
-
-assistant_options loadOptions();
 
 int getIntCommand(char *command);
 QString getStrCommand(QString command);

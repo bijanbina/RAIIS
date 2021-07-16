@@ -14,8 +14,8 @@ Display *reX11_init()
 //    XInitThreads();
 //    Display *display = XOpenDisplay(NULL);
 
-    setbuf(stdout,NULL);
-    printf("hi\n");
+//    setbuf(stdout,NULL);
+//    printf("hi\n");
 
     return display;
 }

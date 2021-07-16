@@ -4,7 +4,8 @@
 #include <QQuickItem>
 #include "re_chapar.h"
 
-void setNoActivable(QObject *item)
+#ifdef _WIN32
+//void setNoActivable(QObject *item)
 {
     //Set NoActivable Flag on UI
     QWindow *window = qobject_cast<QWindow *>(item);
@@ -15,6 +16,7 @@ void setNoActivable(QObject *item)
     }
 
 }
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -22,9 +24,9 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:main.qml")));
     QObject *item = engine.rootObjects().first();
-    setNoActivable(item);
 
 #ifdef _WIN32
+    setNoActivable(item);
     //Use for lnk resolve
     CoInitialize(NULL);   //<< add
 #endif
@@ -32,7 +34,10 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engineSwitcher;
     engineSwitcher.load(QUrl(QStringLiteral("qrc:ReSwitcher.qml")));
     QObject *itemSwitcher = engineSwitcher.rootObjects().first();
-    setNoActivable(itemSwitcher);
+
+#ifdef _WIN32
+//    setNoActivable(itemSwitcher);
+#endif
 
 
 

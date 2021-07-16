@@ -23,6 +23,7 @@
 #define RE_WIN_GEDIT       6
 #define RE_WIN_OVERVIEW    7
 #define RE_WIN_TELEGRAM    8
+#define RE_WIN_TEXTEDITOR  9
 
 class ReApiL : public QObject
 {

@@ -24,3 +24,15 @@ Rebound/release/
 *.log
 
 Rebound/AHK/Dragon/Commands.dat
+
+APS_BM/
+
+*.user
+
+*.8-pre1
+
+S2/
+
+Autism/GUI/Backup/
+
+Autism/GUI/Resources/

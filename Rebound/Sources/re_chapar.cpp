@@ -27,6 +27,8 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
 #else
     controller = new ReXboxL(item, isNative);
+    captain = new ReCaptainL(state);
+    channel = new ReChannelL(captain, ui);
 
     thread_data = new threadStruct;
     thread_data->wins_title = &(state->api->wins_title);

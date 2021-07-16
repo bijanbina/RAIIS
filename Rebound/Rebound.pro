@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick dbus
 
 CONFIG += console
 
@@ -29,7 +29,9 @@ linux:SOURCES += \
                  Sources/re_x11.cpp \
                  Sources/re_xbox_l.cpp  \
                  Sources/re_api_l.cpp \
-                 Sources/re_thread_l.cpp
+                 Sources/re_thread_l.cpp \
+                 Sources/re_channel_l.cpp \
+                 Sources/re_captain_l.cpp
 
 HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
@@ -54,7 +56,9 @@ linux:HEADERS += \
                  Sources/re_x11.h \
                  Sources/re_xbox_l.h \
                  Sources/re_api_l.h \
-                 Sources/re_thread_l.h
+                 Sources/re_thread_l.h \
+                 Sources/re_channel_l.h \
+                 Sources/re_captain_l.h
 
 RESOURCES += Qml/ui.qrc \
              Resources/images.qrc \
@@ -62,7 +66,14 @@ RESOURCES += Qml/ui.qrc \
 
 OTHER_FILES += Qml/*.qml
 
-linux:LIBS += -lX11
+
+linux:INCLUDEPATH += /usr/include/glib-2.0 \
+                     /usr/lib/glib-2.0/include
+
+linux:LIBS += -lX11 \
+              -lgio-2.0 \
+              -lgobject-2.0 \
+              -lglib-2.0
 
 win32:LIBS += -lKernel32 \
               -lUser32 \

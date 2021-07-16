@@ -1,8 +1,6 @@
 #include "backend.h"
 #include <QThread>
 
-assistant_options option;
-
 int getIntCommand(char *command)
 {
     FILE *fp;
@@ -91,11 +89,6 @@ void updateScreenInfo(QObject *item)
 #endif
 
 //    QMetaObject::invokeMethod(item, "show");
-}
-
-assistant_options loadOptions()
-{
-
 }
 
 int isItemVisible(QObject *item)

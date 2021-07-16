@@ -31,10 +31,7 @@ public slots:
     void buttonSelectPressed();
     void buttonGuidePressed();
 
-#ifdef __linux__
-private slots:
     void tab_timeout();
-#endif
 
 private:
     QObject *ui;

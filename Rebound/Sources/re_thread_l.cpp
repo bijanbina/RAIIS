@@ -68,7 +68,9 @@ void ReThreadL::insertWindow(ReWindow win)
             {
                 windows.push_front(win);
                 thread_data->state->updateApp(win);
+#ifdef RE_DEBUG_WIN
                 qDebug() << "Active Changed" << win.title;
+#endif
             }
             else
             {
@@ -104,7 +106,9 @@ void ReThreadL::insertWindow(ReWindow win)
     if ( win.hWnd != HwndA )
     {
         windows.push_back(win);
+#ifdef RE_DEBUG_WIN
         qDebug() << "New Window" << win.hWnd;
+#endif
     }
 
 }
@@ -309,7 +313,9 @@ void ReThreadL::cleanWins()
     {
         if( windows[i].verify==0 )
         {
+#ifdef RE_DEBUG_WIN
             qDebug() << "Remove Window" << windows[i].title;
+#endif
             windows.remove(i);
             i--;
         }
@@ -380,7 +386,6 @@ void ReThreadL::updateActiveWindow()
 
 void reRunThread(void *thread_struct_void)
 {
-    qDebug() << "thread start";
     int cntr = 0;
     threadStruct *thread_data = (threadStruct *)thread_struct_void;
     ReThreadL *priv = new ReThreadL(thread_data);
