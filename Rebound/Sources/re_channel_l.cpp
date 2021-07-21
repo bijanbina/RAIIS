@@ -1,14 +1,12 @@
 #include "re_channel_l.h"
 #include <unistd.h>
 
-
 ReChannelL::ReChannelL(ReCaptainL *cpt, QObject *ui, QObject *parent) : QObject(parent)
 {
     ConnectDBus();
     root = ui;
     captain = cpt;
 }
-
 
 ReChannelL::~ReChannelL()
 {
@@ -27,6 +25,7 @@ void ReChannelL::ConnectDBus()
 
     session.connect("", "/", COM_NAME, "speex", this, SLOT(speex(const QString &)));
     session.connect("", "/", COM_NAME, "nato" , this, SLOT(nato (const QString &)));
+    session.connect("", "/", COM_NAME, "meta" , this, SLOT(meta (const QString &)));
     session.connect("", "/", COM_NAME, "digit", this, SLOT(digit(const QString &)));
     session.connect("", "/", COM_NAME, "modifier", this, SLOT(modifier(const QString &)));
     session.connect("", "/", COM_NAME, "exec"  , this, SLOT(execute()));
@@ -57,13 +56,25 @@ void ReChannelL::execute()
 
 void ReChannelL::nato(const QString &text)
 {
-    CaptainCommand cmd;
+    if( captain->isLastMeta(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
 
-    cmd.val1 = text.toInt();
-    cmd.val2 = 1;
-    cmd.type = RE_COMMAND_NATO;
+        if ( cmd_buf[last_i].val2==0 )
+        {
+            cmd_buf[last_i].val2 = text.toInt();
+        }
+    }
+    else
+    {
+        CaptainCommand cmd;
 
-    cmd_buf.append(cmd);
+        cmd.val1 = text.toInt();
+        cmd.val2 = 1;
+        cmd.type = RE_COMMAND_NATO;
+
+        cmd_buf.append(cmd);
+    }
 }
 
 void ReChannelL::digit(const QString &text)
@@ -118,8 +129,18 @@ void ReChannelL::modifier(const QString &text)
 
 }
 
+void ReChannelL::meta(const QString &text)
+{
+    CaptainCommand cmd;
+    cmd.val1 = text.toInt();
+    cmd.val2 = 0;
+    cmd.type = RE_COMMAND_META;
+
+    cmd_buf.append(cmd);
+
+}
+
 void ReChannelL::startServer()
 {
 
 }
-

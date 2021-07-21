@@ -104,8 +104,15 @@ int x11_getPid(Window window)
     desktop_id = (unsigned long *)x11_getProperty(window, XA_CARDINAL,
                               propperty_name, NULL);
 
-    int ret = *desktop_id;
-    return ret;
+    if( desktop_id )
+    {
+        int ret = *desktop_id;
+        return ret;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 int x11_getDesktop(Window window)

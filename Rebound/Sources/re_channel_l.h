@@ -28,6 +28,7 @@ public:
 public slots:
     void speex(const QString &text);
     void nato (const QString &text);
+    void meta (const QString &text);
     void digit(const QString &text);
     void modifier(const QString &text);
     void execute();

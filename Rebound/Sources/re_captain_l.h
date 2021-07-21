@@ -15,6 +15,14 @@
 #define RE_COMMAND_MOD   4 //Modifiers
 #define RE_COMMAND_META  5
 
+#define RE_META_OPEN    1
+#define RE_META_SYS     2
+#define RE_META_WAKE    3
+#define RE_META_START   4
+#define RE_META_FOX     5
+#define RE_META_PAGE    6
+#define RE_META_GO      7
+
 typedef struct CaptainCommand
 {
     int val1;
@@ -33,6 +41,7 @@ public:
 
     void execute(QVector<CaptainCommand> commands);
     bool isLastCmdReeatable(QVector<CaptainCommand> commands);
+    bool isLastMeta(QVector<CaptainCommand> commands);
     int keyCode2Digit(QString key_code);
 
 private:
@@ -43,6 +52,11 @@ private:
     void pressModifier(CaptainCommand command);
     void releaseModifiers();
     void setKey(int type, int code, int val);
+
+    void execCommand(CaptainCommand command);
+    void execMeta(CaptainCommand command);
+
+    bool isWakeUp(CaptainCommand command);
 
     int uinput_f;
 

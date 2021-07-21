@@ -1,4 +1,4 @@
-#ifndef RESTATE_H
+﻿#ifndef RESTATE_H
 #define RESTATE_H
 
 #ifdef __linux__
@@ -52,6 +52,10 @@ public:
     void updateTitles(QObject *item);
     void showSwither(QObject *item);
 
+    void goToSleep();
+    void wakeUp();
+    bool isSleep();
+
 #ifdef _WIN32
     ReApiW *api;
     ReHardwareW *hardware;
@@ -59,10 +63,11 @@ public:
 #ifdef __linux__
     ReApiL *api;
 #endif
-    int ui_visible;
-    int i_mode;
-    int vpn_connected = 0;
-    int youtube_mode  = 0;
+    int  ui_visible;
+    int  i_mode;
+    int  vpn_connected = 0;
+    int  youtube_mode  = 0;
+    bool sleep_state = 0;
     ReWindow app; //Active Window
 
 signals:

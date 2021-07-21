@@ -18,7 +18,7 @@ ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
 
     // enable all the keys
     // no better solution found :(
-    for( int keycode=KEY_ESC ; keycode<KEY_SCALE ; keycode++)
+    for( int keycode=KEY_ESC ; keycode<KEY_COMPOSE ; keycode++)
     {
         ioctl(uinput_f, UI_SET_KEYBIT, keycode);
     }
@@ -93,20 +93,43 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
 {
     for( int i=0 ; i<commands.length() ; i++ )
     {
-        if( commands[i].type==RE_COMMAND_NATO ||
-            commands[i].type==RE_COMMAND_DIGIT ||
-            commands[i].type==RE_COMMAND_KEY )
+        if( state->isSleep() )
         {
-            for( int j=0 ; j<commands[i].val2 ; j++ )
+            if( commands[i].type!=RE_COMMAND_META )
             {
-                sendKey(commands[i].val1);
+                continue;
             }
-            releaseModifiers();
+            else
+            {
+                if( isWakeUp(commands[i]) )
+                {
+                    state->wakeUp();
+                }
+            }
         }
-        else if( commands[i].type==RE_COMMAND_MOD )
+        execCommand(commands[i]);
+    }
+}
+
+void ReCaptainL::execCommand(CaptainCommand command)
+{
+    if( command.type==RE_COMMAND_NATO ||
+        command.type==RE_COMMAND_DIGIT ||
+        command.type==RE_COMMAND_KEY )
+    {
+        for( int j=0 ; j<command.val2 ; j++ )
         {
-            pressModifier(commands[i]);
+            sendKey(command.val1);
         }
+        releaseModifiers();
+    }
+    else if( command.type==RE_COMMAND_MOD )
+    {
+        pressModifier(command);
+    }
+    else if( command.type==RE_COMMAND_META )
+    {
+        execMeta(command);
     }
 }
 
@@ -126,6 +149,69 @@ bool ReCaptainL::isLastCmdReeatable(QVector<CaptainCommand> commands)
     }
 
     return false;
+}
+
+bool ReCaptainL::isLastMeta(QVector<CaptainCommand> commands)
+{
+    if( commands.count()==0 )
+    {
+        return false;
+    }
+
+    int last_i = commands.count()-1; //last index
+    int cmd_type = commands[last_i].type;
+
+    if( cmd_type==RE_COMMAND_META )
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool ReCaptainL::isWakeUp(CaptainCommand command)
+{
+    if( command.type==RE_COMMAND_META )
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void ReCaptainL::execMeta(CaptainCommand command)
+{
+    if( command.val2==0 )
+    {
+        return;
+    }
+
+    if( command.val1==RE_META_OPEN )
+    {
+        QString cmd = "./Scripts/open ";
+        cmd += QString::number(command.val2)+ " &";
+        system(cmd.toStdString().c_str());
+    }
+    else if( command.val1==RE_META_SYS )
+    {
+
+    }
+    else if( command.val1==RE_META_WAKE )
+    {
+
+    }
+    else if( command.val1==RE_META_START )
+    {
+
+    }
+    else if( command.val1==RE_META_PAGE )
+    {
+
+    }
+    else if( command.val1==RE_META_GO )
+    {
+
+    }
 }
 
 int ReCaptainL::keyCode2Digit(QString key_code)

@@ -121,3 +121,18 @@ void ReState::updateTitles(QObject *item)
         QMetaObject::invokeMethod(item, "updateProcessTitle");
     }
 }
+
+void ReState::goToSleep()
+{
+    sleep_state = 1;
+}
+
+void ReState::wakeUp()
+{
+    sleep_state = 0;
+}
+
+bool ReState::isSleep()
+{
+    return sleep_state;
+}
