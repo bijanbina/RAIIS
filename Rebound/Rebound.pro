@@ -93,3 +93,7 @@ QML_IMPORT_PATH += Qml/
 DISTFILES += \
     Rebound.exe.manifest
 
+MOC_DIR = Build/.moc
+RCC_DIR = Build/.rcc
+OBJECTS_DIR = Build/.obj
+

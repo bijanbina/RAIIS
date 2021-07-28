@@ -4,7 +4,7 @@ ACTIVE_WIN_ID=$(xdotool getwindowfocus)
 ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
 ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
 
-SCREEN_S=$(xrandr | grep "*" | awk '{print $1}') #Screen size
+SCREEN_S=$(xrandr | grep -m 1 "*" | awk '{print $1}') #Screen size
 SCREEN_W=$(echo "$SCREEN_S" | awk -F 'x' '{print $1}')
 SCREEN_H=$(echo "$SCREEN_S" | awk -F 'x' '{print $2}')
 
@@ -36,7 +36,7 @@ elif [[ "$ACTIVE_WIN_PROCESS" = "firefox" ]]; then
 	
 	eval $(xdotool getmouselocation --shell)
 	MOUSE_DIST=$((Y-SCREEN_H/2))
-	echo "MOUSE_DIST=$MOUSE_DIST" 
+	echo "MOUSE_DIST=$MOUSE_DIST $1" 
 	
 else
 	xdotool key Left

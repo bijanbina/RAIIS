@@ -48,7 +48,6 @@ void ReChannelL::execute()
 {
     if( cmd_buf.length() )
     {
-
         captain->execute(cmd_buf);
         cmd_buf.clear();
     }
@@ -56,35 +55,34 @@ void ReChannelL::execute()
 
 void ReChannelL::nato(const QString &text)
 {
-    if( captain->isLastMeta(cmd_buf) )
-    {
-        int last_i = cmd_buf.count()-1; //last index
+//    if( captain->isLastMeta(cmd_buf) )
+//    {
+//        if( )
+//        int last_i = cmd_buf.count()-1; //last index
 
-        if ( cmd_buf[last_i].val2==0 )
-        {
-            cmd_buf[last_i].val2 = text.toInt();
-        }
-    }
-    else
-    {
-        CaptainCommand cmd;
+//        if ( cmd_buf[last_i].val2==0 )
+//        {
+//            cmd_buf[last_i].val2 = text.toInt();
+//        }
+//    }
 
-        cmd.val1 = text.toInt();
-        cmd.val2 = 1;
-        cmd.type = RE_COMMAND_NATO;
+    CaptainCommand cmd;
 
-        cmd_buf.append(cmd);
-    }
+    cmd.val1 = text.toInt();
+    cmd.val2 = 1;
+    cmd.type = RE_COMMAND_NATO;
+
+    cmd_buf.append(cmd);
 }
 
 void ReChannelL::digit(const QString &text)
 {
-
-    if( captain->isLastCmdReeatable(cmd_buf) )
+    if( captain->isLastCmdReeatable(cmd_buf) ||
+        captain->isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        if ( cmd_buf[last_i].val2==1 )
+        if ( cmd_buf[last_i].val2==0 )
         {
             cmd_buf[last_i].val2 = captain->keyCode2Digit(text);
         }
@@ -111,7 +109,7 @@ void ReChannelL::speex(const QString &text)
 {
     CaptainCommand cmd;
     cmd.val1 = text.toInt();
-    cmd.val2 = 1;
+    cmd.val2 = 0;
     cmd.type = RE_COMMAND_KEY;
 
     cmd_buf.append(cmd);

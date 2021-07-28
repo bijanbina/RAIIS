@@ -68,6 +68,7 @@ public:
     int  vpn_connected = 0;
     int  youtube_mode  = 0;
     bool sleep_state = 0;
+    bool scroll_mode = 0;
     ReWindow app; //Active Window
 
 signals:

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+CD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source $CD/functions
+
+CHNANGE_GEAR="$2"
+
+ACTIVE_WIN_ID=$(xdotool getwindowfocus)
+ACTIVE_WIN_PID=$(xdotool getwindowpid $ACTIVE_WIN_ID)
+ACTIVE_WIN_PROCESS=$(cat "/proc/$ACTIVE_WIN_PID/comm")
+
+SCREEN_S=$(xrandr | grep -m 1 "*" | awk '{print $1}') #Screen size
+SCREEN_W=$(echo "$SCREEN_S" | awk -F 'x' '{print $1}')
+SCREEN_H=$(echo "$SCREEN_S" | awk -F 'x' '{print $2}')
+
+if [[ "$ACTIVE_WIN_PROCESS" = "firefox" ]]; then
+	#Put mouse Y location to $Y
+	eval $(xdotool getmouselocation --shell)
+	MOUSE_DIST=$(getWheelSpeed $3)
+	SCREEN_HALF_W=$((SCREEN_W - 100))
+	SCREEN_HALF_H=$((SCREEN_H / 2 + 200))
+
+	if [[ "$CHNANGE_GEAR" == "1" ]]; then
+		xdotool mousemove "$SCREEN_HALF_W" "$SCREEN_HALF_H"
+		xdotool click 2
+		sleep 0.2
+	fi
+
+	if [[ "$1" == "up" ]]; then
+		SCREEN_HALF_H=$((SCREEN_HALF_H - $MOUSE_DIST))
+	else
+		SCREEN_HALF_H=$((SCREEN_HALF_H + $MOUSE_DIST))
+	fi
+	xdotool mousemove "$SCREEN_HALF_W" "$SCREEN_HALF_H"
+	
+	echo "MOUSE_DIST=$MOUSE_DIST $1" 
+	
+fi
+

@@ -99,7 +99,7 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
             {
                 continue;
             }
-            else
+            else //type==RE_COMMAND_META
             {
                 if( isWakeUp(commands[i]) )
                 {
@@ -117,11 +117,16 @@ void ReCaptainL::execCommand(CaptainCommand command)
         command.type==RE_COMMAND_DIGIT ||
         command.type==RE_COMMAND_KEY )
     {
+        if( command.val2==0 )
+        {
+            command.val2 = 1; //change default to 1
+        }
         for( int j=0 ; j<command.val2 ; j++ )
         {
             sendKey(command.val1);
         }
         releaseModifiers();
+        state->scroll_mode = 0;
     }
     else if( command.type==RE_COMMAND_MOD )
     {
@@ -183,6 +188,10 @@ void ReCaptainL::execMeta(CaptainCommand command)
 {
     if( command.val2==0 )
     {
+        if( command.val1==RE_META_WAKE )
+        {
+//                sendKey(command.val1);
+        }
         return;
     }
 
@@ -212,6 +221,48 @@ void ReCaptainL::execMeta(CaptainCommand command)
     {
 
     }
+    else if( command.val1==RE_META_SKY ||
+             command.val1==RE_META_DIVE )
+    {
+        QString cmd = getScrollCmd(state->scroll_mode,
+                                   command.val1, command.val2);
+
+        if( state->scroll_mode==0 )
+        {
+            state->scroll_mode = 1;
+        }
+        system(cmd.toStdString().c_str());
+    }
+}
+
+QString ReCaptainL::getScrollCmd(bool scroll_mode, int meta, int val)
+{
+    QString change_gear;
+    QString direction;
+    QString cmd = "./Scripts/scroll";
+    if( scroll_mode )
+    {
+        change_gear = " 0 ";
+    }
+    else
+    {
+        change_gear = " 1 ";
+    }
+
+    if( meta==RE_META_SKY )
+    {
+        direction = " up ";
+    }
+    else if( meta==RE_META_DIVE )
+    {
+        direction = " down ";
+    }
+
+    cmd += direction;
+    cmd += change_gear;
+    cmd += QString::number(val);
+
+    return cmd;
 }
 
 int ReCaptainL::keyCode2Digit(QString key_code)

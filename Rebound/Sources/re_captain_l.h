@@ -22,6 +22,8 @@
 #define RE_META_FOX     5
 #define RE_META_PAGE    6
 #define RE_META_GO      7
+#define RE_META_SKY     8
+#define RE_META_DIVE    9
 
 typedef struct CaptainCommand
 {
@@ -57,6 +59,7 @@ private:
     void execMeta(CaptainCommand command);
 
     bool isWakeUp(CaptainCommand command);
+    QString getScrollCmd(bool scroll_mode, int meta, int val);
 
     int uinput_f;
 
