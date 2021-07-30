@@ -96,4 +96,5 @@ DISTFILES += \
 MOC_DIR = Build/.moc
 RCC_DIR = Build/.rcc
 OBJECTS_DIR = Build/.obj
+UI_DIR = Build/.ui
 

@@ -115,6 +115,7 @@ int x11_getPid(Window window)
     }
 }
 
+//return workspace id
 int x11_getDesktop(Window window)
 {
     unsigned long *desktop_id;
@@ -123,8 +124,12 @@ int x11_getDesktop(Window window)
     desktop_id = (unsigned long *)x11_getProperty(window, XA_CARDINAL,
                               propperty_name, NULL);
 
-    int ret = *desktop_id;
-    return ret;
+    if( desktop_id )
+    {
+        return *desktop_id;
+    }
+
+    return -1;
 
 }
 

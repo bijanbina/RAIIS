@@ -24,11 +24,13 @@
 #define RE_META_GO      7
 #define RE_META_SKY     8
 #define RE_META_DIVE    9
+#define RE_META_MUSIC   10
 
 typedef struct CaptainCommand
 {
     int val1;
     int val2;
+    int val3;
     int type;
 }CaptainCommand;
 
@@ -60,6 +62,7 @@ private:
 
     bool isWakeUp(CaptainCommand command);
     QString getScrollCmd(bool scroll_mode, int meta, int val);
+    QString getMusicCmd(int val);
 
     int uinput_f;
 
