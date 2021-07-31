@@ -8,7 +8,7 @@ for id in ${WIN_ID}; do
     xp=$(xprop -id $id | grep "$PID_NAME")
     if [[ "$xp" ]]; then
     	wmctrl -i -a $id
-    	SUCCESS=
+    	SUCCESS=1
         echo "Windows Id: $id"
     fi
 done

@@ -26,6 +26,7 @@ void ReChannelL::ConnectDBus()
     session.connect("", "/", COM_NAME, "speex", this, SLOT(speex(const QString &)));
     session.connect("", "/", COM_NAME, "nato" , this, SLOT(nato (const QString &)));
     session.connect("", "/", COM_NAME, "meta" , this, SLOT(meta (const QString &)));
+    session.connect("", "/", COM_NAME, "apps" , this, SLOT(apps (const QString &)));
     session.connect("", "/", COM_NAME, "digit", this, SLOT(digit(const QString &)));
     session.connect("", "/", COM_NAME, "debug", this, SLOT(debug(const QString &)));
     session.connect("", "/", COM_NAME, "modifier", this, SLOT(modifier(const QString &)));
@@ -182,6 +183,19 @@ void ReChannelL::meta(const QString &text)
     cmd_buf.append(cmd);
 }
 
+void ReChannelL::apps(const QString &text)
+{
+    if( captain->isLastMeta(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
+
+        if ( cmd_buf[last_i].val2==0 )
+        {
+            cmd_buf[last_i].val2 = 300 + text.toInt();
+            return;
+        }
+    }
+}
 
 void ReChannelL::debug(const QString &text)
 {

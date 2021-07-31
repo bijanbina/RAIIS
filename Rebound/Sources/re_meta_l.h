@@ -24,6 +24,13 @@
 #define RE_META_DIVE    9
 #define RE_META_MUSIC   10
 #define RE_META_CLOSE   11
+#define RE_META_SWITCH  12
+
+#define RE_APP_GITHUB   301
+#define RE_APP_FIREFOX  302
+#define RE_APP_FILES    303
+#define RE_APP_SPOTIFY  304
+#define RE_APP_ATOM     305
 
 typedef struct CaptainCommand
 {
@@ -47,6 +54,7 @@ public:
 private:
     QString getMusicCmd(int val);
     QString getSystemCmd(int val);
+    QString getSwitchCmd(int val);
     QString getScrollCmd(bool scroll_mode, int meta, int val);
 
     int uinput_f;

@@ -83,7 +83,62 @@ void ReMetaL::execMeta(CaptainCommand command)
             system(cmd.toStdString().c_str());
         }
     }
+    else if( command.val1==RE_META_SWITCH )
+    {
+        QString cmd = getSwitchCmd(command.val2);
+        system(cmd.toStdString().c_str());
+    }
 }
+
+QString ReMetaL::getSwitchCmd(int val)
+{
+    QString cmd = "./Scripts/switcher ";
+
+    if( val==RE_APP_GITHUB )
+    {
+        cmd += "gitkraken";
+    }
+    else if( val==RE_APP_FIREFOX )
+    {
+        cmd += "firefox";
+    }
+    else if( val==RE_APP_FILES )
+    {
+        cmd += "nautilus";
+    }
+    else if( val==RE_APP_SPOTIFY )
+    {
+        cmd += "spotify";
+    }
+    else if( val==RE_APP_ATOM )
+    {
+        cmd += "gedit";
+    }
+    else if( val==KEY_LEFT )
+    {
+        cmd = "xdotool key Super+Shift+Left";
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd = "xdotool key Super+Shift+Right";
+    }
+    else if( val==KEY_Q )
+    {
+        cmd += "Qt";
+    }
+    else if( val==KEY_T )
+    {
+        cmd += "Terminal";
+    }
+    else
+    {
+        qDebug() << "Unknown Switch" << val;
+        return "";
+    }
+
+    return cmd;
+}
+
 
 QString ReMetaL::getSystemCmd(int val)
 {
@@ -127,7 +182,8 @@ QString ReMetaL::getSystemCmd(int val)
     }
     else
     {
-        qDebug() << "Unknown Music" << val;
+        qDebug() << "Unknown System" << val;
+        return "";
     }
 
     return cmd;
@@ -154,6 +210,7 @@ QString ReMetaL::getMusicCmd(int val)
     else
     {
         qDebug() << "Unknown Music" << val;
+        return "";
     }
 
     cmd += " >/dev/null";

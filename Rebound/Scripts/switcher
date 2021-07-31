@@ -1,0 +1,36 @@
+#! /bin/bash
+
+PID_NAME="$1"
+WORK_ID=$(wmctrl -d | grep -w '*' | cut -d " " -f 1)
+WIN_ID=$(wmctrl -l | grep " $WORK_ID " | cut -d " " -f 1 )
+
+PID_NAME=$1
+SUCCESS=0 #Become 1 in case of finding the window
+
+for id in ${WIN_ID}; do
+    xp=$(xprop -id $id | grep -i "$PID_NAME")
+    if [[ "$xp" ]]; then
+    	wmctrl -i -a $id
+    	SUCCESS=1
+    fi
+done
+
+# if not available on current workspace
+# search on all workspaces
+if [[ "$SUCCESS" = "0" ]]; then
+	WIN_ID=$(wmctrl -l | cut -d " " -f 1 )
+	
+	for id in ${WIN_ID}; do
+		xp=$(xprop -id $id | grep -i "$PID_NAME")
+		if [[ "$xp" ]]; then
+			wmctrl -i -a $id
+			SUCCESS=1
+		fi
+	done
+fi
+
+# if no fucking app detected open a new one
+# FIXME: This should be reconsidered soon
+if [[ "$SUCCESS" = "0" ]]; then
+	nohup $PID_NAME &
+fi
