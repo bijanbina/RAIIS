@@ -96,7 +96,11 @@ void ReChannelL::digit(const QString &text)
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        if ( cmd_buf[last_i].val3==0 )
+        if ( cmd_buf[last_i].val2==0 )
+        {
+            cmd_buf[last_i].val2 = captain->keyCode2Digit(text);
+        }
+        else if ( cmd_buf[last_i].val3==0 )
         {
             cmd_buf[last_i].val3 = captain->keyCode2Digit(text);
         }

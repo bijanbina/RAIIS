@@ -31,7 +31,8 @@ linux:SOURCES += \
                  Sources/re_api_l.cpp \
                  Sources/re_thread_l.cpp \
                  Sources/re_channel_l.cpp \
-                 Sources/re_captain_l.cpp
+                 Sources/re_captain_l.cpp \
+                 Sources/re_meta_l.cpp
 
 HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
@@ -58,7 +59,8 @@ linux:HEADERS += \
                  Sources/re_api_l.h \
                  Sources/re_thread_l.h \
                  Sources/re_channel_l.h \
-                 Sources/re_captain_l.h
+                 Sources/re_captain_l.h \
+                 Sources/re_meta_l.h
 
 RESOURCES += Qml/ui.qrc \
              Resources/images.qrc \

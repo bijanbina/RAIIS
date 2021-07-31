@@ -7,33 +7,7 @@
 #include <linux/uinput.h>
 
 #include "backend.h"
-#include "re_state.h"
-
-#define RE_COMMAND_KEY   1
-#define RE_COMMAND_NATO  2
-#define RE_COMMAND_DIGIT 3
-#define RE_COMMAND_MOD   4 //Modifiers
-#define RE_COMMAND_META  5
-
-#define RE_META_OPEN    1
-#define RE_META_SYS     2
-#define RE_META_WAKE    3
-#define RE_META_START   4
-#define RE_META_FOX     5
-#define RE_META_PAGE    6
-#define RE_META_GO      7
-#define RE_META_SKY     8
-#define RE_META_DIVE    9
-#define RE_META_MUSIC   10
-
-typedef struct CaptainCommand
-{
-    int val1;
-    int val2;
-    int val3;
-    int type;
-}CaptainCommand;
-
+#include "re_meta_l.h"
 
 class ReCaptainL : public QObject
 {
@@ -58,15 +32,13 @@ private:
     void setKey(int type, int code, int val);
 
     void execCommand(CaptainCommand command);
-    void execMeta(CaptainCommand command);
 
     bool isWakeUp(CaptainCommand command);
-    QString getScrollCmd(bool scroll_mode, int meta, int val);
-    QString getMusicCmd(int val);
 
     int uinput_f;
 
     ReState *state;
+    ReMetaL *meta;
     QVector<CaptainCommand> modifiers;
 };
 
