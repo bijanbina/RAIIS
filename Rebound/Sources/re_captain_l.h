@@ -18,7 +18,7 @@ public:
     ~ReCaptainL();
 
     void execute(QVector<CaptainCommand> commands);
-    bool isLastCmdReeatable(QVector<CaptainCommand> commands);
+    bool isLastCmdRepeatable(QVector<CaptainCommand> commands);
     bool isLastMeta(QVector<CaptainCommand> commands);
     int keyCode2Digit(QString key_code);
 

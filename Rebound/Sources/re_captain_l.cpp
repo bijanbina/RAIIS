@@ -85,6 +85,7 @@ void ReCaptainL::releaseModifiers()
 {
     for( int i=0 ; i<modifiers.count() ; i++ )
     {
+        qDebug() << modifiers.count();
         releaseKey(modifiers[i].val1);
     }
     modifiers.clear();
@@ -110,6 +111,7 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
         }
         execCommand(commands[i]);
     }
+    releaseModifiers();
 }
 
 void ReCaptainL::execCommand(CaptainCommand command)
@@ -135,11 +137,16 @@ void ReCaptainL::execCommand(CaptainCommand command)
     }
     else if( command.type==RE_COMMAND_META )
     {
+        if( modifiers.count() )
+        {
+            QThread::msleep(100); //little tweak
+            releaseModifiers();
+        }
         meta->execMeta(command);
     }
 }
 
-bool ReCaptainL::isLastCmdReeatable(QVector<CaptainCommand> commands)
+bool ReCaptainL::isLastCmdRepeatable(QVector<CaptainCommand> commands)
 {
     if( commands.count()==0 )
     {
@@ -185,7 +192,7 @@ bool ReCaptainL::isWakeUp(CaptainCommand command)
     return false;
 }
 
-int ReCaptainL::keyCode2Digit(QString key_code)
+int  ReCaptainL::keyCode2Digit(QString key_code)
 {
     int code = key_code.toInt();
 

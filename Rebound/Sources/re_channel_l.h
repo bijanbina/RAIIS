@@ -31,6 +31,7 @@ public slots:
     void meta (const QString &text);
     void digit(const QString &text);
     void modifier(const QString &text);
+    void debug(const QString &text);
     void execute();
 
 private:
@@ -40,7 +41,7 @@ private:
     ReCaptainL *captain;
 
     QVector<CaptainCommand> cmd_buf;
-
+    QString commands_str; //just for debug purpose
 };
 
 

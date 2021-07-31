@@ -87,19 +87,43 @@ void ReMetaL::execMeta(CaptainCommand command)
 
 QString ReMetaL::getSystemCmd(int val)
 {
-    QString cmd = "xdotool key ";
+    QString cmd;
 
-    if( val==KEY_ENTER )
+    if( val==KEY_A )
     {
-        cmd += "org.mpris.MediaPlayer2.Player.PlayPause";
+        cmd = "xdotool set_desktop 0";
+    }
+    else if( val==KEY_B )
+    {
+        cmd = "xdotool set_desktop 1";
+    }
+    else if( val==KEY_C )
+    {
+        cmd = "xdotool set_desktop 2";
+    }
+    else if( val==KEY_D )
+    {
+        cmd = "xdotool set_desktop 3";
+    }
+    else if( val==KEY_E )
+    {
+        cmd = "xdotool set_desktop 4";
+    }
+    else if( val==KEY_T )
+    {
+        cmd = "gnome-terminal";
     }
     else if( val==KEY_LEFT )
     {
-        cmd += "Ctrl+Alt+Left";
+        cmd = "xdotool key Ctrl+Alt+Left";
     }
     else if( val==KEY_RIGHT )
     {
-        cmd += "Ctrl+Alt+Right";
+        cmd = "xdotool key Ctrl+Alt+Right";
+    }
+    else if( val==KEY_CLOSE )
+    {
+        cmd = "xdotool key Alt+F4";
     }
     else
     {

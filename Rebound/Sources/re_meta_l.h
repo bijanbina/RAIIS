@@ -23,6 +23,7 @@
 #define RE_META_SKY     8
 #define RE_META_DIVE    9
 #define RE_META_MUSIC   10
+#define RE_META_CLOSE   11
 
 typedef struct CaptainCommand
 {
