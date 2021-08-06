@@ -6,6 +6,11 @@ ReChannelL::ReChannelL(ReCaptainL *cpt, QObject *ui, QObject *parent) : QObject(
     ConnectDBus();
     root = ui;
     captain = cpt;
+    exec_timer = new QTimer;
+
+    connect(exec_timer, SIGNAL(timeout()), this, SLOT(execute()));
+
+    exec_timer->start(RE_EXEC_TIMEOUT);
 }
 
 ReChannelL::~ReChannelL()
@@ -30,7 +35,6 @@ void ReChannelL::ConnectDBus()
     session.connect("", "/", COM_NAME, "digit", this, SLOT(digit(const QString &)));
     session.connect("", "/", COM_NAME, "debug", this, SLOT(debug(const QString &)));
     session.connect("", "/", COM_NAME, "modifier", this, SLOT(modifier(const QString &)));
-    session.connect("", "/", COM_NAME, "exec"  , this, SLOT(execute()));
 
     /*if(!session.registerObject("/", this, QDBusConnection::ExportScriptableContents)) {
         qFatal("Another session is on DBus.");
@@ -48,6 +52,7 @@ void ReChannelL::ConnectDBus()
 
 void ReChannelL::execute()
 {
+    exec_timer->stop();
     if( cmd_buf.length() )
     {
         qDebug() << commands_str;
@@ -56,10 +61,12 @@ void ReChannelL::execute()
         captain->execute(cmd_buf);
         cmd_buf.clear();
     }
+    exec_timer->start(RE_EXEC_TIMEOUT);
 }
 
 void ReChannelL::nato(const QString &text)
 {
+    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -78,10 +85,12 @@ void ReChannelL::nato(const QString &text)
     cmd.type = RE_COMMAND_NATO;
 
     cmd_buf.append(cmd);
+    execute();
 }
 
 void ReChannelL::digit(const QString &text)
 {
+    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastCmdRepeatable(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -114,6 +123,7 @@ void ReChannelL::digit(const QString &text)
             cmd_buf[last_i].val3  = cmd_buf[last_i].val3*10;
             cmd_buf[last_i].val3 += captain->keyCode2Digit(text);
             qDebug() << cmd_buf[last_i].val3;
+            execute();
         }
     }
     else
@@ -124,11 +134,14 @@ void ReChannelL::digit(const QString &text)
         cmd.type = RE_COMMAND_DIGIT;
 
         cmd_buf.append(cmd);
+
+        execute();
     }
 }
 
 void ReChannelL::speex(const QString &text)
 {
+    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -150,6 +163,7 @@ void ReChannelL::speex(const QString &text)
 
 void ReChannelL::modifier(const QString &text)
 {
+    exec_timer->start(RE_EXEC_TIMEOUT);
     CaptainCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 1;
@@ -160,6 +174,7 @@ void ReChannelL::modifier(const QString &text)
 
 void ReChannelL::meta(const QString &text)
 {
+    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -192,6 +207,7 @@ void ReChannelL::apps(const QString &text)
         if ( cmd_buf[last_i].val2==0 )
         {
             cmd_buf[last_i].val2 = 300 + text.toInt();
+            execute();
             return;
         }
     }

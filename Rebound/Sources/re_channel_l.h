@@ -33,6 +33,8 @@ public slots:
     void digit(const QString &text);
     void modifier(const QString &text);
     void debug(const QString &text);
+
+private slots:
     void execute();
 
 private:
@@ -43,6 +45,7 @@ private:
 
     QVector<CaptainCommand> cmd_buf;
     QString commands_str; //just for debug purpose
+    QTimer *exec_timer;
 };
 
 
