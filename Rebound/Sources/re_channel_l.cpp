@@ -8,7 +8,7 @@ ReChannelL::ReChannelL(ReCaptainL *cpt, QObject *ui, QObject *parent) : QObject(
     captain = cpt;
     exec_timer = new QTimer;
 
-    connect(exec_timer, SIGNAL(timeout()), this, SLOT(execute()));
+    connect(exec_timer, SIGNAL(timeout()), this, SLOT(execTimeOut()));
 
     exec_timer->start(RE_EXEC_TIMEOUT);
 }
@@ -55,13 +55,23 @@ void ReChannelL::execute()
     exec_timer->stop();
     if( cmd_buf.length() )
     {
-        qDebug() << commands_str;
+        qDebug() << QTime::currentTime().toString("mm:ss:zzz") <<
+                    "exec" << commands_str;
         commands_str.clear();
 
         captain->execute(cmd_buf);
         cmd_buf.clear();
     }
     exec_timer->start(RE_EXEC_TIMEOUT);
+}
+
+void ReChannelL::execTimeOut()
+{
+    if( cmd_buf.length() )
+    {
+        qDebug() << QTime::currentTime().toString("mm:ss:zzz") << "Timeout Reached";
+        execute();
+    }
 }
 
 void ReChannelL::nato(const QString &text)
@@ -71,10 +81,13 @@ void ReChannelL::nato(const QString &text)
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        if ( cmd_buf[last_i].val2==0 )
+        if ( cmd_buf[last_i].val1!=RE_META_WAKE )
         {
-            cmd_buf[last_i].val2 = text.toInt();
-            return;
+            if ( cmd_buf[last_i].val2==0 )
+            {
+                cmd_buf[last_i].val2 = text.toInt();
+                return;
+            }
         }
     }
 
@@ -104,6 +117,7 @@ void ReChannelL::digit(const QString &text)
             cmd_buf[last_i].val2  = cmd_buf[last_i].val2*10;
             cmd_buf[last_i].val2 += captain->keyCode2Digit(text);
             qDebug() << cmd_buf[last_i].val2;
+            execute();
         }
     }
     else if( captain->isLastMeta(cmd_buf) )

@@ -32,7 +32,7 @@
 #define RE_CHECK_BTN      4     //Live send interval
 #define RE_CHECK_IN       4     //check input(native mode)
 #define RE_TAB_TIME       900   //Alt pressed time
-#define RE_EXEC_TIMEOUT   1500  //Command execution timeout
+#define RE_EXEC_TIMEOUT   2100  //Command execution timeout
 
 #define RE_SCR_UI      1     //UI Mode
 #define RE_SCR_YOUTUBE 2     //YouTube Mode

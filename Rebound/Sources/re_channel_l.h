@@ -33,9 +33,10 @@ public slots:
     void digit(const QString &text);
     void modifier(const QString &text);
     void debug(const QString &text);
+    void execute();
 
 private slots:
-    void execute();
+    void execTimeOut();
 
 private:
     void ConnectDBus();
