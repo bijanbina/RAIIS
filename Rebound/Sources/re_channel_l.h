@@ -10,8 +10,7 @@
 
 #include "re_captain_l.h"
 
-#define PH_UPDATE_INTERVAL 30 //in minutes
-#define PH_UPDATE_OUTDATED 8 //in hours
+#define RE_EXEC_TIMEOUT_M  1
 
 
 class ReChannelL : public QObject
@@ -46,7 +45,6 @@ private:
 
     QVector<CaptainCommand> cmd_buf;
     QString commands_str; //just for debug purpose
-    QTimer *exec_timer;
 };
 
 

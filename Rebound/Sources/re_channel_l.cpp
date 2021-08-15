@@ -6,11 +6,6 @@ ReChannelL::ReChannelL(ReCaptainL *cpt, QObject *ui, QObject *parent) : QObject(
     ConnectDBus();
     root = ui;
     captain = cpt;
-    exec_timer = new QTimer;
-
-    connect(exec_timer, SIGNAL(timeout()), this, SLOT(execTimeOut()));
-
-    exec_timer->start(RE_EXEC_TIMEOUT);
 }
 
 ReChannelL::~ReChannelL()
@@ -35,6 +30,7 @@ void ReChannelL::ConnectDBus()
     session.connect("", "/", COM_NAME, "digit", this, SLOT(digit(const QString &)));
     session.connect("", "/", COM_NAME, "debug", this, SLOT(debug(const QString &)));
     session.connect("", "/", COM_NAME, "modifier", this, SLOT(modifier(const QString &)));
+    session.connect("", "/", COM_NAME, "exec" , this, SLOT(execTimeOut()));
 
     /*if(!session.registerObject("/", this, QDBusConnection::ExportScriptableContents)) {
         qFatal("Another session is on DBus.");
@@ -52,7 +48,6 @@ void ReChannelL::ConnectDBus()
 
 void ReChannelL::execute()
 {
-    exec_timer->stop();
     if( cmd_buf.length() )
     {
         qDebug() << QTime::currentTime().toString("mm:ss:zzz") <<
@@ -62,21 +57,19 @@ void ReChannelL::execute()
         captain->execute(cmd_buf);
         cmd_buf.clear();
     }
-    exec_timer->start(RE_EXEC_TIMEOUT);
 }
 
 void ReChannelL::execTimeOut()
 {
     if( cmd_buf.length() )
     {
-        qDebug() << QTime::currentTime().toString("mm:ss:zzz") << "Timeout Reached";
+        qDebug() << QTime::currentTime().toString("mm:ss:zzz") << "Request Immediate Execution";
         execute();
     }
 }
 
 void ReChannelL::nato(const QString &text)
 {
-    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -103,7 +96,6 @@ void ReChannelL::nato(const QString &text)
 
 void ReChannelL::digit(const QString &text)
 {
-    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastCmdRepeatable(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -155,7 +147,6 @@ void ReChannelL::digit(const QString &text)
 
 void ReChannelL::speex(const QString &text)
 {
-    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -177,7 +168,6 @@ void ReChannelL::speex(const QString &text)
 
 void ReChannelL::modifier(const QString &text)
 {
-    exec_timer->start(RE_EXEC_TIMEOUT);
     CaptainCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 1;
@@ -188,7 +178,6 @@ void ReChannelL::modifier(const QString &text)
 
 void ReChannelL::meta(const QString &text)
 {
-    exec_timer->start(RE_EXEC_TIMEOUT);
     if( captain->isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
