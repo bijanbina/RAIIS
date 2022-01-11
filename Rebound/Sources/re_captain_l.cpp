@@ -117,8 +117,8 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
 void ReCaptainL::execCommand(CaptainCommand command)
 {
     if( command.type==RE_COMMAND_NATO ||
-        command.type==RE_COMMAND_DIGIT ||
-        command.type==RE_COMMAND_KEY )
+        command.type==RE_COMMAND_DIRS ||
+        command.type==RE_COMMAND_DIGIT )
     {
         if( command.val2==0 )
         {
@@ -156,7 +156,7 @@ bool ReCaptainL::isLastCmdRepeatable(QVector<CaptainCommand> commands)
 //    int key_code = commands[last_i].val1;
     int cmd_type = commands[last_i].type;
 
-    if( cmd_type==RE_COMMAND_KEY )
+    if( cmd_type==RE_COMMAND_DIRS )
     {
         return true;
     }

@@ -7,7 +7,7 @@
 #include "backend.h"
 #include "re_state.h"
 
-#define RE_COMMAND_KEY   1
+#define RE_COMMAND_DIRS   1
 #define RE_COMMAND_NATO  2
 #define RE_COMMAND_DIGIT 3
 #define RE_COMMAND_MOD   4 //Modifiers
@@ -31,6 +31,7 @@
 #define RE_APP_FILES    303
 #define RE_APP_SPOTIFY  304
 #define RE_APP_ATOM     305
+#define RE_APP_DING     306 //fox ding
 
 typedef struct CaptainCommand
 {

@@ -14,7 +14,6 @@
         HWND hwnd = (HWND)window->winId();
         SetWindowLongPtrA(hwnd, GWL_EXSTYLE, WS_EX_NOACTIVATE);
     }
-
 }
 #endif
 
@@ -39,12 +38,9 @@ int main(int argc, char *argv[])
 //    setNoActivable(itemSwitcher);
 #endif
 
-
-
     updateScreenInfo(item);
     //check if app should start in server
     //or client mode
-
 
     int isNative = 0;
     if ( argc>1 )

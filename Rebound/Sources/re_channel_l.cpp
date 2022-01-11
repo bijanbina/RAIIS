@@ -23,7 +23,7 @@ void ReChannelL::ConnectDBus()
         return;
     }
 
-    session.connect("", "/", COM_NAME, "speex", this, SLOT(speex(const QString &)));
+    session.connect("", "/", COM_NAME, "dirs" , this, SLOT(dirs (const QString &)));
     session.connect("", "/", COM_NAME, "nato" , this, SLOT(nato (const QString &)));
     session.connect("", "/", COM_NAME, "meta" , this, SLOT(meta (const QString &)));
     session.connect("", "/", COM_NAME, "apps" , this, SLOT(apps (const QString &)));
@@ -31,11 +31,6 @@ void ReChannelL::ConnectDBus()
     session.connect("", "/", COM_NAME, "debug", this, SLOT(debug(const QString &)));
     session.connect("", "/", COM_NAME, "modifier", this, SLOT(modifier(const QString &)));
     session.connect("", "/", COM_NAME, "exec" , this, SLOT(execTimeOut()));
-
-    /*if(!session.registerObject("/", this, QDBusConnection::ExportScriptableContents)) {
-        qFatal("Another session is on DBus.");
-        return;
-    }*/
 
     if(!session.registerService(COM_NAME))
     {
@@ -145,7 +140,8 @@ void ReChannelL::digit(const QString &text)
     }
 }
 
-void ReChannelL::speex(const QString &text)
+// direction keys
+void ReChannelL::dirs(const QString &text) //speex
 {
     if( captain->isLastMeta(cmd_buf) )
     {
@@ -161,7 +157,7 @@ void ReChannelL::speex(const QString &text)
     CaptainCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 0;
-    cmd.type = RE_COMMAND_KEY;
+    cmd.type = RE_COMMAND_DIRS;
 
     cmd_buf.append(cmd);
 }

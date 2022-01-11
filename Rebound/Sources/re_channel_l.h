@@ -25,7 +25,7 @@ public:
     ~ReChannelL();
 
 public slots:
-    void speex(const QString &text);
+    void dirs (const QString &text);
     void nato (const QString &text);
     void meta (const QString &text);
     void apps (const QString &text);
@@ -42,6 +42,7 @@ private:
 
     QObject  *root;
     ReCaptainL *captain;
+    int special_c; //count of special
 
     QVector<CaptainCommand> cmd_buf;
     QString commands_str; //just for debug purpose

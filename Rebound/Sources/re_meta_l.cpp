@@ -49,6 +49,15 @@ void ReMetaL::execMeta(CaptainCommand command)
     {
 
     }
+    else if( command.val1==RE_META_FOX )
+    {
+        if( command.val2==RE_APP_DING )
+        {
+            QString cmd = "xdotool key Ctrl+F";
+            cmd += " &";
+            system(cmd.toStdString().c_str());
+        }
+    }
     else if( command.val1==RE_META_PAGE )
     {
 
