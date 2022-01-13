@@ -79,13 +79,14 @@ void ReCaptainL::pressModifier(CaptainCommand command)
 {
     modifiers.append(command);
     pressKey(command.val1);
+    qDebug() << "pressModifier" << modifiers.count();
 }
 
 void ReCaptainL::releaseModifiers()
 {
     for( int i=0 ; i<modifiers.count() ; i++ )
     {
-        qDebug() << modifiers.count();
+        qDebug() << "releaseModifiers" << modifiers.count();
         releaseKey(modifiers[i].val1);
     }
     modifiers.clear();
@@ -111,7 +112,7 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
         }
         execCommand(commands[i]);
     }
-    releaseModifiers();
+//    releaseModifiers();
 }
 
 void ReCaptainL::execCommand(CaptainCommand command)
@@ -122,7 +123,7 @@ void ReCaptainL::execCommand(CaptainCommand command)
     {
         if( command.val2==0 )
         {
-            command.val2 = 1; //change default to 1
+            command.val2 = 1;  //this cannot be removed
         }
         for( int j=0 ; j<command.val2 ; j++ )
         {
@@ -157,6 +158,14 @@ bool ReCaptainL::isLastCmdRepeatable(QVector<CaptainCommand> commands)
     int cmd_type = commands[last_i].type;
 
     if( cmd_type==RE_COMMAND_DIRS )
+    {
+        return true;
+    }
+    else if( cmd_type==RE_COMMAND_DIGIT )
+    {
+        return true;
+    }
+    else if( cmd_type==RE_COMMAND_NATO )
     {
         return true;
     }

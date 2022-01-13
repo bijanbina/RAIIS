@@ -29,6 +29,7 @@ public slots:
     void nato (const QString &text);
     void meta (const QString &text);
     void apps (const QString &text);
+    void spex (const QString &text); //special
     void digit(const QString &text);
     void modifier(const QString &text);
     void debug(const QString &text);
