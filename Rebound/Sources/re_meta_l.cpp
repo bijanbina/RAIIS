@@ -14,10 +14,6 @@ void ReMetaL::execMeta(CaptainCommand command)
 {
     if( command.val2==0 )
     {
-        if( command.val1==RE_META_WAKE )
-        {
-//                sendKey(command.val1);
-        }
         return;
     }
 
@@ -41,10 +37,6 @@ void ReMetaL::execMeta(CaptainCommand command)
             system(cmd.toStdString().c_str());
         }
     }
-    else if( command.val1==RE_META_WAKE )
-    {
-
-    }
     else if( command.val1==RE_META_START )
     {
 
@@ -57,6 +49,12 @@ void ReMetaL::execMeta(CaptainCommand command)
             cmd += " &";
             system(cmd.toStdString().c_str());
         }
+        if( command.val2==RE_APP_LINK )
+        {
+            QString cmd = "xdotool key Ctrl+F";
+            cmd += " &";
+            system(cmd.toStdString().c_str());
+        }
     }
     else if( command.val1==RE_META_PAGE )
     {
@@ -64,7 +62,11 @@ void ReMetaL::execMeta(CaptainCommand command)
     }
     else if( command.val1==RE_META_GO )
     {
-
+        if( command.val2==RE_APP_SLEEP )
+        {
+            state->goToSleep();
+            qDebug() << "GO SLEEEEEEEEEEP";
+        }
     }
     else if( command.val1==RE_META_SKY ||
              command.val1==RE_META_DIVE )

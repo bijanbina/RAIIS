@@ -84,10 +84,12 @@ void ReCaptainL::pressModifier(CaptainCommand command)
 
 void ReCaptainL::releaseModifiers()
 {
-    for( int i=0 ; i<modifiers.count() ; i++ )
+    int c = modifiers.count();
+    for( int i=c ; i>0 ; i-- )
     {
-        qDebug() << "releaseModifiers" << modifiers.count();
-        releaseKey(modifiers[i].val1);
+        qDebug() << "releaseModifiers" << modifiers[i-1].val1;
+        releaseKey(modifiers[i-1].val1);
+        QThread::msleep(100); //little tweak
     }
     modifiers.clear();
 }
@@ -107,6 +109,9 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
                 if( isWakeUp(commands[i]) )
                 {
                     state->wakeUp();
+                    commands.clear();
+                    qDebug() << "Wake Up";
+                    return;
                 }
             }
         }
@@ -195,7 +200,10 @@ bool ReCaptainL::isWakeUp(CaptainCommand command)
 {
     if( command.type==RE_COMMAND_META )
     {
-        return true;
+        if( command.val2==17 ) //wake->w->17
+        {
+            return true;
+        }
     }
 
     return false;

@@ -7,6 +7,7 @@ ReChannelL::ReChannelL(ReCaptainL *cpt, QObject *ui, QObject *parent) : QObject(
     root = ui;
     captain = cpt;
     special_c = 0;
+    system("rm ~/.config/polybar/awesomewm/ben_spex");
 }
 
 ReChannelL::~ReChannelL()
@@ -71,13 +72,11 @@ void ReChannelL::nato(const QString &text)
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        if ( cmd_buf[last_i].val1!=RE_META_WAKE )
+        if ( cmd_buf[last_i].val2==0 )
         {
-            if ( cmd_buf[last_i].val2==0 )
-            {
-                cmd_buf[last_i].val2 = text.toInt();
-                return;
-            }
+            cmd_buf[last_i].val2 = text.toInt();
+            execute();
+            return;
         }
     }
 
@@ -114,6 +113,7 @@ void ReChannelL::digit(const QString &text)
         qDebug() << "digit" << cmd_buf[last_i].val2 << special_c;
         if( special_c==0 )
         {
+            system("rm ~/.config/polybar/awesomewm/ben_spex");
             execute();
         }
 
@@ -164,6 +164,7 @@ void ReChannelL::dirs(const QString &text) //speex
         if ( cmd_buf[last_i].val2==0 )
         {
             cmd_buf[last_i].val2 = text.toInt();
+            execute();
             return;
         }
     }
@@ -236,6 +237,10 @@ void ReChannelL::spex(const QString &text)
 {
     special_c++;
     qDebug() << "special_c" << special_c;
+    QString cmd = "echo ";
+    cmd += QString::number(special_c);
+    cmd += " > ~/.config/polybar/awesomewm/ben_spex";
+    system(cmd.toStdString().c_str());
 }
 
 void ReChannelL::debug(const QString &text)

@@ -12,6 +12,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #endif
 #ifdef __linux__
     api = new ReApiL;
+    system("rm ~/.config/polybar/awesomewm/ben_sleep");
 #endif
 }
 
@@ -125,11 +126,13 @@ void ReState::updateTitles(QObject *item)
 void ReState::goToSleep()
 {
     sleep_state = 1;
+    system("touch ~/.config/polybar/awesomewm/ben_sleep");
 }
 
 void ReState::wakeUp()
 {
     sleep_state = 0;
+    system("rm ~/.config/polybar/awesomewm/ben_sleep");
 }
 
 bool ReState::isSleep()
