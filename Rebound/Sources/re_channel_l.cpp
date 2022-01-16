@@ -122,11 +122,11 @@ void ReChannelL::digit(const QString &text)
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        if ( cmd_buf[last_i].val2==0 )
+        if( cmd_buf[last_i].val2==0 )
         {
             cmd_buf[last_i].val2 = captain->keyCode2Digit(text);
         }
-        else if ( cmd_buf[last_i].val3==0 )
+        else if( cmd_buf[last_i].val3==0 )
         {
             cmd_buf[last_i].val3 = captain->keyCode2Digit(text);
         }
@@ -135,6 +135,25 @@ void ReChannelL::digit(const QString &text)
             cmd_buf[last_i].val3  = cmd_buf[last_i].val3*10;
             cmd_buf[last_i].val3 += captain->keyCode2Digit(text);
             qDebug() << cmd_buf[last_i].val3;
+            execute();
+        }
+
+        if( special_c==0 )
+        {
+            execute();
+        }
+    }
+    else if( captain->state->scroll_mode )
+    {
+        CaptainCommand cmd;
+        cmd.val1 = captain->state->scroll_dir;
+        cmd.val2 = captain->keyCode2Digit(text);
+        cmd.type = RE_COMMAND_META;
+
+        cmd_buf.append(cmd);
+
+        if( special_c==0 )
+        {
             execute();
         }
     }

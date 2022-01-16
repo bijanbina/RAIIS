@@ -13,7 +13,8 @@ SCREEN_S=$(xrandr | grep -m 1 "*" | awk '{print $1}') #Screen size
 SCREEN_W=$(echo "$SCREEN_S" | awk -F 'x' '{print $1}')
 SCREEN_H=$(echo "$SCREEN_S" | awk -F 'x' '{print $2}')
 
-if [[ "$ACTIVE_WIN_PROCESS" = "firefox" ]]; then
+if [[ "$ACTIVE_WIN_PROCESS" == "firefox" ]] ||
+   [[ "$ACTIVE_WIN_PROCESS" == "GeckoMain" ]]; then
 	#Put mouse Y location to $Y
 	eval $(xdotool getmouselocation --shell)
 	MOUSE_DIST=$(getWheelSpeed $3)

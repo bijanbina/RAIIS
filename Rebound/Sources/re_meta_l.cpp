@@ -65,7 +65,6 @@ void ReMetaL::execMeta(CaptainCommand command)
         if( command.val2==RE_APP_SLEEP )
         {
             state->goToSleep();
-            qDebug() << "GO SLEEEEEEEEEEP";
         }
     }
     else if( command.val1==RE_META_SKY ||
@@ -73,6 +72,7 @@ void ReMetaL::execMeta(CaptainCommand command)
     {
         QString cmd = getScrollCmd(state->scroll_mode,
                                    command.val1, command.val2);
+        state->scroll_dir = command.val1;
 
         if( state->scroll_mode==0 )
         {

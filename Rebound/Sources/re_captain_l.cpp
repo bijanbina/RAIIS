@@ -200,9 +200,12 @@ bool ReCaptainL::isWakeUp(CaptainCommand command)
 {
     if( command.type==RE_COMMAND_META )
     {
-        if( command.val2==17 ) //wake->w->17
+        if( command.val1==RE_META_GO )
         {
-            return true;
+            if( command.val2==17 ) //wake->w->17
+            {
+                return true;
+            }
         }
     }
 
@@ -222,3 +225,4 @@ int  ReCaptainL::keyCode2Digit(QString key_code)
         return code-1;
     }
 }
+

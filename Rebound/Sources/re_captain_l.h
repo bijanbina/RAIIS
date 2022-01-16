@@ -22,10 +22,12 @@ public:
     bool isLastMeta(QVector<CaptainCommand> commands);
     int keyCode2Digit(QString key_code);
 
+    ReState *state;
 private:
     void sendKey(int key_val);
     void pressKey(int key_val);
     void releaseKey(int key_val);
+    void handleScroll(CaptainCommand command);
 
     void pressModifier(CaptainCommand command);
     void releaseModifiers();
@@ -37,7 +39,6 @@ private:
 
     int uinput_f;
 
-    ReState *state;
     ReMetaL *meta;
     QVector<CaptainCommand> modifiers;
 };
