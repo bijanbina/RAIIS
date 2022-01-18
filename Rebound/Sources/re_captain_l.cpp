@@ -135,7 +135,7 @@ void ReCaptainL::execCommand(CaptainCommand command)
             sendKey(command.val1);
         }
         releaseModifiers();
-        state->scroll_mode = 0;
+        state->disScroll();
     }
     else if( command.type==RE_COMMAND_MOD )
     {
@@ -173,6 +173,28 @@ bool ReCaptainL::isLastCmdRepeatable(QVector<CaptainCommand> commands)
     else if( cmd_type==RE_COMMAND_NATO )
     {
         return true;
+    }
+
+    return false;
+}
+
+bool ReCaptainL::isLastCmdFunction(QVector<CaptainCommand> commands)
+{
+    if( commands.count()==0 )
+    {
+        return false;
+    }
+    int last_i = commands.count()-1; //last index
+    int key_code = commands[last_i].val1;
+    int cmd_type = commands[last_i].type;
+
+    if( cmd_type==RE_COMMAND_NATO )
+    {
+        if( key_code>RE_KEY_FMIN &&
+            key_code <RE_KEY_FMAX )
+        {
+            return true;
+        }
     }
 
     return false;

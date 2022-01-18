@@ -17,6 +17,36 @@
 #include <X11/Xlib.h>
 #endif
 
+#define RE_COMMAND_DIRS  1
+#define RE_COMMAND_NATO  2
+#define RE_COMMAND_DIGIT 3
+#define RE_COMMAND_MOD   4 //Modifiers
+#define RE_COMMAND_META  5
+
+#define RE_META_OPEN    1
+#define RE_META_SYS     2
+#define RE_META_START   3
+#define RE_META_FOX     4
+#define RE_META_PAGE    5
+#define RE_META_GO      6
+#define RE_META_SKY     7
+#define RE_META_DIVE    8
+#define RE_META_MUSIC   9
+#define RE_META_CLOSE   10
+#define RE_META_SWITCH  11
+
+#define RE_APP_GITHUB   301
+#define RE_APP_FIREFOX  302
+#define RE_APP_FILES    303
+#define RE_APP_SPOTIFY  304
+#define RE_APP_ATOM     305
+#define RE_APP_DING     306 //fox ding
+#define RE_APP_LINK     307 //fox link
+#define RE_APP_SLEEP    308 //go sleep
+
+#define RE_KEY_FMIN    66 //F1
+#define RE_KEY_FMAX    77 //F10
+
 typedef struct ReWindow
 {
     // verify clear on each enumeration to
@@ -55,6 +85,8 @@ public:
     void goToSleep();
     void wakeUp();
     bool isSleep();
+    void enScroll(int dir, int speed);
+    void disScroll();
 
 #ifdef _WIN32
     ReApiW *api;

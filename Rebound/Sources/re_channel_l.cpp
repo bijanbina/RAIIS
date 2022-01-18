@@ -110,7 +110,6 @@ void ReChannelL::digit(const QString &text)
         }
         special_c--;
 
-        qDebug() << "digit" << cmd_buf[last_i].val2 << special_c;
         if( special_c==0 )
         {
             system("rm ~/.config/polybar/awesomewm/ben_spex");
@@ -151,6 +150,24 @@ void ReChannelL::digit(const QString &text)
         cmd.type = RE_COMMAND_META;
 
         cmd_buf.append(cmd);
+        if( special_c>0 )
+        {
+            special_c--;
+        }
+        else // special_c=0
+        {
+            system("rm ~/.config/polybar/awesomewm/ben_spex");
+            execute();
+        }
+    }
+    else if( special_c>0 )
+    {
+        CaptainCommand cmd;
+        cmd.val1 = captain->state->scroll_dir;
+        cmd.val2 = captain->keyCode2Digit(text);
+        cmd.type = RE_COMMAND_META;
+
+        cmd_buf.append(cmd);
 
         if( special_c==0 )
         {
@@ -166,10 +183,7 @@ void ReChannelL::digit(const QString &text)
 
         cmd_buf.append(cmd);
 
-        if( special_c==0 )
-        {
-            execute();
-        }
+        execute();
     }
 }
 
@@ -178,6 +192,7 @@ void ReChannelL::dirs(const QString &text) //speex
 {
     if( captain->isLastMeta(cmd_buf) )
     {
+        qDebug() << "cmd_buf[last_i].val3";
         int last_i = cmd_buf.count()-1; //last index
 
         if ( cmd_buf[last_i].val2==0 )

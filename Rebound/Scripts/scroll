@@ -35,6 +35,15 @@ if [[ "$ACTIVE_WIN_PROCESS" == "firefox" ]] ||
 	xdotool mousemove "$SCREEN_HALF_W" "$SCREEN_HALF_H"
 	
 	echo "MOUSE_DIST=$MOUSE_DIST $1" 
-	
-fi
 
+elif [[ "$ACTIVE_WIN_PROCESS" == "xed" ]]; then
+
+	COUNT="$3"
+	
+	if [[ "$1" == "up" ]]; then
+		xdotool key Prior --repeat $COUNT
+	else
+		xdotool key Next  --repeat $COUNT
+	fi
+
+fi

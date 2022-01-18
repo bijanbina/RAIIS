@@ -12,7 +12,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #endif
 #ifdef __linux__
     api = new ReApiL;
-    system("rm ~/.config/polybar/awesomewm/ben_sleep");
+    system("rm ~/.config/polybar/awesomewm/ben_status");
 #endif
 }
 
@@ -126,13 +126,41 @@ void ReState::updateTitles(QObject *item)
 void ReState::goToSleep()
 {
     sleep_state = 1;
-    system("touch ~/.config/polybar/awesomewm/ben_sleep");
+    system("echo Sleep > ~/.config/polybar/awesomewm/ben_status");
 }
 
 void ReState::wakeUp()
 {
     sleep_state = 0;
-    system("rm ~/.config/polybar/awesomewm/ben_sleep");
+    system("rm ~/.config/polybar/awesomewm/ben_status");
+}
+
+// enable scroll
+void ReState::enScroll(int dir, int speed)
+{
+    QString cmd = "echo '";
+    scroll_mode = 1;
+    scroll_dir = dir;
+
+    if( scroll_dir==RE_META_SKY )
+    {
+        cmd += "Sky ";
+    }
+    else if( scroll_dir==RE_META_DIVE )
+    {
+        cmd += "Dive ";
+    }
+    cmd += QString::number(speed);
+    cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+    system(cmd.toStdString().c_str());
+}
+
+// disable scroll
+void ReState::disScroll()
+{
+    scroll_mode = 0;
+    scroll_dir = 0;
+    system("rm ~/.config/polybar/awesomewm/ben_status");
 }
 
 bool ReState::isSleep()
