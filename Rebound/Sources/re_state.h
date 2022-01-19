@@ -44,8 +44,8 @@
 #define RE_APP_LINK     307 //fox link
 #define RE_APP_SLEEP    308 //go sleep
 
-#define RE_KEY_FMIN    66 //F1
-#define RE_KEY_FMAX    77 //F10
+#define RE_KEY_FMIN    59 //F1
+#define RE_KEY_FMAX    68 //F10
 
 typedef struct ReWindow
 {

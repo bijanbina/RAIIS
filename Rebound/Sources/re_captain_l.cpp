@@ -115,7 +115,10 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
                 }
             }
         }
-        execCommand(commands[i]);
+        else
+        {
+            execCommand(commands[i]);
+        }
     }
 //    releaseModifiers();
 }

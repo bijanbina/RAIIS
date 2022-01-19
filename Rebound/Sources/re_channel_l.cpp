@@ -160,17 +160,21 @@ void ReChannelL::digit(const QString &text)
             execute();
         }
     }
-    else if( special_c>0 )
+    else if( special_c>0 ) //FUNC KEY
     {
         CaptainCommand cmd;
-        cmd.val1 = captain->state->scroll_dir;
-        cmd.val2 = captain->keyCode2Digit(text);
-        cmd.type = RE_COMMAND_META;
+        cmd.val1 = RE_KEY_FMIN + captain->keyCode2Digit(text) - 1;
+        cmd.val2 = 1;
+        cmd.type = RE_COMMAND_DIRS;
 
+        qDebug() << "update001s";
         cmd_buf.append(cmd);
 
+        special_c--;
         if( special_c==0 )
         {
+            system("rm ~/.config/polybar/awesomewm/ben_spex");
+            qDebug() << "updateTitles";
             execute();
         }
     }
