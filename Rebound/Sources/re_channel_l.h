@@ -30,6 +30,7 @@ public slots:
     void meta (const QString &text);
     void apps (const QString &text);
     void spex (const QString &text); //special
+    void super(const QString &text); //single shot meta cmd
     void digit(const QString &text);
     void modifier(const QString &text);
     void debug(const QString &text);

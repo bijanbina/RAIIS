@@ -94,7 +94,49 @@ void ReMetaL::execMeta(CaptainCommand command)
         QString cmd = getSwitchCmd(command.val2);
         system(cmd.toStdString().c_str());
     }
+    else if( command.val1==RE_META_MOUSE )
+    {
+        QString cmd = getMouseCmd(command.val2);
+        system(cmd.toStdString().c_str());
+    }
+    else if( command.val1==RE_META_META )
+    {
+        QString cmd = getSwitchCmd(command.val2);
+        system(cmd.toStdString().c_str());
+    }
 }
+
+QString ReMetaL::getMouseCmd(int val)
+{
+    QString cmd;
+
+    if( val==KEY_LEFT )
+    {
+        cmd = "xdotool click 1";
+    }
+    else if( val==KEY_M )
+    {
+        cmd = "xdotool click 2";
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd = "xdotool click 3";
+    }
+    else if( val==KEY_F ) //focus
+    {
+        system("xdotool key --delay 200 super+ctrl+k");
+        QThread::msleep(100); //little tweak
+        cmd = "xdotool key --delay 200 super+ctrl+k";
+    }
+    else
+    {
+        qDebug() << "Unknown Switch" << val;
+        return "";
+    }
+
+    return cmd;
+}
+
 
 QString ReMetaL::getSwitchCmd(int val)
 {
@@ -145,7 +187,6 @@ QString ReMetaL::getSwitchCmd(int val)
     return cmd;
 }
 
-
 QString ReMetaL::getSystemCmd(int val)
 {
     QString cmd;
@@ -174,13 +215,17 @@ QString ReMetaL::getSystemCmd(int val)
     {
         cmd = "gnome-terminal";
     }
+    else if( val==KEY_V )
+    {
+        cmd = "~/.config/polybar/awesomewm/vpn_switch.sh";
+    }
     else if( val==KEY_LEFT )
     {
-        cmd = "xdotool key Ctrl+Alt+Left";
+        cmd = "xdotool key --delay 200 Ctrl+Super+k";
     }
     else if( val==KEY_RIGHT )
     {
-        cmd = "xdotool key Ctrl+Alt+Right";
+        cmd = "xdotool key --delay 200 Ctrl+Super+k";
     }
     else if( val==KEY_CLOSE )
     {

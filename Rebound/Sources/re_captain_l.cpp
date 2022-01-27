@@ -74,7 +74,6 @@ void ReCaptainL::releaseKey(int key_val)
     setKey(EV_KEY, key_val, 0);
     setKey(EV_SYN, SYN_REPORT, 0);
 }
-
 void ReCaptainL::pressModifier(CaptainCommand command)
 {
     modifiers.append(command);

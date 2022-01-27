@@ -30,6 +30,7 @@ void ReChannelL::ConnectDBus()
     session.connect("", "/", COM_NAME, "meta" , this, SLOT(meta (const QString &)));
     session.connect("", "/", COM_NAME, "apps" , this, SLOT(apps (const QString &)));
     session.connect("", "/", COM_NAME, "spex" , this, SLOT(spex (const QString &)));
+    session.connect("", "/", COM_NAME, "super", this, SLOT(super(const QString &)));
     session.connect("", "/", COM_NAME, "digit", this, SLOT(digit(const QString &)));
     session.connect("", "/", COM_NAME, "debug", this, SLOT(debug(const QString &)));
     session.connect("", "/", COM_NAME, "modifier", this, SLOT(modifier(const QString &)));
@@ -167,14 +168,12 @@ void ReChannelL::digit(const QString &text)
         cmd.val2 = 1;
         cmd.type = RE_COMMAND_DIRS;
 
-        qDebug() << "update001s";
         cmd_buf.append(cmd);
 
         special_c--;
         if( special_c==0 )
         {
             system("rm ~/.config/polybar/awesomewm/ben_spex");
-            qDebug() << "updateTitles";
             execute();
         }
     }
@@ -273,12 +272,30 @@ void ReChannelL::apps(const QString &text)
 
 void ReChannelL::spex(const QString &text)
 {
-    special_c++;
-    qDebug() << "special_c" << special_c;
-    QString cmd = "echo ";
-    cmd += QString::number(special_c);
-    cmd += " > ~/.config/polybar/awesomewm/ben_spex";
-    system(cmd.toStdString().c_str());
+    if( !captain->state->isSleep() )
+    {
+        special_c++;
+        qDebug() << "special_c" << special_c;
+        QString cmd = "echo ";
+        cmd += QString::number(special_c);
+        cmd += " > ~/.config/polybar/awesomewm/ben_spex";
+        system(cmd.toStdString().c_str());
+    }
+}
+
+void ReChannelL::super(const QString &text)
+{
+    CaptainCommand cmd;
+    cmd.val1 = text.toInt();
+    cmd.val2 = RE_META_SUPER;
+    cmd.val3 = 0;
+    cmd.type = RE_COMMAND_META;
+    cmd_buf.append(cmd);
+
+    if( special_c==0 )
+    {
+        execute();
+    }
 }
 
 void ReChannelL::debug(const QString &text)

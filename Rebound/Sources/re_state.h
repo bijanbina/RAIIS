@@ -34,6 +34,10 @@
 #define RE_META_MUSIC   9
 #define RE_META_CLOSE   10
 #define RE_META_SWITCH  11
+#define RE_META_MOUSE   12
+#define RE_META_META    13
+
+#define RE_META_SUPER   1 //Used for val2
 
 #define RE_APP_GITHUB   301
 #define RE_APP_FIREFOX  302

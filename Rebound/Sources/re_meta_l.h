@@ -28,6 +28,7 @@ public:
 
 private:
     QString getMusicCmd(int val);
+    QString getMouseCmd(int val);
     QString getSystemCmd(int val);
     QString getSwitchCmd(int val);
     QString getScrollCmd(bool scroll_mode, int meta, int val);
