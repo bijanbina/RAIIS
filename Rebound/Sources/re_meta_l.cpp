@@ -66,6 +66,11 @@ void ReMetaL::execMeta(CaptainCommand command)
         {
             state->goToSleep();
         }
+        else
+        {
+            QString cmd = getGoCmd(command.val2);
+            system(cmd.toStdString().c_str());
+        }
     }
     else if( command.val1==RE_META_SKY ||
              command.val1==RE_META_DIVE )
@@ -128,6 +133,10 @@ QString ReMetaL::getMouseCmd(int val)
         QThread::msleep(100); //little tweak
         cmd = "xdotool key --delay 200 super+ctrl+k";
     }
+    else if( val==KEY_C ) //center
+    {
+        cmd = "xdotool mousemove 960 540";
+    }
     else
     {
         qDebug() << "Unknown Switch" << val;
@@ -136,7 +145,6 @@ QString ReMetaL::getMouseCmd(int val)
 
     return cmd;
 }
-
 
 QString ReMetaL::getSwitchCmd(int val)
 {
@@ -295,6 +303,54 @@ QString ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
     cmd += direction;
     cmd += change_gear;
     cmd += QString::number(val);
+
+    return cmd;
+}
+
+QString ReMetaL::getGoCmd(int val)
+{
+    QString cmd;
+
+    qDebug() << "GO" << state->app.pname;
+
+    if( state->app.pname=="xed" )
+    {
+        if( val==KEY_LEFT )
+        {
+            cmd = "xdotool key ctrl+alt+Page_Up";
+        }
+        else if( val==KEY_RIGHT )
+        {
+            cmd = "xdotool key ctrl+alt+Page_Down";
+        }
+        else if( val==KEY_F ) //focus
+        {
+            system("xdotool key --delay 200 super+ctrl+k");
+            QThread::msleep(100); //little tweak
+            cmd = "xdotool key --delay 200 super+ctrl+k";
+        }
+    }
+    else if( state->app.pname=="qtcreator" )
+    {
+        if( val==KEY_LEFT )
+        {
+            cmd = "xdotool click 1";
+        }
+        else if( val==KEY_M )
+        {
+            cmd = "xdotool click 2";
+        }
+        else if( val==KEY_RIGHT )
+        {
+            cmd = "xdotool click 3";
+        }
+        else if( val==KEY_F ) //focus
+        {
+            system("xdotool key --delay 200 super+ctrl+k");
+            QThread::msleep(100); //little tweak
+            cmd = "xdotool key --delay 200 super+ctrl+k";
+        }
+    }
 
     return cmd;
 }

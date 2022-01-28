@@ -27,6 +27,7 @@ public:
     void execMeta(CaptainCommand command);
 
 private:
+    QString getGoCmd(int val);
     QString getMusicCmd(int val);
     QString getMouseCmd(int val);
     QString getSystemCmd(int val);
