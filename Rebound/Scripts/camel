@@ -1,0 +1,19 @@
+#! /bin/bash
+
+xdotool key End
+xdotool key shift+Home
+xdotool key ctrl+c
+
+INPUT=$(xclip -selection c -o)
+OUTPUT=""
+
+for WORD in $INPUT; do
+    OUTPUT="$OUTPUT${WORD^} "
+done
+
+# Remove last trailing whitespace
+OUTPUT=${OUTPUT::-1}
+
+echo -n "$OUTPUT" | xclip -selection c
+
+xdotool key ctrl+v

@@ -74,23 +74,21 @@ QVector<ReXWindow> re_getWindowList()
 
 QString x11_getPname(int pid)
 {
-    char buffer[1024];
+    QString buffer;
     QString name = "/proc/" + QString::number(pid);
-    name += "/cmdline";
+    name += "/comm";
 
-    FILE* f = fopen(name.toStdString().c_str(),"r");
-    if(f)
+    QFile file(name);
+    if( file.open(QIODevice::ReadOnly))
     {
-        size_t size;
-        size = fread(buffer, sizeof(char), 1024, f);
-        if(size>0)
-        {
-            if('\n'==buffer[size-1])
-            {
-                buffer[size-1]='\0';
-            }
-        }
-        fclose(f);
+        buffer = file.readLine();
+        buffer = buffer.simplified();
+        file.close();
+    }
+    else
+    {
+        qDebug() << "Error 120: x11_getPname failed for pid"
+                 << pid;
     }
 
     return buffer;

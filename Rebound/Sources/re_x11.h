@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QDebug>
+#include <QFile>
 #include <X11/keysym.h>
 #include <X11/keysymdef.h>
 #include <stdio.h>

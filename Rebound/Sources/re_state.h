@@ -35,7 +35,9 @@
 #define RE_META_CLOSE   10
 #define RE_META_SWITCH  11
 #define RE_META_MOUSE   12
-#define RE_META_META    13
+
+#define RE_SUPER_META   101
+#define RE_SUPER_CAMEL  102 //currently colon
 
 #define RE_META_SUPER   1 //Used for val2
 
@@ -53,7 +55,7 @@
 
 typedef struct ReWindow
 {
-    // verify clear on each enumeration to
+    // Verify Clear On Each Enumeration To
     int  verify; //verify hwnd still exist
     int  type;
     QString title;
