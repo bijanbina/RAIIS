@@ -6,6 +6,7 @@
 
 #include "backend.h"
 #include "re_state.h"
+#include "re_meta_go_l.h"
 
 typedef struct CaptainCommand
 {

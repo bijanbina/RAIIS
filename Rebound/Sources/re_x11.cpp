@@ -9,11 +9,7 @@ Window  *winfocus;
 
 Display *reX11_init()
 {
-//    winfocus = new Window;
     display = XOpenDisplay(NULL);
-//    XInitThreads();
-//    Display *display = XOpenDisplay(NULL);
-
 //    setbuf(stdout,NULL);
 //    printf("hi\n");
 
@@ -24,7 +20,6 @@ void reX11_exit()
 {
 //    XFlush(display);
     XCloseDisplay(display);
-    printf("48\n");
 }
 
 QVector<ReXWindow> re_getWindowList()

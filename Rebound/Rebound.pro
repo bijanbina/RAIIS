@@ -10,6 +10,7 @@ SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
            Sources/re_chapar.cpp \
            Sources/re_client.cpp \
+           Sources/re_meta_go_l.cpp \
            Sources/re_state.cpp \
            Sources/re_buttons.cpp \
            Sources/re_directions.cpp \
@@ -38,6 +39,7 @@ HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
+           Sources/re_meta_go_l.h \
            Sources/re_state.h \
            Sources/re_buttons.h \
            Sources/re_directions.h \

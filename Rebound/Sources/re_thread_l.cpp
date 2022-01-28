@@ -22,17 +22,17 @@ void ReThreadL::enumWindows()
     for ( unsigned long i=0 ; i<nchildren ; i++ )
     {
         XFetchName(display, children[i], &name);
-        if ( name )
+        if ( name ) // Name may be null as in GitKraken
         {
-            if(!strcmp(name, "Desktop"))
+            if( !strcmp(name, "Desktop") )
             {
                 continue;
             }
-            int win_desktop = x11_getDesktop(children[i]);
-            if ( win_desktop==desktop_id )
-            {
-                addWindow(children[i]);
-            }
+        }
+        int win_desktop = x11_getDesktop(children[i]);
+        if ( win_desktop==desktop_id )
+        {
+            addWindow(children[i]);
         }
     }
 
@@ -51,8 +51,6 @@ void ReThreadL::addWindow(Window window)
     buf.pid = x11_getPid(window);
     buf.pname = x11_getPname(buf.pid);
     buf.hWnd = window;
-//    printf("%d: <%s> pid=%d pname=%s\n", buf.desktop_id, name,
-//           buf.pid, buf.pname.toStdString().c_str());
     insertWindow(buf);
     XFree(name);
 }
@@ -62,9 +60,10 @@ void ReThreadL::insertWindow(ReWindow win)
     //push active window to front
     if ( win.hWnd==HwndA )
     {
+//        qDebug() << win.hWnd << HwndA << win.pname;
         if ( windows.size()>0 )
         {
-            if ( windows[0].hWnd != win.hWnd )
+            if ( windows[0].hWnd!=win.hWnd )
             {
                 windows.push_front(win);
                 thread_data->state->updateApp(win);
@@ -103,7 +102,7 @@ void ReThreadL::insertWindow(ReWindow win)
         }
     }
 
-    if ( win.hWnd != HwndA )
+    if ( win.hWnd!=HwndA )
     {
         windows.push_back(win);
 #ifdef RE_DEBUG_WIN
@@ -111,111 +110,6 @@ void ReThreadL::insertWindow(ReWindow win)
 #endif
     }
 
-}
-
-QString ReThreadL::cleanTitle(QString app_title)
-{
-    QStringList title_split = app_title.split('-', QString::SkipEmptyParts);
-    QString app_name = renameAppName(title_split.last().simplified());
-    QStringList filename_split = title_split[0].split(" ", QString::SkipEmptyParts);
-    app_title = app_name + ": " + title_split[0].simplified();
-    if(filename_split.size()>1)
-    {
-        app_title += " " + filename_split[1].simplified();
-    }
-    return app_title;
-}
-
-QString ReThreadL::renameAppName(QString app_name)
-{
-    if(app_name.contains("qt", Qt::CaseInsensitive))
-    {
-        return "Qt";
-    }
-    else if(app_name.contains("foxit", Qt::CaseInsensitive))
-    {
-        return "Foxit";
-    }
-    else if(app_name.contains("firefox", Qt::CaseInsensitive))
-    {
-        return "Firefox";
-    }
-    else if(app_name.contains("spotify", Qt::CaseInsensitive))
-    {
-        return "Spotify";
-    }
-    else if(app_name.contains("excel", Qt::CaseInsensitive))
-    {//////
-        return "Excel";
-    }
-    else if(app_name.contains("snip", Qt::CaseInsensitive))
-    {
-        return "Snip";
-    }
-    return app_name;
-}
-
-void ReThreadL::sortApp()
-{
-    QVector<ReWindow> sorted_apps, unsorted_apps;
-    int clover_ind = 0, firefox_ind = 0, spotify_ind = 0;
-    for( int i=0 ; i<windows.size() ; i++)
-    {
-        if(windows[i].pname.contains("Clover", Qt::CaseInsensitive))
-        {
-            sorted_apps.insert(clover_ind, windows[i]);
-            clover_ind++; firefox_ind++; spotify_ind++;
-        }
-        else if(windows[i].pname.contains("Firefox", Qt::CaseInsensitive))
-        {
-            sorted_apps.insert(firefox_ind, windows[i]);
-            firefox_ind++; spotify_ind++;
-        }
-        else if(windows[i].pname.contains("Spotify", Qt::CaseInsensitive))
-        {
-            sorted_apps.insert(spotify_ind, windows[i]);
-            spotify_ind++;
-        }
-        else
-        {
-            unsorted_apps.push_back(windows[i]);
-        }
-    }
-    windows = sorted_apps + unsorted_apps;
-}
-
-void reListChildren(QString path)
-{
-    qDebug() <<"####### Exit getChildren - acc path : " << path;
-}
-
-QString reGetPName(long pid)
-{
-    ;
-}
-
-void ReThreadL::getHWND(QString appname)
-{
-    return;
-}
-
-long reGetPid()
-{
-    // get allegro pid of window handle
-    long dwProcessId;
-
-    return dwProcessId;
-}
-
-long reGetChildCount()
-{
-    long cc;
-    return cc;
-}
-
-void reGetPAcc()
-{
-    ;
 }
 
 int ReThreadL::getIndex(QString app_name)
@@ -230,28 +124,11 @@ int ReThreadL::getIndex(QString app_name)
     return -1;
 }
 
-QString reGetAccName(long childId)
-{
-    return QString("");
-}
-
-ReElemSpec* ReThreadL::getElemSpec(QString name)
-{
-    for(auto e: elems_spec)
-    {
-        if(e->name == name)
-        {
-            return e;
-        }
-    }
-    return NULL;
-}
-
 ReWindow ReThreadL::getWinSpec(QString title)
 {
     for(int i=0; i<windows.size(); i++)
     {
-        if(title == windows[i].title)
+        if( title==windows[i].title )
         {
             return windows[i];
         }
@@ -270,26 +147,6 @@ QString ReThreadL::getWinTitle(int index)
     return "";
 }
 
-QString ReThreadL::getElemName(int index)
-{
-    if(index < elems_spec.size())
-    {
-        return elems_spec[index]->name;
-    }
-    return "";
-}
-
-// return Acc specific chilren
-void reFindAcc(QString path)
-{
-    ;
-}
-
-void ReThreadL::updateElements(QString app_name, QString parent_path,
-                               QString child_path)
-{
-    qDebug() << "updateElements" << app_name;
-}
 
 ReThreadL::ReThreadL(threadStruct *thread_data)
 {
@@ -322,16 +179,6 @@ void ReThreadL::cleanWins()
     }
 }
 
-void ReThreadL::cleanElems()
-{
-    for(auto e : elems_spec)
-    {
-        delete e;
-    }
-    elems_spec.clear();
-    elems_name.clear();
-}
-
 void ReThreadL::syncWinsTitle()
 {
     for(int i=0; i<windows.size(); i++)
@@ -355,26 +202,6 @@ void ReThreadL::syncWinsTitle()
     }
 }
 
-void ReThreadL::syncElemsName()
-{
-    for(int i=0; i<elems_name.size(); i++)
-    {
-        if(i < thread_data->elems_name->size())
-        {
-            (*(thread_data->elems_name))[i] = elems_name[i];
-        }
-        else
-        {
-            thread_data->elems_name->push_back(elems_name[i]);
-        }
-    }
-
-    while( elems_name.size()<thread_data->elems_name->size() )
-    {
-        thread_data->elems_name->pop_front();
-    }
-}
-
 void ReThreadL::updateActiveWindow()
 {
     char *buffer;
@@ -390,9 +217,9 @@ void reRunThread(void *thread_struct_void)
     threadStruct *thread_data = (threadStruct *)thread_struct_void;
     ReThreadL *priv = new ReThreadL(thread_data);
 
-    while(1)
+    while( 1 )
     {
-        if(cntr > 200)
+        if( cntr>200 )
         {
             if( re_state_mode==RE_MODE_HIDDEN )
             {
@@ -406,14 +233,11 @@ void reRunThread(void *thread_struct_void)
             }
             else if( re_state_mode==RE_MODE_MAIN )
             {
-                priv->cleanElems();
-                priv->updateElements("spotifys", RE_SPOTIFY_ALBUM_PARENT,
-                                     RE_SPOTIFY_ALBUM_CHILD);
-                priv->syncElemsName();
+//                priv->syncElemsName();
             }
             cntr = 0;
         }
-        if(!thread_data->message.isEmpty())
+        if( !thread_data->message.isEmpty() )
         {
             if(thread_data->message == "Launch Nuclear missiles")
             {
