@@ -331,6 +331,10 @@ QString ReMetaL::getGoCmd(int val)
     {
         cmd = re_getGoGitKraken(val);
     }
+    else if( state->app.pname=="GeckoMain" )
+    {
+        cmd = re_getGoFirefox(val);
+    }
 
     return cmd;
 }

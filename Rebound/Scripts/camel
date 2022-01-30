@@ -4,11 +4,18 @@ xdotool key End
 xdotool key shift+Home
 xdotool key ctrl+c
 
+CD=$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 INPUT=$(xclip -selection c -o)
 OUTPUT=""
 
 for WORD in $INPUT; do
-    OUTPUT="$OUTPUT${WORD^} "
+	LIST=$(grep -w "$WORD" "$CD/camel_skip")
+
+	if [[ "$LIST" ]]; then
+		OUTPUT="$OUTPUT$WORD "
+	else
+		OUTPUT="$OUTPUT${WORD^} "
+	fi
 done
 
 # Remove last trailing whitespace

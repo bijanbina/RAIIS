@@ -78,7 +78,31 @@ QString re_getGoGitKraken(int val)
     {
         cmd = "xdotool key ctrl+";
         cmd += QString::number(val);
-        qDebug() << "KEY_0" << cmd;
+    }
+
+    return cmd;
+}
+
+QString re_getGoFirefox(int val)
+{
+    QString cmd;
+
+    if( val==KEY_LEFT ) //focus
+    {
+        cmd = "xdotool key ctrl+shift+Tab";
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd = "xdotool key ctrl+Tab";
+    }
+    else if( val==KEY_F ) //find
+    {
+        cmd = "xdotool key ctrl+F";
+    }
+    else if( val>0 && val<10 ) //tab
+    {
+        cmd = "xdotool key alt+";
+        cmd += QString::number(val);
     }
 
     return cmd;

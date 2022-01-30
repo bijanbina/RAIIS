@@ -9,6 +9,7 @@
 
 QString re_getGoXed(int val);
 QString re_getGoQt(int val);
+QString re_getGoFirefox(int val);
 QString re_getGoGitKraken(int val);
 
 #endif // RE_META_GO_L_H
