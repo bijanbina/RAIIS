@@ -6,10 +6,17 @@ ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
     meta = new ReMetaL(state);
+    last_cmd.type = RE_COMMAND_NULL;
 
     struct uinput_setup usetup;
 
     uinput_f = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
+
+    if( uinput_f==-1 )
+    {
+        qDebug() << "Failed to open /dev/uinput";
+        exit(1);
+    }
 
     /*
      * The ioctls below will enable the device that is about to be
@@ -74,7 +81,8 @@ void ReCaptainL::releaseKey(int key_val)
     setKey(EV_KEY, key_val, 0);
     setKey(EV_SYN, SYN_REPORT, 0);
 }
-void ReCaptainL::pressModifier(CaptainCommand command)
+
+void ReCaptainL::pressModifier(CCommand command)
 {
     modifiers.append(command);
     pressKey(command.val1);
@@ -93,7 +101,7 @@ void ReCaptainL::releaseModifiers()
     modifiers.clear();
 }
 
-void ReCaptainL::execute(QVector<CaptainCommand> commands)
+void ReCaptainL::execute(QVector<CCommand> commands)
 {
     for( int i=0 ; i<commands.length() ; i++ )
     {
@@ -122,8 +130,9 @@ void ReCaptainL::execute(QVector<CaptainCommand> commands)
 //    releaseModifiers();
 }
 
-void ReCaptainL::execCommand(CaptainCommand command)
+void ReCaptainL::execCommand(CCommand command)
 {
+    last_cmd = command;
     if( command.type==RE_COMMAND_NATO ||
         command.type==RE_COMMAND_DIRS ||
         command.type==RE_COMMAND_DIGIT )
@@ -154,15 +163,9 @@ void ReCaptainL::execCommand(CaptainCommand command)
     }
 }
 
-bool ReCaptainL::isLastCmdRepeatable(QVector<CaptainCommand> commands)
+bool ReCaptainL::isLastCmdRepeatable()
 {
-    if( commands.count()==0 )
-    {
-        return false;
-    }
-    int last_i = commands.count()-1; //last index
-//    int key_code = commands[last_i].val1;
-    int cmd_type = commands[last_i].type;
+    int cmd_type = last_cmd.type;
 
     if( cmd_type==RE_COMMAND_DIRS )
     {
@@ -180,7 +183,7 @@ bool ReCaptainL::isLastCmdRepeatable(QVector<CaptainCommand> commands)
     return false;
 }
 
-bool ReCaptainL::isLastCmdFunction(QVector<CaptainCommand> commands)
+bool ReCaptainL::isLastCmdFunction(QVector<CCommand> commands)
 {
     if( commands.count()==0 )
     {
@@ -202,7 +205,7 @@ bool ReCaptainL::isLastCmdFunction(QVector<CaptainCommand> commands)
     return false;
 }
 
-bool ReCaptainL::isLastMeta(QVector<CaptainCommand> commands)
+bool ReCaptainL::isLastMeta(QVector<CCommand> commands)
 {
     if( commands.count()==0 )
     {
@@ -220,7 +223,7 @@ bool ReCaptainL::isLastMeta(QVector<CaptainCommand> commands)
     return false;
 }
 
-bool ReCaptainL::isWakeUp(CaptainCommand command)
+bool ReCaptainL::isWakeUp(CCommand command)
 {
     if( command.type==RE_COMMAND_META )
     {

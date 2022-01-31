@@ -8,13 +8,14 @@
 #include "re_state.h"
 #include "re_meta_go_l.h"
 
-typedef struct CaptainCommand
+// Captain Command
+typedef struct CCommand
 {
     int val1;
     int val2;
     int val3;
     int type;
-}CaptainCommand;
+}CCommand;
 
 
 class ReMetaL : public QObject
@@ -25,7 +26,7 @@ public:
     ReMetaL(ReState *st, QObject *parent = NULL);
     ~ReMetaL();
 
-    void execMeta(CaptainCommand command);
+    void execMeta(CCommand command);
 
 private:
     QString getGoCmd(int val);

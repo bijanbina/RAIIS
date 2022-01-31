@@ -17,31 +17,32 @@ public:
     ReCaptainL(ReState *st, QObject *parent = NULL);
     ~ReCaptainL();
 
-    void execute(QVector<CaptainCommand> commands);
-    bool isLastCmdRepeatable(QVector<CaptainCommand> commands);
-    bool isLastCmdFunction(QVector<CaptainCommand> commands);
-    bool isLastMeta(QVector<CaptainCommand> commands);
+    void execute(QVector<CCommand> commands);
+    bool isLastCmdRepeatable();
+    bool isLastCmdFunction(QVector<CCommand> commands);
+    bool isLastMeta(QVector<CCommand> commands);
     int keyCode2Digit(QString key_code);
 
     ReState *state;
+    CCommand last_cmd;
 private:
     void sendKey(int key_val);
     void pressKey(int key_val);
     void releaseKey(int key_val);
-    void handleScroll(CaptainCommand command);
+    void handleScroll(CCommand command);
 
-    void pressModifier(CaptainCommand command);
+    void pressModifier(CCommand command);
     void releaseModifiers();
     void setKey(int type, int code, int val);
 
-    void execCommand(CaptainCommand command);
+    void execCommand(CCommand command);
 
-    bool isWakeUp(CaptainCommand command);
+    bool isWakeUp(CCommand command);
 
     int uinput_f;
 
     ReMetaL *meta;
-    QVector<CaptainCommand> modifiers;
+    QVector<CCommand> modifiers;
 };
 
 

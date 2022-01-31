@@ -20,8 +20,6 @@ class ReChannelL : public QObject
 public:
     ReChannelL(ReCaptainL *cpt, QObject *ui, QObject *parent = NULL);
 
-    void startServer();
-
     ~ReChannelL();
 
 public slots:
@@ -46,7 +44,7 @@ private:
     ReCaptainL *captain;
     int special_c; //count of special
 
-    QVector<CaptainCommand> cmd_buf;
+    QVector<CCommand> cmd_buf;
     QString commands_str; //just for debug purpose
 };
 

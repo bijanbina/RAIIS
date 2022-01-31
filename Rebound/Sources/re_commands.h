@@ -1,0 +1,70 @@
+#ifndef RE_COMMANDS_H
+#define RE_COMMANDS_H
+
+
+#ifdef _WIN32
+#include "re_api_w.h"
+#include "re_hardware_w.h"
+#endif
+#ifdef __linux__
+#include "re_api_l.h"
+#include <X11/Xlib.h>
+#endif
+
+#define RE_COMMAND_NULL  0
+#define RE_COMMAND_DIRS  1
+#define RE_COMMAND_NATO  2
+#define RE_COMMAND_DIGIT 3
+#define RE_COMMAND_MOD   4 //Modifiers
+#define RE_COMMAND_META  5
+
+#define RE_META_OPEN    1
+#define RE_META_SYS     2
+#define RE_META_START   3
+#define RE_META_FOX     4
+#define RE_META_PAGE    5
+#define RE_META_GO      6
+#define RE_META_SKY     7
+#define RE_META_DIVE    8
+#define RE_META_MUSIC   9
+#define RE_META_CLOSE   10
+#define RE_META_SWITCH  11
+#define RE_META_MOUSE   12
+
+#define RE_SUPER_META   101
+#define RE_SUPER_CAMEL  102 //currently colon
+
+#define RE_META_SUPER   1 //Used for val2
+
+#define RE_APP_GITHUB   301
+#define RE_APP_FIREFOX  302
+#define RE_APP_FILES    303
+#define RE_APP_SPOTIFY  304
+#define RE_APP_ATOM     305
+#define RE_APP_DING     306 //fox ding
+#define RE_APP_LINK     307 //fox link
+#define RE_APP_SLEEP    308 //go sleep
+
+#define RE_KEY_FMIN    59 //F1
+#define RE_KEY_FMAX    68 //F10
+
+typedef struct ReWindow
+{
+    // Verify Clear On Each Enumeration To
+    int  verify; //verify hwnd still exist
+    int  type;
+    QString title;
+    QString pname;
+#ifdef _WIN32
+    HWND hWnd;
+    IAccessible *pAcc;
+#endif
+#ifdef __linux__
+    Window hWnd; //pid
+    int pid;
+    int desktop_id;
+#endif
+}ReWindow;
+
+
+#endif // RE_COMMANDS_H

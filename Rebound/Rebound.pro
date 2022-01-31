@@ -37,6 +37,7 @@ linux:SOURCES += \
 
 HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
+           Sources/re_commands.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
            Sources/re_meta_go_l.h \

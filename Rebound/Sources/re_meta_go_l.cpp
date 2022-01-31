@@ -64,7 +64,7 @@ QString re_getGoGitKraken(int val)
     {
         system("xdotool type 'NATO: '");
     }
-    else if( val==KEY_R ) //focus
+    else if( val==KEY_R )
     {
         system("xdotool type 'Rebound-Linux: '");
     }
@@ -73,6 +73,16 @@ QString re_getGoGitKraken(int val)
         system("xdotool key --delay 200 super+ctrl+k");
         QThread::msleep(100); //little tweak
         cmd = "xdotool key --delay 200 super+ctrl+k";
+    }
+    else if( val==KEY_P ) //focus
+    {
+        system("xdotool key ctrl+Enter");
+        QThread::msleep(100); //little tweak
+        system("xdotool key ctrl+p");
+        QThread::msleep(100); //little tweak
+        system("xdotool type push");
+        QThread::msleep(100); //little tweak
+        cmd = "xdotool key Enter";
     }
     else if( val>0 && val<10 ) //tab
     {

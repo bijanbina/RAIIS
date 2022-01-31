@@ -81,42 +81,35 @@ void ReChannelL::nato(const QString &text)
         }
     }
 
-    CaptainCommand cmd;
+    CCommand cmd;
 
     cmd.val1 = text.toInt();
     cmd.val2 = 0;
     cmd.type = RE_COMMAND_NATO;
 
     cmd_buf.append(cmd);
-    if( special_c==0 )
-    {
-        execute();
-    }
+    execute();
 }
 
 void ReChannelL::digit(const QString &text)
 {
-    if( captain->isLastCmdRepeatable(cmd_buf) && (special_c>0) )
+    if( captain->isLastCmdRepeatable() )
     {
-        int last_i = cmd_buf.count()-1; //last index
-
-        if ( cmd_buf[last_i].val2==0 )
+        if ( captain->last_cmd.val2==0 )
         {
-            cmd_buf[last_i].val2 = captain->keyCode2Digit(text);
+            captain->last_cmd.val2 = captain->keyCode2Digit(text)-1;
         }
         else
         {
-            cmd_buf[last_i].val2  = cmd_buf[last_i].val2*10;
-            cmd_buf[last_i].val2 += captain->keyCode2Digit(text);
-        }
-        special_c--;
-
-        if( special_c==0 )
-        {
-            system("rm ~/.config/polybar/awesomewm/ben_spex");
-            execute();
+            int l_count = captain->last_cmd.val2+1; //last count
+            captain->last_cmd.val2  = l_count*10;
+            captain->last_cmd.val2 += captain->keyCode2Digit(text);
+            captain->last_cmd.val2 -= l_count;
+            qDebug() << "last_cmd" << captain->last_cmd.val2;
         }
 
+        cmd_buf.append(captain->last_cmd);
+        execute();
     }
     else if( captain->isLastMeta(cmd_buf) )
     {
@@ -138,14 +131,11 @@ void ReChannelL::digit(const QString &text)
             execute();
         }
 
-        if( special_c==0 )
-        {
-            execute();
-        }
+        execute();
     }
     else if( captain->state->scroll_mode )
     {
-        CaptainCommand cmd;
+        CCommand cmd;
         cmd.val1 = captain->state->scroll_dir;
         cmd.val2 = captain->keyCode2Digit(text);
         cmd.type = RE_COMMAND_META;
@@ -163,7 +153,7 @@ void ReChannelL::digit(const QString &text)
     }
     else if( special_c>0 ) //FUNC KEY
     {
-        CaptainCommand cmd;
+        CCommand cmd;
         cmd.val1 = RE_KEY_FMIN + captain->keyCode2Digit(text) - 1;
         cmd.val2 = 1;
         cmd.type = RE_COMMAND_DIRS;
@@ -179,7 +169,7 @@ void ReChannelL::digit(const QString &text)
     }
     else
     {
-        CaptainCommand cmd;
+        CCommand cmd;
         cmd.val1 = text.toInt();
         cmd.val2 = 1;
         cmd.type = RE_COMMAND_DIGIT;
@@ -190,8 +180,7 @@ void ReChannelL::digit(const QString &text)
     }
 }
 
-// direction keys
-void ReChannelL::dirs(const QString &text) //speex
+void ReChannelL::dirs(const QString &text) // direction keys
 {
     if( captain->isLastMeta(cmd_buf) )
     {
@@ -206,21 +195,18 @@ void ReChannelL::dirs(const QString &text) //speex
         }
     }
 
-    CaptainCommand cmd;
+    CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 0; //press count
     cmd.type = RE_COMMAND_DIRS;
 
     cmd_buf.append(cmd);
-    if( special_c==0 )
-    {
-        execute();
-    }
+    execute();
 }
 
 void ReChannelL::modifier(const QString &text)
 {
-    CaptainCommand cmd;
+    CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 1;
     cmd.type = RE_COMMAND_MOD;
@@ -246,7 +232,7 @@ void ReChannelL::meta(const QString &text)
         }
     }
 
-    CaptainCommand cmd;
+    CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 0;
     cmd.val3 = 0;
@@ -285,17 +271,14 @@ void ReChannelL::spex(const QString &text)
 
 void ReChannelL::super(const QString &text)
 {
-    CaptainCommand cmd;
+    CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = RE_META_SUPER;
     cmd.val3 = 0;
     cmd.type = RE_COMMAND_META;
     cmd_buf.append(cmd);
 
-    if( special_c==0 )
-    {
-        execute();
-    }
+    execute();
 }
 
 void ReChannelL::debug(const QString &text)
@@ -305,9 +288,4 @@ void ReChannelL::debug(const QString &text)
         commands_str += " ";
     }
     commands_str += text;
-}
-
-void ReChannelL::startServer()
-{
-
 }

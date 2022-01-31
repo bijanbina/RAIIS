@@ -10,7 +10,7 @@ ReMetaL::~ReMetaL()
     ;
 }
 
-void ReMetaL::execMeta(CaptainCommand command)
+void ReMetaL::execMeta(CCommand command)
 {
     if( command.val2==0 )
     {
