@@ -33,7 +33,7 @@ public:
     void wakeUp();
     bool isSleep();
     void enScroll(int dir, int speed);
-    void disScroll();
+    void disScroll(CCommand command);
 
 #ifdef _WIN32
     ReApiW *api;

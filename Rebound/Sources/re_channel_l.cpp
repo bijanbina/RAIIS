@@ -115,18 +115,11 @@ void ReChannelL::digit(const QString &text)
         CCommand cmd;
         cmd.val1 = captain->state->scroll_dir;
         cmd.val2 = re_keyCode2Digit(text);
+        cmd.val3 = 1;
         cmd.type = RE_COMMAND_META;
 
         cmd_buf.append(cmd);
-        if( special_c>0 )
-        {
-            special_c--;
-        }
-        else // special_c=0
-        {
-            system("rm ~/.config/polybar/awesomewm/ben_spex");
-            execute();
-        }
+        execute();
     }
     else if( special_c>0 ) //FUNC KEY
     {

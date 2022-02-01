@@ -18,7 +18,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
 
 void ReState::rmStatusFile()
 {
-    QString path = "/home/bijan";
+    QString path = getenv("HOME");
     path += "/.config/polybar/awesomewm/ben_status";
     if( QFileInfo::exists(path) )
     {
@@ -169,11 +169,24 @@ void ReState::enScroll(int dir, int speed)
 }
 
 // disable scroll
-void ReState::disScroll()
+void ReState::disScroll(CCommand command)
 {
-    scroll_mode = 0;
-    scroll_dir = 0;
-    rmStatusFile();
+    if( command.type!=RE_COMMAND_DIRS )
+    {
+        return;
+    }
+
+    if( command.val1!=1 ) //Escape
+    {
+        return;
+    }
+
+    if( scroll_mode )
+    {
+        scroll_mode = 0;
+        scroll_dir = 0;
+        rmStatusFile();
+    }
 }
 
 bool ReState::isSleep()

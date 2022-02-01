@@ -155,8 +155,8 @@ void ReCaptainL::execCommand(CCommand command)
         {
             sendKey(command.val1);
         }
-        ////////////////FIX ME//////////////////////////
-        state->disScroll();
+
+        state->disScroll(command);
     }
     else if( command.type==RE_COMMAND_MOD )
     {
@@ -174,6 +174,11 @@ void ReCaptainL::execCommand(CCommand command)
 bool ReCaptainL::isLastRepeatable()
 {
     int cmd_type = last_cmd.type;
+
+    if( state->scroll_mode )
+    {
+        return false;
+    }
 
     if( cmd_type==RE_COMMAND_DIRS )
     {
