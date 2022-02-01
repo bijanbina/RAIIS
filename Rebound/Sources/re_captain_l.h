@@ -18,10 +18,7 @@ public:
     ~ReCaptainL();
 
     void execute(QVector<CCommand> commands);
-    bool isLastCmdRepeatable();
-    bool isLastCmdFunction(QVector<CCommand> commands);
-    bool isLastMeta(QVector<CCommand> commands);
-    int keyCode2Digit(QString key_code);
+    bool isLastRepeatable();
 
     ReState *state;
     CCommand last_cmd;

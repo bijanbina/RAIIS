@@ -8,16 +8,6 @@
 #include "re_state.h"
 #include "re_meta_go_l.h"
 
-// Captain Command
-typedef struct CCommand
-{
-    int val1;
-    int val2;
-    int val3;
-    int type;
-}CCommand;
-
-
 class ReMetaL : public QObject
 {
     Q_OBJECT

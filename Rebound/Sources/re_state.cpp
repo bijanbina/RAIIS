@@ -1,4 +1,5 @@
 #include "re_state.h"
+#include <QFileInfo>
 
 ReState::ReState(QObject *parent) : QObject(parent)
 {
@@ -12,8 +13,20 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #endif
 #ifdef __linux__
     api = new ReApiL;
-    system("rm ~/.config/polybar/awesomewm/ben_status");
+    rmStatusFile();
 #endif
+}
+
+void ReState::rmStatusFile()
+{
+    QString path = "~/.config/polybar/awesomewm/ben_status";
+    if( QFileInfo::exists(path) )
+    {
+        QString cmd = "rm ";
+        cmd += path;
+
+        system(cmd.toStdString().c_str());
+    }
 }
 
 void ReState::setMode(int mode)
@@ -132,7 +145,7 @@ void ReState::goToSleep()
 void ReState::wakeUp()
 {
     sleep_state = 0;
-    system("rm ~/.config/polybar/awesomewm/ben_status");
+    rmStatusFile();
 }
 
 // enable scroll
@@ -160,7 +173,7 @@ void ReState::disScroll()
 {
     scroll_mode = 0;
     scroll_dir = 0;
-    system("rm ~/.config/polybar/awesomewm/ben_status");
+    rmStatusFile();
 }
 
 bool ReState::isSleep()

@@ -163,7 +163,7 @@ void ReCaptainL::execCommand(CCommand command)
     }
 }
 
-bool ReCaptainL::isLastCmdRepeatable()
+bool ReCaptainL::isLastRepeatable()
 {
     int cmd_type = last_cmd.type;
 
@@ -173,49 +173,17 @@ bool ReCaptainL::isLastCmdRepeatable()
     }
     else if( cmd_type==RE_COMMAND_DIGIT )
     {
-        return true;
+        return false;
     }
     else if( cmd_type==RE_COMMAND_NATO )
     {
+        return false;
+    }
+    else if( cmd_type==RE_COMMAND_META )
+    {
         return true;
     }
-
-    return false;
-}
-
-bool ReCaptainL::isLastCmdFunction(QVector<CCommand> commands)
-{
-    if( commands.count()==0 )
-    {
-        return false;
-    }
-    int last_i = commands.count()-1; //last index
-    int key_code = commands[last_i].val1;
-    int cmd_type = commands[last_i].type;
-
-    if( cmd_type==RE_COMMAND_NATO )
-    {
-        if( key_code>RE_KEY_FMIN &&
-            key_code <RE_KEY_FMAX )
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-bool ReCaptainL::isLastMeta(QVector<CCommand> commands)
-{
-    if( commands.count()==0 )
-    {
-        return false;
-    }
-
-    int last_i = commands.count()-1; //last index
-    int cmd_type = commands[last_i].type;
-
-    if( cmd_type==RE_COMMAND_META )
+    else if( cmd_type==RE_COMMAND_MOD  )
     {
         return true;
     }
@@ -238,18 +206,3 @@ bool ReCaptainL::isWakeUp(CCommand command)
 
     return false;
 }
-
-int  ReCaptainL::keyCode2Digit(QString key_code)
-{
-    int code = key_code.toInt();
-
-    if( code==11 )
-    {
-        return 0;
-    }
-    else
-    {
-        return code-1;
-    }
-}
-

@@ -14,8 +14,10 @@ class ReState : public QObject
     Q_OBJECT
 public:
     explicit ReState(QObject *parent = 0);
+
+    void rmStatusFile();
     void setMode(int mode);
-    int getMode();
+    int  getMode();
 
     void setProcess(QString name);
     void setProcess(int proc);

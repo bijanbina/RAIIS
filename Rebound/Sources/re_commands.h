@@ -18,6 +18,10 @@
 #define RE_COMMAND_MOD   4 //Modifiers
 #define RE_COMMAND_META  5
 
+#define RE_CSTATE_0  5
+#define RE_CSTATE_1  5
+#define RE_CSTATE_2  5
+
 #define RE_META_OPEN    1
 #define RE_META_SYS     2
 #define RE_META_START   3
@@ -66,5 +70,20 @@ typedef struct ReWindow
 #endif
 }ReWindow;
 
+// Captain Command
+typedef struct CCommand
+{
+    int val1;
+    int val2;
+    int val3;
+    int type = RE_COMMAND_NULL;
+    int state = RE_CSTATE_0;
+    QVector<int> mod_list; //modifiers list
+}CCommand;
+
+bool re_isLastCmdFunction(QVector<CCommand> commands);
+bool re_isLastMeta(QVector<CCommand> commands);
+bool re_isLastMod(QVector<CCommand> commands);
+int  re_keyCode2Digit(QString key_code);
 
 #endif // RE_COMMANDS_H

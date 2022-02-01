@@ -10,6 +10,7 @@ SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
            Sources/re_chapar.cpp \
            Sources/re_client.cpp \
+           Sources/re_commands.cpp \
            Sources/re_meta_go_l.cpp \
            Sources/re_state.cpp \
            Sources/re_buttons.cpp \
