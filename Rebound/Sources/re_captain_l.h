@@ -21,7 +21,6 @@ public:
     bool isLastRepeatable();
 
     ReState *state;
-    CCommand last_cmd;
 private:
     void sendKey(int key_val);
     void pressKey(int key_val);

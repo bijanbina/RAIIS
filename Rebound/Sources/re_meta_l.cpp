@@ -34,6 +34,7 @@ void ReMetaL::execMeta(CCommand command)
     }
     else if( command.val1==RE_META_FOX )
     {
+        state->last_cmd.type = RE_COMMAND_NULL;
         if( command.val2==RE_APP_DING )
         {
             QString cmd = "xdotool key Ctrl+F";
@@ -238,21 +239,19 @@ QString ReMetaL::getSystemCmd(int val)
 
 QString ReMetaL::getMusicCmd(int val)
 {
-    QString cmd = "dbus-send --print-reply --dest="
-                  "org.mpris.MediaPlayer2.spotify "
-                  "/org/mpris/MediaPlayer2 ";
+    QString cmd = "./Scripts/music.sh ";
 
     if( val==KEY_ENTER )
     {
-        cmd += "org.mpris.MediaPlayer2.Player.PlayPause";
+        cmd += "play";
     }
     else if( val==KEY_LEFT )
     {
-        cmd += "org.mpris.MediaPlayer2.Player.Previous";
+        cmd += "prev";
     }
     else if( val==KEY_RIGHT )
     {
-        cmd += "org.mpris.MediaPlayer2.Player.Next";
+        cmd += "next";
     }
     else
     {

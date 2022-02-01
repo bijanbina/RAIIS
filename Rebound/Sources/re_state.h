@@ -50,6 +50,7 @@ public:
     bool scroll_mode = 0;
     int  scroll_dir  = 0;
     ReWindow app; //Active Window
+    CCommand last_cmd;
 
 signals:
     void updateMode();

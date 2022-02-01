@@ -6,7 +6,7 @@ ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
     meta = new ReMetaL(state);
-    last_cmd.type = RE_COMMAND_NULL;
+    state->last_cmd.type = RE_COMMAND_NULL;
 
     struct uinput_setup usetup;
 
@@ -146,7 +146,7 @@ void ReCaptainL::execute(QVector<CCommand> commands)
 
 void ReCaptainL::execCommand(CCommand command)
 {
-    last_cmd = command;
+    state->last_cmd = command;
     if( command.type==RE_COMMAND_NATO ||
         command.type==RE_COMMAND_DIRS ||
         command.type==RE_COMMAND_DIGIT )
@@ -173,7 +173,7 @@ void ReCaptainL::execCommand(CCommand command)
 
 bool ReCaptainL::isLastRepeatable()
 {
-    int cmd_type = last_cmd.type;
+    int cmd_type = state->last_cmd.type;
 
     if( state->scroll_mode )
     {
@@ -194,14 +194,14 @@ bool ReCaptainL::isLastRepeatable()
     }
     else if( cmd_type==RE_COMMAND_META )
     {
-        if( last_cmd.val2 )
+        if( state->last_cmd.val2 )
         {
             return true;
         }
     }
     else if( cmd_type==RE_COMMAND_MOD  )
     {
-        if( last_cmd.val1 )
+        if( state->last_cmd.val1 )
         {
             return true;
         }
