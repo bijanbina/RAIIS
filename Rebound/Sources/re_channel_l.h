@@ -39,6 +39,7 @@ private slots:
 
 private:
     void ConnectDBus();
+    void handleLastRepeatable(int input);
 
     QObject  *root;
     ReCaptainL *captain;

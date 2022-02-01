@@ -4,10 +4,11 @@
 #ifdef __linux__
 #endif
 
+#include "re_commands.h"
 #include <QObject>
 #include <QString>
 #include <QQmlProperty>
-#include "re_commands.h"
+#include <QFileInfo>
 
 class ReState : public QObject
 {

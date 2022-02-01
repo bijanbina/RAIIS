@@ -26,16 +26,7 @@ void ReMetaL::execMeta(CCommand command)
     else if( command.val1==RE_META_SYS )
     {
         QString cmd = getSystemCmd(command.val2);
-
-        if( command.val3==0 )
-        {
-            command.val3 = 1; //change default to 1
-        }
-
-        for( int j=0 ; j<command.val3 ; j++ )
-        {
-            system(cmd.toStdString().c_str());
-        }
+        system(cmd.toStdString().c_str());
     }
     else if( command.val1==RE_META_START )
     {
@@ -83,16 +74,7 @@ void ReMetaL::execMeta(CCommand command)
     else if( command.val1==RE_META_MUSIC )
     {
         QString cmd = getMusicCmd(command.val2);
-
-        if( command.val3==0 )
-        {
-            command.val3 = 1; //change default to 1
-        }
-
-        for( int j=0 ; j<command.val3 ; j++ )
-        {
-            system(cmd.toStdString().c_str());
-        }
+        system(cmd.toStdString().c_str());
     }
     else if( command.val1==RE_META_SWITCH )
     {

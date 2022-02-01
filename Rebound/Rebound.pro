@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick dbus
+QT += qml quick dbus core
 
 CONFIG += console
 

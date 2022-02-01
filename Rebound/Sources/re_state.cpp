@@ -1,5 +1,4 @@
 #include "re_state.h"
-#include <QFileInfo>
 
 ReState::ReState(QObject *parent) : QObject(parent)
 {
@@ -19,7 +18,8 @@ ReState::ReState(QObject *parent) : QObject(parent)
 
 void ReState::rmStatusFile()
 {
-    QString path = "~/.config/polybar/awesomewm/ben_status";
+    QString path = "/home/bijan";
+    path += "/.config/polybar/awesomewm/ben_status";
     if( QFileInfo::exists(path) )
     {
         QString cmd = "rm ";

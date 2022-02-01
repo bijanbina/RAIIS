@@ -31,10 +31,14 @@ bool re_isLastMeta(QVector<CCommand> commands)
 
     int last_i = commands.count()-1; //last index
     int cmd_type = commands[last_i].type;
+    int cmd_val2 = commands[last_i].val2;
 
     if( cmd_type==RE_COMMAND_META )
     {
-        return true;
+        if( cmd_val2==0 )
+        {
+            return true;
+        }
     }
 
     return false;
@@ -58,7 +62,7 @@ bool re_isLastMod(QVector<CCommand> commands)
     return false;
 }
 
-int  re_keyCode2Digit(QString key_code)
+int re_keyCode2Digit(QString key_code)
 {
     int code = key_code.toInt();
 

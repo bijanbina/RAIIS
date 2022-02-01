@@ -28,7 +28,7 @@ private:
     void releaseKey(int key_val);
     void handleScroll(CCommand command);
 
-    void pressModifier(CCommand command);
+    void execModifier(CCommand command);
     void releaseModifiers();
     void setKey(int type, int code, int val);
 

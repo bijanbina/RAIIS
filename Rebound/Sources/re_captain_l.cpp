@@ -82,10 +82,24 @@ void ReCaptainL::releaseKey(int key_val)
     setKey(EV_SYN, SYN_REPORT, 0);
 }
 
-void ReCaptainL::pressModifier(CCommand command)
+void ReCaptainL::execModifier(CCommand command)
 {
-    modifiers.append(command);
-    pressKey(command.val1);
+    int len = command.mod_list.size();
+    for( int i=0 ; i<len ; i++ )
+    {
+        pressKey(command.mod_list[i]);
+    }
+
+    for( int j=0 ; j<command.val2 ; j++ )
+    {
+        sendKey(command.val1);
+    }
+
+    for( int i=0 ; i<len ; i++ )
+    {
+        releaseKey(command.mod_list[len-i-1]);
+    }
+//    QThread::msleep(100); //little tweak
     qDebug() << "pressModifier" << modifiers.count();
 }
 
@@ -137,29 +151,23 @@ void ReCaptainL::execCommand(CCommand command)
         command.type==RE_COMMAND_DIRS ||
         command.type==RE_COMMAND_DIGIT )
     {
-        if( command.val2==0 )
-        {
-            command.val2 = 1;  //this cannot be removed
-        }
         for( int j=0 ; j<command.val2 ; j++ )
         {
             sendKey(command.val1);
         }
-        releaseModifiers();
+        ////////////////FIX ME//////////////////////////
         state->disScroll();
     }
     else if( command.type==RE_COMMAND_MOD )
     {
-        pressModifier(command);
+        execModifier(command);
     }
     else if( command.type==RE_COMMAND_META )
     {
-        if( modifiers.count() )
+        for( int j=0 ; j<command.val3 ; j++ )
         {
-            QThread::msleep(100); //little tweak
-            releaseModifiers();
+            meta->execMeta(command);
         }
-        meta->execMeta(command);
     }
 }
 
@@ -181,11 +189,17 @@ bool ReCaptainL::isLastRepeatable()
     }
     else if( cmd_type==RE_COMMAND_META )
     {
-        return true;
+        if( last_cmd.val2 )
+        {
+            return true;
+        }
     }
     else if( cmd_type==RE_COMMAND_MOD  )
     {
-        return true;
+        if( last_cmd.val1 )
+        {
+            return true;
+        }
     }
 
     return false;

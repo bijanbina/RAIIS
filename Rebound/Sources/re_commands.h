@@ -18,9 +18,9 @@
 #define RE_COMMAND_MOD   4 //Modifiers
 #define RE_COMMAND_META  5
 
-#define RE_CSTATE_0  5
-#define RE_CSTATE_1  5
-#define RE_CSTATE_2  5
+#define RE_CSTATE_0  0
+#define RE_CSTATE_1  1
+#define RE_CSTATE_2  2
 
 #define RE_META_OPEN    1
 #define RE_META_SYS     2

@@ -72,13 +72,9 @@ void ReChannelL::nato(const QString &text)
     if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
-
-        if ( cmd_buf[last_i].val2==0 )
-        {
-            cmd_buf[last_i].val2 = text.toInt();
-            execute();
-            return;
-        }
+        cmd_buf[last_i].val2 = text.toInt();
+        execute();
+        return;
     }
     else if( re_isLastMod(cmd_buf) )
     {
@@ -91,9 +87,10 @@ void ReChannelL::nato(const QString &text)
 
     CCommand cmd;
 
-    cmd.val1 = text.toInt();
-    cmd.val2 = 0;
-    cmd.type = RE_COMMAND_NATO;
+    cmd.val1  = text.toInt();
+    cmd.val2  = 1;
+    cmd.type  = RE_COMMAND_NATO;
+    cmd.state = RE_CSTATE_0;
 
     cmd_buf.append(cmd);
     execute();
@@ -103,47 +100,14 @@ void ReChannelL::digit(const QString &text)
 {
     if( captain->isLastRepeatable() ) //max 2 digit
     {
-        if( captain->last_cmd.state==RE_CSTATE_0 )
-        {
-            captain->last_cmd.state = RE_CSTATE_1;
-            captain->last_cmd.val2  = re_keyCode2Digit(text)-1;
-        }
-        else if( captain->last_cmd.state==RE_CSTATE_1 )
-        {
-            captain->last_cmd.state = RE_CSTATE_2;
-            int l_count = captain->last_cmd.val2+1; //last count
-            captain->last_cmd.val2  = l_count*10;
-            captain->last_cmd.val2 += re_keyCode2Digit(text);
-            captain->last_cmd.val2 -= l_count;
-        }
-        else
-        {
-            qDebug() << "digit unsupported CmdRepeatable";
-        }
-
-        cmd_buf.append(captain->last_cmd);
-        execute();
+        int input = re_keyCode2Digit(text);
+        handleLastRepeatable(input);
     }
     else if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        if( cmd_buf[last_i].val2==0 )
-        {
-            cmd_buf[last_i].val2 = re_keyCode2Digit(text);
-        }
-        else if( cmd_buf[last_i].val3==0 )
-        {
-            cmd_buf[last_i].val3 = re_keyCode2Digit(text);
-        }
-        else
-        {
-            cmd_buf[last_i].val3  = cmd_buf[last_i].val3*10;
-            cmd_buf[last_i].val3 += re_keyCode2Digit(text);
-            qDebug() << cmd_buf[last_i].val3;
-            execute();
-        }
-
+        cmd_buf[last_i].val2 = re_keyCode2Digit(text);
         execute();
     }
     else if( captain->state->scroll_mode )
@@ -180,6 +144,15 @@ void ReChannelL::digit(const QString &text)
             execute();
         }
     }
+    else if( re_isLastMod(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
+        qDebug() << "re_isLastMod";
+
+        cmd_buf[last_i].val1 = text.toInt();
+        execute();
+        return;
+    }
     else
     {
         CCommand cmd;
@@ -199,13 +172,9 @@ void ReChannelL::dirs(const QString &text) // direction keys
     {
         qDebug() << "cmd_buf[last_i].val3";
         int last_i = cmd_buf.count()-1; //last index
-
-        if ( cmd_buf[last_i].val2==0 )
-        {
-            cmd_buf[last_i].val2 = text.toInt();
-            execute();
-            return;
-        }
+        cmd_buf[last_i].val2 = text.toInt();
+        execute();
+        return;
     }
     else if( re_isLastMod(cmd_buf) )
     {
@@ -218,7 +187,7 @@ void ReChannelL::dirs(const QString &text) // direction keys
 
     CCommand cmd;
     cmd.val1 = text.toInt();
-    cmd.val2 = 0; //press count
+    cmd.val2 = 1; //press count
     cmd.type = RE_COMMAND_DIRS;
 
     cmd_buf.append(cmd);
@@ -230,11 +199,14 @@ void ReChannelL::modifier(const QString &text)
     if( re_isLastMod(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
-
-        cmd_buf[last_i].mod_list.append(text.toInt());
-        return;
+        if( cmd_buf[last_i].val1==0 )
+        {
+            cmd_buf[last_i].mod_list.append(text.toInt());
+            return;
+        }
     }
 
+    qDebug() << "modifier re_isLastMod";
     CCommand cmd;
     cmd.val1  = 0;
     cmd.val2  = 1;
@@ -243,8 +215,7 @@ void ReChannelL::modifier(const QString &text)
     cmd.mod_list.append(text.toInt());
 
     cmd_buf.append(cmd);
-
-    execute();
+    captain->last_cmd.type = RE_COMMAND_NULL;
 }
 
 void ReChannelL::meta(const QString &text)
@@ -252,24 +223,19 @@ void ReChannelL::meta(const QString &text)
     if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
-
-        if ( cmd_buf[last_i].val2==0 )
-        {
-            if( text.toInt()==RE_META_CLOSE )
-            {
-                cmd_buf[last_i].val2 = KEY_CLOSE;
-                return;
-            }
-        }
+        cmd_buf[last_i].val2 = text.toInt();
+        execute();
+        return;
     }
 
     CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 0;
-    cmd.val3 = 0;
+    cmd.val3 = 1;
     cmd.type = RE_COMMAND_META;
 
     cmd_buf.append(cmd);
+    captain->last_cmd.type = RE_COMMAND_NULL;
 }
 
 void ReChannelL::apps(const QString &text)
@@ -277,13 +243,9 @@ void ReChannelL::apps(const QString &text)
     if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
-
-        if ( cmd_buf[last_i].val2==0 )
-        {
-            cmd_buf[last_i].val2 = 300 + text.toInt();
-            execute();
-            return;
-        }
+        cmd_buf[last_i].val2 = 300 + text.toInt();
+        execute();
+        return;
     }
 }
 
@@ -319,4 +281,53 @@ void ReChannelL::debug(const QString &text)
         commands_str += " ";
     }
     commands_str += text;
+}
+
+void ReChannelL::handleLastRepeatable(int input)
+{
+//    qDebug() << "captain->isLastRepeatable()";
+    //////////FIXME: USE POINTER/////////////////
+    if( captain->last_cmd.type==RE_COMMAND_META )
+    {
+        if( captain->last_cmd.state==RE_CSTATE_0 )
+        {
+            captain->last_cmd.state = RE_CSTATE_1;
+            captain->last_cmd.val3 = input-1;
+        }
+        else if( captain->last_cmd.state==RE_CSTATE_1 )
+        {
+            captain->last_cmd.state = RE_CSTATE_2;
+            int l_count = captain->last_cmd.val3+1; //last count
+            captain->last_cmd.val3  = l_count*10;
+            captain->last_cmd.val3 += input;
+            captain->last_cmd.val3 -= l_count;
+        }
+        else
+        {
+            qDebug() << "digit unsupported handleLastRepeatable";
+        }
+    }
+    else
+    {
+        if( captain->last_cmd.state==RE_CSTATE_0 )
+        {
+            captain->last_cmd.state = RE_CSTATE_1;
+            captain->last_cmd.val2  = input-1;
+        }
+        else if( captain->last_cmd.state==RE_CSTATE_1 )
+        {
+            captain->last_cmd.state = RE_CSTATE_2;
+            int l_count = captain->last_cmd.val2+1; //last count
+            captain->last_cmd.val2  = l_count*10;
+            captain->last_cmd.val2 += input;
+            captain->last_cmd.val2 -= l_count;
+            qDebug() << "digit RE_CSTATE_1" << l_count;
+        }
+        else
+        {
+            qDebug() << "digit unsupported handleLastRepeatable";
+        }
+    }
+    cmd_buf.append(captain->last_cmd);
+    execute();
 }
