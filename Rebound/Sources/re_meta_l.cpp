@@ -67,6 +67,10 @@ void ReMetaL::execMeta(CCommand command)
     else if( command.val1==RE_META_SKY ||
              command.val1==RE_META_DIVE )
     {
+        if( (command.val2<1) || (command.val2>9) )
+        {
+            return;
+        }
         QString cmd = getScrollCmd(state->scroll_mode,
                                    command.val1, command.val2);
         state->enScroll(command.val1, command.val2);
@@ -94,7 +98,7 @@ void ReMetaL::execMeta(CCommand command)
     }
     else if( command.val1==RE_SUPER_CAMEL )
     {
-        qDebug() << "CreateProcess failed";
+        qDebug() << "CreateProcess 1";
         system("./Scripts/camel");
         qDebug() << "CreateProcess 2";
     }

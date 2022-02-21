@@ -52,7 +52,7 @@ QString re_getGoGitKraken(int val)
 {
     QString cmd;
 
-    if( val==KEY_B ) //focus
+    if( val==KEY_B )
     {
         system("xdotool type 'BaTool: '");
     }
@@ -74,7 +74,7 @@ QString re_getGoGitKraken(int val)
         QThread::msleep(100); //little tweak
         cmd = "xdotool key --delay 200 super+ctrl+k";
     }
-    else if( val==KEY_P ) //focus
+    else if( val==KEY_P ) //push
     {
         system("xdotool key ctrl+Enter");
         QThread::msleep(100); //little tweak

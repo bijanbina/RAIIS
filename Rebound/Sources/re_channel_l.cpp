@@ -98,7 +98,23 @@ void ReChannelL::nato(const QString &text)
 
 void ReChannelL::digit(const QString &text)
 {
-    if( captain->isLastRepeatable() ) //max 2 digit
+    if( special_c>0 ) //FUNC KEY
+    {
+        CCommand cmd;
+        cmd.val1 = RE_KEY_FMIN + re_keyCode2Digit(text) - 1;
+        cmd.val2 = 1;
+        cmd.type = RE_COMMAND_DIRS;
+
+        cmd_buf.append(cmd);
+
+        special_c--;
+        if( special_c==0 )
+        {
+            system("rm ~/.config/polybar/awesomewm/ben_spex");
+            execute();
+        }
+    }
+    else if( captain->isLastRepeatable() ) //max 2 digit
     {
         int input = re_keyCode2Digit(text);
         handleLastRepeatable(input);
@@ -120,22 +136,6 @@ void ReChannelL::digit(const QString &text)
 
         cmd_buf.append(cmd);
         execute();
-    }
-    else if( special_c>0 ) //FUNC KEY
-    {
-        CCommand cmd;
-        cmd.val1 = RE_KEY_FMIN + re_keyCode2Digit(text) - 1;
-        cmd.val2 = 1;
-        cmd.type = RE_COMMAND_DIRS;
-
-        cmd_buf.append(cmd);
-
-        special_c--;
-        if( special_c==0 )
-        {
-            system("rm ~/.config/polybar/awesomewm/ben_spex");
-            execute();
-        }
     }
     else if( re_isLastMod(cmd_buf) )
     {
@@ -260,7 +260,7 @@ void ReChannelL::super(const QString &text)
     CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = RE_META_SUPER;
-    cmd.val3 = 0;
+    cmd.val3 = 1;
     cmd.type = RE_COMMAND_META;
     cmd_buf.append(cmd);
 
