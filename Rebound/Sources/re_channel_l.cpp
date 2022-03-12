@@ -50,7 +50,8 @@ void ReChannelL::execute()
     if( cmd_buf.length() )
     {
         qDebug() << QTime::currentTime().toString("mm:ss:zzz") <<
-                    "exec" << commands_str << special_c;
+                    "exec" << commands_str << special_c
+                 << cmd_buf.last().val2;
         commands_str.clear();
 
         captain->execute(cmd_buf);
@@ -179,9 +180,10 @@ void ReChannelL::dirs(const QString &text) // direction keys
     }
 
     CCommand cmd;
-    cmd.val1 = text.toInt();
-    cmd.val2 = 1; //press count
-    cmd.type = RE_COMMAND_DIRS;
+    cmd.val1  = text.toInt();
+    cmd.val2  = 1; //press count
+    cmd.type  = RE_COMMAND_DIRS;
+    cmd.state = RE_CSTATE_0;
 
     cmd_buf.append(cmd);
     execute();
@@ -300,7 +302,7 @@ void ReChannelL::handleLastRepeatable(int input)
             qDebug() << "digit unsupported handleLastRepeatable";
         }
     }
-    else
+    else // not meta command
     {
         if( captain->state->last_cmd.state==RE_CSTATE_0 )
         {
@@ -314,7 +316,6 @@ void ReChannelL::handleLastRepeatable(int input)
             captain->state->last_cmd.val2  = l_count*10;
             captain->state->last_cmd.val2 += input;
             captain->state->last_cmd.val2 -= l_count;
-            qDebug() << "digit RE_CSTATE_1" << l_count;
         }
         else
         {

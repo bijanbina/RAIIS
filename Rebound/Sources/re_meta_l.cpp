@@ -73,7 +73,6 @@ void ReMetaL::execMeta(CCommand command)
         }
         QString cmd = getScrollCmd(state->scroll_mode,
                                    command.val1, command.val2);
-        state->enScroll(command.val1, command.val2);
         system(cmd.toStdString().c_str());
     }
     else if( command.val1==RE_META_MUSIC )
@@ -270,30 +269,46 @@ QString ReMetaL::getMusicCmd(int val)
 
 QString ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
 {
-    QString change_gear;
-    QString direction;
-    QString cmd = "./Scripts/scroll";
-    if( scroll_mode )
+    QString cmd;
+    if( state->app.pname=="GeckoMain" )
     {
-        change_gear = " 0 ";
-    }
-    else
-    {
-        change_gear = " 1 ";
-    }
+        QString change_gear;
+        QString direction;
+        cmd = "./Scripts/scroll";
+        if( scroll_mode )
+        {
+            change_gear = " 0 ";
+        }
+        else
+        {
+            change_gear = " 1 ";
+        }
 
-    if( meta==RE_META_SKY )
-    {
-        direction = " up ";
-    }
-    else if( meta==RE_META_DIVE )
-    {
-        direction = " down ";
-    }
+        if( meta==RE_META_SKY )
+        {
+            direction = " up ";
+        }
+        else if( meta==RE_META_DIVE )
+        {
+            direction = " down ";
+        }
 
-    cmd += direction;
-    cmd += change_gear;
-    cmd += QString::number(val);
+        cmd += direction;
+        cmd += change_gear;
+        cmd += QString::number(val);
+        state->enScroll(meta, val);
+    }
+    else if( state->app.pname=="qtcreator" )
+    {
+        if( meta==RE_META_SKY )
+        {
+            cmd = "xdotool key Page_Up";
+        }
+        else if( meta==RE_META_DIVE )
+        {
+            cmd = "xdotool key Page_Down";
+        }
+    }
 
     return cmd;
 }

@@ -154,6 +154,7 @@ void ReCaptainL::execCommand(CCommand command)
         for( int j=0 ; j<command.val2 ; j++ )
         {
             sendKey(command.val1);
+            QThread::msleep(5); //little tweak
         }
 
         state->disScroll(command);
