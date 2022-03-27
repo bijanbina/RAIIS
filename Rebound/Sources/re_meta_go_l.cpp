@@ -117,3 +117,13 @@ QString re_getGoFirefox(int val)
 
     return cmd;
 }
+
+QString re_getGoNautilus(int val)
+{
+    QString cmd;
+    if( val==KEY_BACKSPACE )
+    {
+        cmd = "xdotool key alt+Up";
+    }
+    return cmd;
+}

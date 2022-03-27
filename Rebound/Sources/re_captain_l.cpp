@@ -171,7 +171,6 @@ void ReCaptainL::execCommand(CCommand command)
         }
     }
 }
-
 bool ReCaptainL::isLastRepeatable()
 {
     int cmd_type = state->last_cmd.type;

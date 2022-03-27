@@ -30,6 +30,7 @@ void ReChannelL::ConnectDBus()
     session.connect("", "/", COM_NAME, "meta" , this, SLOT(meta (const QString &)));
     session.connect("", "/", COM_NAME, "apps" , this, SLOT(apps (const QString &)));
     session.connect("", "/", COM_NAME, "spex" , this, SLOT(spex (const QString &)));
+    session.connect("", "/", COM_NAME, "type" , this, SLOT(type (const QString &)));
     session.connect("", "/", COM_NAME, "super", this, SLOT(super(const QString &)));
     session.connect("", "/", COM_NAME, "digit", this, SLOT(digit(const QString &)));
     session.connect("", "/", COM_NAME, "debug", this, SLOT(debug(const QString &)));
@@ -216,11 +217,14 @@ void ReChannelL::modifier(const QString &text)
 void ReChannelL::meta(const QString &text)
 {
     if( re_isLastMeta(cmd_buf) )
-    {
-        int last_i = cmd_buf.count()-1; //last index
-        cmd_buf[last_i].val2 = text.toInt();
-        execute();
-        return;
+    {//"go wake" in <dive go wake> should be "go wake" if sleep
+        if( captain->state->isSleep()==false )
+        {
+            int last_i = cmd_buf.count()-1; //last index
+            cmd_buf[last_i].val2 = text.toInt();
+            execute();
+            return;
+        }
     }
 
     CCommand cmd;
@@ -267,6 +271,11 @@ void ReChannelL::super(const QString &text)
     cmd_buf.append(cmd);
 
     execute();
+}
+
+void ReChannelL::type(const QString &text)
+{
+    captain->state->last_cmd.type = RE_COMMAND_NATO;
 }
 
 void ReChannelL::debug(const QString &text)

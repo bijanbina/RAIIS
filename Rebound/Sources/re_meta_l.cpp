@@ -221,11 +221,11 @@ QString ReMetaL::getSystemCmd(int val)
     }
     else if( val==KEY_LEFT )
     {
-        cmd = "xdotool key --delay 200 Ctrl+Super+k";
+        cmd = "xdotool key --delay 200 Super+b";
     }
     else if( val==KEY_RIGHT )
     {
-        cmd = "xdotool key --delay 200 Ctrl+Super+k";
+        cmd = "xdotool key --delay 200 Super+b";
     }
     else if( val==KEY_CLOSE )
     {
@@ -298,15 +298,17 @@ QString ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
         cmd += QString::number(val);
         state->enScroll(meta, val);
     }
-    else if( state->app.pname=="qtcreator" )
+    else
     {
+        cmd  = "xdotool key --repeat ";
+        cmd += QString::number(val);
         if( meta==RE_META_SKY )
         {
-            cmd = "xdotool key Page_Up";
+            cmd += " Page_Up";
         }
         else if( meta==RE_META_DIVE )
         {
-            cmd = "xdotool key Page_Down";
+            cmd += " Page_Down";
         }
     }
 
@@ -334,6 +336,10 @@ QString ReMetaL::getGoCmd(int val)
     else if( state->app.pname=="GeckoMain" )
     {
         cmd = re_getGoFirefox(val);
+    }
+    else if( state->app.pname=="nautilus" )
+    {
+        cmd = re_getGoNautilus(val);
     }
 
     return cmd;

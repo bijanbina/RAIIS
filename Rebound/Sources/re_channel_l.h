@@ -27,6 +27,7 @@ public slots:
     void nato (const QString &text);
     void meta (const QString &text);
     void apps (const QString &text);
+    void type (const QString &text); //No Repeat on LastCmd
     void spex (const QString &text); //special
     void super(const QString &text); //single shot meta cmd
     void digit(const QString &text);
