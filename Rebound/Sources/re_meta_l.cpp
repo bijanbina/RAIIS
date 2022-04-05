@@ -50,7 +50,8 @@ void ReMetaL::execMeta(CCommand command)
     }
     else if( command.val1==RE_META_PAGE )
     {
-
+        QString cmd = getPageCmd(command.val2);
+        system(cmd.toStdString().c_str());
     }
     else if( command.val1==RE_META_GO )
     {
@@ -340,6 +341,43 @@ QString ReMetaL::getGoCmd(int val)
     else if( state->app.pname=="nautilus" )
     {
         cmd = re_getGoNautilus(val);
+    }
+
+    return cmd;
+}
+
+QString ReMetaL::getPageCmd(int val)
+{
+    QString cmd;
+
+    qDebug() << "Page" << state->app.pname;
+
+    if( state->app.pname=="xed" )
+    {
+//        cmd = re_getGoXed(val);
+    }
+    else if( state->app.pname=="qtcreator" )
+    {
+        if( val==KEY_DOWN )
+        {
+            cmd = "xdotool key --repeat 30 Down";
+        }
+        if( val==KEY_UP )
+        {
+            cmd = "xdotool key --repeat 30 Up";
+        }
+    }
+    else if( state->app.pname=="gitkraken" )
+    {
+//        cmd = re_getGoGitKraken(val);
+    }
+    else if( state->app.pname=="GeckoMain" )
+    {
+//        cmd = re_getGoFirefox(val);
+    }
+    else if( state->app.pname=="nautilus" )
+    {
+//        cmd = re_getGoNautilus(val);
     }
 
     return cmd;

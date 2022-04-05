@@ -20,6 +20,7 @@ public:
 
 private:
     QString getGoCmd(int val);
+    QString getPageCmd(int val);
     QString getMusicCmd(int val);
     QString getMouseCmd(int val);
     QString getSystemCmd(int val);

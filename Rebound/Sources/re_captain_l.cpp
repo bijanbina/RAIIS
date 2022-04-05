@@ -95,11 +95,11 @@ void ReCaptainL::execModifier(CCommand command)
         sendKey(command.val1);
     }
 
+    QThread::msleep(100); //little tweak
     for( int i=0 ; i<len ; i++ )
     {
         releaseKey(command.mod_list[len-i-1]);
     }
-//    QThread::msleep(100); //little tweak
     qDebug() << "pressModifier" << modifiers.count();
 }
 
