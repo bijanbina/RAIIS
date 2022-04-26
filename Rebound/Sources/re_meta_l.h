@@ -25,6 +25,7 @@ private:
     QString getMouseCmd(int val);
     QString getSystemCmd(int val);
     QString getSwitchCmd(int val);
+    QString getTouchCmd(int val);
     QString getScrollCmd(bool scroll_mode, int meta, int val);
 
     int uinput_f;

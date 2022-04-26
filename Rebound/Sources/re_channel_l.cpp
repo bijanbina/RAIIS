@@ -179,7 +179,21 @@ void ReChannelL::dirs(const QString &text) // direction keys
         execute();
         return;
     }
+    else if( captain->state->chess_mode )
+    {
+        CCommand cmd;
+        cmd.val1 = RE_META_TOUCH;
+        cmd.val2 = text.toInt();
+        cmd.val3 = 1;
+        cmd.type = RE_COMMAND_META;
 
+        if( cmd.val2!=1 )
+        {
+            cmd_buf.append(cmd);
+            execute();
+            return;
+        }
+    }
     CCommand cmd;
     cmd.val1  = text.toInt();
     cmd.val2  = 1; //press count
@@ -226,7 +240,21 @@ void ReChannelL::meta(const QString &text)
             return;
         }
     }
-
+    else if( captain->state->chess_mode )
+    {
+        int val = text.toInt();
+        if( val==RE_META_TOUCH )
+        {
+            CCommand cmd;
+            cmd.val1 = RE_META_MOUSE;
+            cmd.val2 = KEY_LEFT;
+            cmd.val3 = 1;
+            cmd.type = RE_COMMAND_META;
+            cmd_buf.append(cmd);
+            execute();
+            return;
+        }
+    }
     CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 0;

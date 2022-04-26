@@ -34,6 +34,7 @@
 #define RE_META_CLOSE   10
 #define RE_META_SWITCH  11
 #define RE_META_MOUSE   12
+#define RE_META_TOUCH   13
 
 #define RE_SUPER_META   101
 #define RE_SUPER_CAMEL  102 //currently colon

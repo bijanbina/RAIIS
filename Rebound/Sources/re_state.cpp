@@ -187,6 +187,12 @@ void ReState::disScroll(CCommand command)
         scroll_dir = 0;
         rmStatusFile();
     }
+
+    if( chess_mode )
+    {
+        chess_mode = 0;
+        rmStatusFile();
+    }
 }
 
 bool ReState::isSleep()

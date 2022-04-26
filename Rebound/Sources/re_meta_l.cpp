@@ -47,6 +47,12 @@ void ReMetaL::execMeta(CCommand command)
             cmd += " &";
             system(cmd.toStdString().c_str());
         }
+        if( command.val2==RE_META_PAGE )
+        {
+            QString cmd = "xdotool key Ctrl+Alt+g";
+            cmd += " &";
+            system(cmd.toStdString().c_str());
+        }
     }
     else if( command.val1==RE_META_PAGE )
     {
@@ -101,6 +107,11 @@ void ReMetaL::execMeta(CCommand command)
         qDebug() << "CreateProcess 1";
         system("./Scripts/camel");
         qDebug() << "CreateProcess 2";
+    }
+    else if( command.val1==RE_META_TOUCH )
+    {
+        QString cmd = getTouchCmd(command.val2);
+        system(cmd.toStdString().c_str());
     }
 }
 
@@ -202,7 +213,8 @@ QString ReMetaL::getSystemCmd(int val)
     }
     else if( val==KEY_C )
     {
-        cmd = "xdotool set_desktop 2";
+        state->chess_mode = 1;
+        cmd = "echo 'Chess' > ~/.config/polybar/awesomewm/ben_status";
     }
     else if( val==KEY_D )
     {
@@ -356,7 +368,8 @@ QString ReMetaL::getPageCmd(int val)
     {
 //        cmd = re_getGoXed(val);
     }
-    else if( state->app.pname=="qtcreator" )
+    else if( state->app.pname=="qtcreator" ||
+             state->app.pname=="code-oss" )
     {
         if( val==KEY_DOWN )
         {
@@ -378,6 +391,33 @@ QString ReMetaL::getPageCmd(int val)
     else if( state->app.pname=="nautilus" )
     {
 //        cmd = re_getGoNautilus(val);
+    }
+
+    return cmd;
+}
+
+QString ReMetaL::getTouchCmd(int val)
+{
+    QString cmd;
+
+    qDebug() << "Touch" << state->app.pname
+             << val;
+
+    if( val==KEY_DOWN )
+    {
+        cmd = "xdotool mousemove_relative 0 100";
+    }
+    else if( val==KEY_UP )
+    {
+        cmd = "xdotool mousemove_relative 0 -100";
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd = "xdotool mousemove_relative 100 0";
+    }
+    else if( val==KEY_LEFT )
+    {
+        cmd = "xdotool mousemove_relative -- -100 0";
     }
 
     return cmd;
