@@ -313,6 +313,7 @@ void ReChannelL::debug(const QString &text)
         commands_str += " ";
     }
     commands_str += text;
+    qDebug() << "debug" << text;
 }
 
 void ReChannelL::handleLastRepeatable(int input)

@@ -26,9 +26,13 @@ QString re_getGoQt(int val)
 {
     QString cmd;
 
-    if( val==KEY_LEFT )
+    if( val==KEY_LEFT ) //focus
     {
-        cmd = "xdotool click 1";
+        cmd = "xdotool key ctrl+shift+Tab";
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd = "xdotool key ctrl+Tab";
     }
     else if( val==KEY_M )
     {

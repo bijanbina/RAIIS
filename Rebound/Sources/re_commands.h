@@ -41,14 +41,13 @@
 
 #define RE_META_SUPER   1 //Used for val2
 
-#define RE_APP_GITHUB   301
-#define RE_APP_FIREFOX  302
-#define RE_APP_FILES    303
-#define RE_APP_SPOTIFY  304
-#define RE_APP_ATOM     305
-#define RE_APP_DING     306 //fox ding
-#define RE_APP_LINK     307 //fox link
-#define RE_APP_SLEEP    308 //go sleep
+#define RE_APP_FIREFOX  301
+#define RE_APP_FILES    302
+#define RE_APP_SPOTIFY  303
+#define RE_APP_ATOM     304
+#define RE_APP_DING     305 //fox ding
+#define RE_APP_LINK     306 //fox link
+#define RE_APP_SLEEP    307 //go sleep
 
 #define RE_KEY_FMIN    59 //F1
 #define RE_KEY_FMAX    68 //F10

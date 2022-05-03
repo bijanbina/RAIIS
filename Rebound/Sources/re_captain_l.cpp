@@ -93,9 +93,10 @@ void ReCaptainL::execModifier(CCommand command)
     for( int j=0 ; j<command.val2 ; j++ )
     {
         sendKey(command.val1);
+        QThread::msleep(30); //little tweak
     }
 
-    QThread::msleep(100); //little tweak
+    QThread::msleep(70); //little tweak
     for( int i=0 ; i<len ; i++ )
     {
         releaseKey(command.mod_list[len-i-1]);

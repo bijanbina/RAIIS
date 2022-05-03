@@ -154,11 +154,7 @@ QString ReMetaL::getSwitchCmd(int val)
 {
     QString cmd = "./Scripts/switcher ";
 
-    if( val==RE_APP_GITHUB )
-    {
-        cmd += "gitkraken";
-    }
-    else if( val==RE_APP_FIREFOX )
+    if( val==RE_APP_FIREFOX )
     {
         cmd += "firefox";
     }
@@ -338,7 +334,8 @@ QString ReMetaL::getGoCmd(int val)
     {
         cmd = re_getGoXed(val);
     }
-    else if( state->app.pname=="qtcreator" )
+    else if( state->app.pname=="qtcreator" ||
+             state->app.pname=="code-oss" )
     {
         cmd = re_getGoQt(val);
     }
@@ -380,17 +377,16 @@ QString ReMetaL::getPageCmd(int val)
             cmd = "xdotool key --repeat 30 Up";
         }
     }
-    else if( state->app.pname=="gitkraken" )
+    else
     {
-//        cmd = re_getGoGitKraken(val);
-    }
-    else if( state->app.pname=="GeckoMain" )
-    {
-//        cmd = re_getGoFirefox(val);
-    }
-    else if( state->app.pname=="nautilus" )
-    {
-//        cmd = re_getGoNautilus(val);
+        if( val==KEY_DOWN )
+        {
+            cmd = "xdotool key Next";
+        }
+        if( val==KEY_UP )
+        {
+            cmd = "xdotool key Prior";
+        }
     }
 
     return cmd;
