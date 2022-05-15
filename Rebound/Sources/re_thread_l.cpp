@@ -43,16 +43,15 @@ void ReThreadL::enumWindows()
 void ReThreadL::addWindow(Window window)
 {
     ReWindow buf;
-    char *name;
+    XTextProperty name;
 
-    XFetchName(display, window, &name);
+    XGetWMName(display, window, &name);
     buf.desktop_id = x11_getDesktop(window);
-    buf.title = name;
+    buf.title = QString((char *)name.value);
     buf.pid = x11_getPid(window);
     buf.pname = x11_getPname(buf.pid);
     buf.hWnd = window;
     insertWindow(buf);
-    XFree(name);
 }
 
 void ReThreadL::insertWindow(ReWindow win)
@@ -61,7 +60,7 @@ void ReThreadL::insertWindow(ReWindow win)
     if ( win.hWnd==HwndA )
     {
 //        qDebug() << win.hWnd << HwndA << win.pname;
-        if ( windows.size()>0 )
+        if ( windows.size() )
         {
             if ( windows[0].hWnd!=win.hWnd )
             {

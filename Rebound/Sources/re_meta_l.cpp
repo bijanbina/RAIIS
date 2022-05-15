@@ -279,8 +279,10 @@ QString ReMetaL::getMusicCmd(int val)
 QString ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
 {
     QString cmd;
-    if( state->app.pname=="GeckoMain" )
+    if( state->app.pname=="GeckoMain" ||
+        state->app.pname=="firefox" )
     {
+        qDebug() << "title" << state->app.title;
         QString change_gear;
         QString direction;
         cmd = "./Scripts/scroll";
@@ -309,6 +311,7 @@ QString ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
     }
     else
     {
+        qDebug() << "scroll" << state->app.pname;
         cmd  = "xdotool key --repeat ";
         cmd += QString::number(val);
         if( meta==RE_META_SKY )
@@ -343,7 +346,8 @@ QString ReMetaL::getGoCmd(int val)
     {
         cmd = re_getGoGitKraken(val);
     }
-    else if( state->app.pname=="GeckoMain" )
+    else if( state->app.pname=="GeckoMain" ||
+             state->app.pname=="firefox" )
     {
         cmd = re_getGoFirefox(val);
     }

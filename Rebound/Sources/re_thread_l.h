@@ -5,6 +5,7 @@
 #include <QStringList>
 
 #include "re_state.h"
+#include "re_config.h"
 
 #define RE_SPOTIFY_ALBUM_CHILD  "0000"
 #define RE_SPOTIFY_ALBUM_PARENT "301000000201201"

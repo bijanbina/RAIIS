@@ -29,6 +29,19 @@ void ReState::rmStatusFile()
     }
 }
 
+void ReState::rmSpexFile()
+{
+    QString path = getenv("HOME");
+    path += "/.config/polybar/awesomewm/ben_spex";
+    if( QFileInfo::exists(path) )
+    {
+        QString cmd = "rm ";
+        cmd += path;
+
+        system(cmd.toStdString().c_str());
+    }
+}
+
 void ReState::setMode(int mode)
 {
     i_mode = mode;

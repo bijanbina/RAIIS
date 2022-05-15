@@ -17,6 +17,7 @@ public:
     explicit ReState(QObject *parent = 0);
 
     void rmStatusFile();
+    void rmSpexFile();
     void setMode(int mode);
     int  getMode();
 

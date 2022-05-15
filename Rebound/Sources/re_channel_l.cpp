@@ -7,7 +7,7 @@ ReChannelL::ReChannelL(ReCaptainL *cpt, QObject *ui, QObject *parent) : QObject(
     root = ui;
     captain = cpt;
     special_c = 0;
-    system("rm ~/.config/polybar/awesomewm/ben_spex");
+    captain->state->rmSpexFile();
 }
 
 ReChannelL::~ReChannelL()
@@ -112,7 +112,7 @@ void ReChannelL::digit(const QString &text)
         special_c--;
         if( special_c==0 )
         {
-            system("rm ~/.config/polybar/awesomewm/ben_spex");
+            captain->state->rmSpexFile();
             execute();
         }
     }
