@@ -158,7 +158,10 @@ void ReCaptainL::execCommand(CCommand command)
             QThread::msleep(5); //little tweak
         }
 
-        state->disScroll(command);
+        if( state->isEscape(command) )
+        {
+            state->resetState();
+        }
     }
     else if( command.type==RE_COMMAND_MOD )
     {
@@ -176,7 +179,7 @@ bool ReCaptainL::isLastRepeatable()
 {
     int cmd_type = state->last_cmd.type;
 
-    if( state->scroll_mode )
+    if( state->scroll_dir )
     {
         return false;
     }

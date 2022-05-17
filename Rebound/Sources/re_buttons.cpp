@@ -45,7 +45,7 @@ void ReButtons::buttonBPressed()
          {
              state->toggleUi(ui);
 
-             if( state->vpn_connected )
+             if( re_isVpnConnected() )
              {
                  system("rasdial MK2 /DISCONNECT");
              }

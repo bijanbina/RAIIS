@@ -78,7 +78,7 @@ void ReMetaL::execMeta(CCommand command)
         {
             return;
         }
-        QString cmd = getScrollCmd(state->scroll_mode,
+        QString cmd = getScrollCmd(state->scroll_dir,
                                    command.val1, command.val2);
         system(cmd.toStdString().c_str());
     }

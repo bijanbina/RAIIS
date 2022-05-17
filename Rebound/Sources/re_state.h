@@ -34,7 +34,8 @@ public:
     void wakeUp();
     bool isSleep();
     void enScroll(int dir, int speed);
-    void disScroll(CCommand command);
+    bool isEscape(CCommand command);
+    void resetState();
 
 #ifdef _WIN32
     ReApiW *api;
@@ -45,12 +46,11 @@ public:
 #endif
     int  ui_visible;
     int  i_mode;
-    int  vpn_connected = 0;
-    int  youtube_mode  = 0;
     bool sleep_state = 0;
-    bool scroll_mode = 0;
+    int  scroll_spd  = 0;
+    int  scroll_dir  = 0; // 0 deactive, other active
     bool chess_mode  = 0;
-    int  scroll_dir  = 0;
+    int  utube_mode  = 0;
     ReWindow app; //Active Window
     CCommand last_cmd;
 

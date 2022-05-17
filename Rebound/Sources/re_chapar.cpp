@@ -148,7 +148,7 @@ void ReChapar::updateMode()
         c_page.axis_state = "0";
 
 
-        if ( state->vpn_connected )
+        if ( re_isVpnConnected() )
         {
             c_page.b_action = "Disconnect VPN";
         }

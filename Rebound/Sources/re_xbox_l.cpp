@@ -17,7 +17,7 @@ ReXboxL::ReXboxL(QObject *item, int native, QObject *parent) : QObject(parent)
     isNative = native;
 
 
-    if (native)
+    if( native )
     {
         th_this = this;
 
@@ -153,7 +153,7 @@ void ReXboxL::createProcess(QString evnum)
 {
     QString cmd_arg = "/dev/input/event" + evnum;
 
-    qDebug() << cmd_arg;
+//    qDebug() << "XBBox Event" << cmd_arg;
 
     QString program = "evtest";
     QStringList arguments;

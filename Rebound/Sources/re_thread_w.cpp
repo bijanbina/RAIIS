@@ -706,11 +706,11 @@ void ReThreadW::updateActiveWindow()
 
     if( win_active.type==RE_WIN_YOUTUBE )
     {
-        thread_data->state->youtube_mode = 1;
+        thread_data->state->utube_mode = 1;
     }
     else
     {
-        thread_data->state->youtube_mode = 0;
+        thread_data->state->utube_mode = 0;
     }
 //    char class_name[128];
 //    GetClassNameA(HwndA, class_name, 128);
@@ -759,7 +759,6 @@ void reRunThread(void *thread_struct_void)
 //                priv->syncElemsName();
             }
             cntr = 0;
-            thread_data->state->vpn_connected = re_isVpnConnected();
         }
         if(!thread_data->message.isEmpty())
         {

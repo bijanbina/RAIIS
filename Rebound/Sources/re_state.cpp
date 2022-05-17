@@ -158,15 +158,26 @@ void ReState::goToSleep()
 void ReState::wakeUp()
 {
     sleep_state = 0;
-    rmStatusFile();
+    if( scroll_dir )
+    {
+        enScroll(scroll_dir, scroll_spd);
+    }
+    else if( chess_mode )
+    {
+        system("echo 'Chess' > ~/.config/polybar/awesomewm/ben_status");
+    }
+    else
+    {
+        rmStatusFile();
+    }
 }
 
 // enable scroll
 void ReState::enScroll(int dir, int speed)
 {
     QString cmd = "echo '";
-    scroll_mode = 1;
     scroll_dir = dir;
+    scroll_spd = speed;
 
     if( scroll_dir==RE_META_SKY )
     {
@@ -178,25 +189,30 @@ void ReState::enScroll(int dir, int speed)
     }
     cmd += QString::number(speed);
     cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+    qDebug() << "spped" << scroll_spd;
     system(cmd.toStdString().c_str());
 }
 
-// disable scroll
-void ReState::disScroll(CCommand command)
+// is escape command
+bool ReState::isEscape(CCommand command)
 {
     if( command.type!=RE_COMMAND_DIRS )
     {
-        return;
+        return 0;
     }
 
     if( command.val1!=1 ) //Escape
     {
-        return;
+        return 0;
     }
 
-    if( scroll_mode )
+
+}
+
+void ReState::resetState()
+{
+    if( scroll_dir )
     {
-        scroll_mode = 0;
         scroll_dir = 0;
         rmStatusFile();
     }

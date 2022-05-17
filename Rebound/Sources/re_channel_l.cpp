@@ -128,7 +128,7 @@ void ReChannelL::digit(const QString &text)
         cmd_buf[last_i].val2 = re_keyCode2Digit(text);
         execute();
     }
-    else if( captain->state->scroll_mode )
+    else if( captain->state->scroll_dir )
     {
         CCommand cmd;
         cmd.val1 = captain->state->scroll_dir;
