@@ -3,6 +3,7 @@
 #include <QQuickView>
 #include <QQuickItem>
 #include "re_chapar.h"
+#include "re_firefox_l.h"
 
 #ifdef _WIN32
 //void setNoActivable(QObject *item)
@@ -54,6 +55,7 @@ int main(int argc, char *argv[])
         }
     }
     ReChapar *chaper = new ReChapar(item, itemSwitcher, isNative);
+    ReFirefoxL *fl = new ReFirefoxL;
 
 #ifdef RE_TEST_EN
     ReClient *channel_cl;
