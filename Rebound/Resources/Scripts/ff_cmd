@@ -1,0 +1,3 @@
+{"id": 1, "method": "Runtime.enable"}
+
+{"id": 2, "method": "Runtime.evaluate" , "params": {"expression": "document.visibilityState"}}
