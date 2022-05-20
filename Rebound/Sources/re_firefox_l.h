@@ -5,14 +5,18 @@
 #include <QtDebug>
 #include <QtWebSockets/QtWebSockets>
 #include "backend.h"
+#include "re_firefox_ws.h"
 
 class ReFirefoxL : public QObject
 {
     Q_OBJECT
 public:
     explicit ReFirefoxL(QObject *parent = nullptr);
+    ~ReFirefoxL();
     void sendScroll();
 
+signals:
+    void startChild();
 
 private slots:
     void onConnected();
@@ -23,6 +27,8 @@ private:
     void send_js(QString cmd);
     QWebSocket *socket;
     QString cmd_buf;
+    QVector<ReFirefoxWs *> childs;
+    QVector<QThread *>     childs_th;
 };
 
 #endif // RE_FIREFOX_L_H

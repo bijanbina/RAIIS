@@ -13,14 +13,14 @@ int getIntCommand(char *command)
 
     if (fp == NULL)
     {
-      printf("Failed to run command\n" );
-      return -1;
+        printf("Failed to run command\n" );
+        return -1;
     }
 
     /* Read the output a line at a time - output it. */
     while (fgets(path, sizeof(path)-1, fp) != NULL)
     {
-      returnData = atoi(path);
+        returnData = atoi(path);
     }
 
     /* close */
@@ -38,17 +38,20 @@ QString getStrCommand(QString command)
     /* Open the command for reading. */
     fp = popen(command.toStdString().c_str(), "r");
 
-    if (fp == NULL) {
-      printf("Failed to run command\n" );
-      return returnData;
+    if (fp == NULL)
+    {
+        printf("Failed to run command\n" );
+        return returnData;
     }
 
     /* Read the output a line at a time - output it. */
-    while (fgets(path, sizeof(path)-1, fp) != NULL) {
-      returnData = QString(path);
+    while (fgets(path, sizeof(path)-1, fp) != NULL)
+    {
+        returnData += QString(path);
     }
 
-    returnData.remove('\n');
+    // Remove last \n
+    returnData.remove(returnData.length()-1,1);
 
     /* close */
     pclose(fp);
@@ -69,26 +72,26 @@ screen_pos getPrimaryScreen()
 void updateScreenInfo(QObject *item)
 {
 
-//    screen_pos PrimaryScreen = getPrimaryScreen();
-//    QQmlProperty::write(item, "x_base", PrimaryScreen.x);
-//    QQmlProperty::write(item, "y_base", PrimaryScreen.y);
+    //    screen_pos PrimaryScreen = getPrimaryScreen();
+    //    QQmlProperty::write(item, "x_base", PrimaryScreen.x);
+    //    QQmlProperty::write(item, "y_base", PrimaryScreen.y);
 
-//    int minimumWidth = QQmlProperty::read(item, "minimumWidth");
-//    int minimumHeight = QQmlProperty::read(item, "minimumHeight");
-//    x:x_base + (Screen.width  - minimumWidth)  / 2
-//    y:y_base + (Screen.height - minimumHeight) / 2
+    //    int minimumWidth = QQmlProperty::read(item, "minimumWidth");
+    //    int minimumHeight = QQmlProperty::read(item, "minimumHeight");
+    //    x:x_base + (Screen.width  - minimumWidth)  / 2
+    //    y:y_base + (Screen.height - minimumHeight) / 2
 
 #ifdef __linux__
     QQmlProperty::write(item, "minimumHeight", 400);
-//    QQmlProperty::write(item, "visible", 1);
+    //    QQmlProperty::write(item, "visible", 1);
 #endif
 
 #ifdef _WIN32
-//    QQmlProperty::write(item, "minimumHeight", 400);
+    //    QQmlProperty::write(item, "minimumHeight", 400);
     QQmlProperty::write(item, "minimumHeight", 300);
 #endif
 
-//    QMetaObject::invokeMethod(item, "show");
+    //    QMetaObject::invokeMethod(item, "show");
 }
 
 int isItemVisible(QObject *item)

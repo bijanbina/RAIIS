@@ -1,5 +1,4 @@
 #include "re_firefox_l.h"
-#define WS_URL   "ws://127.0.0.1:9222/devtools/page/0fa1e028-f8af-41d5-8e8f-b74fb085e35a"
 #define CMD_PATH "Resources/Scripts/ElementsWithScrolls.js"
 
 ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
@@ -7,9 +6,33 @@ ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
     socket = new QWebSocket;
     connect(socket, SIGNAL(connected()),    this, SLOT(onConnected()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
-    QString ws = getStrCommand("Resources/Scripts/ff_getFocusedWS.sh");
-    qDebug() << ws;
-    socket->open(QUrl(ws));
+    QString ws = getStrCommand("Resources/Scripts/ff_getWS.sh");
+    QStringList ws_list = ws.split("\n");
+//    qDebug() << ws;
+//    socket->open(QUrl(ws));
+    for( int i=0 ; i<ws_list.length() ; i++ )
+    {
+        ReFirefoxWs *child = new ReFirefoxWs(ws_list[i]);
+        QThread  *child_th = new QThread;
+        child->moveToThread(child_th);
+        child_th->start();
+        childs.push_back(child);
+        childs_th.push_back(child_th);
+        connect(this, SIGNAL(startChild()), child, SLOT(run()));
+    }
+    emit startChild();
+}
+
+ReFirefoxL::~ReFirefoxL()
+{
+    delete socket;
+    for( int i=0 ; i<childs_th.size() ; i++ )
+    {
+        delete childs[i];
+        delete childs_th[i];
+    }
+    childs.clear();
+    childs_th.clear();
 }
 
 void ReFirefoxL::onConnected()
