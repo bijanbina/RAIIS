@@ -12,6 +12,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #endif
 #ifdef __linux__
     api = new ReApiL;
+    fl = new ReFirefoxL;
     rmStatusFile();
 #endif
 }
@@ -182,10 +183,12 @@ void ReState::enScroll(int dir, int speed)
     if( scroll_dir==RE_META_SKY )
     {
         cmd += "Sky ";
+        fl->scrollUp(speed);
     }
     else if( scroll_dir==RE_META_DIVE )
     {
         cmd += "Dive ";
+        fl->scrollDown(speed);
     }
     cmd += QString::number(speed);
     cmd += "' > ~/.config/polybar/awesomewm/ben_status";

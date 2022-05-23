@@ -9,6 +9,7 @@
 #include <QString>
 #include <QQmlProperty>
 #include <QFileInfo>
+#include "re_firefox_l.h"
 
 class ReState : public QObject
 {
@@ -42,7 +43,7 @@ public:
     ReHardwareW *hardware;
 #endif
 #ifdef __linux__
-    ReApiL *api;
+//    ReApiL *api;
 #endif
     int  ui_visible;
     int  i_mode;
@@ -53,6 +54,7 @@ public:
     int  utube_mode  = 0;
     ReWindow app; //Active Window
     CCommand last_cmd;
+    ReFirefoxL *fl;
 
 signals:
     void updateMode();

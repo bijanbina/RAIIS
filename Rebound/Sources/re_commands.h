@@ -7,8 +7,10 @@
 #include "re_hardware_w.h"
 #endif
 #ifdef __linux__
-#include "re_api_l.h"
-#include <X11/Xlib.h>
+#include <QObject>
+#include <QDebug>
+#include <QStringList>
+//#include "re_api_l.h"
 #endif
 
 #define RE_COMMAND_NULL  0
@@ -64,7 +66,7 @@ typedef struct ReWindow
     IAccessible *pAcc;
 #endif
 #ifdef __linux__
-    Window hWnd; //pid
+    unsigned long hWnd; //pid
     int pid;
     int desktop_id;
 #endif

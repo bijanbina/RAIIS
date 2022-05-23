@@ -6,6 +6,17 @@ ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
     socket = new QWebSocket;
     connect(socket, SIGNAL(connected()),    this, SLOT(onConnected()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+    ws_buf = "";
+}
+
+ReFirefoxL::~ReFirefoxL()
+{
+    delete socket;
+    reset();
+}
+
+void ReFirefoxL::refreshURL()
+{
     QString ws = getStrCommand("Resources/Scripts/ff_getWS.sh");
     QStringList ws_list = ws.split("\n");
     for( int i=0 ; i<ws_list.length() ; i++ )
@@ -23,34 +34,71 @@ ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
     emit startChild();
 }
 
-ReFirefoxL::~ReFirefoxL()
-{
-    delete socket;
-    for( int i=0 ; i<childs_th.size() ; i++ )
-    {
-        delete childs[i];
-        delete childs_th[i];
-    }
-    childs.clear();
-    childs_th.clear();
-}
-
 void ReFirefoxL::urlCheck(QString title, QString ws)
 {
+    ws_buf = ws;
     QString cmd = "Resources/Scripts/ff_isVisible.sh \"";
     cmd += title + "\"";
     QString res = getStrCommand(cmd);
 
     if( res.length() )
     {
-        qDebug() << "W" << ws;
         socket->open(QUrl(ws));
+        reset();
     }
+}
+
+void ReFirefoxL::reset()
+{
+    for( int i=0 ; i<childs_th.size() ; i++ )
+    {
+        disconnect(this, SIGNAL(startChild()), childs[i], SLOT(run()));
+        disconnect(childs[i], SIGNAL(finished(QString,QString)),
+                   this     , SLOT  (urlCheck(QString,QString)));
+        childs_th[i]->exit();
+        childs_th[i]->wait();
+        delete childs_th[i];
+    }
+    childs.clear();
+    childs_th.clear();
+}
+
+void ReFirefoxL::scrollDown(int speed)
+{
+    sc_speed = speed;
+    if( ws_buf.length() )
+    {
+        QString cmd = "bt_speed = ";
+        cmd += QString::number(sc_speed) + "; ";
+        cmd += "clearInterval(scroll_timer); ";
+        cmd += "scroll_timer = undefined;";
+        cmd += "var scroll_timer = setInterval(pageScroll, 100/bt_speed);";
+
+        send_js(cmd);
+    }
+    else
+    {
+        refreshURL();
+    }
+}
+
+void ReFirefoxL::scrollUp(int speed)
+{
+
+}
+
+void ReFirefoxL::scrollEscape()
+{
+    ws_buf = "";
+
+    QString cmd = "clearInterval(scroll_timer); ";
+    cmd += "scroll_timer = undefined;";
+
+    send_js(cmd);
 }
 
 void ReFirefoxL::onConnected()
 {
-   qDebug() << "WebSocket connected";
    connect(socket, SIGNAL(textMessageReceived(QString)),
            this  , SLOT  (dataReceived(QString)));
    sendScroll();
@@ -66,19 +114,19 @@ void ReFirefoxL::dataReceived(QString message)
         js_cmd += cmd_buf + "\"}}\n";
         qDebug() << "executing" << cmd_buf.toStdString().c_str();
         cmd_buf = "";
-//        QThread::msleep(50);
         socket->sendTextMessage(js_cmd);
     }
 }
 
 void ReFirefoxL::onDisconnected()
 {
-   qDebug() << "WebSocket disconnected";
+//   qDebug() << "WebSocket disconnected";
 }
 
 void ReFirefoxL::sendScroll()
 {
-    QString cmd;
+    QString cmd = "var bt_speed = ";
+    cmd += QString::number(sc_speed) + "; ";
     QString filename = CMD_PATH;
 
     QFile file(filename);
@@ -87,15 +135,8 @@ void ReFirefoxL::sendScroll()
         while( !file.atEnd() )
         {
             QString line = file.readLine();
-//            if( line.contains(QRegExp("(\\{|\\}|;)")) )
-//            {
-                line.replace('\n', " ");
-                line.replace('\t', " ");
-//            }
-//            else
-//            {
-//                line.replace('\n', "; ");
-//            }
+            line.replace('\n', " ");
+            line.replace('\t', " ");
             cmd += line;
         }
         file.close();
@@ -115,5 +156,4 @@ void ReFirefoxL::send_js(QString cmd)
 
     socket->sendTextMessage(en_runtime);
     cmd_buf = cmd;
-//    qDebug() << "send_js" << cmd;
 }

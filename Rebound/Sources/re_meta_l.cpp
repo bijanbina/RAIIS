@@ -78,9 +78,8 @@ void ReMetaL::execMeta(CCommand command)
         {
             return;
         }
-        QString cmd = getScrollCmd(state->scroll_dir,
-                                   command.val1, command.val2);
-        system(cmd.toStdString().c_str());
+        getScrollCmd(state->scroll_dir,
+                     command.val1, command.val2);
     }
     else if( command.val1==RE_META_MUSIC )
     {
@@ -276,55 +275,30 @@ QString ReMetaL::getMusicCmd(int val)
     return cmd;
 }
 
-QString ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
+void ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
 {
-    QString cmd;
-    if( state->app.pname=="GeckoMain" ||
-        state->app.pname=="firefox" )
+    QString change_gear;
+    QString direction;
+    if( scroll_mode )
     {
-        qDebug() << "title" << state->app.title;
-        QString change_gear;
-        QString direction;
-        cmd = "./Scripts/scroll";
-        if( scroll_mode )
-        {
-            change_gear = " 0 ";
-        }
-        else
-        {
-            change_gear = " 1 ";
-        }
-
-        if( meta==RE_META_SKY )
-        {
-            direction = " up ";
-        }
-        else if( meta==RE_META_DIVE )
-        {
-            direction = " down ";
-        }
-
-        cmd += direction;
-        cmd += change_gear;
-        cmd += QString::number(val);
-        state->enScroll(meta, val);
+        change_gear = " 0 ";
     }
     else
     {
-        qDebug() << "scroll" << state->app.pname;
-        cmd  = "xdotool key --repeat ";
-        cmd += QString::number(val);
-        if( meta==RE_META_SKY )
-        {
-            cmd += " Page_Up";
-        }
-        else if( meta==RE_META_DIVE )
-        {
-            cmd += " Page_Down";
-        }
+        change_gear = " 1 ";
     }
 
-    return cmd;
+    if( meta==RE_META_SKY )
+    {
+        direction = " up ";
+    }
+    else if( meta==RE_META_DIVE )
+    {
+        direction = " down ";
+        fl->scrollDown(val);
+    }
+
+    state->enScroll(meta, val);
 }
 
 QString ReMetaL::getGoCmd(int val)

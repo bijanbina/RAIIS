@@ -38,10 +38,9 @@ function pageScroll()
 
 if( typeof scroll_timer === 'undefined' ) 
 {
-	var scroll_timer = setInterval(pageScroll, 5);
+	var scroll_timer = setInterval(pageScroll, 100/bt_speed);
 }
 else
 {
-	clearInterval(scroll_timer);
-	scroll_timer = undefined;
+	alert('fuck');
 }

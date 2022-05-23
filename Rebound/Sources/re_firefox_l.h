@@ -14,6 +14,11 @@ public:
     explicit ReFirefoxL(QObject *parent = nullptr);
     ~ReFirefoxL();
     void sendScroll();
+    void refreshURL();
+    void reset();
+    void scrollDown(int speed);
+    void scrollUp(int speed);
+    void scrollEscape();
 
 signals:
     void startChild();
@@ -28,8 +33,11 @@ private:
     void send_js(QString cmd);
     QWebSocket *socket;
     QString cmd_buf;
+    QString ws_buf;
     QVector<ReFirefoxWs *> childs;
     QVector<QThread *>     childs_th;
+
+    int sc_speed = 5;
 };
 
 #endif // RE_FIREFOX_L_H
