@@ -31,18 +31,17 @@ else
 	};
 }
 
-function pageScroll(speed)
+function pageScroll()
 {
 	big_elem.scrollBy(0,1);
-	scroll_timer = setTimeout(pageScroll,1000/speed);
 }
 
 if( typeof scroll_timer === 'undefined' ) 
 {
-	pageScroll(1000);
+	var scroll_timer = setInterval(pageScroll, 5);
 }
 else
 {
-	clearTimeout(scroll_timer);
-	scroll_timer=undefined;
+	clearInterval(scroll_timer);
+	scroll_timer = undefined;
 }

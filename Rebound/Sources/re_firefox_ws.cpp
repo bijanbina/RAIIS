@@ -1,5 +1,4 @@
 #include "re_firefox_ws.h"
-#define CMD_PATH "Resources/Scripts/ElementsWithScrolls.js"
 #define RE_MATCH_PATTERN "\"result\":{\"type\":\"string\""
 
 ReFirefoxWs::ReFirefoxWs(QString ws_url, QObject *parent) : QObject(parent)
@@ -54,7 +53,8 @@ void ReFirefoxWs::dataReceived(QString message)
             if( vals.length()>1 )
             {
                 vals[1].remove("\"}}}"); //remove endings
-                qDebug() << "message" << vals[1];
+                socket->close();
+                emit finished(vals[1], url);
             }
         }
     }
@@ -62,7 +62,7 @@ void ReFirefoxWs::dataReceived(QString message)
 
 void ReFirefoxWs::onDisconnected()
 {
-   qDebug() << "WebSocket disconnected";
+//   qDebug() << "WebSocket disconnected";
 }
 
 void ReFirefoxWs::send_js(QString cmd)

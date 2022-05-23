@@ -14,13 +14,15 @@ public:
     ~ReFirefoxWs();
 
 signals:
-    void finished();
+    void finished(QString title, QString ws);
+
+public slots:
+    void run();
 
 private slots:
     void onConnected();
     void onDisconnected();
     void dataReceived(QString message);
-    void run();
 
 private:
     void send_js(QString cmd);

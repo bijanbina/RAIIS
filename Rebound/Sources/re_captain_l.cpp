@@ -101,7 +101,7 @@ void ReCaptainL::execModifier(CCommand command)
     {
         releaseKey(command.mod_list[len-i-1]);
     }
-    qDebug() << "pressModifier" << modifiers.count();
+//    qDebug() << "pressModifier" << modifiers.count();
 }
 
 void ReCaptainL::releaseModifiers()
@@ -109,7 +109,7 @@ void ReCaptainL::releaseModifiers()
     int c = modifiers.count();
     for( int i=c ; i>0 ; i-- )
     {
-        qDebug() << "releaseModifiers" << modifiers[i-1].val1;
+//        qDebug() << "releaseModifiers" << modifiers[i-1].val1;
         releaseKey(modifiers[i-1].val1);
         QThread::msleep(100); //little tweak
     }

@@ -19,6 +19,7 @@ signals:
     void startChild();
 
 private slots:
+    void urlCheck(QString title, QString ws);
     void onConnected();
     void onDisconnected();
     void dataReceived(QString message);

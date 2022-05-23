@@ -8,8 +8,6 @@ ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
     connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
     QString ws = getStrCommand("Resources/Scripts/ff_getWS.sh");
     QStringList ws_list = ws.split("\n");
-//    qDebug() << ws;
-//    socket->open(QUrl(ws));
     for( int i=0 ; i<ws_list.length() ; i++ )
     {
         ReFirefoxWs *child = new ReFirefoxWs(ws_list[i]);
@@ -18,7 +16,9 @@ ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
         child_th->start();
         childs.push_back(child);
         childs_th.push_back(child_th);
-        connect(this, SIGNAL(startChild()), child, SLOT(run()));
+        connect(this , SIGNAL(startChild()), child, SLOT(run()));
+        connect(child, SIGNAL(finished(QString,QString)),
+                this , SLOT  (urlCheck(QString,QString)));
     }
     emit startChild();
 }
@@ -35,6 +35,19 @@ ReFirefoxL::~ReFirefoxL()
     childs_th.clear();
 }
 
+void ReFirefoxL::urlCheck(QString title, QString ws)
+{
+    QString cmd = "Resources/Scripts/ff_isVisible.sh \"";
+    cmd += title + "\"";
+    QString res = getStrCommand(cmd);
+
+    if( res.length() )
+    {
+        qDebug() << "W" << ws;
+        socket->open(QUrl(ws));
+    }
+}
+
 void ReFirefoxL::onConnected()
 {
    qDebug() << "WebSocket connected";
@@ -45,16 +58,16 @@ void ReFirefoxL::onConnected()
 
 void ReFirefoxL::dataReceived(QString message)
 {
-    qDebug() << message;
     if( cmd_buf.length() )
     {
+        qDebug() << message;
         QString js_cmd = "{\"id\": 2, \"method\": \"Runtime.evaluate\"";
         js_cmd += ", \"params\": {\"expression\": \"";
-        js_cmd += cmd_buf + "\"}}\n\n";
+        js_cmd += cmd_buf + "\"}}\n";
         qDebug() << "executing" << cmd_buf.toStdString().c_str();
-        QThread::msleep(50);
-        socket->sendTextMessage(js_cmd);
         cmd_buf = "";
+//        QThread::msleep(50);
+        socket->sendTextMessage(js_cmd);
     }
 }
 
@@ -78,7 +91,6 @@ void ReFirefoxL::sendScroll()
 //            {
                 line.replace('\n', " ");
                 line.replace('\t', " ");
-////                qDebug() << "444444444"  << line;
 //            }
 //            else
 //            {
