@@ -1,4 +1,4 @@
-#ifndef RE_STATE_H
+﻿#ifndef RE_STATE_H
 #define RE_STATE_H
 
 #ifdef __linux__
@@ -8,9 +8,9 @@
 #include <QString>
 #include <QQmlProperty>
 #include <QFileInfo>
+#include "re_firefox_l.h"
 #include "re_commands.h"
 #include "re_state_const.h"
-//#include "re_firefox_l.h"
 
 class ReState : public QObject
 {
@@ -29,7 +29,7 @@ public:
     void updateApp(ReWindow active_window);
     void toggleUi(QObject *item);
     void propageteMode(int mode);
-    void updateTitles(QObject *item);
+    void updateTitles(QStringList wins_title, QObject *item);
     void showSwither(QObject *item);
 
     void goToSleep();
@@ -42,9 +42,6 @@ public:
 #ifdef _WIN32
     ReApiW *api;
     ReHardwareW *hardware;
-#endif
-#ifdef __linux__
-//    ReApiL *api;
 #endif
     int  ui_visible;
     int  i_mode;
@@ -64,4 +61,4 @@ private:
     int i_proc;
 };
 
-#endif // RESTATE_H
+#endif // RE_STATE_H

@@ -37,7 +37,10 @@ private:
     QVector<ReFirefoxWs *> childs;
     QVector<QThread *>     childs_th;
 
-    int sc_speed = 5;
+    double sc_speed = 5;
+    double sc_step  = 1;
+    int speed_table[10] = { 100, 50, 25, 10, 10, 5, 5, 5, 5 };
+    int step_table[10]  = { 1  , 2 , 3 , 4 , 5 , 6, 7, 8, 9 };
 };
 
 #endif // RE_FIREFOX_L_H

@@ -11,7 +11,6 @@ ReState::ReState(QObject *parent) : QObject(parent)
     hardware = new ReHardwareW;
 #endif
 #ifdef __linux__
-    api = new ReApiL;
     fl = new ReFirefoxL;
     rmStatusFile();
 #endif
@@ -69,7 +68,8 @@ void ReState::showSwither(QObject *item)
 {
     setMode(RE_MODE_SWITCH);
 
-    updateTitles(item);
+    ///FIXME: UNCOMMENT THIS
+//    updateTitles(item);
     QQmlProperty::write(item, "active_process", 1);
     QQmlProperty::write(item, "visible", 1);
 }
@@ -131,16 +131,16 @@ void ReState::propageteMode(int mode)
     emit updateMode();
 }
 
-void ReState::updateTitles(QObject *item)
+void ReState::updateTitles(QStringList wins_title, QObject *item)
 {
-    qDebug() << "updateTitles" << api->wins_title.size();
+    qDebug() << "updateTitles" << wins_title.size();
 
     for(int i=0; i<6; i++)
     {
         QQmlProperty::write(item, "process_id", i+1);
-        if(i<api->wins_title.length())
+        if( i<wins_title.length() )
         {
-            QQmlProperty::write(item, "process_title", api->wins_title[i]);
+            QQmlProperty::write(item, "process_title", wins_title[i]);
         }
         else
         {
@@ -192,7 +192,6 @@ void ReState::enScroll(int dir, int speed)
     }
     cmd += QString::number(speed);
     cmd += "' > ~/.config/polybar/awesomewm/ben_status";
-    qDebug() << "spped" << scroll_spd;
     system(cmd.toStdString().c_str());
 }
 
@@ -217,6 +216,7 @@ void ReState::resetState()
     if( scroll_dir )
     {
         scroll_dir = 0;
+        fl->scrollEscape();
         rmStatusFile();
     }
 

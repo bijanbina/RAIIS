@@ -1,10 +1,10 @@
 #ifndef RE_THREAD_L_H
 #define RE_THREAD_L_H
 
+#include "re_state.h"
 #include "re_x11.h"
 #include <QStringList>
 
-#include "re_state.h"
 #include "re_config.h"
 
 #define RE_SPOTIFY_ALBUM_CHILD  "0000"

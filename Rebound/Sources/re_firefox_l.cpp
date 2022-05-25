@@ -65,14 +65,17 @@ void ReFirefoxL::reset()
 
 void ReFirefoxL::scrollDown(int speed)
 {
-    sc_speed = speed;
+    sc_speed = speed_table[speed-1];
+    sc_step  = step_table[speed-1];
     if( ws_buf.length() )
     {
         QString cmd = "bt_speed = ";
         cmd += QString::number(sc_speed) + "; ";
+        cmd += "bt_step = ";
+        cmd += QString::number(sc_step) + "; ";
         cmd += "clearInterval(scroll_timer); ";
         cmd += "scroll_timer = undefined;";
-        cmd += "var scroll_timer = setInterval(pageScroll, 100/bt_speed);";
+        cmd += "var scroll_timer = setInterval(pageScroll, bt_speed);";
 
         send_js(cmd);
     }
@@ -108,11 +111,9 @@ void ReFirefoxL::dataReceived(QString message)
 {
     if( cmd_buf.length() )
     {
-        qDebug() << message;
         QString js_cmd = "{\"id\": 2, \"method\": \"Runtime.evaluate\"";
         js_cmd += ", \"params\": {\"expression\": \"";
         js_cmd += cmd_buf + "\"}}\n";
-        qDebug() << "executing" << cmd_buf.toStdString().c_str();
         cmd_buf = "";
         socket->sendTextMessage(js_cmd);
     }
@@ -127,6 +128,8 @@ void ReFirefoxL::sendScroll()
 {
     QString cmd = "var bt_speed = ";
     cmd += QString::number(sc_speed) + "; ";
+    cmd += "bt_step = ";
+    cmd += QString::number(sc_step) + "; ";
     QString filename = CMD_PATH;
 
     QFile file(filename);

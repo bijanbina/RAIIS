@@ -33,12 +33,12 @@ else
 
 function pageScroll()
 {
-	big_elem.scrollBy(0,1);
+	big_elem.scrollBy(0, bt_step);
 }
 
 if( typeof scroll_timer === 'undefined' ) 
 {
-	var scroll_timer = setInterval(pageScroll, 100/bt_speed);
+	var scroll_timer = setInterval(pageScroll, bt_speed);
 }
 else
 {
