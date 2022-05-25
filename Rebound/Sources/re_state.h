@@ -1,15 +1,16 @@
-﻿#ifndef RESTATE_H
-#define RESTATE_H
+#ifndef RE_STATE_H
+#define RE_STATE_H
 
 #ifdef __linux__
 #endif
 
-#include "re_commands.h"
 #include <QObject>
 #include <QString>
 #include <QQmlProperty>
 #include <QFileInfo>
-#include "re_firefox_l.h"
+#include "re_commands.h"
+#include "re_state_const.h"
+//#include "re_firefox_l.h"
 
 class ReState : public QObject
 {

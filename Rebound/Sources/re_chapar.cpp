@@ -13,6 +13,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     directions = new ReDirections(ui, state);
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
+    api = new ReApiL;
 
 #ifdef _WIN32
     thread_data = new threadStruct;
@@ -31,12 +32,12 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     channel = new ReChannelL(captain, ui);
 
     thread_data = new threadStruct;
-    thread_data->wins_title = &(state->api->wins_title);
-    thread_data->elems_name = &(state->api->elems_name);
+    thread_data->wins_title = &(api->wins_title);
+    thread_data->elems_name = &(api->elems_name);
     thread_data->state = state;
 
     Display *disp = reX11_init();
-    state->api->setDisplay(disp);
+    api->setDisplay(disp);
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 #endif
 
@@ -75,7 +76,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
 
 QString ReChapar::getShortTitle(int index)
 {
-    QString title = state->api->getWinTitle(index);
+    QString title = api->getWinTitle(index);
 
     for ( int i=0 ; i<title.length() ; i++ )
     {
@@ -236,12 +237,12 @@ void ReChapar::switchWindow(int index)
 
         state->updateApp(buffer);
 
-        QString buffer_t = state->api->wins_title[i];
-        state->api->wins_title.removeAt(i);
-        state->api->wins_title.push_front(buffer_t);
+        QString buffer_t = api->wins_title[i];
+        api->wins_title.removeAt(i);
+        api->wins_title.push_front(buffer_t);
 
         qDebug() << "switchWindow" << i << thread_data->windows[0].title;
-        state->api->setActiveWindow(thread_data->windows[0].hWnd);
+        api->setActiveWindow(thread_data->windows[0].hWnd);
     }
 }
 

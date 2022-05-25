@@ -10,7 +10,6 @@
 #include <QObject>
 #include <QDebug>
 #include <QStringList>
-//#include "re_api_l.h"
 #endif
 
 #define RE_COMMAND_NULL  0

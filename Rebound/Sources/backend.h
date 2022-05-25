@@ -3,7 +3,6 @@
 
 #include <QQmlApplicationEngine>
 #include <QQmlProperty>
-#include <QtDBus>
 #include <QDebug>
 #include <stdio.h>
 #include <unistd.h>

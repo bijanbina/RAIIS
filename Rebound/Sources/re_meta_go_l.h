@@ -2,6 +2,7 @@
 #define RE_META_GO_L_H
 
 #include <QVector>
+#include <QThread>
 #include <linux/uinput.h>
 
 #include "backend.h"

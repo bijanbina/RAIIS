@@ -1,13 +1,13 @@
 #ifndef CHANNEL_H_L
 #define CHANNEL_H_L
 
-#include "backend.h"
 
 #include <QObject>
 #include <QtCore/QObject>
 #include <QtDBus/QtDBus>
 #include "QThread"
 
+#include "backend.h"
 #include "re_captain_l.h"
 
 #define RE_EXEC_TIMEOUT_M  1

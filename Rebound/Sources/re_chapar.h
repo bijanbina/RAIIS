@@ -1,14 +1,9 @@
 #ifndef RECHAPAR_H
 #define RECHAPAR_H
 
+//#include "re_api_l.h"
 #include <QObject>
-#include <thread>         // std::thread
 #include <QTimer>
-#include "re_bumpers.h"
-#include "re_buttons.h"
-#include "re_directions.h"
-#include "re_laxis.h"
-#include "re_raxis.h"
 
 #ifdef _WIN32
     #include "re_xbox_w.h"
@@ -19,13 +14,20 @@
 #endif
 
 #ifdef __linux__
-    #include "re_xbox_l.h"
-    #include "re_thread_l.h"
     #include "re_channel_l.h"
     #include "re_captain_l.h"
     #include "re_client.h"
+    #include "re_xbox_l.h"
+    #include "re_thread_l.h"
+    #include "re_api_l.h"
 #endif
 
+#include <thread>         // std::thread
+#include "re_bumpers.h"
+#include "re_buttons.h"
+#include "re_directions.h"
+#include "re_laxis.h"
+#include "re_raxis.h"
 #include "re_state.h"
 
 typedef struct RePage
@@ -91,6 +93,7 @@ private:
     ReChannelL *channel;
     std::thread *api_thread;
     threadStruct *thread_data;
+    ReApiL       *api;
 #endif
 };
 

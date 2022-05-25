@@ -1,5 +1,4 @@
 #include "backend.h"
-#include <QThread>
 
 int getIntCommand(char *command)
 {

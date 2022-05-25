@@ -52,7 +52,8 @@ HEADERS += Sources/backend.h \
            Sources/re_directions.h \
            Sources/re_laxis.h \
            Sources/re_raxis.h \
-           Sources/re_bumpers.h
+           Sources/re_bumpers.h \
+           Sources/re_state_const.h
 
 win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_win32.h \

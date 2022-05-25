@@ -295,7 +295,6 @@ void ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
     else if( meta==RE_META_DIVE )
     {
         direction = " down ";
-        fl->scrollDown(val);
     }
 
     state->enScroll(meta, val);
