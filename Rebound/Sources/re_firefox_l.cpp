@@ -87,7 +87,24 @@ void ReFirefoxL::scrollDown(int speed)
 
 void ReFirefoxL::scrollUp(int speed)
 {
+    sc_speed = speed_table[speed-1];
+    sc_step  = -step_table[speed-1];
+    if( ws_buf.length() )
+    {
+        QString cmd = "bt_speed = ";
+        cmd += QString::number(sc_speed) + "; ";
+        cmd += "bt_step = ";
+        cmd += QString::number(sc_step) + "; ";
+        cmd += "clearInterval(scroll_timer); ";
+        cmd += "scroll_timer = undefined;";
+        cmd += "var scroll_timer = setInterval(pageScroll, bt_speed);";
 
+        send_js(cmd);
+    }
+    else
+    {
+        refreshURL();
+    }
 }
 
 void ReFirefoxL::scrollEscape()

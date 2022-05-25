@@ -13,20 +13,23 @@ var s_elem = [].filter.call(document.querySelectorAll('*'), hasScroller);
 
 var big_elem;
 
-if( document.body.offsetHeight>window.innerHeight )
+var b_scroll = document.defaultView.getComputedStyle(document.body, null)['overflow-y'];
+if( b_scroll=='scroll' )
 {
 	big_elem = window;
 }
 else
 {
-	var max_height = 0;
+	var max_size = 0;
 
 	for( let i=0; i<s_elem.length ; i++ ) 
 	{
-		if( max_height<s_elem[i].offsetHeight )
+		var elem_size = s_elem[i].offsetHeight;
+		elem_size *= s_elem[i].offsetWidth;
+		if( max_size<elem_size )
 		{
-			big_elem   = s_elem[i];
-			max_height = s_elem[i].offsetHeight;
+			big_elem = s_elem[i];
+			max_size = elem_size;
 		}
 	};
 }
