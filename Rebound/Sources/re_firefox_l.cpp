@@ -1,5 +1,7 @@
 #include "re_firefox_l.h"
-#define CMD_PATH "Resources/Scripts/ElementsWithScrolls.js"
+#define JS_SC_PATH "Scripts/Firefox/ElementsWithScrolls.js"
+#define WS_SC_PATH "Scripts/Firefox/getWS.sh"
+#define VI_SC_PATH "Scripts/Firefox/isVisible.sh"
 
 ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
 {
@@ -17,7 +19,7 @@ ReFirefoxL::~ReFirefoxL()
 
 void ReFirefoxL::refreshURL()
 {
-    QString ws = getStrCommand("Resources/Scripts/ff_getWS.sh");
+    QString ws = getStrCommand(WS_SC_PATH);
     QStringList ws_list = ws.split("\n");
     for( int i=0 ; i<ws_list.length() ; i++ )
     {
@@ -37,13 +39,14 @@ void ReFirefoxL::refreshURL()
 void ReFirefoxL::urlCheck(QString title, QString ws)
 {
     ws_buf = ws;
-    QString cmd = "Resources/Scripts/ff_isVisible.sh \"";
+    QString cmd = VI_SC_PATH " \"";
     cmd += title + "\"";
     QString res = getStrCommand(cmd);
 
     if( res.length() )
     {
         socket->open(QUrl(ws));
+        qDebug() << ws;
         reset();
     }
 }
@@ -147,7 +150,7 @@ void ReFirefoxL::sendScroll()
     cmd += QString::number(sc_speed) + "; ";
     cmd += "bt_step = ";
     cmd += QString::number(sc_step) + "; ";
-    QString filename = CMD_PATH;
+    QString filename = JS_SC_PATH;
 
     QFile file(filename);
     if( file.open(QIODevice::ReadOnly) )

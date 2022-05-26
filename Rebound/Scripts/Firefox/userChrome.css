@@ -1,0 +1,12 @@
+#urlbar-background 
+{
+  background-image: none !important;
+}
+
+#remote-control-icon 
+{
+	list-style-image: none !important;
+	width: 0px !important;
+	height: 0px !important;
+	margin-left: -12px !important;
+}

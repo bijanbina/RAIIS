@@ -18,6 +18,10 @@ if( b_scroll=='scroll' )
 {
 	big_elem = window;
 }
+else if( document.body.offsetHeight>window.innerHeight )
+{
+	big_elem = window;
+}
 else
 {
 	var max_size = 0;
