@@ -12,9 +12,33 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #endif
 #ifdef __linux__
     fl = new ReFirefoxL;
-    rmStatusFile();
+    readStatusFile();
 #endif
 }
+
+void ReState::readStatusFile()
+{
+    QString path = getenv("HOME");
+    path += "/.config/polybar/awesomewm/ben_status";
+    QFile file(path);
+    if( file.open(QIODevice::ReadOnly) )
+    {
+        QString line = file.readLine();
+        line.replace('\n', "");
+
+        if( line=="Sleep" )
+        {
+            sleep_state = 1;
+            file.close();
+        }
+        else
+        {
+            file.close();
+            rmStatusFile();
+        }
+    }
+}
+
 
 void ReState::rmStatusFile()
 {

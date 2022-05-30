@@ -14,8 +14,14 @@ ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
 
     if( uinput_f==-1 )
     {
-        qDebug() << "Failed to open /dev/uinput";
-        exit(1);
+        qDebug() << "Try to set /dev/uinput permission";
+        system("pkexec " RE_SCR_UINPUT);
+        uinput_f = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
+        if( uinput_f==-1 )
+        {
+            exit(1);
+            qDebug() << "Failed to open /dev/uinput";
+        }
     }
 
     /*

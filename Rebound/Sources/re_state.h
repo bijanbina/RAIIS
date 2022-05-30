@@ -18,6 +18,7 @@ class ReState : public QObject
 public:
     explicit ReState(QObject *parent = 0);
 
+    void readStatusFile();
     void rmStatusFile();
     void rmSpexFile();
     void setMode(int mode);

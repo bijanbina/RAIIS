@@ -45,8 +45,7 @@ void ReFirefoxL::urlCheck(QString title, QString ws)
 
     if( res.length() )
     {
-        socket->open(QUrl(ws));
-        qDebug() << ws;
+        socket->open(QUrl(ws));        qDebug() << ws;
         reset();
     }
 }
