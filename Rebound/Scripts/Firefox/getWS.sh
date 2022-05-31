@@ -3,7 +3,7 @@
 # then with an added delay execute "Runtime.evaluate"!
 
 CURL_OUT=$(curl -s http://127.0.0.1:9222/json/list)
-WS_URL=$(echo "$CURL_OUT" | grep -A 2 '"type": "page",')
+WS_URL=$(echo "$CURL_OUT" | grep -A 4 '"type": "page",')
 WS_URL=$(echo "$WS_URL" | grep '"webSocketDebuggerUrl"')
 WS_URL=$(echo "$WS_URL" | cut -d\" -f4)
 cd "$(dirname "$0")"

@@ -10,7 +10,7 @@ REM_LINE='user_pref("devtools.debugger.remote-enabled", true);'
 WBS_LINE='user_pref("devtools.debugger.remote-websocket", true);'
 THM_LINE='user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);'
 mkdir -p ~/.mozilla/firefox/$PROF/chrome
-cp Scripts/userChrome.css ~/.mozilla/firefox/$PROF/chrome
+cp userChrome.css ~/.mozilla/firefox/$PROF/chrome
 
 #chrome.enabled
 LN=$(grep -n chrome.enabled $PROF_PREF | cut -d: -f 1)
