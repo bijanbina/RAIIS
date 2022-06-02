@@ -125,7 +125,7 @@ void ReChannelL::digit(const QString &text)
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        cmd_buf[last_i].val2 = re_keyCode2Digit(text);
+        cmd_buf[last_i].val2 = text.toInt();
         execute();
     }
     else if( captain->state->scroll_dir )

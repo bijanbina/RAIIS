@@ -88,10 +88,11 @@ QString re_getGoGitKraken(int val)
         QThread::msleep(100); //little tweak
         cmd = "xdotool key Enter";
     }
-    else if( val>0 && val<10 ) //tab
+    else if( val>1 && val<12 ) //tab
     {
+        int input = re_keyCode2Digit(val);
         cmd = "xdotool key ctrl+";
-        cmd += QString::number(val);
+        cmd += QString::number(input);
     }
 
     return cmd;
@@ -113,10 +114,11 @@ QString re_getGoFirefox(int val)
     {
         cmd = "xdotool key ctrl+F";
     }
-    else if( val>0 && val<10 ) //tab
+    else if( val>1 && val<12 ) //tab
     {
+        int input = re_keyCode2Digit(val);
         cmd = "xdotool key alt+";
-        cmd += QString::number(val);
+        cmd += QString::number(input);
     }
 
     return cmd;

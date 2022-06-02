@@ -75,3 +75,15 @@ int re_keyCode2Digit(QString key_code)
         return code-1;
     }
 }
+
+int re_keyCode2Digit(int code)
+{
+    if( code==11 )
+    {
+        return 0;
+    }
+    else
+    {
+        return code-1;
+    }
+}
