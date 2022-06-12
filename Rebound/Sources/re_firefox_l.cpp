@@ -36,16 +36,18 @@ void ReFirefoxL::refreshURL()
     emit startChild();
 }
 
+//Check if firefox is visible
 void ReFirefoxL::urlCheck(QString title, QString ws)
 {
-    ws_buf = ws;
     QString cmd = VI_SC_PATH " \"";
     cmd += title + "\"";
     QString res = getStrCommand(cmd);
 
     if( res.length() )
     {
-        socket->open(QUrl(ws));        qDebug() << ws;
+        ws_buf = ws;
+        socket->open(QUrl(ws));
+        qDebug() << ws;
         reset();
     }
 }
@@ -65,46 +67,52 @@ void ReFirefoxL::reset()
     childs_th.clear();
 }
 
-void ReFirefoxL::scrollDown(int speed)
+void ReFirefoxL::scrollDown(int speed, QString st_cmd)
 {
-    sc_speed = speed_table[speed-1];
-    sc_step  = step_table[speed-1];
+    sc_speed = speed-1;
     if( ws_buf.length() )
     {
+        sc_dir = RE_META_DIVE;
         QString cmd = "bt_speed = ";
-        cmd += QString::number(sc_speed) + "; ";
+        cmd += QString::number(speed_table[sc_speed]) + "; ";
         cmd += "bt_step = ";
-        cmd += QString::number(sc_step) + "; ";
+        cmd += QString::number(step_table[sc_speed]) + "; ";
         cmd += "clearInterval(scroll_timer); ";
         cmd += "scroll_timer = undefined;";
         cmd += "var scroll_timer = setInterval(pageScroll, bt_speed);";
 
         send_js(cmd);
+        system(st_cmd.toStdString().c_str());
     }
     else
     {
+        status_cmd = st_cmd;
+        sc_dirb = RE_META_DIVE;
         refreshURL();
     }
 }
 
-void ReFirefoxL::scrollUp(int speed)
+void ReFirefoxL::scrollUp(int speed, QString st_cmd)
 {
-    sc_speed = speed_table[speed-1];
-    sc_step  = -step_table[speed-1];
+    sc_speed = speed-1;
     if( ws_buf.length() )
     {
+        sc_dir = RE_META_SKY;
         QString cmd = "bt_speed = ";
-        cmd += QString::number(sc_speed) + "; ";
+        cmd += QString::number(speed_table[sc_speed]) + "; ";
         cmd += "bt_step = ";
-        cmd += QString::number(sc_step) + "; ";
+        cmd += QString::number(-step_table[sc_speed]) + "; ";
         cmd += "clearInterval(scroll_timer); ";
         cmd += "scroll_timer = undefined;";
         cmd += "var scroll_timer = setInterval(pageScroll, bt_speed);";
 
         send_js(cmd);
+        system(st_cmd.toStdString().c_str());
     }
     else
     {
+        status_cmd = st_cmd;
+        sc_dirb = RE_META_SKY;
         refreshURL();
     }
 }
@@ -146,9 +154,16 @@ void ReFirefoxL::onDisconnected()
 void ReFirefoxL::sendScroll()
 {
     QString cmd = "var bt_speed = ";
-    cmd += QString::number(sc_speed) + "; ";
+    cmd += QString::number(speed_table[sc_speed]) + "; ";
     cmd += "bt_step = ";
-    cmd += QString::number(sc_step) + "; ";
+    if( sc_dirb==RE_META_DIVE )
+    {
+        cmd += QString::number(step_table[sc_speed]) + "; ";
+    }
+    else
+    {
+        cmd += QString::number(-step_table[sc_speed]) + "; ";
+    }
     QString filename = JS_SC_PATH;
 
     QFile file(filename);
@@ -167,9 +182,13 @@ void ReFirefoxL::sendScroll()
     {
         qDebug() << "Error 133: error opening"
                  << filename;
+        return;
     }
 
     send_js(cmd);
+    system(status_cmd.toStdString().c_str());
+    status_cmd = "";
+    sc_dir = sc_dirb;
 }
 
 void ReFirefoxL::send_js(QString cmd)

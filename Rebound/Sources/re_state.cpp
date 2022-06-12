@@ -182,9 +182,9 @@ void ReState::goToSleep()
 void ReState::wakeUp()
 {
     sleep_state = 0;
-    if( scroll_dir )
+    if( fl->sc_dir )
     {
-        enScroll(scroll_dir, scroll_spd);
+        enScroll(fl->sc_dir, fl->sc_speed);
     }
     else if( chess_mode )
     {
@@ -200,22 +200,21 @@ void ReState::wakeUp()
 void ReState::enScroll(int dir, int speed)
 {
     QString cmd = "echo '";
-    scroll_dir = dir;
-    scroll_spd = speed;
 
-    if( scroll_dir==RE_META_SKY )
+    if( dir==RE_META_SKY )
     {
         cmd += "Sky ";
-        fl->scrollUp(speed);
+        cmd += QString::number(speed);
+        cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+        fl->scrollUp(speed, cmd);
     }
-    else if( scroll_dir==RE_META_DIVE )
+    else if( dir==RE_META_DIVE )
     {
         cmd += "Dive ";
-        fl->scrollDown(speed);
+        cmd += QString::number(speed);
+        cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+        fl->scrollDown(speed, cmd);
     }
-    cmd += QString::number(speed);
-    cmd += "' > ~/.config/polybar/awesomewm/ben_status";
-    system(cmd.toStdString().c_str());
 }
 
 // is escape command
@@ -236,9 +235,9 @@ bool ReState::isEscape(CCommand command)
 
 void ReState::resetState()
 {
-    if( scroll_dir )
+    if( fl->sc_dir )
     {
-        scroll_dir = 0;
+        fl->sc_dir = 0;
         fl->scrollEscape();
         rmStatusFile();
     }

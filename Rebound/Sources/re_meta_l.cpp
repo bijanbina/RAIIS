@@ -78,8 +78,7 @@ void ReMetaL::execMeta(CCommand command)
         {
             return;
         }
-        getScrollCmd(state->scroll_dir,
-                     command.val1, command.val2);
+        getScrollCmd(command.val1, command.val2-1);
     }
     else if( command.val1==RE_META_MUSIC )
     {
@@ -275,19 +274,9 @@ QString ReMetaL::getMusicCmd(int val)
     return cmd;
 }
 
-void ReMetaL::getScrollCmd(bool scroll_mode, int meta, int val)
+void ReMetaL::getScrollCmd(int meta, int val)
 {
-    QString change_gear;
     QString direction;
-    if( scroll_mode )
-    {
-        change_gear = " 0 ";
-    }
-    else
-    {
-        change_gear = " 1 ";
-    }
-
     if( meta==RE_META_SKY )
     {
         direction = " up ";

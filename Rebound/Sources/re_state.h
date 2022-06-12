@@ -47,8 +47,6 @@ public:
     int  ui_visible;
     int  i_mode;
     bool sleep_state = 0;
-    int  scroll_spd  = 0;
-    int  scroll_dir  = 0; // 0 deactive, other active
     bool chess_mode  = 0;
     int  utube_mode  = 0;
     ReWindow app; //Active Window

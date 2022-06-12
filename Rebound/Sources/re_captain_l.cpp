@@ -186,7 +186,7 @@ bool ReCaptainL::isLastRepeatable()
 {
     int cmd_type = state->last_cmd.type;
 
-    if( state->scroll_dir )
+    if( state->fl->sc_dir )
     {
         return false;
     }

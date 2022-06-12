@@ -123,10 +123,10 @@ void ReChannelL::digit(const QString &text)
         cmd_buf[last_i].val2 = text.toInt();
         execute();
     }
-    else if( captain->state->scroll_dir )
+    else if( captain->state->fl->sc_dir )
     {
         CCommand cmd;
-        cmd.val1 = captain->state->scroll_dir;
+        cmd.val1 = captain->state->fl->sc_dir;
         cmd.val2 = re_keyCode2Digit(text);
         cmd.val3 = 1;
         cmd.type = RE_COMMAND_META;
