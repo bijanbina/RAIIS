@@ -62,6 +62,24 @@ bool re_isLastMod(QVector<CCommand> commands)
     return false;
 }
 
+bool re_isLastQt(QVector<CCommand> commands)
+{
+    if( commands.count()==0 )
+    {
+        return false;
+    }
+
+    int last_i = commands.count()-1; //last index
+    int cmd_type = commands[last_i].type;
+
+    if( cmd_type==RE_COMMAND_QDIGIT )
+    {
+        return true;
+    }
+
+    return false;
+}
+
 int re_keyCode2Digit(QString key_code)
 {
     int code = key_code.toInt();

@@ -116,11 +116,6 @@ void ReChannelL::digit(const QString &text)
             execute();
         }
     }
-    else if( captain->isLastRepeatable() ) //max 2 digit
-    {
-        int input = re_keyCode2Digit(text);
-        handleLastRepeatable(input);
-    }
     else if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -194,6 +189,13 @@ void ReChannelL::dirs(const QString &text) // direction keys
             return;
         }
     }
+    else if( captain->state->app.pname=="qtcreator" )
+    {
+        if( re_dirQtProc(&cmd_buf, text) )
+        {
+            return;
+        }
+    }
     CCommand cmd;
     cmd.val1  = text.toInt();
     cmd.val2  = 1; //press count
@@ -239,6 +241,15 @@ void ReChannelL::meta(const QString &text)
             execute();
             return;
         }
+    }
+    else if( re_isLastQt(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
+        cmd_buf[last_i].val1 = text.toInt();
+        cmd_buf[last_i].type = RE_COMMAND_META;
+        cmd_buf[last_i].val3 = 1;
+        execute();
+        return;
     }
     else if( captain->state->chess_mode )
     {

@@ -12,12 +12,13 @@
 #include <QStringList>
 #endif
 
-#define RE_COMMAND_NULL  0
-#define RE_COMMAND_DIRS  1
-#define RE_COMMAND_NATO  2
-#define RE_COMMAND_DIGIT 3
-#define RE_COMMAND_MOD   4 //Modifiers
-#define RE_COMMAND_META  5
+#define RE_COMMAND_NULL   0
+#define RE_COMMAND_DIRS   1
+#define RE_COMMAND_NATO   2
+#define RE_COMMAND_DIGIT  3
+#define RE_COMMAND_MOD    4 //Modifiers
+#define RE_COMMAND_META   5
+#define RE_COMMAND_QDIGIT 6
 
 #define RE_CSTATE_0  0
 #define RE_CSTATE_1  1
@@ -85,6 +86,7 @@ typedef struct CCommand
 bool re_isLastCmdFunction(QVector<CCommand> commands);
 bool re_isLastMeta(QVector<CCommand> commands);
 bool re_isLastMod(QVector<CCommand> commands);
+bool re_isLastQt(QVector<CCommand> commands);
 int  re_keyCode2Digit(QString key_code);
 int  re_keyCode2Digit(int code);
 

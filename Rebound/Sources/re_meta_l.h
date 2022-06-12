@@ -7,6 +7,7 @@
 #include "backend.h"
 #include "re_state.h"
 #include "re_meta_go_l.h"
+#include "re_meta_oc_l.h"
 
 class ReMetaL : public QObject
 {

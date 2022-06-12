@@ -39,7 +39,6 @@ void ReState::readStatusFile()
     }
 }
 
-
 void ReState::rmStatusFile()
 {
     QString path = getenv("HOME");
