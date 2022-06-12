@@ -19,9 +19,13 @@ void ReMetaL::execMeta(CCommand command)
 
     if( command.val1==RE_META_OPEN )
     {
-        QString cmd = "./Scripts/open ";
-        cmd += QString::number(command.val2)+ " &";
-        system(cmd.toStdString().c_str());
+//        QString cmd = re_getOpenCmd(state, command.val2);
+//        system(cmd.toStdString().c_str());
+    }
+    else if( command.val1==RE_META_CLOSE )
+    {
+//        QString cmd = re_getCloseCmd(state, command.val2);
+//        system(cmd.toStdString().c_str());
     }
     else if( command.val1==RE_META_SYS )
     {

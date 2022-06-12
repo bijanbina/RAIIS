@@ -141,7 +141,22 @@ void ReChannelL::digit(const QString &text)
 
         cmd_buf[last_i].val1 = text.toInt();
         execute();
-        return;
+    }
+    else if( re_isLastQt(cmd_buf) )
+    {
+        if( captain->state->isSleep() )
+        {
+            return;
+        }
+        re_qtDigitProc(&cmd_buf, text);
+
+        int key_code = text.toInt();
+        captain->sendKey(key_code);
+    }
+    else if( captain->isLastRepeatable() ) //max 2 digit
+    {
+        int input = re_keyCode2Digit(text);
+        handleLastRepeatable(input);
     }
     else
     {
@@ -191,7 +206,7 @@ void ReChannelL::dirs(const QString &text) // direction keys
     }
     else if( captain->state->app.pname=="qtcreator" )
     {
-        if( re_dirQtProc(&cmd_buf, text) )
+        if( re_qtDirProc(&cmd_buf, text) )
         {
             return;
         }
@@ -232,7 +247,22 @@ void ReChannelL::modifier(const QString &text)
 
 void ReChannelL::meta(const QString &text)
 {
-    if( re_isLastMeta(cmd_buf) )
+    if( re_isLastQt(cmd_buf) )
+    {
+        int last_i  = cmd_buf.count()-1; //last index
+        int cmd_val = text.toInt();
+
+        if( cmd_val==RE_META_OPEN ||
+            cmd_val==RE_META_CLOSE )
+        {
+            cmd_buf[last_i].val1 = cmd_val;
+            cmd_buf[last_i].val3 = 1;
+            execute();
+        }
+        // ignore all others
+        return;
+    }
+    else if( re_isLastMeta(cmd_buf) )
     {//"go wake" in <dive go wake> should be "go wake" if sleep
         if( captain->state->isSleep()==false )
         {
@@ -241,15 +271,6 @@ void ReChannelL::meta(const QString &text)
             execute();
             return;
         }
-    }
-    else if( re_isLastQt(cmd_buf) )
-    {
-        int last_i = cmd_buf.count()-1; //last index
-        cmd_buf[last_i].val1 = text.toInt();
-        cmd_buf[last_i].type = RE_COMMAND_META;
-        cmd_buf[last_i].val3 = 1;
-        execute();
-        return;
     }
     else if( captain->state->chess_mode )
     {
@@ -266,11 +287,36 @@ void ReChannelL::meta(const QString &text)
             return;
         }
     }
+    else if( captain->state->app.pname=="qtcreator" )
+    {
+        int val = text.toInt();
+        if( val==RE_META_GO )
+        {
+            CCommand cmd;
+            cmd.val1 = 0;
+            cmd.val2 = 0;
+            cmd.val3 = 0;
+            cmd.type = RE_COMMAND_QDIGIT;
+            cmd_buf.append(cmd);
+            QString cmd_st = "xdotool key F9; echo 'go' > ";
+            cmd_st += "~/.config/polybar/awesomewm/ben_status";
+            system(cmd_st.toStdString().c_str());
+            return;
+        }
+    }
+
     CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 0;
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_META;
+
+    if( cmd.val1==RE_META_OPEN ||
+        cmd.val1==RE_META_CLOSE )
+    {
+        return; // we don't accept empty open/close
+        system("rm ~/.config/polybar/awesomewm/ben_status");
+    }
 
     cmd_buf.append(cmd);
     captain->state->last_cmd.type = RE_COMMAND_NULL;

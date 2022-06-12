@@ -8,6 +8,7 @@
 
 #include "backend.h"
 #include "re_meta_l.h"
+#include "re_qt.h"
 
 class ReCaptainL : public QObject
 {
@@ -19,10 +20,10 @@ public:
 
     void execute(QVector<CCommand> commands);
     bool isLastRepeatable();
+    void sendKey(int key_val);
 
     ReState *state;
 private:
-    void sendKey(int key_val);
     void pressKey(int key_val);
     void releaseKey(int key_val);
     void handleScroll(CCommand command);

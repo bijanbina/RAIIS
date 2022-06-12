@@ -8,9 +8,6 @@ function hasScroller(elem)
 	}
 	return false;
 };
-
-var s_elem = [].filter.call(document.querySelectorAll('*'), hasScroller);
-
 var big_elem;
 
 var b_scroll = document.defaultView.getComputedStyle(document.body, null)['overflow-y'];
@@ -29,6 +26,7 @@ else if( document.body.scrollHeight>window.innerHeight )
 else
 {
 	var max_size = 0;
+	var s_elem = [].filter.call(document.querySelectorAll('*'), hasScroller);
 
 	for( let i=0; i<s_elem.length ; i++ ) 
 	{

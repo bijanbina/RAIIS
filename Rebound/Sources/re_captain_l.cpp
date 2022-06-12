@@ -180,6 +180,10 @@ void ReCaptainL::execCommand(CCommand command)
             meta->execMeta(command);
         }
     }
+    else if( command.type==RE_COMMAND_QDIGIT )
+    {
+        re_getQtCmd(command);
+    }
 }
 
 bool ReCaptainL::isLastRepeatable()
