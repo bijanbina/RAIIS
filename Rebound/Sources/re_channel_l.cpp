@@ -290,6 +290,20 @@ void ReChannelL::meta(const QString &text)
     else if( captain->state->app.pname=="qtcreator" )
     {
         int val = text.toInt();
+
+        if( captain->state->isSleep() ) // fix for go wake
+        {
+            CCommand cmd;
+            cmd.val1 = text.toInt();
+            cmd.val2 = 0;
+            cmd.val3 = 1;
+            cmd.type = RE_COMMAND_META;
+
+            cmd_buf.append(cmd);
+            captain->state->last_cmd.type = RE_COMMAND_NULL;
+            return;
+        }
+
         if( val==RE_META_GO )
         {
             CCommand cmd;
@@ -330,6 +344,22 @@ void ReChannelL::apps(const QString &text)
         cmd_buf[last_i].val2 = 300 + text.toInt();
         execute();
         return;
+    }
+    else if( re_isLastQt(cmd_buf) ) // Fix for go sleep
+    {
+        int last_i  = cmd_buf.count()-1; //last index
+        int cmd_val = 300 + text.toInt();
+
+        if( cmd_val==RE_APP_SLEEP )
+        {
+            captain->sendKey(KEY_ESC);
+            cmd_buf[last_i].val1 = RE_META_GO;
+            cmd_buf[last_i].val2 = cmd_val;
+            cmd_buf[last_i].val3 = 1;
+            cmd_buf[last_i].type = RE_COMMAND_META;
+            execute();
+            return;
+        }
     }
 }
 
