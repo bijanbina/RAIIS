@@ -21,7 +21,8 @@ SOURCES += Sources/main.cpp \
            Sources/re_directions.cpp \
            Sources/re_laxis.cpp \
            Sources/re_raxis.cpp \
-           Sources/re_bumpers.cpp
+           Sources/re_bumpers.cpp \
+           Sources/re_super_l.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_xbox_win32.cpp \
@@ -57,7 +58,8 @@ HEADERS += Sources/backend.h \
            Sources/re_laxis.h \
            Sources/re_raxis.h \
            Sources/re_bumpers.h \
-           Sources/re_state_const.h
+           Sources/re_state_const.h \
+           Sources/re_super_l.h
 
 win32:HEADERS += Sources/re_server.h \
                  Sources/re_xbox_win32.h \

@@ -18,7 +18,8 @@
 #define RE_COMMAND_DIGIT  3
 #define RE_COMMAND_MOD    4 //Modifiers
 #define RE_COMMAND_META   5
-#define RE_COMMAND_QDIGIT 6
+#define RE_COMMAND_SUPER  6
+#define RE_COMMAND_QDIGIT 7
 
 #define RE_CSTATE_0  0
 #define RE_CSTATE_1  1
@@ -34,14 +35,12 @@
 #define RE_META_DIVE    8
 #define RE_META_MUSIC   9
 #define RE_META_CLOSE   10
-#define RE_META_SWITCH  11
-#define RE_META_MOUSE   12
-#define RE_META_TOUCH   13
+#define RE_META_MOUSE   11
+#define RE_META_TOUCH   12
 
 #define RE_SUPER_META   101
 #define RE_SUPER_CAMEL  102 //currently colon
-
-#define RE_META_SUPER   1 //Used for val2
+#define RE_SUPER_SWITCH 103
 
 #define RE_APP_FIREFOX  301
 #define RE_APP_FILES    302

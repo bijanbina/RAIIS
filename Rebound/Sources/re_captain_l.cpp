@@ -5,7 +5,8 @@
 ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
-    meta = new ReMetaL(state);
+    meta  = new ReMetaL (state);
+    super = new ReSuperL(state);
     state->last_cmd.type = RE_COMMAND_NULL;
 
     struct uinput_setup usetup;
@@ -180,6 +181,13 @@ void ReCaptainL::execCommand(CCommand command)
             meta->execMeta(command);
         }
     }
+    else if( command.type==RE_COMMAND_SUPER )
+    {
+        for( int j=0 ; j<command.val3 ; j++ )
+        {
+            super->exec(command);
+        }
+    }
     else if( command.type==RE_COMMAND_QDIGIT )
     {
         re_getQtCmd(command);
@@ -214,12 +222,16 @@ bool ReCaptainL::isLastRepeatable()
             return true;
         }
     }
-    else if( cmd_type==RE_COMMAND_MOD  )
+    else if( cmd_type==RE_COMMAND_MOD )
     {
         if( state->last_cmd.val1 )
         {
             return true;
         }
+    }
+    else if( cmd_type==RE_COMMAND_SUPER )
+    {
+        return true;
     }
 
     return false;

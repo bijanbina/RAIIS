@@ -127,7 +127,7 @@ void ReChannelL::digit(const QString &text)
     {
         CCommand cmd;
         cmd.val1 = captain->state->fl->sc_dir;
-        cmd.val2 = re_keyCode2Digit(text);
+        cmd.val2 = text.toInt();
         cmd.val3 = 1;
         cmd.type = RE_COMMAND_META;
 
@@ -380,9 +380,9 @@ void ReChannelL::super(const QString &text)
 {
     CCommand cmd;
     cmd.val1 = text.toInt();
-    cmd.val2 = RE_META_SUPER;
+    cmd.val2 = 0;
     cmd.val3 = 1;
-    cmd.type = RE_COMMAND_META;
+    cmd.type = RE_COMMAND_SUPER;
     cmd_buf.append(cmd);
 
     execute();

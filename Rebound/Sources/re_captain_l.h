@@ -8,6 +8,7 @@
 
 #include "backend.h"
 #include "re_meta_l.h"
+#include "re_super_l.h"
 #include "re_qt.h"
 
 class ReCaptainL : public QObject
@@ -38,7 +39,8 @@ private:
 
     int uinput_f;
 
-    ReMetaL *meta;
+    ReMetaL  *meta;
+    ReSuperL *super;
     QVector<CCommand> modifiers;
 };
 

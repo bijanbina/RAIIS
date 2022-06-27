@@ -89,26 +89,10 @@ void ReMetaL::execMeta(CCommand command)
         QString cmd = getMusicCmd(command.val2);
         system(cmd.toStdString().c_str());
     }
-    else if( command.val1==RE_META_SWITCH )
-    {
-        QString cmd = getSwitchCmd(command.val2);
-        system(cmd.toStdString().c_str());
-    }
     else if( command.val1==RE_META_MOUSE )
     {
         QString cmd = getMouseCmd(command.val2);
         system(cmd.toStdString().c_str());
-    }
-    else if( command.val1==RE_SUPER_META )
-    {
-        QString cmd = getSwitchCmd(command.val2);
-        system(cmd.toStdString().c_str());
-    }
-    else if( command.val1==RE_SUPER_CAMEL )
-    {
-        qDebug() << "CreateProcess 1";
-        system("./Scripts/camel");
-        qDebug() << "CreateProcess 2";
     }
     else if( command.val1==RE_META_TOUCH )
     {
@@ -142,51 +126,6 @@ QString ReMetaL::getMouseCmd(int val)
     else if( val==KEY_C ) //center
     {
         cmd = "xdotool mousemove 960 540";
-    }
-    else
-    {
-        qDebug() << "Unknown Switch" << val;
-        return "";
-    }
-
-    return cmd;
-}
-
-QString ReMetaL::getSwitchCmd(int val)
-{
-    QString cmd = "./Scripts/switcher ";
-
-    if( val==RE_APP_FIREFOX )
-    {
-        cmd += "firefox";
-    }
-    else if( val==RE_APP_FILES )
-    {
-        cmd += "nautilus";
-    }
-    else if( val==RE_APP_SPOTIFY )
-    {
-        cmd += "spotify";
-    }
-    else if( val==RE_APP_ATOM )
-    {
-        cmd += "gedit";
-    }
-    else if( val==KEY_LEFT )
-    {
-        cmd = "xdotool key Super+Shift+Left";
-    }
-    else if( val==KEY_RIGHT )
-    {
-        cmd = "xdotool key Super+Shift+Right";
-    }
-    else if( val==KEY_Q )
-    {
-        cmd += "Qt";
-    }
-    else if( val==KEY_T )
-    {
-        cmd += "Terminal";
     }
     else
     {
@@ -242,6 +181,12 @@ QString ReMetaL::getSystemCmd(int val)
     {
         cmd = "xdotool key Alt+F4";
     }
+    else if( val==KEY_UP )
+    {
+        cmd  = "dbus-send --dest=com.benjamin.chess";
+        cmd += " / com.benjamin.chess.show string:\"\"";
+    }
+
     else
     {
         qDebug() << "Unknown System" << val;
@@ -384,6 +329,38 @@ QString ReMetaL::getTouchCmd(int val)
     else if( val==KEY_LEFT )
     {
         cmd = "xdotool mousemove_relative -- -100 0";
+    }
+    else if( val==KEY_1 )
+    {
+        cmd = "xdotool mousemove_relative -- -27 -22";
+    }
+    else if( val==KEY_2 )
+    {
+        cmd = "xdotool mousemove_relative -- 0 -22";
+    }
+    else if( val==KEY_3 )
+    {
+        cmd = "xdotool mousemove_relative -- 27 -22";
+    }
+    else if( val==KEY_4 )
+    {
+        cmd = "xdotool mousemove_relative -- -27 0";
+    }
+    else if( val==KEY_6 )
+    {
+        cmd = "xdotool mousemove_relative 0 22";
+    }
+    else if( val==KEY_7 )
+    {
+        cmd = "xdotool mousemove_relative -- -27 22";
+    }
+    else if( val==KEY_8 )
+    {
+        cmd = "xdotool mousemove_relative 0 22";
+    }
+    else if( val==KEY_9 )
+    {
+        cmd = "xdotool mousemove_relative 27 22";
     }
 
     return cmd;

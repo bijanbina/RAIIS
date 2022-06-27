@@ -47,6 +47,7 @@ bool re_qtDirProc(QVector<CCommand> *cmd_buf, QString text)
 
         if( key==KEY_BACKSPACE )
         {
+            system("xdotool key BackSpace");
             (*cmd_buf)[last_i].val2 /= 10;
 
             if( (*cmd_buf)[last_i].val2==0 )
