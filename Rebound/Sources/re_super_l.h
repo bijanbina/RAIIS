@@ -18,7 +18,7 @@ public:
     void exec(CCommand command);
 
 private:
-    QString getGoCmd(int val);
+    QString getMetaCmd();
 
     int uinput_f;
 

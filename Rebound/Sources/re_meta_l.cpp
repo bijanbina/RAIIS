@@ -348,7 +348,7 @@ QString ReMetaL::getTouchCmd(int val)
     }
     else if( val==KEY_6 )
     {
-        cmd = "xdotool mousemove_relative 0 22";
+        cmd = "xdotool mousemove_relative 22 0";
     }
     else if( val==KEY_7 )
     {

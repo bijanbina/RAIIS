@@ -131,5 +131,11 @@ QString re_getGoNautilus(int val)
     {
         cmd = "xdotool key alt+Up";
     }
+    else if( val>1 && val<12 ) //tab
+    {
+        int input = re_keyCode2Digit(val);
+        cmd = "xdotool key alt+";
+        cmd += QString::number(input);
+    }
     return cmd;
 }

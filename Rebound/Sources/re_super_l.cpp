@@ -14,7 +14,7 @@ void ReSuperL::exec(CCommand command)
 {
     if( command.val1==RE_SUPER_META )
     {
-        QString cmd;
+        QString cmd = getMetaCmd();
         system(cmd.toStdString().c_str());
     }
     else if( command.val1==RE_SUPER_CAMEL )
@@ -27,21 +27,30 @@ void ReSuperL::exec(CCommand command)
     {
         system("xdotool key --delay 200 super+b");
     }
+    else if( command.val1==RE_SUPER_KICK )
+    {
+        system("dbus-send --dest=com.benjamin.chess"
+               " / com.benjamin.chess.show string:\"\"");
+    }
 }
 
-QString ReSuperL::getGoCmd(int val)
+QString ReSuperL::getMetaCmd()
 {
     QString cmd;
 
-    qDebug() << "GO" << state->app.pname;
+    qDebug() << "Meta" << state->app.pname;
 
-    if( state->app.pname=="xed" )
+    if( state->app.pname=="Chess" )
     {
+        cmd = "xdotool key F1";
     }
-    else if( state->app.pname=="qtcreator" ||
-             state->app.pname=="code-oss" )
+    else if( state->app.pname=="qtcreator" )
     {
-//        cmd = re_getGoQt(val);
+        cmd = "xdotool key F1";
+    }
+    else if( state->app.pname=="code-oss" )
+    {
+        cmd = "xdotool key F5";
     }
     else if( state->app.pname=="gitkraken" )
     {
@@ -50,11 +59,11 @@ QString ReSuperL::getGoCmd(int val)
     else if( state->app.pname=="GeckoMain" ||
              state->app.pname=="firefox" )
     {
-//        cmd = re_getGoFirefox(val);
+        cmd = "xdotool key ctrl+w";
     }
     else if( state->app.pname=="nautilus" )
     {
-//        cmd = re_getGoNautilus(val);
+        cmd = "xdotool key ctrl+w";
     }
 
     return cmd;
