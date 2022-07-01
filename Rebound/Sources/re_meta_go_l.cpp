@@ -88,6 +88,14 @@ QString re_getGoGitKraken(int val)
         QThread::msleep(100); //little tweak
         cmd = "xdotool key Enter";
     }
+    else if( val==KEY_LEFT ) //tab
+    {
+        cmd = "xdotool key ctrl+shift+Tab";
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd = "xdotool key ctrl+Tab";
+    }
     else if( val>1 && val<12 ) //tab
     {
         int input = re_keyCode2Digit(val);
@@ -102,7 +110,7 @@ QString re_getGoFirefox(int val)
 {
     QString cmd;
 
-    if( val==KEY_LEFT ) //focus
+    if( val==KEY_LEFT ) //tab
     {
         cmd = "xdotool key ctrl+shift+Tab";
     }

@@ -233,7 +233,7 @@ void ReChannelL::modifier(const QString &text)
         }
     }
 
-    qDebug() << "modifier re_isLastMod";
+//    qDebug() << "modifier re_isLastMod";
     CCommand cmd;
     cmd.val1  = 0;
     cmd.val2  = 1;

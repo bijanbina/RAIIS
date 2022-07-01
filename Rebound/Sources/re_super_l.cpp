@@ -65,6 +65,10 @@ QString ReSuperL::getMetaCmd()
     {
         cmd = "xdotool key ctrl+w";
     }
+    else if( state->app.pname=="Telegram" )
+    {
+        cmd = "./Scripts/telegram_voice.sh";
+    }
 
     return cmd;
 }
