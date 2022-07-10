@@ -1,7 +1,7 @@
 #include "re_preprocessor.h"
 #include <unistd.h>
 
-RePreProcessor::RePreProcessor(ReCaptainL *cpt, QObject *ui, QObject *parent) : QObject(parent)
+RePreProcessor::RePreProcessor(ReKeyboardL *cpt, QObject *ui, QObject *parent) : QObject(parent)
 {
     ConnectDBus();
     root = ui;

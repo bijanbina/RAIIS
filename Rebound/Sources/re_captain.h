@@ -9,6 +9,11 @@
 #include "re_meta_l.h"
 #include "re_super_l.h"
 #include "re_qt.h"
+#ifdef WIN32
+//#include "re_keyboard_w.h"
+#elif
+#include "re_keyboard_l.h"
+#endif
 
 class ReCaptainL : public QObject
 {

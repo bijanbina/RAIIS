@@ -1,7 +1,7 @@
 #include "re_channel_l.h"
 #include <unistd.h>
 
-ReChannelL::ReChannelL(ReCaptainL *cpt, QObject *parent) : QObject(parent)
+ReChannelL::ReChannelL(ReCaptain *cpt, QObject *parent) : QObject(parent)
 {
     ConnectDBus();
     captain = cpt;

@@ -1,11 +1,6 @@
-#include "re_captain_l.h"
+#include "re_captain.h"
 #include <unistd.h>
 #include <fcntl.h>
-#ifdef WIN32
-//#include <linux/uinput.h>
-#elif
-#include <linux/uinput.h>
-#endif
 
 ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
 {

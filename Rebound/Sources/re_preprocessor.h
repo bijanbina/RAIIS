@@ -5,13 +5,13 @@
 #include <QThread>
 
 #include "backend.h"
-#include "re_captain_l.h"
+#include "re_captain.h"
 
 class RePreProcessor : public QObject
 {
     Q_OBJECT
 public:
-    RePreProcessor(ReCaptainL *cpt, QObject *ui, QObject *parent = NULL);
+    RePreProcessor(ReKeyboardL *cpt, QObject *ui, QObject *parent = NULL);
 
     ~RePreProcessor();
 
@@ -32,7 +32,7 @@ private:
     void handleLastRepeatable(int input);
 
     QObject  *root;
-    ReCaptainL *captain;
+    ReKeyboardL *captain;
     int special_c; //count of special
 
     QVector<CCommand> cmd_buf;

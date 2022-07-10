@@ -15,7 +15,7 @@ class ReChannelL : public QObject
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", COM_NAME)
 public:
-    ReChannelL(ReCaptainL *cpt, QObject *parent = NULL);
+    ReChannelL(ReCaptain *cpt, QObject *parent = NULL);
     ~ReChannelL();
 
 private:

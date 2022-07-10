@@ -8,6 +8,7 @@ win32:QT += gamepad
 
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
+           Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
            Sources/re_client.cpp \
            Sources/re_commands.cpp \
@@ -37,12 +38,13 @@ linux:SOURCES += \
                  Sources/re_api_l.cpp \
                  Sources/re_thread_l.cpp \
                  Sources/re_channel_l.cpp \
-                 Sources/re_captain_l.cpp \
+                 Sources/re_keyboard_l.cpp \
                  Sources/re_meta_l.cpp \
                  Sources/re_meta_go_l.cpp \
                  Sources/re_meta_oc_l.cpp
 
 HEADERS += Sources/backend.h \
+           Sources/re_captain.h \
            Sources/re_chapar.h \
            Sources/re_commands.h \
            Sources/re_config.h \
@@ -75,7 +77,7 @@ linux:HEADERS += \
                  Sources/re_api_l.h \
                  Sources/re_thread_l.h \
                  Sources/re_channel_l.h \
-                 Sources/re_captain_l.h \
+                 Sources/re_keyboard_l.h \
                  Sources/re_meta_l.h \
                  Sources/re_meta_go_l.h \
                  Sources/re_meta_oc_l.h
