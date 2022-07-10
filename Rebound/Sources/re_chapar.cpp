@@ -13,9 +13,8 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     directions = new ReDirections(ui, state);
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
-    api = new ReApiL;
 
-#ifdef _WIN32
+#ifdef WIN32
     thread_data = new threadStruct;
     thread_data->wins_title = &(state->api->wins_title);
     thread_data->elems_name = &(state->api->elems_name);
@@ -27,6 +26,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     controller = new ReXboxW(state);
     connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
 #else
+    api = new ReApiL;
     controller = new ReXboxL(item, isNative);
     captain = new ReCaptainL(state);
     channel = new ReChannelL(captain, ui);

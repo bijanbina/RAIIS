@@ -4,7 +4,6 @@
 #include <QVector>
 
 #include <stdio.h>
-#include <linux/uinput.h>
 
 #include "backend.h"
 #include "re_meta_l.h"
@@ -25,6 +24,7 @@ public:
 
     ReState *state;
 private:
+    void initLinux();
     void pressKey(int key_val);
     void releaseKey(int key_val);
     void handleScroll(CCommand command);

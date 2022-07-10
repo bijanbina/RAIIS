@@ -1,6 +1,11 @@
 #include "re_captain_l.h"
 #include <unistd.h>
 #include <fcntl.h>
+#ifdef WIN32
+//#include <linux/uinput.h>
+#elif
+#include <linux/uinput.h>
+#endif
 
 ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
 {
@@ -8,46 +13,6 @@ ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
     meta  = new ReMetaL (state);
     super = new ReSuperL(state);
     state->last_cmd.type = RE_COMMAND_NULL;
-
-    struct uinput_setup usetup;
-
-    uinput_f = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
-
-    if( uinput_f==-1 )
-    {
-        qDebug() << "Try to set /dev/uinput permission";
-        system("pkexec " RE_SCR_UINPUT);
-        uinput_f = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
-        if( uinput_f==-1 )
-        {
-            exit(1);
-            qDebug() << "Failed to open /dev/uinput";
-        }
-    }
-
-    /*
-     * The ioctls below will enable the device that is about to be
-     * created, to pass key events, in this case the space key.
-     */
-    ioctl(uinput_f, UI_SET_EVBIT, EV_KEY);
-
-    // enable all the keys
-    // no better solution found :(
-    for( int keycode=KEY_ESC ; keycode<KEY_COMPOSE ; keycode++)
-    {
-        ioctl(uinput_f, UI_SET_KEYBIT, keycode);
-    }
-
-    ioctl(uinput_f, UI_SET_KEYBIT, KEY_SPACE);
-
-    memset(&usetup, 0, sizeof(usetup));
-    usetup.id.bustype = BUS_USB;
-    usetup.id.vendor  = 0x1234; /* sample vendor */
-    usetup.id.product = 0x5678; /* sample product */
-    strcpy(usetup.name, "Rebound Keyboard");
-
-    ioctl(uinput_f, UI_DEV_SETUP, &usetup);
-    ioctl(uinput_f, UI_DEV_CREATE);
 }
 
 ReCaptainL::~ReCaptainL()
@@ -74,6 +39,48 @@ void ReCaptainL::sendKey(int key_val)
 {
     pressKey(key_val);
     releaseKey(key_val);
+}
+
+void ReCaptainL::initLinux()
+{
+#ifdef _linux
+    struct uinput_setup usetup;
+
+    uinput_f = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
+
+    if( uinput_f==-1 )
+    {
+        qDebug() << "Try to set /dev/uinput permission";
+        system("pkexec " RE_SCR_UINPUT);
+        uinput_f = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
+        if( uinput_f==-1 )
+        {
+            exit(1);
+            qDebug() << "Failed to open /dev/uinput";
+        }
+    }
+
+    // ioctls enable the device to pass key events
+    ioctl(uinput_f, UI_SET_EVBIT, EV_KEY);
+
+    // enable all the keys
+    // no better solution found :(
+    for( int keycode=KEY_ESC ; keycode<KEY_COMPOSE ; keycode++)
+    {
+        ioctl(uinput_f, UI_SET_KEYBIT, keycode);
+    }
+
+    ioctl(uinput_f, UI_SET_KEYBIT, KEY_SPACE);
+
+    memset(&usetup, 0, sizeof(usetup));
+    usetup.id.bustype = BUS_USB;
+    usetup.id.vendor  = 0x1234; /* sample vendor */
+    usetup.id.product = 0x5678; /* sample product */
+    strcpy(usetup.name, "Rebound Keyboard");
+
+    ioctl(uinput_f, UI_DEV_SETUP, &usetup);
+    ioctl(uinput_f, UI_DEV_CREATE);
+#endif
 }
 
 void ReCaptainL::pressKey(int key_val)

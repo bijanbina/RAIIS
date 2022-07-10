@@ -13,8 +13,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_commands.cpp \
            Sources/re_firefox_l.cpp \
            Sources/re_firefox_ws.cpp \
-           Sources/re_meta_go_l.cpp \
-           Sources/re_meta_oc_l.cpp \
+           Sources/re_preprocessor.cpp \
            Sources/re_qt.cpp \
            Sources/re_state.cpp \
            Sources/re_buttons.cpp \
@@ -39,7 +38,9 @@ linux:SOURCES += \
                  Sources/re_thread_l.cpp \
                  Sources/re_channel_l.cpp \
                  Sources/re_captain_l.cpp \
-                 Sources/re_meta_l.cpp
+                 Sources/re_meta_l.cpp \
+                 Sources/re_meta_go_l.cpp \
+                 Sources/re_meta_oc_l.cpp
 
 HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
@@ -49,8 +50,7 @@ HEADERS += Sources/backend.h \
            Sources/re_firefox_ws.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
-           Sources/re_meta_go_l.h \
-           Sources/re_meta_oc_l.h \
+           Sources/re_preprocessor.h \
            Sources/re_qt.h \
            Sources/re_state.h \
            Sources/re_buttons.h \
@@ -76,7 +76,9 @@ linux:HEADERS += \
                  Sources/re_thread_l.h \
                  Sources/re_channel_l.h \
                  Sources/re_captain_l.h \
-                 Sources/re_meta_l.h
+                 Sources/re_meta_l.h \
+                 Sources/re_meta_go_l.h \
+                 Sources/re_meta_oc_l.h
 
 RESOURCES += Qml/ui.qrc \
              Resources/images.qrc \
