@@ -1,20 +1,20 @@
-#ifndef RE_META_L_H
-#define RE_META_L_H
+#ifndef RE_META_H
+#define RE_META_H
 
 #include <QVector>
 
 #include "backend.h"
 #include "re_state.h"
-#include "re_meta_go_l.h"
+#include "re_meta_go.h"
 #include "re_meta_oc_l.h"
 
-class ReMetaL : public QObject
+class ReMeta : public QObject
 {
     Q_OBJECT
 
 public:
-    ReMetaL(ReState *st, QObject *parent = NULL);
-    ~ReMetaL();
+    ReMeta(ReState *st, QObject *parent = NULL);
+    ~ReMeta();
 
     void execMeta(CCommand command);
 
@@ -32,4 +32,4 @@ private:
 
 
 
-#endif // RE_META_L_H
+#endif // RE_META_H

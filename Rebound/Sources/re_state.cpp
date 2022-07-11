@@ -7,7 +7,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
     ui_visible = false;
 
 #ifdef _WIN32
-    api = new ReApiW;
+    api = new ReApi;
     hardware = new ReHardwareW;
 #endif
 #ifdef __linux__

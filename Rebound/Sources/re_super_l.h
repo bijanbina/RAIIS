@@ -2,7 +2,6 @@
 #define RE_SUPER_H
 
 #include <QVector>
-#include <linux/uinput.h>
 
 #include "backend.h"
 #include "re_state.h"

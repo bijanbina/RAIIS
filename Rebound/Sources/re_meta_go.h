@@ -1,5 +1,5 @@
-#ifndef RE_META_GO_L_H
-#define RE_META_GO_L_H
+#ifndef RE_META_GO_H
+#define RE_META_GO_H
 
 #include <QVector>
 #include <QThread>
@@ -13,4 +13,4 @@ QString re_getGoFirefox(int val);
 QString re_getGoNautilus(int val);
 QString re_getGoGitKraken(int val);
 
-#endif // RE_META_GO_L_H
+#endif // RE_META_GO_H

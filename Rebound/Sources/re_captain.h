@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #include "backend.h"
-#include "re_meta_l.h"
+#include "re_meta.h"
 #include "re_super_l.h"
 #include "re_qt.h"
 #ifdef WIN32
@@ -40,7 +40,7 @@ private:
 
     int uinput_f;
 
-    ReMetaL  *meta;
+    ReMeta  *meta;
     ReSuperL *super;
     QVector<CCommand> modifiers;
 };

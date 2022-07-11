@@ -41,7 +41,7 @@ public:
     void resetState();
 
 #ifdef _WIN32
-    ReApiW *api;
+    ReApi *api;
     ReHardwareW *hardware;
 #endif
     int  ui_visible;

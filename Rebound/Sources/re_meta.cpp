@@ -1,19 +1,21 @@
-#include "re_meta_l.h"
-#ifdef __linux__
-#include <linux/uinput.h>
+#include "re_meta.h"
+#ifdef WIN32
+#include "re_keyboard_w.h"
+#else
+#include "re_keyboard_l.h"
 #endif
 
-ReMetaL::ReMetaL(ReState *st, QObject *parent): QObject(parent)
+ReMeta::ReMeta(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
 }
 
-ReMetaL::~ReMetaL()
+ReMeta::~ReMeta()
 {
     ;
 }
 
-void ReMetaL::execMeta(CCommand command)
+void ReMeta::execMeta(CCommand command)
 {
     if( command.val2==0 )
     {
@@ -104,7 +106,7 @@ void ReMetaL::execMeta(CCommand command)
     }
 }
 
-QString ReMetaL::getMouseCmd(int val)
+QString ReMeta::getMouseCmd(int val)
 {
     QString cmd;
 
@@ -139,7 +141,7 @@ QString ReMetaL::getMouseCmd(int val)
     return cmd;
 }
 
-QString ReMetaL::getSystemCmd(int val)
+QString ReMeta::getSystemCmd(int val)
 {
     QString cmd;
 
@@ -180,7 +182,7 @@ QString ReMetaL::getSystemCmd(int val)
     {
         cmd = "xdotool key --delay 200 Super+b";
     }
-    else if( val==KEY_CLOSE )
+    else if( val==RE_META_CLOSE )
     {
         cmd = "xdotool key Alt+F4";
     }
@@ -199,7 +201,7 @@ QString ReMetaL::getSystemCmd(int val)
     return cmd;
 }
 
-QString ReMetaL::getMusicCmd(int val)
+QString ReMeta::getMusicCmd(int val)
 {
     QString cmd = "./Scripts/music.sh ";
 
@@ -226,7 +228,7 @@ QString ReMetaL::getMusicCmd(int val)
     return cmd;
 }
 
-void ReMetaL::getScrollCmd(int meta, int val)
+void ReMeta::getScrollCmd(int meta, int val)
 {
     QString direction;
     if( meta==RE_META_SKY )
@@ -241,7 +243,7 @@ void ReMetaL::getScrollCmd(int meta, int val)
     state->enScroll(meta, val);
 }
 
-QString ReMetaL::getGoCmd(int val)
+QString ReMeta::getGoCmd(int val)
 {
     QString cmd;
 
@@ -273,7 +275,7 @@ QString ReMetaL::getGoCmd(int val)
     return cmd;
 }
 
-QString ReMetaL::getPageCmd(int val)
+QString ReMeta::getPageCmd(int val)
 {
     QString cmd;
 
@@ -310,7 +312,7 @@ QString ReMetaL::getPageCmd(int val)
     return cmd;
 }
 
-QString ReMetaL::getTouchCmd(int val)
+QString ReMeta::getTouchCmd(int val)
 {
     QString cmd;
 

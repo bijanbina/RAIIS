@@ -84,4 +84,6 @@ void reRunThread(void *thread_struct_void);
 void reCleanWins(threadStruct *thread_data);
 void reCleanElems(threadStruct *thread_data);
 
+int re_isVpnConnected();
+
 #endif // RE_THREAD_W_H
