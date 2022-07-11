@@ -109,7 +109,7 @@ void RePreProcessor::digit(const QString &text)
         re_qtDigitProc(&cmd_buf, text);
 
         int key_code = text.toInt();
-        captain->sendKey(key_code);
+        captain->key->sendKey(key_code);
     }
     else if( captain->isLastRepeatable() ) //max 2 digit
     {
@@ -310,7 +310,7 @@ void RePreProcessor::apps(const QString &text)
 
         if( cmd_val==RE_APP_SLEEP )
         {
-            captain->sendKey(KEY_ESC);
+            captain->key->sendKey(KEY_ESC);
             cmd_buf[last_i].val1 = RE_META_GO;
             cmd_buf[last_i].val2 = cmd_val;
             cmd_buf[last_i].val3 = 1;

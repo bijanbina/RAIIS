@@ -25,18 +25,14 @@ public:
 
     void execute(QVector<CCommand> commands);
     bool isLastRepeatable();
-    void sendKey(int key_val);
 
-    ReState *state;
+    ReState     *state;
+    ReKeyboardL *key;
 private:
-    void initLinux();
-    void pressKey(int key_val);
-    void releaseKey(int key_val);
     void handleScroll(CCommand command);
 
     void execModifier(CCommand command);
     void releaseModifiers();
-    void setKey(int type, int code, int val);
 
     void execCommand(CCommand command);
 
@@ -48,7 +44,5 @@ private:
     ReSuperL *super;
     QVector<CCommand> modifiers;
 };
-
-
 
 #endif // RE_CAPTAIN_H
