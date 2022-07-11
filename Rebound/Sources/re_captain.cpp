@@ -13,8 +13,8 @@ ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
 
 ReCaptain::~ReCaptain()
 {
-    ioctl(uinput_f, UI_DEV_DESTROY);
-    close(uinput_f);
+    delete meta;
+    delete super;
 }
 
 void ReCaptain::execModifier(CCommand command)
