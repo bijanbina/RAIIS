@@ -1,4 +1,5 @@
 #include "re_qt.h"
+#include "re_keyboard_l.h"
 
 void re_qtDigitProc(QVector<CCommand> *cmd_buf, QString text)
 {

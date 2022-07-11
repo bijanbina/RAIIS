@@ -1,10 +1,8 @@
 #include "re_preprocessor.h"
 #include <unistd.h>
 
-RePreProcessor::RePreProcessor(ReKeyboardL *cpt, QObject *ui, QObject *parent) : QObject(parent)
+RePreProcessor::RePreProcessor(ReCaptain *cpt, QObject *parent) : QObject(parent)
 {
-    ConnectDBus();
-    root = ui;
     captain = cpt;
     special_c = 0;
     captain->state->rmSpexFile();
@@ -26,15 +24,6 @@ void RePreProcessor::execute()
 
         captain->execute(cmd_buf);
         cmd_buf.clear();
-    }
-}
-
-void RePreProcessor::execTimeOut()
-{
-    if( cmd_buf.length() )
-    {
-        qDebug() << QTime::currentTime().toString("mm:ss:zzz") << "Request Immediate Execution";
-        execute();
     }
 }
 

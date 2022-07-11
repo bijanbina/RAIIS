@@ -11,17 +11,17 @@
 #include "re_qt.h"
 #ifdef WIN32
 //#include "re_keyboard_w.h"
-#elif
+#else
 #include "re_keyboard_l.h"
 #endif
 
-class ReCaptainL : public QObject
+class ReCaptain : public QObject
 {
     Q_OBJECT
 
 public:
-    ReCaptainL(ReState *st, QObject *parent = NULL);
-    ~ReCaptainL();
+    ReCaptain(ReState *st, QObject *parent = NULL);
+    ~ReCaptain();
 
     void execute(QVector<CCommand> commands);
     bool isLastRepeatable();

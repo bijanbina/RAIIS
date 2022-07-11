@@ -28,7 +28,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
 #else
     api = new ReApiL;
     controller = new ReXboxL(item, isNative);
-    captain = new ReCaptainL(state);
+    captain = new ReCaptain(state);
     channel = new ReChannelL(captain, ui);
 
     thread_data = new threadStruct;

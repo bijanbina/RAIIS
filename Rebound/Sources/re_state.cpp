@@ -1,4 +1,4 @@
-#include "re_state.h"
+ #include "re_state.h"
 
 ReState::ReState(QObject *parent) : QObject(parent)
 {

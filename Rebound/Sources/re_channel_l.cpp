@@ -3,10 +3,8 @@
 
 ReChannelL::ReChannelL(ReCaptain *cpt, QObject *parent) : QObject(parent)
 {
+    pre = new RePreProcessor(cpt);
     ConnectDBus();
-    captain = cpt;
-    special_c = 0;
-    captain->state->rmSpexFile();
 }
 
 ReChannelL::~ReChannelL()

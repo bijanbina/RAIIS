@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
+ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
     meta  = new ReMetaL (state);
@@ -10,13 +10,13 @@ ReCaptainL::ReCaptainL(ReState *st, QObject *parent): QObject(parent)
     state->last_cmd.type = RE_COMMAND_NULL;
 }
 
-ReCaptainL::~ReCaptainL()
+ReCaptain::~ReCaptain()
 {
     ioctl(uinput_f, UI_DEV_DESTROY);
     close(uinput_f);
 }
 
-void ReCaptainL::setKey(int type, int code, int val)
+void ReCaptain::setKey(int type, int code, int val)
 {
    struct input_event ie;
 
@@ -30,13 +30,13 @@ void ReCaptainL::setKey(int type, int code, int val)
    write(uinput_f, &ie, sizeof(ie));
 }
 
-void ReCaptainL::sendKey(int key_val)
+void ReCaptain::sendKey(int key_val)
 {
     pressKey(key_val);
     releaseKey(key_val);
 }
 
-void ReCaptainL::initLinux()
+void ReCaptain::initLinux()
 {
 #ifdef _linux
     struct uinput_setup usetup;
@@ -78,20 +78,20 @@ void ReCaptainL::initLinux()
 #endif
 }
 
-void ReCaptainL::pressKey(int key_val)
+void ReCaptain::pressKey(int key_val)
 {
     /* Key press, report the event, send key release, and report again */
     setKey(EV_KEY, key_val, 1);
     setKey(EV_SYN, SYN_REPORT, 0);
 }
 
-void ReCaptainL::releaseKey(int key_val)
+void ReCaptain::releaseKey(int key_val)
 {
     setKey(EV_KEY, key_val, 0);
     setKey(EV_SYN, SYN_REPORT, 0);
 }
 
-void ReCaptainL::execModifier(CCommand command)
+void ReCaptain::execModifier(CCommand command)
 {
     int len = command.mod_list.size();
     for( int i=0 ; i<len ; i++ )
@@ -113,7 +113,7 @@ void ReCaptainL::execModifier(CCommand command)
 //    qDebug() << "pressModifier" << modifiers.count();
 }
 
-void ReCaptainL::releaseModifiers()
+void ReCaptain::releaseModifiers()
 {
     int c = modifiers.count();
     for( int i=c ; i>0 ; i-- )
@@ -125,7 +125,7 @@ void ReCaptainL::releaseModifiers()
     modifiers.clear();
 }
 
-void ReCaptainL::execute(QVector<CCommand> commands)
+void ReCaptain::execute(QVector<CCommand> commands)
 {
     for( int i=0 ; i<commands.length() ; i++ )
     {
@@ -154,7 +154,7 @@ void ReCaptainL::execute(QVector<CCommand> commands)
 //    releaseModifiers();
 }
 
-void ReCaptainL::execCommand(CCommand command)
+void ReCaptain::execCommand(CCommand command)
 {
     state->last_cmd = command;
     if( command.type==RE_COMMAND_NATO ||
@@ -196,7 +196,7 @@ void ReCaptainL::execCommand(CCommand command)
     }
 }
 
-bool ReCaptainL::isLastRepeatable()
+bool ReCaptain::isLastRepeatable()
 {
     int cmd_type = state->last_cmd.type;
 
@@ -239,7 +239,7 @@ bool ReCaptainL::isLastRepeatable()
     return false;
 }
 
-bool ReCaptainL::isWakeUp(CCommand command)
+bool ReCaptain::isWakeUp(CCommand command)
 {
     if( command.type==RE_COMMAND_META )
     {

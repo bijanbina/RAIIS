@@ -8,7 +8,7 @@
 #include "re_preprocessor.h"
 
 #include "backend.h"
-#include "re_captain_l.h"
+#include "re_captain.h"
 
 class ReChannelL : public QObject
 {

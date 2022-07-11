@@ -11,28 +11,28 @@ class RePreProcessor : public QObject
 {
     Q_OBJECT
 public:
-    RePreProcessor(ReKeyboardL *cpt, QObject *ui, QObject *parent = NULL);
+    RePreProcessor(ReCaptain *cpt, QObject *parent = NULL);
 
     ~RePreProcessor();
 
 public slots:
-    void dirs (QString &arg);
-    void nato (QString &arg);
-    void meta (QString &arg);
-    void apps (QString &arg);
-    void type (QString &arg); //No Repeat on LastCmd
-    void spex (QString &arg); //special
-    void super(QString &arg); //single shot meta cmd
-    void digit(QString &arg);
-    void modifier(QString &arg);
-    void debug(QString &arg);
+    void dirs (const QString &arg);
+    void nato (const QString &arg);
+    void meta (const QString &arg);
+    void apps (const QString &arg);
+    void type (const QString &arg); //No Repeat on LastCmd
+    void spex (const QString &arg); //special
+    void super(const QString &arg); //single shot meta cmd
+    void digit(const QString &arg);
+    void modifier(const QString &arg);
+    void debug(const QString &arg);
     void execute();
 
 private:
     void handleLastRepeatable(int input);
 
     QObject  *root;
-    ReKeyboardL *captain;
+    ReCaptain *captain;
     int special_c; //count of special
 
     QVector<CCommand> cmd_buf;

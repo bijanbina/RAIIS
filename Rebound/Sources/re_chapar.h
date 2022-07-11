@@ -15,7 +15,6 @@
 
 #ifdef __linux__
     #include "re_channel_l.h"
-    #include "re_captain_l.h"
     #include "re_client.h"
     #include "re_xbox_l.h"
     #include "re_thread_l.h"
@@ -23,6 +22,7 @@
 #endif
 
 #include <thread>         // std::thread
+#include "re_captain.h"
 #include "re_bumpers.h"
 #include "re_buttons.h"
 #include "re_directions.h"
@@ -89,7 +89,7 @@ private:
     threadStruct *thread_data;
 #else
     ReXboxL *controller;
-    ReCaptainL *captain;
+    ReCaptain *captain;
     ReChannelL *channel;
     std::thread *api_thread;
     threadStruct *thread_data;
