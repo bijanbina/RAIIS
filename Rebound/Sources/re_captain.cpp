@@ -7,7 +7,7 @@ ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
     state = st;
     meta  = new ReMetaL (state);
     super = new ReSuperL(state);
-    key   = new ReKeyboardL;
+    key   = new ReKeyboard;
     state->last_cmd.type = RE_COMMAND_NULL;
 }
 

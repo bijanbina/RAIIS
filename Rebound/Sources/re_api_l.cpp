@@ -2,45 +2,45 @@
 #include <stdio.h>
 #include <unistd.h>
 
-ReApiL::ReApiL(QObject *parent) : QObject(parent)
+ReApi::ReApi(QObject *parent) : QObject(parent)
 {
 
 }
 
-long ReApiL::getPid()
+long ReApi::getPid()
 {
     // get allegro pid of window handle
     return 0;
 }
 
-QString ReApiL::getPNameA()
+QString ReApi::getPNameA()
 {
     QString app_name;
 
     return app_name;
 }
 
-QString ReApiL::getPName(long pid)
+QString ReApi::getPName(long pid)
 {
     return QString("pname");
 }
 
-QString ReApiL::getElemName(int index)
+QString ReApi::getElemName(int index)
 {
     return "";
 }
 
-QString ReApiL::getWinTitle(int index)
+QString ReApi::getWinTitle(int index)
 {
     return "";
 }
 
-QString ReApiL::getAccName(long childId)
+QString ReApi::getAccName(long childId)
 {
     return QString("accName");
 }
 
-void ReApiL::setActiveWindow(Window win)
+void ReApi::setActiveWindow(Window win)
 {
     XEvent event;
     long mask = SubstructureRedirectMask | SubstructureNotifyMask;
@@ -62,7 +62,7 @@ void ReApiL::setActiveWindow(Window win)
     XMapRaised(disp, win);
 }
 
-void ReApiL::setDisplay(Display *display)
+void ReApi::setDisplay(Display *display)
 {
     disp = display;
 }
@@ -72,7 +72,7 @@ void ResolveIt(char *target)
 
 }
 
-QString ReApiL::getLinkPath(QString path)
+QString ReApi::getLinkPath(QString path)
 {
     QString lnk;
 
@@ -84,7 +84,7 @@ void lunnchExe(QString name)
 
 }
 
-void ReApiL::openApp(int appid)
+void ReApi::openApp(int appid)
 {
     QString link_path;
 

@@ -10,7 +10,7 @@
 #include "re_super_l.h"
 #include "re_qt.h"
 #ifdef WIN32
-//#include "re_keyboard_w.h"
+#include "re_keyboard_w.h"
 #else
 #include "re_keyboard_l.h"
 #endif
@@ -27,7 +27,7 @@ public:
     bool isLastRepeatable();
 
     ReState     *state;
-    ReKeyboardL *key;
+    ReKeyboard *key;
 private:
     void handleScroll(CCommand command);
 

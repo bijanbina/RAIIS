@@ -1,16 +1,16 @@
 #ifndef RECHAPAR_H
 #define RECHAPAR_H
 
-//#include "re_api_l.h"
 #include <QObject>
 #include <QTimer>
 
-#ifdef _WIN32
+#ifdef WIN32
     #include "re_xbox_w.h"
     #include "re_thread_w.h"
     #ifdef RE_TEST_EN
         #include "re_client.h"
     #endif
+    #include "re_api_w.h"
 #endif
 
 #ifdef __linux__
@@ -82,6 +82,8 @@ private:
     ReLAxis      *laxis;
     ReRAxis      *raxis;
 
+    ReCaptain *captain;
+    ReApi     *api;
 #ifdef _WIN32
     ReXboxW *controller;
     std::thread *api_thread;
@@ -89,11 +91,9 @@ private:
     threadStruct *thread_data;
 #else
     ReXboxL *controller;
-    ReCaptain *captain;
     ReChannelL *channel;
     std::thread *api_thread;
     threadStruct *thread_data;
-    ReApiL       *api;
 #endif
 };
 

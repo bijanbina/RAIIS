@@ -3,7 +3,6 @@
 
 #include <QVector>
 #include <QThread>
-#include <linux/uinput.h>
 
 #include "backend.h"
 #include "re_state.h"

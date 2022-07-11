@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
-ReApiW::ReApiW(QObject *parent) : QObject(parent)
+ReApi::ReApi(QObject *parent) : QObject(parent)
 {
 
 }
 
-long ReApiW::getPid(HWND hWnd)
+long ReApi::getPid(HWND hWnd)
 {
     // get allegro pid of window handle
     DWORD dwProcessId;
@@ -20,7 +20,7 @@ long ReApiW::getPid(HWND hWnd)
     return dwProcessId;
 }
 
-QString ReApiW::getPNameA()
+QString ReApi::getPNameA()
 {
     long active_pid = getPid(GetForegroundWindow());
     QString app_path = getPName(active_pid);
@@ -29,7 +29,7 @@ QString ReApiW::getPNameA()
     return app_name;
 }
 
-QString ReApiW::getPName(long pid)
+QString ReApi::getPName(long pid)
 {
     HANDLE processHandle = NULL;
 //    processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
@@ -50,7 +50,7 @@ QString ReApiW::getPName(long pid)
     return QString(filename);
 }
 
-QString ReApiW::getElemName(int index)
+QString ReApi::getElemName(int index)
 {
     if(index < elems_name.size())
     {
@@ -59,7 +59,7 @@ QString ReApiW::getElemName(int index)
     return "";
 }
 
-QString ReApiW::getWinTitle(int index)
+QString ReApi::getWinTitle(int index)
 {
     if(index < wins_title.size())
     {
@@ -68,7 +68,7 @@ QString ReApiW::getWinTitle(int index)
     return "";
 }
 
-QString ReApiW::getAccName(IAccessible *pAcc, long childId)
+QString ReApi::getAccName(IAccessible *pAcc, long childId)
 {
     BSTR bstrName;
     VARIANT varChild;
@@ -78,7 +78,7 @@ QString ReApiW::getAccName(IAccessible *pAcc, long childId)
     return QString::fromWCharArray(bstrName);
 }
 
-void ReApiW::setActiveWindow(HWND hWnd)
+void ReApi::setActiveWindow(HWND hWnd)
 {
     DWORD dwCurrentThread = GetCurrentThreadId();
     DWORD dwFGThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
@@ -177,7 +177,7 @@ HRESULT ResolveIt(LPCSTR lnk_path, char *target)
     return hres;
 }
 
-QString ReApiW::getLinkPath(QString path)
+QString ReApi::getLinkPath(QString path)
 {
     char target[MAX_PATH];
 
@@ -191,7 +191,7 @@ QString ReApiW::getLinkPath(QString path)
 }
 
 //retreive link from ProgramData instead of user account
-QString ReApiW::getLinkPathB(QString path)
+QString ReApi::getLinkPathB(QString path)
 {
     char target[MAX_PATH];
 
@@ -227,7 +227,7 @@ void lunnchExe(QString name)
     }
 }
 
-void ReApiW::openApp(int appid)
+void ReApi::openApp(int appid)
 {
     QString link_path;
 

@@ -1,27 +1,19 @@
-#ifndef RE_KEYBOARD_H
-#define RE_KEYBOARD_H
+#ifndef RE_KEYBOARD_L_H
+#define RE_KEYBOARD_L_H
 
 #include <stdio.h>
 #include <linux/uinput.h>
-
 #include "backend.h"
-#include "re_meta_l.h"
-#include "re_super_l.h"
-#include "re_qt.h"
 
-class ReKeyboardL
+class ReKeyboard
 {
 public:
-    ReKeyboardL();
-    ~ReKeyboardL();
+    ReKeyboard();
+    ~ReKeyboard();
 
     void sendKey(int key_val);
     void pressKey(int key_val);
     void releaseKey(int key_val);
-    void handleScroll(CCommand command);
-
-    void execModifier(CCommand command);
-    void releaseModifiers();
     void setKey(int type, int code, int val);
 
 private:
@@ -30,4 +22,4 @@ private:
 
 
 
-#endif // RE_KEYBOARD_H
+#endif // RE_KEYBOARD_L_H

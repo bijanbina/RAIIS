@@ -1,4 +1,7 @@
 #include "re_meta_l.h"
+#ifdef __linux__
+#include <linux/uinput.h>
+#endif
 
 ReMetaL::ReMetaL(ReState *st, QObject *parent): QObject(parent)
 {

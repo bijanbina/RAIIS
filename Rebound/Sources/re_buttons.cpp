@@ -16,6 +16,7 @@ ReButtons::ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *par
 }
 
 #ifdef _WIN32
+#include "re_thread_w.h"
 void ReButtons::buttonAPressed()
 {
     if( state->ui_visible )

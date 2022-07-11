@@ -7,11 +7,11 @@
 #include <X11/Xlib.h>
 #include "re_state_const.h"
 
-class ReApiL : public QObject
+class ReApi : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReApiL(QObject *parent = nullptr);
+    explicit ReApi(QObject *parent = nullptr);
     QString getPNameA();
     long getPid();
     QString getPName(long pid);

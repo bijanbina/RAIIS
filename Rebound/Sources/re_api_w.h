@@ -1,5 +1,5 @@
-#ifndef REAPIW_H
-#define REAPIW_H
+#ifndef RE_APIW_H
+#define RE_APIW_H
 
 #include <QObject>
 #include <QtDebug>
@@ -33,11 +33,11 @@
 #define RE_WIN_TERMINAL    10
 #define RE_WIN_YOUTUBE     11
 
-class ReApiW : public QObject
+class ReApi : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReApiW(QObject *parent = nullptr);
+    explicit ReApi(QObject *parent = nullptr);
     QString getPNameA();
     long getPid(HWND hWnd);
     QString getPName(long pid);
@@ -57,4 +57,4 @@ private slots:
 private:
 };
 
-#endif // REAPIW_H
+#endif // RE_APIW_H

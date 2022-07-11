@@ -2,7 +2,6 @@
 #define RE_META_L_H
 
 #include <QVector>
-#include <linux/uinput.h>
 
 #include "backend.h"
 #include "re_state.h"
@@ -27,8 +26,6 @@ private:
     QString getSystemCmd(int val);
     QString getTouchCmd(int val);
     void getScrollCmd(int meta, int val);
-
-    int uinput_f;
 
     ReState *state;
 };

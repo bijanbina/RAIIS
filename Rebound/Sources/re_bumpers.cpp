@@ -32,7 +32,7 @@ void ReBumpers::buttonL1Pressed()
         }
         else
         {
-            if( state->youtube_mode )
+            if( state-> utube_mode )
             {
                 qDebug() << "fuck";
                 executScript("l1", RE_SCR_YOUTUBE);
