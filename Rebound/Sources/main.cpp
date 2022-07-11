@@ -5,7 +5,7 @@
 #include "re_chapar.h"
 
 #ifdef _WIN32
-//void setNoActivable(QObject *item)
+void setNoActivable(QObject *item)
 {
     //Set NoActivable Flag on UI
     QWindow *window = qobject_cast<QWindow *>(item);

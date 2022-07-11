@@ -25,12 +25,14 @@ SOURCES += Sources/main.cpp \
            Sources/re_super_l.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
-                 Sources/re_xbox_win32.cpp \
-                 Sources/re_xbox_w.cpp \
                  Sources/re_api_w.cpp \
+                 Sources/re_channel_w.cpp \
+                 Sources/re_keyboard_W.cpp \
                  Sources/re_thread_w.cpp \
                  Sources/re_hardware_w.cpp \
-                 Sources/re_admin_win.cpp
+                 Sources/re_admin_win.cpp \
+                 Sources/re_xbox_win32.cpp \
+                 Sources/re_xbox_w.cpp
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
@@ -63,24 +65,25 @@ HEADERS += Sources/backend.h \
            Sources/re_state_const.h \
            Sources/re_super_l.h
 
-win32:HEADERS += Sources/re_server.h \
-                 Sources/re_xbox_win32.h \
-                 Sources/re_xbox_w.h \
-                 Sources/re_api_w.h \
-                 Sources/re_thread_w.h \
+win32:HEADERS += Sources/re_api_w.h \
                  Sources/re_admin_win.h \
-                 Sources/re_hardware_w.h
+                 Sources/re_channel_w.h \
+                 Sources/re_keyboard_w.cpp \
+                 Sources/re_thread_w.h \
+                 Sources/re_server.h \
+                 Sources/re_hardware_w.h \
+                 Sources/re_xbox_win32.h \
+                 Sources/re_xbox_w.h
 
-linux:HEADERS += \
-                 Sources/re_x11.h \
-                 Sources/re_xbox_l.h \
-                 Sources/re_api_l.h \
-                 Sources/re_thread_l.h \
+linux:HEADERS += Sources/re_api_l.h \
                  Sources/re_channel_l.h \
                  Sources/re_keyboard_l.h \
                  Sources/re_meta_l.h \
                  Sources/re_meta_go_l.h \
-                 Sources/re_meta_oc_l.h
+                 Sources/re_meta_oc_l.h \
+                 Sources/re_thread_l.h \
+                 Sources/re_x11.h \
+                 Sources/re_xbox_l.h
 
 RESOURCES += Qml/ui.qrc \
              Resources/images.qrc \
