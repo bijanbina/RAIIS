@@ -32,6 +32,23 @@ void ReSuperL::exec(CCommand command)
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"\"");
     }
+    else if( command.val1==RE_SUPER_COMMENT )
+    {
+        system("xdotool key --delay 200 ctrl+slash");
+    }
+    else if( command.val1==RE_SUPER_COPY )
+    {
+        system("xdotool key --delay 200 ctrl+c");
+    }
+    else if( command.val1==RE_SUPER_PASTE )
+    {
+        system("xdotool key --delay 200 ctrl+v");
+    }
+    else if( command.val1==RE_SUPER_SIDE )
+    {
+        system("dbus-send --dest=com.benjamin.chess"
+               " / com.benjamin.chess.show string:\"side\"");
+    }
 }
 
 QString ReSuperL::getMetaCmd()

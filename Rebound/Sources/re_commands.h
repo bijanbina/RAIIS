@@ -38,10 +38,14 @@
 #define RE_META_MOUSE   11
 #define RE_META_TOUCH   12
 
-#define RE_SUPER_META   101
-#define RE_SUPER_CAMEL  102 //currently colon
-#define RE_SUPER_SWITCH 103
-#define RE_SUPER_KICK   104
+#define RE_SUPER_META    101
+#define RE_SUPER_CAMEL   102 //currently colon
+#define RE_SUPER_SWITCH  103
+#define RE_SUPER_KICK    104
+#define RE_SUPER_COMMENT 105
+#define RE_SUPER_COPY    106
+#define RE_SUPER_PASTE   107
+#define RE_SUPER_SIDE    108
 
 #define RE_APP_FIREFOX  301
 #define RE_APP_FILES    302
