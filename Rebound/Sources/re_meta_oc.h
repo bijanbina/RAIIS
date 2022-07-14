@@ -1,5 +1,5 @@
-#ifndef RE_META_OC_L_H
-#define RE_META_OC_L_H
+#ifndef RE_META_OC_H
+#define RE_META_OC_H
 
 // Open/Close Meta Function
 
@@ -18,4 +18,4 @@ QString re_getOpenFirefox(int val);
 QString re_getOpenNautilus(int val);
 QString re_getOpenGitKraken(int val);
 
-#endif // RE_META_OC_L_H
+#endif // RE_META_OC_H

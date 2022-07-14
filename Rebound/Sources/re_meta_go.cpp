@@ -1,4 +1,9 @@
-#include "re_meta_go_l.h"
+#include "re_meta_go.h"
+#ifdef WIN32
+#include "re_keyboard_w.h"
+#else
+#include "re_keyboard_l.h"
+#endif
 
 QString re_getGoXed(int val)
 {

@@ -20,6 +20,9 @@
 #define KEY_E         'E'
 #define KEY_F         'F'
 #define KEY_M         'M'
+#define KEY_N         'N'
+#define KEY_P         'P'
+#define KEY_R         'R'
 #define KEY_T         'T'
 #define KEY_V         'V'
 #define KEY_ESC       VK_ESCAPE
@@ -29,8 +32,6 @@
 #define KEY_DOWN      VK_DOWN
 #define KEY_RIGHT     VK_RIGHT
 #define KEY_BACKSPACE VK_BACK
-
-// VK_LWIN
 
 class ReKeyboard
 {

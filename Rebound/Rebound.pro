@@ -16,7 +16,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_firefox_ws.cpp \
            Sources/re_meta.cpp \
            Sources/re_meta_go.cpp \
-           Sources/re_meta_oc_l.cpp \
+           Sources/re_meta_oc.cpp \
            Sources/re_preprocessor.cpp \
            Sources/re_qt.cpp \
            Sources/re_state.cpp \
@@ -80,7 +80,6 @@ win32:HEADERS += Sources/re_api_w.h \
 linux:HEADERS += Sources/re_api_l.h \
                  Sources/re_channel_l.h \
                  Sources/re_keyboard_l.h \
-                 Sources/re_meta_oc_l.h \
                  Sources/re_thread_l.h \
                  Sources/re_x11.h \
                  Sources/re_xbox_l.h
@@ -122,4 +121,7 @@ MOC_DIR = Build/.moc
 RCC_DIR = Build/.rcc
 OBJECTS_DIR = Build/.obj
 UI_DIR = Build/.ui
+
+HEADERS += \
+    Sources/re_meta_oc.h
 
