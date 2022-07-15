@@ -7,6 +7,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     ui = item;
     uiSwitcher = switcher;
 
+    api   = new ReApi;
     state = new ReState;
     bumpers = new ReBumpers(ui, switcher, state);
     buttons = new ReButtons(ui, switcher, state);
@@ -27,7 +28,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
     controller = new ReXboxW(state);
     connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
 #else
-    api = new ReApiL;
     controller = new ReXboxL(item, isNative);
     channel = new ReChannelL(captain, ui);
 

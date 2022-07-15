@@ -195,14 +195,13 @@ void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
     re_getType(&win);
 
     //push active window to front
-    if ( win.hWnd == thread_w->win_active.hWnd )
+    if( win.hWnd==thread_w->win_active.hWnd )
     {
-        if ( thread_w->windows.size()>0 )
+        if( thread_w->windows.size()>0 )
         {
-            if ( thread_w->windows[0].hWnd != win.hWnd )
+            if( thread_w->windows[0].hWnd!=win.hWnd )
             {
                 thread_w->windows.push_front(win);
-                thread_w->thread_data->state->updateApp(win);
                 qDebug() << "Active Changed" << win.title;
             }
             else
@@ -210,6 +209,7 @@ void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
                 thread_w->windows[0].verify = 1;
                 thread_w->windows[0].title = win.title;
             }
+            thread_w->thread_data->state->updateApp(win);
         }
         else
         {

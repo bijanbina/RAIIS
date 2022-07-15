@@ -25,15 +25,14 @@ void ReState::readStatusFile()
     {
         QString line = file.readLine();
         line.replace('\n', "");
+        file.close();
 
         if( line=="Sleep" )
         {
             sleep_state = 1;
-            file.close();
         }
         else
         {
-            file.close();
             rmStatusFile();
         }
     }
@@ -143,8 +142,37 @@ void ReState::updateApp(ReWindow active_window)
 {
     app = active_window;
 
-#ifdef _WIN32
+#ifdef WIN32
     setProcess(app.pname);
+#else
+    QString status = re_readStatus();
+
+    QRegExp go_reg("^go");
+    QRegExp number_reg("\\d*");
+    if( status.contains(go_reg) )
+    {
+        return;
+    }
+    if( number_reg.exactMatch(status) )
+    {
+        if( status.length() )
+        {
+            return;
+        }
+    }
+    else if( status=="Sleep" )
+    {
+        return;
+    }
+    else if( status=="Halt" )
+    {
+        return;
+    }
+
+    QString cmd = "echo \"";
+    cmd += app.pname + "\"";
+    cmd += " > ~/.config/polybar/awesomewm/ben_status";
+    system(cmd.toStdString().c_str());
 #endif
 }
 

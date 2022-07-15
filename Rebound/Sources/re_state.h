@@ -8,6 +8,7 @@
 #include <QString>
 #include <QQmlProperty>
 #include <QFileInfo>
+#include "backend.h"
 #include "re_firefox_l.h"
 #include "re_commands.h"
 #include "re_state_const.h"

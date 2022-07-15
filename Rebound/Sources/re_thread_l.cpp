@@ -65,7 +65,7 @@ void ReThreadL::insertWindow(ReWindow win)
             if ( windows[0].hWnd!=win.hWnd )
             {
                 windows.push_front(win);
-                thread_data->state->updateApp(win);
+
 #ifdef RE_DEBUG_WIN
                 qDebug() << "Active Changed" << win.title;
 #endif
@@ -75,6 +75,7 @@ void ReThreadL::insertWindow(ReWindow win)
                 windows[0].verify = 1;
                 windows[0].title = win.title;
             }
+            thread_data->state->updateApp(win);
         }
         else
         {
@@ -203,11 +204,13 @@ void ReThreadL::syncWinsTitle()
 
 void ReThreadL::updateActiveWindow()
 {
-    char *buffer;
     HwndA = x11_currentWindow();
-    int written = XFetchName(display, HwndA, &buffer);
+    //XFetchName will not always work, XGetWMName used instead
+    XTextProperty buffer;
+    int written = XGetWMName(display, HwndA, &buffer);
+    char *buffer_c = (char *)buffer.value;
 
-    titleA = buffer;
+    titleA = buffer_c;
 }
 
 void reRunThread(void *thread_struct_void)
