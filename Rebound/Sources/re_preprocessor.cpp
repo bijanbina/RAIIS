@@ -336,6 +336,15 @@ void RePreProcessor::spex(const QString &text)
 
 void RePreProcessor::super(const QString &text)
 {
+    if( re_isLastMod(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
+
+        cmd_buf[last_i].val1=text.toInt();
+        execute();
+        return;
+    }
+
     CCommand cmd;
     cmd.val1 = text.toInt();
     cmd.val2 = 0;

@@ -27,8 +27,19 @@ void ReCaptain::execModifier(CCommand command)
 
     for( int j=0 ; j<command.val2 ; j++ )
     {
-        key->sendKey(command.val1);
-        QThread::msleep(30); //little tweak
+        if( command.val1==RE_SUPER_LOVE )
+        {
+            system("xdotool key --delay 40 ctrl+Left");
+        }
+        else if( command.val1==RE_SUPER_ROGER )
+        {
+            system("xdotool key --delay 40 ctrl+Right");
+        }
+        else
+        {
+            key->sendKey(command.val1);
+            QThread::msleep(30); //little tweak
+        }
     }
 
     QThread::msleep(70); //little tweak

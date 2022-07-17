@@ -49,6 +49,14 @@ void ReSuperL::exec(CCommand command)
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"side\"");
     }
+    else if( command.val1==RE_SUPER_LOVE )
+    {
+        system("xdotool key --delay 40 ctrl+Left");
+    }
+    else if( command.val1==RE_SUPER_ROGER )
+    {
+        system("xdotool key --delay 40 ctrl+Right");
+    }
 }
 
 QString ReSuperL::getMetaCmd()

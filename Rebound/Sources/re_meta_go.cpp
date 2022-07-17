@@ -27,6 +27,7 @@ QString re_getGoXed(int val)
     return cmd;
 }
 
+// Or VsCode
 QString re_getGoQt(int val)
 {
     QString cmd;
@@ -52,6 +53,12 @@ QString re_getGoQt(int val)
         system("xdotool key --delay 200 super+ctrl+k");
         QThread::msleep(100); //little tweak
         cmd = "xdotool key --delay 200 super+ctrl+k";
+    }
+    else if( val>1 && val<12 ) //tab
+    {
+        int input = re_keyCode2Digit(val);
+        cmd = "xdotool key alt+";
+        cmd += QString::number(input);
     }
 
     return cmd;
