@@ -7,6 +7,7 @@
 #ifdef WIN32
     #include "re_xbox_w.h"
     #include "re_thread_w.h"
+    #include "re_channel_w.h"
     #ifdef RE_TEST_EN
         #include "re_client.h"
     #endif
@@ -66,6 +67,8 @@ public:
     void setPage(RePage page);
     QString getShortTitle(int index);
 
+signals:
+    void startChannel();
 
 private slots:
     void updateMode();
@@ -89,6 +92,8 @@ private:
     std::thread *api_thread;
     QTimer *sync_thread_timer;
     threadStruct *thread_data;
+    ReChannelW *channel;
+    QThread *channel_thread;
 #else
     ReXboxL *controller;
     ReChannelL *channel;

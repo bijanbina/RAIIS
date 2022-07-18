@@ -8,27 +8,23 @@
 #include "backend.h"
 #include "re_captain.h"
 
-
+#define PIPE_PATH "\\\\.\\pipe\\ipc"
 // The buffer size specified should be small enough that your process will not run out of nonpaged pool,
 // but large enough to accommodate typical requests.
 #define BUFFER_SIZE (1024 * 8)
 #define INPUT_BUFFER_SIZE BUFFER_SIZE
 #define OUTPUT_BUFFER_SIZE BUFFER_SIZE
 
-#define LINE_SEPARATOR "\r\n"
-#define COMMAND_SEPARATOR "###"
-#define COMMAND_POSITION 0
-#define ARGUMENT_POSITION 1
-
+#define COMMAND_SEPARATOR ","
 
 class ReChannelW : public QObject
 {
     Q_OBJECT
-    Q_CLASSINFO("D-Bus Interface", COM_NAME)
 public:
     ReChannelW(ReCaptain *cpt, QObject *parent = NULL);
     ~ReChannelW();
 
+public slots:
     void ListenPipe();
 
 signals:
@@ -42,12 +38,11 @@ signals:
     void digit(QString args);
     void debug(QString args);
     void modifier(QString args);
-    void exec(QString args);
-
 
 private:
     void createPipe();
-    void handleNewCommand(QString cmd, QString args);
+    void processCommand(QString cmd, QString args);
+    void processLine(QString line);
 
     RePreProcessor *pre;
     HANDLE hPipe;

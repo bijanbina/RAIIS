@@ -122,7 +122,7 @@ void ReCaptain::execCommand(CCommand command)
     }
     else if( command.type==RE_COMMAND_SUPER )
     {
-        for( int j=0 ; j<command.val3 ; j++ )
+        for( int j=0 ; j<command.val2 ; j++ )
         {
             super->exec(command);
         }

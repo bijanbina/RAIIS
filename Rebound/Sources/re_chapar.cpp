@@ -27,6 +27,15 @@ ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *pare
 
     controller = new ReXboxW(state);
     connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
+
+    channel = new ReChannelW(captain);
+    channel_thread = new QThread();
+    channel->moveToThread(channel_thread);
+
+    connect(this, SIGNAL(startChannel()), channel, SLOT(ListenPipe()));
+    channel_thread->start();
+
+    emit startChannel();
 #else
     controller = new ReXboxL(item, isNative);
     channel = new ReChannelL(captain, ui);

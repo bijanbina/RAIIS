@@ -347,7 +347,7 @@ void RePreProcessor::super(const QString &text)
 
     CCommand cmd;
     cmd.val1 = text.toInt();
-    cmd.val2 = 0;
+    cmd.val2 = 1;
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_SUPER;
     cmd_buf.append(cmd);

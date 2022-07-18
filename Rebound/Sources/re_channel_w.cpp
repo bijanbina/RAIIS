@@ -16,7 +16,6 @@ ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent) : QObject(parent)
     connect(this, SIGNAL(digit(QString)), pre, SLOT(digit(QString)));
     connect(this, SIGNAL(debug(QString)), pre, SLOT(debug(QString)));
     connect(this, SIGNAL(modifier(QString)), pre, SLOT(modifier(QString)));
-    connect(this, SIGNAL(exec(QString)), pre, SLOT(exec(QString)));
 }
 
 ReChannelW::~ReChannelW()
@@ -28,54 +27,54 @@ void ReChannelW::ListenPipe()
 {
     char buffer[BUFFER_SIZE];
     DWORD dwRead;
-    QStringList all_line;
-    QStringList list_data;
-    while(hPipe != INVALID_HANDLE_VALUE)
+    while( hPipe!=INVALID_HANDLE_VALUE )
     {
         // wait for someone to connect to the pipe
-        if (ConnectNamedPipe(hPipe, nullptr) != FALSE)
+        if( ConnectNamedPipe(hPipe, nullptr)!=FALSE )
         {
             qDebug() << "Connect client";
-            while (ReadFile(hPipe, buffer, sizeof(buffer) - 1, &dwRead, nullptr) != FALSE)
+            while( ReadFile(hPipe, buffer, sizeof(buffer)-1, &dwRead, nullptr)!=FALSE )
             {
-                /* add terminating zero */
-                buffer[dwRead] = '\0';
+                // add terminating zero
+                buffer[dwRead] = 0;
+                QString input(buffer);
 
-                /* do something with data in buffer */
-                printf("Received: %s\n", buffer);
+                QStringList lines = input.split("\n", QString::SkipEmptyParts);
 
-                QString data(buffer);
-                qDebug() << data;
-
-                all_line = data.split(LINE_SEPARATOR, QString::SkipEmptyParts);
-
-                foreach (QString line, all_line)
+                for(int i=0 ; i<lines.length() ; i++)
                 {
-                    line = line.trimmed();
-                    list_data = line.split(COMMAND_SEPARATOR, QString::SkipEmptyParts);
-                    if ( list_data.length()!=2 )
-                    {
-                        qDebug() << "Invalid data `" + data + "`";
-                        continue;
-                    }
-
-                    qDebug() << "Command:" << list_data[COMMAND_POSITION];
-                    qDebug() << "Args:" << list_data[ARGUMENT_POSITION];
-                    handleNewCommand(list_data[COMMAND_POSITION], list_data[ARGUMENT_POSITION]);
+                    processLine(lines[i]);
                 }
             }
         }
 
-        qDebug() << "Disconnect client";
+        qDebug() << "Client Disconnected";
         DisconnectNamedPipe(hPipe);
     }
+}
+
+void ReChannelW::processLine(QString line)
+{
+    line = line.trimmed();
+    QStringList fields = line.split(COMMAND_SEPARATOR,
+                               QString::SkipEmptyParts);
+    if ( fields.length()!=2 )
+    {
+        qDebug() << "Invalid data `" + line + "`";
+        return;
+    }
+
+    QString command = fields[0];
+    QString arg = fields[1];
+    qDebug() << "Command:" << command
+             << "Args:" << arg;
 }
 
 void ReChannelW::createPipe()
 {
     // To create an instance of a named pipe by using CreateNamedPipe,
     // the user must have FILE_CREATE_PIPE_INSTANCE access to the named pipe object.
-    hPipe = CreateNamedPipe(TEXT("\\\\.\\pipe\\ipc"),
+    hPipe = CreateNamedPipe(TEXT(PIPE_PATH),
                             PIPE_ACCESS_INBOUND,            // dwOpenMode. The flow of data in the pipe goes from client to server only
                             PIPE_TYPE_BYTE | PIPE_WAIT,     // dwPipeMode
                             1,                              // nMaxInstances
@@ -84,36 +83,53 @@ void ReChannelW::createPipe()
                             NMPWAIT_WAIT_FOREVER,           // nDefaultTimeOut
                             nullptr);                       // lpSecurityAttributes
 
-    if (hPipe == INVALID_HANDLE_VALUE)
+    if( hPipe==INVALID_HANDLE_VALUE )
     {
-        qFatal("Cannot create \\\\.\\pipe\\ipc");
+        qDebug(PIPE_PATH"Failed");
     }
-    qDebug() << "Create pipe \\\\.\\pipe\\ipc";
+    qDebug() << PIPE_PATH << "pipe Created";
 }
 
-void ReChannelW::handleNewCommand(QString cmd, QString args)
+void ReChannelW::processCommand(QString cmd, QString args)
 {
-    if (cmd == "dirs") {
+    if( cmd=="dirs" )
+    {
         emit dirs(args);
-    } else if (cmd == "nato") {
+    }
+    else if( cmd=="nato" )
+    {
         emit nato(args);
-    } else if (cmd == "meta") {
+    }
+    else if( cmd=="meta" )
+    {
         emit meta(args);
-    } else if (cmd == "apps") {
+    }
+    else if( cmd=="apps" )
+    {
         emit apps(args);
-    } else if (cmd == "spex") {
+    }
+    else if( cmd=="spex" )
+    {
         emit spex(args);
-    } else if (cmd == "type") {
+    }
+    else if( cmd=="type" )
+    {
         emit type(args);
-    } else if (cmd == "super") {
+    }
+    else if( cmd=="super" )
+    {
         emit super(args);
-    } else if (cmd == "digit") {
+    }
+    else if( cmd=="digit" )
+    {
         emit digit(args);
-    } else if (cmd == "debug") {
+    }
+    else if( cmd=="debug" )
+    {
         emit debug(args);
-    } else if (cmd == "modifier") {
+    }
+    else if( cmd=="modifier" )
+    {
         emit modifier(args);
-    } else if (cmd == "exec") {
-        emit exec(args);
     }
 }
