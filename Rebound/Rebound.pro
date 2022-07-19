@@ -12,7 +12,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_chapar.cpp \
            Sources/re_client.cpp \
            Sources/re_commands.cpp \
-           Sources/re_firefox_l.cpp \
+           Sources/re_firefox.cpp \
            Sources/re_firefox_ws.cpp \
            Sources/re_meta.cpp \
            Sources/re_meta_go.cpp \
@@ -50,7 +50,7 @@ HEADERS += Sources/backend.h \
            Sources/re_chapar.h \
            Sources/re_commands.h \
            Sources/re_config.h \
-           Sources/re_firefox_l.h \
+           Sources/re_firefox.h \
            Sources/re_firefox_ws.h \
            Sources/re_keycode.h \
            Sources/re_client.h \

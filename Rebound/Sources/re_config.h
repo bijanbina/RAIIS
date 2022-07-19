@@ -28,5 +28,6 @@
 #define RE_SCR_SPOTIFY 3     //Spotify Mode
 
 #define RE_SCR_UINPUT  "Scripts/uDev/init.sh"
+#define RE_NP_SEPARATOR ","
 
 #endif // BACKEND_H

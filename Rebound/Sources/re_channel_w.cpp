@@ -56,18 +56,21 @@ void ReChannelW::ListenPipe()
 void ReChannelW::processLine(QString line)
 {
     line = line.trimmed();
-    QStringList fields = line.split(COMMAND_SEPARATOR,
+    QStringList fields = line.split(RE_NP_SEPARATOR,
                                QString::SkipEmptyParts);
     if ( fields.length()!=2 )
     {
-        qDebug() << "Invalid data `" + line + "`";
+        qDebug() << "Error 128: wrong field length, `"
+                    + line + "`";
         return;
     }
 
-    QString command = fields[0];
-    QString arg = fields[1];
-    qDebug() << "Command:" << command
-             << "Args:" << arg;
+    QString key_type = fields[0];
+    QString key_code = fields[1];
+    qDebug() << "Command:" << key_type
+             << "Args:" << key_code;
+
+    processCommand(key_type, key_code);
 }
 
 void ReChannelW::createPipe()
@@ -90,46 +93,46 @@ void ReChannelW::createPipe()
     qDebug() << PIPE_PATH << "pipe Created";
 }
 
-void ReChannelW::processCommand(QString cmd, QString args)
+void ReChannelW::processCommand(QString k_type, QString k_code)
 {
-    if( cmd=="dirs" )
+    if( k_type=="dirs" )
     {
-        emit dirs(args);
+        emit dirs(k_code);
     }
-    else if( cmd=="nato" )
+    else if( k_type=="nato" )
     {
-        emit nato(args);
+        emit nato(k_code);
     }
-    else if( cmd=="meta" )
+    else if( k_type=="meta" )
     {
-        emit meta(args);
+        emit meta(k_code);
     }
-    else if( cmd=="apps" )
+    else if( k_type=="apps" )
     {
-        emit apps(args);
+        emit apps(k_code);
     }
-    else if( cmd=="spex" )
+    else if( k_type=="spex" )
     {
-        emit spex(args);
+        emit spex(k_code);
     }
-    else if( cmd=="type" )
+    else if( k_type=="type" )
     {
-        emit type(args);
+        emit type(k_code);
     }
-    else if( cmd=="super" )
+    else if( k_type=="super" )
     {
-        emit super(args);
+        emit super(k_code);
     }
-    else if( cmd=="digit" )
+    else if( k_type=="digit" )
     {
-        emit digit(args);
+        emit digit(k_code);
     }
-    else if( cmd=="debug" )
+    else if( k_type=="debug" )
     {
-        emit debug(args);
+        emit debug(k_code);
     }
-    else if( cmd=="modifier" )
+    else if( k_type=="modifier" )
     {
-        emit modifier(args);
+        emit modifier(k_code);
     }
 }

@@ -1,9 +1,9 @@
-#include "re_firefox_l.h"
+#include "re_firefox.h"
 #define JS_SC_PATH "Scripts/Firefox/ElementsWithScrolls.js"
 #define WS_SC_PATH "Scripts/Firefox/getWS.sh"
 #define VI_SC_PATH "Scripts/Firefox/isVisible.sh"
 
-ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
+ReFirefox::ReFirefox(QObject *parent) : QObject(parent)
 {
     socket = new QWebSocket;
     connect(socket, SIGNAL(connected()),    this, SLOT(onConnected()));
@@ -11,13 +11,13 @@ ReFirefoxL::ReFirefoxL(QObject *parent) : QObject(parent)
     ws_buf = "";
 }
 
-ReFirefoxL::~ReFirefoxL()
+ReFirefox::~ReFirefox()
 {
     delete socket;
     reset();
 }
 
-void ReFirefoxL::refreshURL()
+void ReFirefox::refreshURL()
 {
     QString ws = getStrCommand(WS_SC_PATH);
     QStringList ws_list = ws.split("\n");
@@ -37,7 +37,7 @@ void ReFirefoxL::refreshURL()
 }
 
 //Check if firefox is visible
-void ReFirefoxL::urlCheck(QString title, QString ws)
+void ReFirefox::urlCheck(QString title, QString ws)
 {
     QString cmd = VI_SC_PATH " \"";
     cmd += title + "\"";
@@ -52,7 +52,7 @@ void ReFirefoxL::urlCheck(QString title, QString ws)
     }
 }
 
-void ReFirefoxL::reset()
+void ReFirefox::reset()
 {
     for( int i=0 ; i<childs_th.size() ; i++ )
     {
@@ -67,7 +67,7 @@ void ReFirefoxL::reset()
     childs_th.clear();
 }
 
-void ReFirefoxL::scrollDown(int speed, QString st_cmd)
+void ReFirefox::scrollDown(int speed, QString st_cmd)
 {
     sc_speed = speed-1;
     if( ws_buf.length() )
@@ -82,7 +82,9 @@ void ReFirefoxL::scrollDown(int speed, QString st_cmd)
         cmd += "var scroll_timer = setInterval(pageScroll, bt_speed);";
 
         send_js(cmd);
+#ifdef __linux__
         system(st_cmd.toStdString().c_str());
+#endif
     }
     else
     {
@@ -92,7 +94,7 @@ void ReFirefoxL::scrollDown(int speed, QString st_cmd)
     }
 }
 
-void ReFirefoxL::scrollUp(int speed, QString st_cmd)
+void ReFirefox::scrollUp(int speed, QString st_cmd)
 {
     sc_speed = speed-1;
     if( ws_buf.length() )
@@ -107,7 +109,9 @@ void ReFirefoxL::scrollUp(int speed, QString st_cmd)
         cmd += "var scroll_timer = setInterval(pageScroll, bt_speed);";
 
         send_js(cmd);
+#ifdef __linux__
         system(st_cmd.toStdString().c_str());
+#endif
     }
     else
     {
@@ -117,7 +121,7 @@ void ReFirefoxL::scrollUp(int speed, QString st_cmd)
     }
 }
 
-void ReFirefoxL::scrollEscape()
+void ReFirefox::scrollEscape()
 {
     ws_buf = "";
 
@@ -127,14 +131,14 @@ void ReFirefoxL::scrollEscape()
     send_js(cmd);
 }
 
-void ReFirefoxL::onConnected()
+void ReFirefox::onConnected()
 {
    connect(socket, SIGNAL(textMessageReceived(QString)),
            this  , SLOT  (dataReceived(QString)));
    sendScroll();
 }
 
-void ReFirefoxL::dataReceived(QString message)
+void ReFirefox::dataReceived(QString message)
 {
     if( cmd_buf.length() )
     {
@@ -146,12 +150,12 @@ void ReFirefoxL::dataReceived(QString message)
     }
 }
 
-void ReFirefoxL::onDisconnected()
+void ReFirefox::onDisconnected()
 {
 //   qDebug() << "WebSocket disconnected";
 }
 
-void ReFirefoxL::sendScroll()
+void ReFirefox::sendScroll()
 {
     QString cmd = "var bt_speed = ";
     cmd += QString::number(speed_table[sc_speed]) + "; ";
@@ -186,12 +190,14 @@ void ReFirefoxL::sendScroll()
     }
 
     send_js(cmd);
+#ifdef __linux__
     system(status_cmd.toStdString().c_str());
+#endif
     status_cmd = "";
     sc_dir = sc_dirb;
 }
 
-void ReFirefoxL::send_js(QString cmd)
+void ReFirefox::send_js(QString cmd)
 {
     QString en_runtime = "{\"id\": 1, \"method\": \"Runtime.enable\"}\n\n";
 

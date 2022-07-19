@@ -1,4 +1,5 @@
-#include "re_keyboard_W.h"
+#include "re_keyboard_w.h"
+#include <QDebug>
 
 ReKeyboard::ReKeyboard()
 {
