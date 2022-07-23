@@ -8,7 +8,6 @@
 #include "backend.h"
 #include "re_captain.h"
 
-#define PIPE_PATH "\\\\.\\pipe\\ipc"
 // The buffer size specified should be small enough that your process will not run out of nonpaged pool,
 // but large enough to accommodate typical requests.
 #define BUFFER_SIZE (1024 * 8)

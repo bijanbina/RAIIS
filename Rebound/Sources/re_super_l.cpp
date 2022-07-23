@@ -29,8 +29,12 @@ void ReSuperL::exec(CCommand command)
     }
     else if( command.val1==RE_SUPER_KICK )
     {
+#ifdef WIN32
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"\"");
+#else
+
+#endif
     }
     else if( command.val1==RE_SUPER_COMMENT )
     {

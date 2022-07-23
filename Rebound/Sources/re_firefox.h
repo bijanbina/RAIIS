@@ -1,5 +1,5 @@
-#ifndef RE_FIREFOX_L_H
-#define RE_FIREFOX_L_H
+#ifndef RE_FIREFOX_H
+#define RE_FIREFOX_H
 
 #include <QObject>
 #include <QtDebug>
@@ -8,12 +8,12 @@
 #include "re_firefox_ws.h"
 #include "re_commands.h"
 
-class ReFirefoxL : public QObject
+class ReFirefox : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReFirefoxL(QObject *parent = nullptr);
-    ~ReFirefoxL();
+    explicit ReFirefox(QObject *parent = nullptr);
+    ~ReFirefox();
     void sendScroll();
     void refreshURL();
     void reset();
@@ -46,4 +46,4 @@ private:
     int step_table[10]  = { 1  , 2 , 3 , 4 , 5 , 6, 7, 8, 9 };
 };
 
-#endif // RE_FIREFOX_L_H
+#endif // RE_FIREFOX_H

@@ -5,13 +5,13 @@ ReState::ReState(QObject *parent) : QObject(parent)
     i_mode = RE_MODE_HIDDEN;
     i_proc = RE_WIN_UNKNOWN;
     ui_visible = false;
+    fl = new ReFirefox;
 
 #ifdef _WIN32
     api = new ReApi;
     hardware = new ReHardwareW;
 #endif
 #ifdef __linux__
-    fl = new ReFirefoxL;
     readStatusFile();
 #endif
 }

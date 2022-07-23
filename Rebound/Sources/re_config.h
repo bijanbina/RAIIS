@@ -3,6 +3,7 @@
 
 #define COM_NAME "com.binaee.rebound"
 #define ORG_NAME "org.binaee.rebound"
+#define PIPE_PATH "\\\\.\\pipe\\com_binaee_rebound"
 
 //#define RE_DEBUG_WIN //show window detection debug info
 

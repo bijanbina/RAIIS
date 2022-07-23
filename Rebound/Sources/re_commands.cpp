@@ -84,16 +84,15 @@ int re_keyCode2Digit(QString key_code)
 {
     int code = key_code.toInt();
 
-    if( code==11 )
-    {
-        return 0;
-    }
-    else
-    {
-        return code-1;
-    }
+    return re_keyCode2Digit(code);
 }
 
+#ifdef WIN32
+int re_keyCode2Digit(int code)
+{
+    return code-'0';
+}
+#else
 int re_keyCode2Digit(int code)
 {
     if( code==11 )
@@ -105,3 +104,4 @@ int re_keyCode2Digit(int code)
         return code-1;
     }
 }
+#endif
