@@ -58,17 +58,25 @@ void ReChannelW::processLine(QString line)
     line = line.trimmed();
     QStringList fields = line.split(RE_NP_SEPARATOR,
                                QString::SkipEmptyParts);
-    if ( fields.length()!=2 )
+
+    QString key_type, key_code;
+    if ( fields.length()>0 )
     {
-        qDebug() << "Error 128: wrong field length, `"
+        key_type = fields[0];
+    }
+    if ( fields.length()>1 )
+    {
+        key_code = fields[1];
+    }
+    if ( fields.length()==0 ||
+         fields.length()>2 )
+    {
+        qDebug() << "Error 128: wrong field length, data=`"
                     + line + "`";
         return;
     }
-
-    QString key_type = fields[0];
-    QString key_code = fields[1];
-    qDebug() << "Command:" << key_type
-             << "Args:" << key_code;
+//    qDebug() << "Command:" << key_type
+//             << "Args:" << key_code;
 
     processCommand(key_type, key_code);
 }

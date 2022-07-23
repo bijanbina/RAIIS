@@ -37,8 +37,8 @@ void ReCaptain::execModifier(CCommand command)
         }
         else
         {
-            key->sendKey(command.val1);
             QThread::msleep(30); //little tweak
+            key->sendKey(command.val1);
         }
     }
 

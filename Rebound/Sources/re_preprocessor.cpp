@@ -367,7 +367,7 @@ void RePreProcessor::debug(const QString &text)
         commands_str += " ";
     }
     commands_str += text;
-    qDebug() << "debug" << text;
+//    qDebug() << "debug" << text;
 }
 
 void RePreProcessor::handleLastRepeatable(int input)

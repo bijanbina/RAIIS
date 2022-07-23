@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <Windows.h>
+#include <QVector>
 
 #define KEY_1         '1'
 #define KEY_2         '2'
@@ -44,6 +45,9 @@ public:
     void releaseKey(int key_val);
 
 private:
+    bool isExtended(int key_val);
+
+    QVector<int> extended_keys;
     int uinput_f;
 };
 
