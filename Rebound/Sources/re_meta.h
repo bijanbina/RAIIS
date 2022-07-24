@@ -7,6 +7,11 @@
 #include "re_state.h"
 #include "re_meta_go.h"
 #include "re_meta_oc.h"
+#ifdef WIN32
+#include "re_app_w.h"
+#else
+#include "re_app_l.h"
+#endif
 
 class ReMeta : public QObject
 {

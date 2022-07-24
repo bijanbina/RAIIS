@@ -68,6 +68,7 @@ HEADERS += Sources/backend.h \
            Sources/re_super_l.h
 
 win32:HEADERS += Sources/re_api_w.h \
+                 Sources/re_app_w.h \
                  Sources/re_admin_win.h \
                  Sources/re_channel_w.h \
                  Sources/re_keyboard_w.cpp \
@@ -78,6 +79,7 @@ win32:HEADERS += Sources/re_api_w.h \
                  Sources/re_xbox_w.h
 
 linux:HEADERS += Sources/re_api_l.h \
+                 Sources/re_app_l.h \
                  Sources/re_channel_l.h \
                  Sources/re_keyboard_l.h \
                  Sources/re_thread_l.h \

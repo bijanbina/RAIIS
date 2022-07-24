@@ -249,25 +249,25 @@ QString ReMeta::getGoCmd(int val)
 
     qDebug() << "GO" << state->app.pname;
 
-    if( state->app.pname=="xed" )
+    if( state->app.pname==RE_PROC_EDITOR )
     {
         cmd = re_getGoXed(val);
     }
-    else if( state->app.pname=="qtcreator" ||
-             state->app.pname=="code-oss" )
+    else if( state->app.pname==RE_PROC_QT ||
+             state->app.pname==RE_PROC_VSCODE )
     {
         cmd = re_getGoQt(val);
     }
-    else if( state->app.pname=="gitkraken" )
+    else if( state->app.pname==RE_PROC_GIT )
     {
         cmd = re_getGoGitKraken(val);
     }
-    else if( state->app.pname=="GeckoMain" ||
-             state->app.pname=="firefox" )
+    else if( state->app.pname==RE_PROC_FIREFOX ||
+             state->app.pname==RE_PROC_GEKO )
     {
         cmd = re_getGoFirefox(val);
     }
-    else if( state->app.pname=="nautilus" )
+    else if( state->app.pname==RE_PROC_EXPLORER )
     {
         cmd = re_getGoNautilus(val);
     }
@@ -281,12 +281,12 @@ QString ReMeta::getPageCmd(int val)
 
     qDebug() << "Page" << state->app.pname;
 
-    if( state->app.pname=="xed" )
+    if( state->app.pname==RE_PROC_EDITOR )
     {
 //        cmd = re_getGoXed(val);
     }
-    else if( state->app.pname=="qtcreator" ||
-             state->app.pname=="code-oss" )
+    else if( state->app.pname==RE_PROC_QT ||
+             state->app.pname==RE_PROC_VSCODE )
     {
         if( val==KEY_DOWN )
         {

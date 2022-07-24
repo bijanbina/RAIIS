@@ -162,7 +162,7 @@ void RePreProcessor::dirs(const QString &text) // direction keys
             return;
         }
     }
-    else if( captain->state->app.pname=="qtcreator" )
+    else if( captain->state->app.pname==RE_PROC_QT )
     {
         if( re_qtDirProc(&cmd_buf, text) )
         {
@@ -245,7 +245,7 @@ void RePreProcessor::meta(const QString &text)
             return;
         }
     }
-    else if( captain->state->app.pname=="qtcreator" )
+    else if( captain->state->app.pname==RE_PROC_QT )
     {
         int val = text.toInt();
 

@@ -73,24 +73,24 @@ QString ReSuperL::getMetaCmd()
     {
         cmd = "xdotool key F1";
     }
-    else if( state->app.pname=="qtcreator" )
+    else if( state->app.pname==RE_PROC_QT )
     {
         cmd = "xdotool key F1";
     }
-    else if( state->app.pname=="code-oss" )
+    else if( state->app.pname==RE_PROC_VSCODE )
     {
         cmd = "xdotool key F5";
     }
-    else if( state->app.pname=="gitkraken" )
+    else if( state->app.pname==RE_PROC_GIT )
     {
 //        cmd = re_getGoGitKraken(val);
     }
-    else if( state->app.pname=="GeckoMain" ||
-             state->app.pname=="firefox" )
+    else if( state->app.pname==RE_PROC_FIREFOX ||
+             state->app.pname==RE_PROC_GEKO )
     {
         cmd = "xdotool key ctrl+w";
     }
-    else if( state->app.pname=="nautilus" )
+    else if( state->app.pname==RE_PROC_EXPLORER )
     {
         cmd = "xdotool key ctrl+w";
     }

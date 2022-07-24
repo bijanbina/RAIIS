@@ -267,9 +267,9 @@ QString ReThreadW::renameAppName(QString app_name)
     {
         return "Foxit";
     }
-    else if(app_name.contains("firefox", Qt::CaseInsensitive))
+    else if(app_name.contains(RE_PROC_GEKO, Qt::CaseInsensitive))
     {
-        return "Firefox";
+        return RE_PROC_GEKO;
     }
     else if(app_name.contains("spotify", Qt::CaseInsensitive))
     {
@@ -297,7 +297,7 @@ void ReThreadW::sortApp()
             sorted_apps.insert(clover_ind, windows[i]);
             clover_ind++; firefox_ind++; spotify_ind++;
         }
-        else if(windows[i].pname.contains("Firefox", Qt::CaseInsensitive))
+        else if(windows[i].pname.contains(RE_PROC_GEKO, Qt::CaseInsensitive))
         {
             sorted_apps.insert(firefox_ind, windows[i]);
             firefox_ind++; spotify_ind++;
@@ -376,13 +376,19 @@ QString reGetPName(long pid)
     }
 
     // get name of process handle
-    char filename[MAX_PATH];
-    if(GetProcessImageFileNameA(processHandle, filename, MAX_PATH) == 0)
+    char path_buff[MAX_PATH];
+    if(GetProcessImageFileNameA(processHandle, path_buff, MAX_PATH) == 0)
     {
         qDebug() << "Error" << GetLastError() << " : Fail to get Pname of " << pid;
         return "";
     }
-    return QString(filename);
+
+    QString path_q = path_buff; //process filename
+    QStringList path_list = path_q.split("\\", QString::SkipEmptyParts);
+    QString filename = path_list.last();
+    filename.remove(".exe");
+
+    return filename;
 }
 
 HWND ReThreadW::getHWND(QString appname)
