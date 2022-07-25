@@ -1,103 +1,173 @@
 #include "re_super_l.h"
 
-ReSuperL::ReSuperL(ReState *st, QObject *parent): QObject(parent)
+ReSuper::ReSuper(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
 }
 
-ReSuperL::~ReSuperL()
+ReSuper::~ReSuper()
 {
     ;
 }
 
-void ReSuperL::exec(CCommand command)
+void ReSuper::castCmd(int cmd, CCommand *ret)
 {
-    if( command.val1==RE_SUPER_META )
+    if( cmd==RE_SUPER_META )
     {
-        QString cmd = getMetaCmd();
-        system(cmd.toStdString().c_str());
+        getMetaCmd(ret);
     }
-    else if( command.val1==RE_SUPER_CAMEL )
+    else if( cmd==RE_SUPER_CAMEL )
     {
         qDebug() << "CreateProcess 1";
+#ifdef WIN32
+#else
         system("./Scripts/camel");
-        qDebug() << "CreateProcess 2";
+#endif
     }
-    else if( command.val1==RE_SUPER_SWITCH )
+    else if( cmd==RE_SUPER_SWITCH )
     {
-        system("xdotool key --delay 200 super+b");
+        getSwitchCmd(ret);
     }
-    else if( command.val1==RE_SUPER_KICK )
+    else if( cmd==RE_SUPER_KICK )
     {
+        getKickCmd();
+    }
+    else if( cmd==RE_SUPER_COMMENT )
+    {
+        system("xdotool key --delay 200 ctrl+slash");
+    }
+    else if( cmd==RE_SUPER_COPY )
+    {
+        getCopyCmd(ret);
+    }
+    else if( cmd==RE_SUPER_PASTE )
+    {
+        getPasteCmd(ret);
+    }
+    else if( cmd==RE_SUPER_SIDE )
+    {
+        getSideCmd();
+    }
+    else if( cmd==RE_SUPER_LOVE )
+    {
+        getLoveCmd(ret);
+    }
+    else if( cmd==RE_SUPER_ROGER )
+    {
+        getRogerCmd(ret);
+    }
+}
+
+void ReSuper::getMetaCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type = RE_COMMAND_SUPER;
+
+    qDebug() << "Meta" << state->app.pname;
+
+//    if( state->app.pname==RE_PROC_CHESS )
+//    {
+//        cmd = "xdotool key F1";
+//    }
+//    else if( state->app.pname==RE_PROC_QT )
+//    {
+//        cmd = "xdotool key F1";
+//    }
+//    else if( state->app.pname==RE_PROC_VSCODE )
+//    {
+//        cmd = "xdotool key F5";
+//    }
+//    else if( state->app.pname==RE_PROC_GIT )
+//    {
+////        cmd = re_getGoGitKraken(val);
+//    }
+//    else if( state->app.pname==RE_PROC_FIREFOX ||
+//             state->app.pname==RE_PROC_GEKO )
+//    {
+//        cmd = "xdotool key ctrl+w";
+//    }
+//    else if( state->app.pname==RE_PROC_EXPLORER )
+//    {
+//        cmd = "xdotool key ctrl+w";
+//    }
+//    else if( state->app.pname==RE_PROC_TELEGRAM )
+//    {
+//        system("./Scripts/telegram_voice.sh");
+//    }
+}
+
+void ReSuper::getCopyCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
+
+    ret->mod_list.append(KEY_CTRL);
+    ret->val1 = KEY_C;
+}
+
+void ReSuper::getPasteCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
+
+    ret->mod_list.append(KEY_CTRL);
+    ret->val1 = KEY_V;
+}
+
+void ReSuper::getKickCmd()
+{
 #ifdef WIN32
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"\"");
 #else
 
 #endif
-    }
-    else if( command.val1==RE_SUPER_COMMENT )
-    {
-        system("xdotool key --delay 200 ctrl+slash");
-    }
-    else if( command.val1==RE_SUPER_COPY )
-    {
-        system("xdotool key --delay 200 ctrl+c");
-    }
-    else if( command.val1==RE_SUPER_PASTE )
-    {
-        system("xdotool key --delay 200 ctrl+v");
-    }
-    else if( command.val1==RE_SUPER_SIDE )
-    {
-        system("dbus-send --dest=com.benjamin.chess"
-               " / com.benjamin.chess.show string:\"side\"");
-    }
-    else if( command.val1==RE_SUPER_LOVE )
-    {
-        system("xdotool key --delay 40 ctrl+Left");
-    }
-    else if( command.val1==RE_SUPER_ROGER )
-    {
-        system("xdotool key --delay 40 ctrl+Right");
-    }
 }
 
-QString ReSuperL::getMetaCmd()
+void ReSuper::getSideCmd()
 {
-    QString cmd;
+#ifdef WIN32
+    system("dbus-send --dest=com.benjamin.chess"
+           " / com.benjamin.chess.show string:\"side\"");
+#else
 
-    qDebug() << "Meta" << state->app.pname;
+#endif
+}
 
-    if( state->app.pname=="Chess" )
-    {
-        cmd = "xdotool key F1";
-    }
-    else if( state->app.pname==RE_PROC_QT )
-    {
-        cmd = "xdotool key F1";
-    }
-    else if( state->app.pname==RE_PROC_VSCODE )
-    {
-        cmd = "xdotool key F5";
-    }
-    else if( state->app.pname==RE_PROC_GIT )
-    {
-//        cmd = re_getGoGitKraken(val);
-    }
-    else if( state->app.pname==RE_PROC_FIREFOX ||
-             state->app.pname==RE_PROC_GEKO )
-    {
-        cmd = "xdotool key ctrl+w";
-    }
-    else if( state->app.pname==RE_PROC_EXPLORER )
-    {
-        cmd = "xdotool key ctrl+w";
-    }
-    else if( state->app.pname=="Telegram" )
-    {
-        cmd = "./Scripts/telegram_voice.sh";
-    }
+void ReSuper::getLoveCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
 
-    return cmd;
+    ret->mod_list.append(KEY_CTRL);
+    ret->val1 = KEY_LEFT;
+}
+
+void ReSuper::getRogerCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
+
+    ret->mod_list.append(KEY_CTRL);
+    ret->val1 = KEY_RIGHT;
+}
+
+void ReSuper::getSwitchCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
+
+    ret->mod_list.append(KEY_META);
+    ret->val1 = KEY_B;
 }
