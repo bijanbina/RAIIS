@@ -8,6 +8,7 @@
 #ifdef WIN32
 #include "re_app_w.h"
 #include "re_keyboard_w.h"
+#include "re_win32_virt.h"
 #else
 #include "re_keyboard_l.h"
 #include "re_app_l.h"
@@ -36,6 +37,7 @@ private:
     int uinput_f;
 
     ReState *state;
+    ReWin32Virt *virt;
 };
 
 #endif //RE_SUPER_H

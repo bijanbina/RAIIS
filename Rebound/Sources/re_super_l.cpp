@@ -3,6 +3,7 @@
 ReSuper::ReSuper(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
+    virt = new ReWin32Virt;
 }
 
 ReSuper::~ReSuper()
@@ -65,6 +66,7 @@ void ReSuper::getMetaCmd(CCommand *ret)
     ret->type = RE_COMMAND_SUPER;
 
     qDebug() << "Meta" << state->app.pname;
+    virt->setDesktop(2);
 
 //    if( state->app.pname==RE_PROC_CHESS )
 //    {
