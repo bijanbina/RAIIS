@@ -1,9 +1,11 @@
 #ifndef RE_CONFIG_H
 #define RE_CONFIG_H
 
-#define COM_NAME "com.binaee.rebound"
-#define ORG_NAME "org.binaee.rebound"
-#define PIPE_PATH "\\\\.\\pipe\\com_binaee_rebound"
+#define COM_NAME        "com.binaee.rebound"
+#define ORG_NAME        "org.binaee.rebound"
+#define PIPE_PATH       "\\\\.\\pipe\\com_binaee_rebound"
+#define CH_PIPE_PATH    "\\\\.\\pipe\\com_binaee_chess"
+#define CH_NP_SEPARATOR ","
 
 //#define RE_DEBUG_WIN //show window detection debug info
 

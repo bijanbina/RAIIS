@@ -3,7 +3,7 @@
 
 #include <QVector>
 
-#include "backend.h"
+#include "re_config.h"
 #include "re_state.h"
 #ifdef WIN32
 #include "re_app_w.h"
@@ -31,12 +31,18 @@ private:
     void getLoveCmd(CCommand *ret);
     void getRogerCmd(CCommand *ret);
     void getSwitchCmd(CCommand *ret);
+    void getCamelCmd();
     void getSideCmd();
     void getKickCmd();
+
+    void connectChessPipe();
+    void sendPipe(const char *data);
 
     int uinput_f;
 
     ReState *state;
+
+    HANDLE hPipe;
     ReWin32Virt *virt;
 };
 

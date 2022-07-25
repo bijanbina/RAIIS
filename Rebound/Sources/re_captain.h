@@ -7,7 +7,7 @@
 
 #include "backend.h"
 #include "re_meta.h"
-#include "re_super_l.h"
+#include "re_super.h"
 #include "re_qt.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"

@@ -1,9 +1,11 @@
-#include "re_super_l.h"
+#include "re_super.h"
 
 ReSuper::ReSuper(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
     virt = new ReWin32Virt;
+
+    connectChessPipe();
 }
 
 ReSuper::~ReSuper()
@@ -19,11 +21,7 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     }
     else if( cmd==RE_SUPER_CAMEL )
     {
-        qDebug() << "CreateProcess 1";
-#ifdef WIN32
-#else
-        system("./Scripts/camel");
-#endif
+        getCamelCmd();
     }
     else if( cmd==RE_SUPER_SWITCH )
     {
@@ -124,20 +122,28 @@ void ReSuper::getPasteCmd(CCommand *ret)
 void ReSuper::getKickCmd()
 {
 #ifdef WIN32
-        system("dbus-send --dest=com.benjamin.chess"
-               " / com.benjamin.chess.show string:\"\"");
+    sendPipe("show" CH_NP_SEPARATOR);
 #else
-
+    system("dbus-send --dest=com.benjamin.chess"
+           " / com.benjamin.chess.show string:\"\"");
 #endif
 }
 
 void ReSuper::getSideCmd()
 {
 #ifdef WIN32
+#else
     system("dbus-send --dest=com.benjamin.chess"
            " / com.benjamin.chess.show string:\"side\"");
-#else
+#endif
+}
 
+void ReSuper::getCamelCmd()
+{
+    qDebug() << "CreateProcess 1";
+#ifdef WIN32
+#else
+    system("./Scripts/camel");
 #endif
 }
 
@@ -172,4 +178,60 @@ void ReSuper::getSwitchCmd(CCommand *ret)
 
     ret->mod_list.append(KEY_META);
     ret->val1 = KEY_B;
+}
+
+void ReSuper::connectChessPipe()
+{
+    // 0: Default Wait Time
+    int np_is_available = WaitNamedPipeA(CH_PIPE_PATH, 0);
+    if( np_is_available )
+    {
+        hPipe = CreateFileA(CH_PIPE_PATH, GENERIC_WRITE, // dwDesiredAccess
+                            0, nullptr,    // lpSecurityAttributes
+                            OPEN_EXISTING,  // dwCreationDisposition
+                            0, nullptr);    // hTemplateFile
+
+        if( hPipe==INVALID_HANDLE_VALUE )
+        {
+            qDebug() << "Error 120: Cannot create " CH_PIPE_PATH;
+        }
+    }
+    else
+    {
+        hPipe = INVALID_HANDLE_VALUE;
+        qDebug() << "Error 121: Pipe " CH_PIPE_PATH
+                    " not found";
+    }
+}
+
+void ReSuper::sendPipe(const char *data)
+{
+    DWORD len = strlen(data);
+    if( hPipe==INVALID_HANDLE_VALUE )
+    {
+        qDebug() << "Try to reconnect to"
+                 << CH_PIPE_PATH;
+
+        connectChessPipe();
+        if( hPipe==INVALID_HANDLE_VALUE )
+        {
+            return;
+        }
+    }
+
+    DWORD dwWritten;
+    int success = WriteFile(hPipe, data, len, &dwWritten, NULL);
+    if( !success )
+    {
+        qDebug() << "Error: NamedPipe writing failed," << GetLastError();
+    }
+
+    if( dwWritten!=len )
+    {
+        qDebug() << "Error: Wrong writing length."
+                    "Try to revive channel";
+        CloseHandle(hPipe);
+        hPipe = INVALID_HANDLE_VALUE;
+        sendPipe(data);
+    }
 }

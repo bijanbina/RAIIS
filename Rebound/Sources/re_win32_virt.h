@@ -5,6 +5,9 @@
 #include <windows.h>
 #include <objbase.h>
 #include <ObjectArray.h>
+// https://github.com/senfiron/win10-virtual-desktop-switcher/tree/master/VirtualDesktopSwitcher/VirtualDesktopSwitcher
+// https://github.com/chuckrector/virtual_desktopper/blob/main/virtual_desktopper.h
+
 
 const CLSID CLSID_ImmersiveShell = {
     0xC2F03A33, 0x21F5, 0x47FA, {0xB4, 0xBB, 0x15, 0x63, 0x62, 0xA2, 0xF2, 0x39} };
@@ -18,37 +21,20 @@ const IID IID_IVirtualDesktopManagerInternal = {
 const GUID UUID_IVirtualDesktop = {
     0xFF72FFDD, 0xBE7E, 0x43FC, {0x9C, 0x03, 0xAD, 0x81, 0x68, 0x1E, 0x88, 0xE4} };
 
-// см. IApplicationView из Windows Runtime
 struct IApplicationView : public IUnknown
-{
-public:
+{ };
 
-};
-
-EXTERN_C const IID IID_IVirtualDesktop;
-
-MIDL_INTERFACE("FF72FFDD-BE7E-43FC-9C03-AD81681E88E4")
-IVirtualDesktop : public IUnknown
+struct IVirtualDesktop : public IUnknown
 {
 public:
     virtual HRESULT STDMETHODCALLTYPE IsViewVisible(
-        IApplicationView *pView,
-        int *pfVisible) = 0;
+        IApplicationView *pView, int *pfVisible) = 0;
 
     virtual HRESULT STDMETHODCALLTYPE GetID(
         GUID *pGuid) = 0;
 };
 
-enum AdjacentDesktop
-{
-    // Соседний рабочий стол слева
-    LeftDirection = 3,
-    // Соседний рабочий стол справа
-    RightDirection = 4
-};
-
-MIDL_INTERFACE("AF8DA486-95BB-4460-B3B7-6E7A6B2962B5")
-IVirtualDesktopManagerInternal : public IUnknown
+struct IVirtualDesktopManagerInternal : public IUnknown
 {
 public:
     virtual HRESULT STDMETHODCALLTYPE GetCount(
@@ -72,7 +58,7 @@ public:
     // Получение соседнего рабочего стола относительно указанного, с учетом направления
     virtual HRESULT STDMETHODCALLTYPE GetAdjacentDesktop(
         IVirtualDesktop *pDesktopReference,
-        AdjacentDesktop uDirection,
+        int uDirection,
         IVirtualDesktop **ppAdjacentDesktop) = 0;
 
     virtual HRESULT STDMETHODCALLTYPE SwitchDesktop(
@@ -108,7 +94,6 @@ public:
         /* [in] */ __RPC__in HWND topLevelWindow,
         /* [in] */ __RPC__in REFGUID desktopId) = 0;
 };
-
 
 class ReWin32Virt
 {
