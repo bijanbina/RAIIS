@@ -48,8 +48,6 @@ void ReAdminWin::readyRead()
     QByteArray data = connection_socket->readAll();
     qDebug() << "received data:" << data;
 
-
-
 #ifdef _WIN32
     QString command = "O:\\Projects\\AccJoon\\release\\AccJoon.exe";
 

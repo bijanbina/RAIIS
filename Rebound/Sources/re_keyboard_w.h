@@ -33,6 +33,9 @@
 #define KEY_DOWN      VK_DOWN
 #define KEY_RIGHT     VK_RIGHT
 #define KEY_BACKSPACE VK_BACK
+#define KEY_CTRL      VK_CONTROL
+#define KEY_META      VK_LWIN
+
 
 class ReKeyboard
 {

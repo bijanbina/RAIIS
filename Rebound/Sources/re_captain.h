@@ -27,7 +27,8 @@ public:
     bool isLastRepeatable();
 
     ReState     *state;
-    ReKeyboard *key;
+    ReSuper     *super;
+    ReKeyboard  *key;
 private:
     void handleScroll(CCommand command);
 
@@ -41,7 +42,6 @@ private:
     int uinput_f;
 
     ReMeta  *meta;
-    ReSuperL *super;
     QVector<CCommand> modifiers;
 };
 

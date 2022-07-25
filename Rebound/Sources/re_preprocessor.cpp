@@ -350,6 +350,7 @@ void RePreProcessor::super(const QString &text)
     cmd.val2 = 1;
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_SUPER;
+    captain->super->castCmd(text.toInt(), &cmd);
     cmd_buf.append(cmd);
 
     execute();

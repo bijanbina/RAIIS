@@ -8,5 +8,7 @@
 #define RE_PROC_GEKO     "GeckoMain" //same as firefox
 #define RE_PROC_EXPLORER "nautilus"
 #define RE_PROC_EDITOR   "xed"
+#define RE_PROC_CHESS    "Chess"
+#define RE_PROC_TELEGRAM "Telegram"
 
 #endif // RE_APP_L_H

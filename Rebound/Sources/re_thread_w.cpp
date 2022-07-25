@@ -267,9 +267,9 @@ QString ReThreadW::renameAppName(QString app_name)
     {
         return "Foxit";
     }
-    else if(app_name.contains(RE_PROC_GEKO, Qt::CaseInsensitive))
+    else if(app_name.contains("firefox", Qt::CaseInsensitive))
     {
-        return RE_PROC_GEKO;
+        return "firefox";
     }
     else if(app_name.contains("spotify", Qt::CaseInsensitive))
     {
@@ -297,7 +297,7 @@ void ReThreadW::sortApp()
             sorted_apps.insert(clover_ind, windows[i]);
             clover_ind++; firefox_ind++; spotify_ind++;
         }
-        else if(windows[i].pname.contains(RE_PROC_GEKO, Qt::CaseInsensitive))
+        else if(windows[i].pname.contains("firefox", Qt::CaseInsensitive))
         {
             sorted_apps.insert(firefox_ind, windows[i]);
             firefox_ind++; spotify_ind++;

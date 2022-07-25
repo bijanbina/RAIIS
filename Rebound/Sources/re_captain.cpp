@@ -6,7 +6,7 @@ ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
     meta  = new ReMeta (state);
-    super = new ReSuperL(state);
+    super = new ReSuper(state);
     key   = new ReKeyboard;
     state->last_cmd.type = RE_COMMAND_NULL;
 }
@@ -124,7 +124,8 @@ void ReCaptain::execCommand(CCommand command)
     {
         for( int j=0 ; j<command.val2 ; j++ )
         {
-            super->exec(command);
+            CCommand cmd; //dummy var
+            super->castCmd(command.val1, &cmd);
         }
     }
     else if( command.type==RE_COMMAND_QDIGIT )

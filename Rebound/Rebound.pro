@@ -34,6 +34,7 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_thread_w.cpp \
                  Sources/re_hardware_w.cpp \
                  Sources/re_admin_win.cpp \
+                 Sources/re_win32_virt.cpp \
                  Sources/re_xbox_win32.cpp \
                  Sources/re_xbox_w.cpp
 
@@ -75,6 +76,7 @@ win32:HEADERS += Sources/re_api_w.h \
                  Sources/re_thread_w.h \
                  Sources/re_server.h \
                  Sources/re_hardware_w.h \
+                 Sources/re_win32_virt.h \
                  Sources/re_xbox_win32.h \
                  Sources/re_xbox_w.h
 
