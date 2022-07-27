@@ -1,8 +1,8 @@
 #include "re_super.h"
 
-ReSuper::ReSuper(ReState *st, QObject *parent): QObject(parent)
+ReSuper::ReSuper(ReWindow *current_w, QObject *parent): QObject(parent)
 {
-    state = st;
+    app = current_w;
     virt = new ReWin32Virt;
 
     connectChessPipe();
@@ -63,35 +63,35 @@ void ReSuper::getMetaCmd(CCommand *ret)
     ret->val3 = 1;
     ret->type = RE_COMMAND_SUPER;
 
-    qDebug() << "Meta" << state->app.pname;
+    qDebug() << "Meta" << app->pname;
     virt->setDesktop(2);
 
-//    if( state->app.pname==RE_PROC_CHESS )
+//    if( app->pname==RE_PROC_CHESS )
 //    {
 //        cmd = "xdotool key F1";
 //    }
-//    else if( state->app.pname==RE_PROC_QT )
+//    else if( app->pname==RE_PROC_QT )
 //    {
 //        cmd = "xdotool key F1";
 //    }
-//    else if( state->app.pname==RE_PROC_VSCODE )
+//    else if( app->pname==RE_PROC_VSCODE )
 //    {
 //        cmd = "xdotool key F5";
 //    }
-//    else if( state->app.pname==RE_PROC_GIT )
+//    else if( app->pname==RE_PROC_GIT )
 //    {
 ////        cmd = re_getGoGitKraken(val);
 //    }
-//    else if( state->app.pname==RE_PROC_FIREFOX ||
-//             state->app.pname==RE_PROC_GEKO )
+//    else if( app->pname==RE_PROC_FIREFOX ||
+//             app->pname==RE_PROC_GEKO )
 //    {
 //        cmd = "xdotool key ctrl+w";
 //    }
-//    else if( state->app.pname==RE_PROC_EXPLORER )
+//    else if( app->pname==RE_PROC_EXPLORER )
 //    {
 //        cmd = "xdotool key ctrl+w";
 //    }
-//    else if( state->app.pname==RE_PROC_TELEGRAM )
+//    else if( app->pname==RE_PROC_TELEGRAM )
 //    {
 //        system("./Scripts/telegram_voice.sh");
 //    }

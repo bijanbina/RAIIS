@@ -21,15 +21,16 @@ public:
     ReMeta(ReState *st, QObject *parent = NULL);
     ~ReMeta();
 
-    void execMeta(CCommand command);
+    CCommand castMeta(int meta, int arg);
 
 private:
     QString getGoCmd(int val);
     QString getPageCmd(int val);
     QString getMusicCmd(int val);
     QString getMouseCmd(int val);
-    QString getSystemCmd(int val);
     QString getTouchCmd(int val);
+    CCommand castSystemCmd(int val);
+    CCommand castFoxCmd(int val);
     void getScrollCmd(int meta, int val);
 
     ReState *state;
