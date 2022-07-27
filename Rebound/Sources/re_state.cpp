@@ -6,6 +6,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
     i_proc = RE_WIN_UNKNOWN;
     ui_visible = false;
     fl = new ReFirefox;
+    super = new ReSuper(&app);
 
 #ifdef _WIN32
     api = new ReApi;
@@ -13,6 +14,17 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #endif
 #ifdef __linux__
     readStatusFile();
+#endif
+}
+
+ReState::~ReState()
+{
+    delete super;
+    delete fl;
+
+#ifdef _WIN32
+    delete api;
+    delete hardware;
 #endif
 }
 

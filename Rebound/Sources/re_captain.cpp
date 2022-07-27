@@ -6,7 +6,6 @@ ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
     meta  = new ReMeta (state);
-    super = new ReSuper(state);
     key   = new ReKeyboard;
     state->last_cmd.type = RE_COMMAND_NULL;
 }
@@ -14,7 +13,6 @@ ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
 ReCaptain::~ReCaptain()
 {
     delete meta;
-    delete super;
 }
 
 void ReCaptain::execModifier(CCommand command)
@@ -115,17 +113,14 @@ void ReCaptain::execCommand(CCommand command)
     }
     else if( command.type==RE_COMMAND_META )
     {
-        for( int j=0 ; j<command.val3 ; j++ )
-        {
-            meta->execMeta(command);
-        }
+        execMeta(command);
     }
     else if( command.type==RE_COMMAND_SUPER )
     {
         for( int j=0 ; j<command.val2 ; j++ )
         {
             CCommand cmd; //dummy var
-            super->castCmd(command.val1, &cmd);
+            state->super->castCmd(command.val1, &cmd);
         }
     }
     else if( command.type==RE_COMMAND_QDIGIT )
@@ -191,4 +186,30 @@ bool ReCaptain::isWakeUp(CCommand command)
     }
 
     return false;
+}
+
+void ReCaptain::execMeta(CCommand command)
+{
+    CCommand translated;
+    for( int j=0 ; j<command.val3 ; j++ )
+    {
+        translated = meta->castMeta(command.val1,
+                                    command.val2);
+        execCommand(translated);
+
+        if( command.type==RE_COMMAND_NATO ||
+            command.type==RE_COMMAND_DIRS ||
+            command.type==RE_COMMAND_DIGIT )
+        {
+            for( int j=0 ; j<command.val2 ; j++ )
+            {
+                key->sendKey(command.val1);
+                QThread::msleep(5); //little tweak
+            }
+        }
+        else if( command.type==RE_COMMAND_MOD )
+        {
+            execModifier(command);
+        }
+    }
 }

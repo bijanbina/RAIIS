@@ -27,12 +27,12 @@ public:
     bool isLastRepeatable();
 
     ReState     *state;
-    ReSuper     *super;
     ReKeyboard  *key;
 private:
     void handleScroll(CCommand command);
 
     void execModifier(CCommand command);
+    void execMeta(CCommand command);
     void releaseModifiers();
 
     void execCommand(CCommand command);

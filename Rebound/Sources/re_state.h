@@ -12,12 +12,15 @@
 #include "re_firefox.h"
 #include "re_commands.h"
 #include "re_state_const.h"
+#include "re_state_const.h"
+#include "re_super.h"
 
 class ReState : public QObject
 {
     Q_OBJECT
 public:
     explicit ReState(QObject *parent = 0);
+    ~ReState();
 
     void readStatusFile();
     void rmStatusFile();
@@ -53,6 +56,7 @@ public:
     ReWindow app; //Active Window
     CCommand last_cmd;
     ReFirefox *fl;
+    ReSuper   *super;
 
 signals:
     void updateMode();

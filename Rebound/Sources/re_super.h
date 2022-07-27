@@ -4,7 +4,7 @@
 #include <QVector>
 
 #include "re_config.h"
-#include "re_state.h"
+#include "re_commands.h"
 #ifdef WIN32
 #include "re_app_w.h"
 #include "re_keyboard_w.h"
@@ -19,11 +19,12 @@ class ReSuper : public QObject
     Q_OBJECT
 
 public:
-    ReSuper(ReState *st, QObject *parent = NULL);
+    ReSuper(ReWindow *current_w, QObject *parent = NULL);
     ~ReSuper();
 
     void castCmd(int cmd, CCommand *ret);
 
+    ReWin32Virt *virt;
 private:
     void getMetaCmd(CCommand *ret);
     void getCopyCmd(CCommand *ret);
@@ -40,10 +41,9 @@ private:
 
     int uinput_f;
 
-    ReState *state;
+    ReWindow *app;
 
     HANDLE hPipe;
-    ReWin32Virt *virt;
 };
 
 #endif //RE_SUPER_H
