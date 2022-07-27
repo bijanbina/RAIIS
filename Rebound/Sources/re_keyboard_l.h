@@ -5,6 +5,9 @@
 #include <linux/uinput.h>
 #include "backend.h"
 
+#define RE_KEY_FMIN    59 //F1
+#define RE_KEY_FMAX    68 //F10
+
 class ReKeyboard
 {
 public:

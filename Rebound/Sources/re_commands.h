@@ -1,15 +1,16 @@
 #ifndef RE_COMMANDS_H
 #define RE_COMMANDS_H
 
-
 #ifdef _WIN32
 #include "re_api_w.h"
 #include "re_hardware_w.h"
+#include "re_keyboard_w.h"
 #endif
 #ifdef __linux__
 #include <QObject>
 #include <QDebug>
 #include <QStringList>
+#include "re_keyboard_l.h"
 #endif
 
 #define RE_COMMAND_NULL   0
@@ -56,9 +57,6 @@
 #define RE_APP_DING     305 //fox ding
 #define RE_APP_LINK     306 //fox link
 #define RE_APP_SLEEP    307 //go sleep
-
-#define RE_KEY_FMIN    59 //F1
-#define RE_KEY_FMAX    68 //F10
 
 typedef struct ReWindow
 {

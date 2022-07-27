@@ -36,6 +36,8 @@
 #define KEY_CTRL      VK_CONTROL
 #define KEY_META      VK_LWIN
 
+#define RE_KEY_FMIN    VK_F1    //0x6f
+#define RE_KEY_FMAX    VK_F12+1 //0x7C
 
 class ReKeyboard
 {

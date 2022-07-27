@@ -327,10 +327,15 @@ void RePreProcessor::spex(const QString &text)
     {
         special_c++;
         qDebug() << "special_c" << special_c;
+
+#ifdef WIN32
+    ///POLYBAR INTEGRATION
+#else
         QString cmd = "echo ";
         cmd += QString::number(special_c);
         cmd += " > ~/.config/polybar/awesomewm/ben_spex";
         system(cmd.toStdString().c_str());
+#endif
     }
 }
 

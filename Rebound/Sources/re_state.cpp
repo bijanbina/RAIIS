@@ -18,6 +18,9 @@ ReState::ReState(QObject *parent) : QObject(parent)
 
 void ReState::readStatusFile()
 {
+#ifdef WIN32
+    ///POLYBAR INTEGRATION
+#else
     QString path = getenv("HOME");
     path += "/.config/polybar/awesomewm/ben_status";
     QFile file(path);
@@ -36,10 +39,14 @@ void ReState::readStatusFile()
             rmStatusFile();
         }
     }
+#endif
 }
 
 void ReState::rmStatusFile()
 {
+#ifdef WIN32
+    ///POLYBAR INTEGRATION
+#else
     QString path = getenv("HOME");
     path += "/.config/polybar/awesomewm/ben_status";
     if( QFileInfo::exists(path) )
@@ -49,10 +56,14 @@ void ReState::rmStatusFile()
 
         system(cmd.toStdString().c_str());
     }
+#endif
 }
 
 void ReState::rmSpexFile()
 {
+#ifdef WIN32
+    ///POLYBAR INTEGRATION
+#else
     QString path = getenv("HOME");
     path += "/.config/polybar/awesomewm/ben_spex";
     if( QFileInfo::exists(path) )
@@ -62,6 +73,7 @@ void ReState::rmSpexFile()
 
         system(cmd.toStdString().c_str());
     }
+#endif
 }
 
 void ReState::setMode(int mode)

@@ -12,7 +12,7 @@ bool re_isLastCmdFunction(QVector<CCommand> commands)
 
     if( cmd_type==RE_COMMAND_NATO )
     {
-        if( key_code>RE_KEY_FMIN &&
+        if( key_code>=RE_KEY_FMIN &&
             key_code <RE_KEY_FMAX )
         {
             return true;
