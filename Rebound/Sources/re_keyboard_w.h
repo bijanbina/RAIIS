@@ -26,6 +26,7 @@
 #define KEY_R         'R'
 #define KEY_T         'T'
 #define KEY_V         'V'
+#define KEY_W         'W'
 #define KEY_ESC       VK_ESCAPE
 #define KEY_UP        VK_UP
 #define KEY_ENTER     VK_RETURN
@@ -39,6 +40,16 @@
 #define KEY_META      VK_LWIN
 #define KEY_PRIOR     VK_PRIOR //Page Up
 #define KEY_NEXT      VK_NEXT  //Page Down
+
+#define KEY_F1        VK_F1
+#define KEY_F2        VK_F2
+#define KEY_F3        VK_F3
+#define KEY_F4        VK_F4
+#define KEY_F5        VK_F5
+#define KEY_F6        VK_F6
+#define KEY_F7        VK_F7
+#define KEY_F8        VK_F8
+#define KEY_F9        VK_F9
 
 #define RE_KEY_FMIN    VK_F1    //0x6f
 #define RE_KEY_FMAX    VK_F12+1 //0x7C

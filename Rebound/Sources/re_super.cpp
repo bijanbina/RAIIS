@@ -65,35 +65,50 @@ void ReSuper::getMetaCmd(CCommand *ret)
 
     qDebug() << "Meta" << app->pname;
 
-//    if( app->pname==RE_PROC_CHESS )
-//    {
-//        cmd = "xdotool key F1";
-//    }
-//    else if( app->pname==RE_PROC_QT )
-//    {
-//        cmd = "xdotool key F1";
-//    }
-//    else if( app->pname==RE_PROC_VSCODE )
-//    {
-//        cmd = "xdotool key F5";
-//    }
-//    else if( app->pname==RE_PROC_GIT )
-//    {
-////        cmd = re_getGoGitKraken(val);
-//    }
-//    else if( app->pname==RE_PROC_FIREFOX ||
-//             app->pname==RE_PROC_GEKO )
-//    {
-//        cmd = "xdotool key ctrl+w";
-//    }
-//    else if( app->pname==RE_PROC_EXPLORER )
-//    {
-//        cmd = "xdotool key ctrl+w";
-//    }
-//    else if( app->pname==RE_PROC_TELEGRAM )
-//    {
-//        system("./Scripts/telegram_voice.sh");
-//    }
+    if( app->pname==RE_PROC_CHESS )
+    {
+        ret->val1 = KEY_F1;
+        ret->type = RE_COMMAND_DIRS;
+    }
+    else if( app->pname==RE_PROC_QT )
+    {
+        ret->val1 = KEY_F1;
+        ret->type = RE_COMMAND_DIRS;
+    }
+    else if( app->pname==RE_PROC_VSCODE )
+    {
+        ret->val1 = KEY_F5;
+        ret->type = RE_COMMAND_DIRS;
+    }
+    else if( app->pname==RE_PROC_GIT )
+    {
+//        cmd = re_getGoGitKraken(val);
+    }
+    else if( app->pname==RE_PROC_FIREFOX ||
+             app->pname==RE_PROC_GEKO )
+    {
+        ret->mod_list.append(KEY_CTRL);
+        ret->val1 = KEY_W;
+
+        ret->val2 = 1;
+        ret->val3 = 1;
+        ret->type  = RE_COMMAND_MOD;
+        ret->state = RE_CSTATE_0;
+    }
+    else if( app->pname==RE_PROC_EXPLORER )
+    {
+        ret->mod_list.append(KEY_CTRL);
+        ret->val1 = KEY_W;
+
+        ret->val2 = 1;
+        ret->val3 = 1;
+        ret->type  = RE_COMMAND_MOD;
+        ret->state = RE_CSTATE_0;
+    }
+    else if( app->pname==RE_PROC_TELEGRAM )
+    {
+        system("./Scripts/telegram_voice.sh");
+    }
 }
 
 void ReSuper::getCopyCmd(CCommand *ret)
