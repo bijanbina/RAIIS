@@ -64,7 +64,6 @@ void ReSuper::getMetaCmd(CCommand *ret)
     ret->type = RE_COMMAND_SUPER;
 
     qDebug() << "Meta" << app->pname;
-    virt->setDesktop(2);
 
 //    if( app->pname==RE_PROC_CHESS )
 //    {

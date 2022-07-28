@@ -91,37 +91,32 @@ CCommand ReMeta::castMeta(int meta, int arg)
 
 void ReMeta::castMouseCmd(int val, CCommand *cmd)
 {
-    //////SHOULD GET FIXED WITH THE NEW SYSTEM
-    QString cmd_str;
 
     if( val==KEY_LEFT )
     {
-        cmd_str = "xdotool click 1";
+        re_mouseKey(1);
     }
     else if( val==KEY_M )
     {
-        cmd_str = "xdotool click 2";
+        re_mouseKey(2);
     }
     else if( val==KEY_RIGHT )
     {
-        cmd_str = "xdotool click 3";
+        re_mouseKey(3);
     }
+#ifndef WIN32
     else if( val==KEY_F ) //focus
     {
         system("xdotool key --delay 200 super+ctrl+k");
         QThread::msleep(100); //little tweak
-        cmd_str = "xdotool key --delay 200 super+ctrl+k";
+        system("xdotool key --delay 200 super+ctrl+k");
     }
     else if( val==KEY_C ) //center
     {
-        cmd_str = "xdotool mousemove 960 540";
+        system("xdotool mousemove 960 540");
     }
-    else
-    {
-        qDebug() << "Unknown Switch" << val;
-    }
+#endif
 
-    system(cmd_str.toStdString().c_str());
 }
 
 void ReMeta::castSystemCmd(int val, CCommand *cmd)
@@ -283,75 +278,50 @@ void ReMeta::castTouchCmd(int val, CCommand *cmd)
 
     if( val==KEY_DOWN )
     {
-        moveMouseR(0, 100);
+        re_mouseMoveR(0, 100);
     }
     else if( val==KEY_UP )
     {
-        moveMouseR(0, -100);
+        re_mouseMoveR(0, -100);
     }
     else if( val==KEY_RIGHT )
     {
-        moveMouseR(100, 0);
+        re_mouseMoveR(100, 0);
     }
     else if( val==KEY_LEFT )
     {
-        moveMouseR(-100, 0);
+        re_mouseMoveR(-100, 0);
     }
     else if( val==KEY_1 )
     {
-        moveMouseR(-27, -22);
+        re_mouseMoveR(-27, -22);
     }
     else if( val==KEY_2 )
     {
-        moveMouseR(0, -22);
+        re_mouseMoveR(0, -22);
     }
     else if( val==KEY_3 )
     {
-        moveMouseR(27, -22);
+        re_mouseMoveR(27, -22);
     }
     else if( val==KEY_4 )
     {
-        moveMouseR(-27, 0);
+        re_mouseMoveR(-27, 0);
     }
     else if( val==KEY_6 )
     {
-        moveMouseR(22, 0);
+        re_mouseMoveR(22, 0);
     }
     else if( val==KEY_7 )
     {
-        moveMouseR(-27, 22);
+        re_mouseMoveR(-27, 22);
     }
     else if( val==KEY_8 )
     {
-        moveMouseR(0, 22);
+        re_mouseMoveR(0, 22);
     }
     else if( val==KEY_9 )
     {
-        moveMouseR(27, 22);
+        re_mouseMoveR(27, 22);
     }
-}
-
-void ReMeta::moveMouseR(int x, int y)
-{
-#ifdef WIN32
-    POINT pt;
-    GetCursorPos(&pt);
-
-    int x2 = pt.x + x;
-    int y2 = pt.y + y;
-
-    SetCursorPos(x2, y2);
-#else
-    QString cmd = "xdotool mousemove_relative ";
-
-    if( x<0 )
-    {
-        cmd += "-- ";
-    }
-    cmd += QString::number(x);
-    cmd += " ";
-    cmd += QString::number(y);
-#endif
-
-
 }

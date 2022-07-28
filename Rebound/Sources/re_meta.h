@@ -13,6 +13,7 @@
 #else
 #include "re_app_l.h"
 #endif
+#include "re_mouse.h"
 
 class ReMeta : public QObject
 {
@@ -33,8 +34,6 @@ private:
     void castSystemCmd(int val, CCommand *cmd);
     void castFoxCmd(int val, CCommand *cmd);
     void execScrollCmd(int meta, int val);
-
-    void moveMouseR(int x, int y);
 
     ReState *state;
 };
