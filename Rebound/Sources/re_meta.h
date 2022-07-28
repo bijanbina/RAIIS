@@ -24,14 +24,14 @@ public:
     CCommand castMeta(int meta, int arg);
 
 private:
-    QString getGoCmd(int val);
-    QString getPageCmd(int val);
-    QString getMusicCmd(int val);
-    QString getMouseCmd(int val);
-    QString getTouchCmd(int val);
-    CCommand castSystemCmd(int val);
-    CCommand castFoxCmd(int val);
-    void getScrollCmd(int meta, int val);
+    void castGoCmd(int val, CCommand *cmd);
+    void castPageCmd(int val, CCommand *cmd);
+    void castMusicCmd(int val, CCommand *cmd);
+    void castMouseCmd(int val, CCommand *cmd);
+    void castTouchCmd(int val, CCommand *cmd);
+    void castSystemCmd(int val, CCommand *cmd);
+    void castFoxCmd(int val, CCommand *cmd);
+    void execScrollCmd(int meta, int val);
 
     ReState *state;
 };

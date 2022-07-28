@@ -35,6 +35,8 @@
 #define KEY_BACKSPACE VK_BACK
 #define KEY_CTRL      VK_CONTROL
 #define KEY_META      VK_LWIN
+#define KEY_PRIOR     VK_PRIOR //Page Up
+#define KEY_NEXT      VK_NEXT  //Page Down
 
 #define RE_KEY_FMIN    VK_F1    //0x6f
 #define RE_KEY_FMAX    VK_F12+1 //0x7C

@@ -29,17 +29,17 @@ CCommand ReMeta::castMeta(int meta, int arg)
 
     if( meta==RE_META_OPEN )
     {
-//        QString cmd = re_getOpenCmd(state, arg);
+//        QString system(re_getOpenCmd(state, arg);
 //        system(cmd.toStdString().c_str());
     }
     else if( meta==RE_META_CLOSE )
     {
-//        QString cmd = re_getCloseCmd(state, arg);
+//        QString system(re_getCloseCmd(state, arg);
 //        system(cmd.toStdString().c_str());
     }
     else if( meta==RE_META_SYS )
     {
-        return castSystemCmd(arg);
+        castSystemCmd(arg, &cmd);
     }
     else if( meta==RE_META_START )
     {
@@ -47,12 +47,11 @@ CCommand ReMeta::castMeta(int meta, int arg)
     }
     else if( meta==RE_META_FOX )
     {
-        castFoxCmd(arg);
+        castFoxCmd(arg, &cmd);
     }
     else if( meta==RE_META_PAGE )
     {
-        QString cmd = getPageCmd(arg);
-        system(cmd.toStdString().c_str());
+        castPageCmd(arg, &cmd);
     }
     else if( meta==RE_META_GO )
     {
@@ -62,8 +61,7 @@ CCommand ReMeta::castMeta(int meta, int arg)
         }
         else
         {
-            QString cmd = getGoCmd(arg);
-            system(cmd.toStdString().c_str());
+            castGoCmd(arg, &cmd);
         }
     }
     else if( meta==RE_META_SKY ||
@@ -73,69 +71,61 @@ CCommand ReMeta::castMeta(int meta, int arg)
         {
             return cmd;
         }
-        getScrollCmd(meta, arg-1);
+        execScrollCmd(meta, arg-KEY_1);
     }
     else if( meta==RE_META_MUSIC )
     {
-        QString cmd = getMusicCmd(arg);
-        system(cmd.toStdString().c_str());
+        castMusicCmd(arg, &cmd);
     }
     else if( meta==RE_META_MOUSE )
     {
-        QString cmd = getMouseCmd(arg);
-        system(cmd.toStdString().c_str());
+        castMouseCmd(arg, &cmd);
     }
     else if( meta==RE_META_TOUCH )
     {
-        QString cmd = getTouchCmd(arg);
-        system(cmd.toStdString().c_str());
+        castTouchCmd(arg, &cmd);
     }
 
     return cmd;
 }
 
-QString ReMeta::getMouseCmd(int val)
+void ReMeta::castMouseCmd(int val, CCommand *cmd)
 {
-    QString cmd;
+    //////SHOULD GET FIXED WITH THE NEW SYSTEM
+    QString cmd_str;
 
     if( val==KEY_LEFT )
     {
-        cmd = "xdotool click 1";
+        cmd_str = "xdotool click 1";
     }
     else if( val==KEY_M )
     {
-        cmd = "xdotool click 2";
+        cmd_str = "xdotool click 2";
     }
     else if( val==KEY_RIGHT )
     {
-        cmd = "xdotool click 3";
+        cmd_str = "xdotool click 3";
     }
     else if( val==KEY_F ) //focus
     {
         system("xdotool key --delay 200 super+ctrl+k");
         QThread::msleep(100); //little tweak
-        cmd = "xdotool key --delay 200 super+ctrl+k";
+        cmd_str = "xdotool key --delay 200 super+ctrl+k";
     }
     else if( val==KEY_C ) //center
     {
-        cmd = "xdotool mousemove 960 540";
+        cmd_str = "xdotool mousemove 960 540";
     }
     else
     {
         qDebug() << "Unknown Switch" << val;
-        return "";
     }
 
-    return cmd;
+    system(cmd_str.toStdString().c_str());
 }
 
-CCommand ReMeta::castSystemCmd(int val)
+void ReMeta::castSystemCmd(int val, CCommand *cmd)
 {
-    CCommand cmd; //dummy var
-    cmd.type = RE_COMMAND_NATO;
-    cmd.val1 = 0;
-    cmd.val2 = 0;
-
     if( val==KEY_A )
     {
         system("xdotool set_desktop 0");
@@ -158,60 +148,52 @@ CCommand ReMeta::castSystemCmd(int val)
     {
         qDebug() << "Unknown System" << val;
     }
-
-    return cmd;
 }
 
-CCommand ReMeta::castFoxCmd(int val)
+void ReMeta::castFoxCmd(int val, CCommand *cmd)
 {
-    CCommand cmd; //dummy var
-    cmd.type = RE_COMMAND_NATO;
-    cmd.val1 = 0;
-    cmd.val2 = 0;
     state->last_cmd.type = RE_COMMAND_NULL;
 
     if( val==RE_APP_LINK )
     {
-        cmd.mod_list.append(KEY_CTRL);
-        cmd.val1 = KEY_F;
+        cmd->mod_list.append(KEY_CTRL);
+        cmd->val1 = KEY_F;
 
-        cmd.val2 = 1;
-        cmd.val3 = 1;
-        cmd.type  = RE_COMMAND_MOD;
-        cmd.state = RE_CSTATE_0;
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
     }
-
-    return cmd;
 }
 
-QString ReMeta::getMusicCmd(int val)
+void ReMeta::castMusicCmd(int val, CCommand *cmd)
 {
-    QString cmd = "./Scripts/music.sh ";
+    //////SHOULD GET FIXED WITH THE NEW SYSTEM
+    QString cmd_str = "./Scripts/music.sh ";
 
     if( val==KEY_ENTER )
     {
-        cmd += "play";
+        cmd_str += "play";
     }
     else if( val==KEY_LEFT )
     {
-        cmd += "prev";
+        cmd_str += "prev";
     }
     else if( val==KEY_RIGHT )
     {
-        cmd += "next";
+        cmd_str += "next";
     }
     else
     {
         qDebug() << "Unknown Music" << val;
-        return "";
+        return;
     }
 
-    cmd += " >/dev/null";
-
-    return cmd;
+    cmd_str += " >/dev/null";
+    system(cmd_str.toStdString().c_str());
 }
 
-void ReMeta::getScrollCmd(int meta, int val)
+void ReMeta::execScrollCmd(int meta, int val)
 {
     QString direction;
     if( meta==RE_META_SKY )
@@ -226,130 +208,126 @@ void ReMeta::getScrollCmd(int meta, int val)
     state->enScroll(meta, val);
 }
 
-QString ReMeta::getGoCmd(int val)
+void ReMeta::castGoCmd(int val, CCommand *cmd)
 {
-    QString cmd;
+    //////SHOULD GET FIXED WITH THE NEW SYSTEM
 
     qDebug() << "GO" << state->app.pname;
 
     if( state->app.pname==RE_PROC_EDITOR )
     {
-        cmd = re_getGoXed(val);
+        re_getGoXed(val);
     }
     else if( state->app.pname==RE_PROC_QT ||
              state->app.pname==RE_PROC_VSCODE )
     {
-        cmd = re_getGoQt(val);
+        re_getGoQt(val);
     }
     else if( state->app.pname==RE_PROC_GIT )
     {
-        cmd = re_getGoGitKraken(val);
+        re_getGoGitKraken(val);
     }
     else if( state->app.pname==RE_PROC_FIREFOX ||
              state->app.pname==RE_PROC_GEKO )
     {
-        cmd = re_getGoFirefox(val);
+        re_getGoFirefox(val);
     }
     else if( state->app.pname==RE_PROC_EXPLORER )
     {
-        cmd = re_getGoNautilus(val);
+        re_getGoNautilus(val);
     }
-
-    return cmd;
 }
 
-QString ReMeta::getPageCmd(int val)
+void ReMeta::castPageCmd(int val, CCommand *cmd)
 {
-    QString cmd;
-
     qDebug() << "Page" << state->app.pname;
 
     if( state->app.pname==RE_PROC_EDITOR )
     {
-//        cmd = re_getGoXed(val);
+//        system(re_getGoXed(val);
     }
     else if( state->app.pname==RE_PROC_QT ||
              state->app.pname==RE_PROC_VSCODE )
     {
-        if( val==KEY_DOWN )
+        if( val==KEY_DOWN ||
+            val==KEY_UP )
         {
-            cmd = "xdotool key --repeat 30 Down";
-        }
-        if( val==KEY_UP )
-        {
-            cmd = "xdotool key --repeat 30 Up";
+            cmd->val1  = KEY_DOWN;
+            cmd->val2  = 30; //press count
+            cmd->type  = RE_COMMAND_DIRS;
+            cmd->state = RE_CSTATE_0;
         }
     }
     else
     {
         if( val==KEY_DOWN )
         {
-            cmd = "xdotool key Next";
+            cmd->val1  = KEY_NEXT;
+            cmd->val2  = 1; //press count
+            cmd->type  = RE_COMMAND_DIRS;
+            cmd->state = RE_CSTATE_0;
         }
         if( val==KEY_UP )
         {
-            cmd = "xdotool key Prior";
+            cmd->val1  = KEY_PRIOR;
+            cmd->val2  = 1; //press count
+            cmd->type  = RE_COMMAND_DIRS;
+            cmd->state = RE_CSTATE_0;
         }
     }
-
-    return cmd;
 }
 
-QString ReMeta::getTouchCmd(int val)
+void ReMeta::castTouchCmd(int val, CCommand *cmd)
 {
-    QString cmd;
-
     qDebug() << "Touch" << state->app.pname
              << val;
 
     if( val==KEY_DOWN )
     {
-        cmd = "xdotool mousemove_relative 0 100";
+        system("xdotool mousemove_relative 0 100");
     }
     else if( val==KEY_UP )
     {
-        cmd = "xdotool mousemove_relative 0 -100";
+        system("xdotool mousemove_relative 0 -100");
     }
     else if( val==KEY_RIGHT )
     {
-        cmd = "xdotool mousemove_relative 100 0";
+        system("xdotool mousemove_relative 100 0");
     }
     else if( val==KEY_LEFT )
     {
-        cmd = "xdotool mousemove_relative -- -100 0";
+        system("xdotool mousemove_relative -- -100 0");
     }
     else if( val==KEY_1 )
     {
-        cmd = "xdotool mousemove_relative -- -27 -22";
+        system("xdotool mousemove_relative -- -27 -22");
     }
     else if( val==KEY_2 )
     {
-        cmd = "xdotool mousemove_relative -- 0 -22";
+        system("xdotool mousemove_relative -- 0 -22");
     }
     else if( val==KEY_3 )
     {
-        cmd = "xdotool mousemove_relative -- 27 -22";
+        system("xdotool mousemove_relative -- 27 -22");
     }
     else if( val==KEY_4 )
     {
-        cmd = "xdotool mousemove_relative -- -27 0";
+        system("xdotool mousemove_relative -- -27 0");
     }
     else if( val==KEY_6 )
     {
-        cmd = "xdotool mousemove_relative 22 0";
+        system("xdotool mousemove_relative 22 0");
     }
     else if( val==KEY_7 )
     {
-        cmd = "xdotool mousemove_relative -- -27 22";
+        system("xdotool mousemove_relative -- -27 22");
     }
     else if( val==KEY_8 )
     {
-        cmd = "xdotool mousemove_relative 0 22";
+        system("xdotool mousemove_relative 0 22");
     }
     else if( val==KEY_9 )
     {
-        cmd = "xdotool mousemove_relative 27 22";
+        system("xdotool mousemove_relative 27 22");
     }
-
-    return cmd;
 }
