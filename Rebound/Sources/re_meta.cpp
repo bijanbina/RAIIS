@@ -211,7 +211,6 @@ void ReMeta::execScrollCmd(int meta, int val)
 void ReMeta::castGoCmd(int val, CCommand *cmd)
 {
     //////SHOULD GET FIXED WITH THE NEW SYSTEM
-
     qDebug() << "GO" << state->app.pname;
 
     if( state->app.pname==RE_PROC_EDITOR )
@@ -230,7 +229,7 @@ void ReMeta::castGoCmd(int val, CCommand *cmd)
     else if( state->app.pname==RE_PROC_FIREFOX ||
              state->app.pname==RE_PROC_GEKO )
     {
-        re_getGoFirefox(val);
+        re_castGoFirefox(val, cmd);
     }
     else if( state->app.pname==RE_PROC_EXPLORER )
     {
@@ -284,50 +283,75 @@ void ReMeta::castTouchCmd(int val, CCommand *cmd)
 
     if( val==KEY_DOWN )
     {
-        system("xdotool mousemove_relative 0 100");
+        moveMouseR(0, 100);
     }
     else if( val==KEY_UP )
     {
-        system("xdotool mousemove_relative 0 -100");
+        moveMouseR(0, -100);
     }
     else if( val==KEY_RIGHT )
     {
-        system("xdotool mousemove_relative 100 0");
+        moveMouseR(100, 0);
     }
     else if( val==KEY_LEFT )
     {
-        system("xdotool mousemove_relative -- -100 0");
+        moveMouseR(-100, 0);
     }
     else if( val==KEY_1 )
     {
-        system("xdotool mousemove_relative -- -27 -22");
+        moveMouseR(-27, -22);
     }
     else if( val==KEY_2 )
     {
-        system("xdotool mousemove_relative -- 0 -22");
+        moveMouseR(0, -22);
     }
     else if( val==KEY_3 )
     {
-        system("xdotool mousemove_relative -- 27 -22");
+        moveMouseR(27, -22);
     }
     else if( val==KEY_4 )
     {
-        system("xdotool mousemove_relative -- -27 0");
+        moveMouseR(-27, 0);
     }
     else if( val==KEY_6 )
     {
-        system("xdotool mousemove_relative 22 0");
+        moveMouseR(22, 0);
     }
     else if( val==KEY_7 )
     {
-        system("xdotool mousemove_relative -- -27 22");
+        moveMouseR(-27, 22);
     }
     else if( val==KEY_8 )
     {
-        system("xdotool mousemove_relative 0 22");
+        moveMouseR(0, 22);
     }
     else if( val==KEY_9 )
     {
-        system("xdotool mousemove_relative 27 22");
+        moveMouseR(27, 22);
     }
+}
+
+void ReMeta::moveMouseR(int x, int y)
+{
+#ifdef WIN32
+    POINT pt;
+    GetCursorPos(&pt);
+
+    int x2 = pt.x + x;
+    int y2 = pt.y + y;
+
+    SetCursorPos(x2, y2);
+#else
+    QString cmd = "xdotool mousemove_relative ";
+
+    if( x<0 )
+    {
+        cmd += "-- ";
+    }
+    cmd += QString::number(x);
+    cmd += " ";
+    cmd += QString::number(y);
+#endif
+
+
 }

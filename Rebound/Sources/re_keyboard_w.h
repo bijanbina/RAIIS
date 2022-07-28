@@ -34,6 +34,8 @@
 #define KEY_RIGHT     VK_RIGHT
 #define KEY_BACKSPACE VK_BACK
 #define KEY_CTRL      VK_CONTROL
+#define KEY_SHIFT     VK_SHIFT
+#define KEY_TAB       VK_TAB
 #define KEY_META      VK_LWIN
 #define KEY_PRIOR     VK_PRIOR //Page Up
 #define KEY_NEXT      VK_NEXT  //Page Down

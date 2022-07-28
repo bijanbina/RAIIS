@@ -9,7 +9,7 @@
 
 QString re_getGoQt(int val);
 QString re_getGoXed(int val);
-QString re_getGoFirefox(int val);
+void re_castGoFirefox(int val, CCommand *cmd);
 QString re_getGoNautilus(int val);
 QString re_getGoGitKraken(int val);
 

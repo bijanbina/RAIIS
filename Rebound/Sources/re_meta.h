@@ -8,6 +8,7 @@
 #include "re_meta_go.h"
 #include "re_meta_oc.h"
 #ifdef WIN32
+#include <windows.h>
 #include "re_app_w.h"
 #else
 #include "re_app_l.h"
@@ -32,6 +33,8 @@ private:
     void castSystemCmd(int val, CCommand *cmd);
     void castFoxCmd(int val, CCommand *cmd);
     void execScrollCmd(int meta, int val);
+
+    void moveMouseR(int x, int y);
 
     ReState *state;
 };

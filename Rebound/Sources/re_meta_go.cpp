@@ -118,30 +118,51 @@ QString re_getGoGitKraken(int val)
     return cmd;
 }
 
-QString re_getGoFirefox(int val)
+void re_castGoFirefox(int val, CCommand *cmd)
 {
-    QString cmd;
-
     if( val==KEY_LEFT ) //tab
     {
-        cmd = "xdotool key ctrl+shift+Tab";
+        cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_SHIFT);
+        cmd->val1 = KEY_TAB;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_RIGHT )
     {
-        cmd = "xdotool key ctrl+Tab";
+        cmd->mod_list.append(KEY_CTRL);
+        cmd->val1 = KEY_TAB;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_F ) //find
     {
-        cmd = "xdotool key ctrl+F";
-    }
-    else if( val>1 && val<12 ) //tab
-    {
-        int input = re_keyCode2Digit(val);
-        cmd = "xdotool key alt+";
-        cmd += QString::number(input);
-    }
+        cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_SHIFT);
+        cmd->val1 = KEY_F;
 
-    return cmd;
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val>=KEY_1 &&
+             val<=KEY_9 ) //tab
+    {
+        cmd->mod_list.append(KEY_CTRL);
+        cmd->val1 = val;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
+    }
 }
 
 QString re_getGoNautilus(int val)
