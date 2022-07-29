@@ -152,6 +152,7 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     if( val==RE_APP_LINK )
     {
         cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_SHIFT);
         cmd->val1 = KEY_F;
 
         cmd->val2 = 1;

@@ -195,21 +195,20 @@ void ReCaptain::execMeta(CCommand command)
     {
         translated = meta->castMeta(command.val1,
                                     command.val2);
-        execCommand(translated);
 
-        if( command.type==RE_COMMAND_NATO ||
-            command.type==RE_COMMAND_DIRS ||
-            command.type==RE_COMMAND_DIGIT )
+        if( translated.type==RE_COMMAND_NATO ||
+            translated.type==RE_COMMAND_DIRS ||
+            translated.type==RE_COMMAND_DIGIT )
         {
-            for( int j=0 ; j<command.val2 ; j++ )
+            for( int j=0 ; j<translated.val2 ; j++ )
             {
-                key->sendKey(command.val1);
+                key->sendKey(translated.val1);
                 QThread::msleep(5); //little tweak
             }
         }
-        else if( command.type==RE_COMMAND_MOD )
+        else if( translated.type==RE_COMMAND_MOD )
         {
-            execModifier(command);
+            execModifier(translated);
         }
     }
 }
