@@ -27,11 +27,23 @@ void ReCaptain::execModifier(CCommand command)
     {
         if( command.val1==RE_SUPER_LOVE )
         {
-            system("xdotool key --delay 40 ctrl+Left");
+            CCommand cmd;
+            cmd.mod_list.append(KEY_CTRL);
+            cmd.val1 = KEY_LEFT;
+            cmd.val2 = 1;
+            cmd.state = RE_CSTATE_0;
+
+            execModifier(cmd);
         }
         else if( command.val1==RE_SUPER_ROGER )
         {
-            system("xdotool key --delay 40 ctrl+Right");
+            CCommand cmd;
+            cmd.mod_list.append(KEY_CTRL);
+            cmd.val1 = KEY_RIGHT;
+            cmd.val2 = 1;
+            cmd.state = RE_CSTATE_0;
+
+            execModifier(cmd);
         }
         else
         {

@@ -220,7 +220,7 @@ void ReMeta::castGoCmd(int val, CCommand *cmd)
     }
     else if( state->app.pname==RE_PROC_GIT )
     {
-        re_getGoGitKraken(val);
+        re_getGoGitKraken(val, cmd);
     }
     else if( state->app.pname==RE_PROC_FIREFOX ||
              state->app.pname==RE_PROC_GEKO )
@@ -229,7 +229,7 @@ void ReMeta::castGoCmd(int val, CCommand *cmd)
     }
     else if( state->app.pname==RE_PROC_EXPLORER )
     {
-        re_getGoNautilus(val);
+        re_getGoNautilus(val, cmd);
     }
 }
 

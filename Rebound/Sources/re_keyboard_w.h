@@ -34,6 +34,7 @@
 #define KEY_DOWN      VK_DOWN
 #define KEY_RIGHT     VK_RIGHT
 #define KEY_BACKSPACE VK_BACK
+#define KEY_ALT       VK_MENU
 #define KEY_CTRL      VK_CONTROL
 #define KEY_SHIFT     VK_SHIFT
 #define KEY_TAB       VK_TAB
