@@ -287,12 +287,12 @@ bool ReState::isEscape(CCommand command)
         return 0;
     }
 
-    if( command.val1!=1 ) //Escape
+    if( command.val1!=KEY_ESC )
     {
         return 0;
     }
 
-
+    return 1;
 }
 
 void ReState::resetState()

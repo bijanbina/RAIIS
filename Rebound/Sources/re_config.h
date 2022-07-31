@@ -7,6 +7,8 @@
 #define CH_PIPE_PATH    "\\\\.\\pipe\\com_binaee_chess"
 #define CH_NP_SEPARATOR ","
 
+#define RE_FIREFOX_DIR "Scripts\\Firefox"
+
 //#define RE_DEBUG_WIN //show window detection debug info
 
 #define RE_CLIENT 0

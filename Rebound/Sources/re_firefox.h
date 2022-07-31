@@ -7,6 +7,7 @@
 #include "backend.h"
 #include "re_firefox_ws.h"
 #include "re_commands.h"
+#include "re_lua.h"
 
 class ReFirefox : public QObject
 {
@@ -35,11 +36,13 @@ private slots:
 
 private:
     void send_js(QString cmd);
+
     QWebSocket *socket;
-    QString status_cmd;
-    QString cmd_buf;
-    QString ws_buf;
-    int     sc_dirb = 0;  // buffer (not final)
+    QString  status_cmd;
+    QString  cmd_buf;
+    QString  ws_buf;
+    ReLua   *lua;
+    int      sc_dirb = 0;  // buffer (not final)
     QVector<ReFirefoxWs *> childs;
     QVector<QThread *>     childs_th;
     int speed_table[10] = { 100, 50, 25, 10, 10, 5, 5, 5, 5 };

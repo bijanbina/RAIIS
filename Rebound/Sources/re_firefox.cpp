@@ -1,6 +1,5 @@
 #include "re_firefox.h"
 #define JS_SC_PATH "Scripts/Firefox/ElementsWithScrolls.js"
-#define WS_SC_PATH "Scripts/Firefox/getWS.sh"
 #define VI_SC_PATH "Scripts/Firefox/isVisible.sh"
 
 ReFirefox::ReFirefox(QObject *parent) : QObject(parent)
@@ -9,6 +8,7 @@ ReFirefox::ReFirefox(QObject *parent) : QObject(parent)
     connect(socket, SIGNAL(connected()),    this, SLOT(onConnected()));
     connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
     ws_buf = "";
+    lua = new ReLua;
 }
 
 ReFirefox::~ReFirefox()
@@ -19,10 +19,10 @@ ReFirefox::~ReFirefox()
 
 void ReFirefox::refreshURL()
 {
-    QString ws = getStrCommand(WS_SC_PATH);
-    QStringList ws_list = ws.split("\n");
+    QStringList ws_list = lua->getWSList();
     for( int i=0 ; i<ws_list.length() ; i++ )
     {
+        qDebug() << "LUA : " << ws_list[i];
         ReFirefoxWs *child = new ReFirefoxWs(ws_list[i]);
         QThread  *child_th = new QThread;
         child->moveToThread(child_th);
@@ -39,17 +39,20 @@ void ReFirefox::refreshURL()
 //Check if firefox is visible
 void ReFirefox::urlCheck(QString title, QString ws)
 {
+#ifdef  __linux__
     QString cmd = VI_SC_PATH " \"";
     cmd += title + "\"";
     QString res = getStrCommand(cmd);
 
-    if( res.length() )
+    if( res.isEmpty() )
     {
-        ws_buf = ws;
-        socket->open(QUrl(ws));
-        qDebug() << ws;
-        reset();
+        return;
     }
+#endif
+    ws_buf = ws;
+    socket->open(QUrl(ws));
+    qDebug() << ws;
+    reset();
 }
 
 void ReFirefox::reset()

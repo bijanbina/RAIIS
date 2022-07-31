@@ -13,11 +13,14 @@ extern "C"
 class ReLua
 {
 public:
-    explicit ReLua();
-    void run();
+    ReLua();
     ~ReLua();
 
+    QStringList getWSList();
+
 private:
+    QString exec(const char *path);
+
     lua_State *lst;
 };
 
