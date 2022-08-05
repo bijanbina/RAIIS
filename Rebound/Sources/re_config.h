@@ -7,7 +7,9 @@
 #define CH_PIPE_PATH    "\\\\.\\pipe\\com_binaee_chess"
 #define CH_NP_SEPARATOR ","
 
-#define RE_FIREFOX_DIR "Scripts\\Firefox"
+#define RE_FIREFOX_DIR   "Scripts\\Firefox"
+#define MOM_LABEL_DIR    "..\\..\\Benjamin\\Mom\\Labels"
+#define MOM_LABEL_STATUS "\\r1_status.lbl"
 
 //#define RE_DEBUG_WIN //show window detection debug info
 

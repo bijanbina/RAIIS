@@ -1,4 +1,4 @@
- #include "re_state.h"
+#include "re_state.h"
 
 ReState::ReState(QObject *parent) : QObject(parent)
 {
@@ -12,9 +12,8 @@ ReState::ReState(QObject *parent) : QObject(parent)
     api = new ReApi;
     hardware = new ReHardwareW;
 #endif
-#ifdef __linux__
+
     readStatusFile();
-#endif
 }
 
 ReState::~ReState()
@@ -32,9 +31,12 @@ void ReState::readStatusFile()
 {
 #ifdef WIN32
     ///POLYBAR INTEGRATION
+    QString path = MOM_LABEL_DIR;
+    path += MOM_LABEL_STATUS;
 #else
     QString path = getenv("HOME");
     path += "/.config/polybar/awesomewm/ben_status";
+#endif
     QFile file(path);
     if( file.open(QIODevice::ReadOnly) )
     {
@@ -42,7 +44,7 @@ void ReState::readStatusFile()
         line.replace('\n', "");
         file.close();
 
-        if( line=="Sleep" )
+        if( line.contains("Sleep") )
         {
             sleep_state = 1;
         }
@@ -51,24 +53,28 @@ void ReState::readStatusFile()
             rmStatusFile();
         }
     }
-#endif
 }
 
 void ReState::rmStatusFile()
 {
 #ifdef WIN32
-    ///POLYBAR INTEGRATION
+    QString path = MOM_LABEL_DIR;
+    path += MOM_LABEL_STATUS;
 #else
     QString path = getenv("HOME");
     path += "/.config/polybar/awesomewm/ben_status";
+#endif
     if( QFileInfo::exists(path) )
     {
+#ifdef WIN32
+        QString cmd = "del ";
+#else
         QString cmd = "rm ";
+#endif
         cmd += path;
 
         system(cmd.toStdString().c_str());
     }
-#endif
 }
 
 void ReState::rmSpexFile()
@@ -238,7 +244,26 @@ void ReState::updateTitles(QStringList wins_title, QObject *item)
 void ReState::goToSleep()
 {
     sleep_state = 1;
+#ifdef WIN32
+    QString path = MOM_LABEL_DIR;
+    path += MOM_LABEL_STATUS;
+    QFile st_file(path);
+
+    if( !st_file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Error creating" << MOM_LABEL_STATUS;
+        qDebug() << "Trying to create" << MOM_LABEL_DIR;
+        system("mkdir " MOM_LABEL_DIR);
+        return;
+    }
+    QTextStream out(&st_file);
+    out << "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}"
+        << "  Sleep  "
+        << "%{A}%{B- F1-}";
+    st_file.close();
+#else
     system("echo Sleep > ~/.config/polybar/awesomewm/ben_status");
+#endif
 }
 
 void ReState::wakeUp()

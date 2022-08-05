@@ -190,7 +190,7 @@ bool ReCaptain::isWakeUp(CCommand command)
     {
         if( command.val1==RE_META_GO )
         {
-            if( command.val2==17 ) //wake->w->17
+            if( command.val2==KEY_W ) //wake->w->17
             {
                 return true;
             }
