@@ -5,9 +5,9 @@
 #include <windows.h>
 #include <objbase.h>
 #include <ObjectArray.h>
+#include <QVector>
 // https://github.com/senfiron/win10-virtual-desktop-switcher/tree/master/VirtualDesktopSwitcher/VirtualDesktopSwitcher
 // https://github.com/chuckrector/virtual_desktopper/blob/main/virtual_desktopper.h
-
 
 const CLSID CLSID_ImmersiveShell = {
     0xC2F03A33, 0x21F5, 0x47FA, {0xB4, 0xBB, 0x15, 0x63, 0x62, 0xA2, 0xF2, 0x39} };
@@ -102,8 +102,13 @@ public:
     ~ReWin32Virt();
 
     void setDesktop(int id);
+    int  current_workspace;
 
 private:
+    void updateGUID();
+    int  getCurrDesktop();
+
+    QVector<GUID> vd_guids;
     IVirtualDesktopManagerInternal* pDesktopManager;
 
 };

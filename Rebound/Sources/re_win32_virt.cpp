@@ -23,11 +23,36 @@ ReWin32Virt::ReWin32Virt()
 
     qDebug() << "S_OK" << S_OK << hr;
     pServiceProvider->Release();
+
+    updateGUID();
 }
 
 ReWin32Virt::~ReWin32Virt()
 {
     pDesktopManager->Release();
+}
+
+void ReWin32Virt::updateGUID()
+{
+    IObjectArray *desktops;
+    IVirtualDesktop *nextDesktop;
+
+    pDesktopManager->GetDesktops(&desktops);
+    UINT count;
+    desktops->GetCount(&count);
+
+    for( unsigned int i=0 ; i<count ; i++ )
+    {
+        desktops->GetAt(i, UUID_IVirtualDesktop, (void**)&nextDesktop);
+
+        GUID buffer;
+        nextDesktop->GetID(&buffer);
+        vd_guids << buffer;
+
+        nextDesktop->Release();
+    }
+
+    desktops->Release();
 }
 
 void ReWin32Virt::setDesktop(int id)
@@ -36,9 +61,32 @@ void ReWin32Virt::setDesktop(int id)
     IVirtualDesktop *nextDesktop;
 
     HRESULT hr = pDesktopManager->GetDesktops(&desktops);
+
     desktops->GetAt(id, UUID_IVirtualDesktop, (void**)&nextDesktop);
     desktops->Release();
 
     hr = pDesktopManager->SwitchDesktop(nextDesktop);
     nextDesktop->Release();
+
+    qDebug() << "getCurrDesktop()" << getCurrDesktop();
+}
+
+int ReWin32Virt::getCurrDesktop()
+{
+    IVirtualDesktop *currDesktop;
+
+    pDesktopManager->GetCurrentDesktop(&currDesktop);
+    GUID curr_DesktopGUID;
+    currDesktop->GetID(&curr_DesktopGUID);
+    currDesktop->Release();
+
+    for( int i=0 ; i<vd_guids.length() ; i++ )
+    {
+        if( curr_DesktopGUID==vd_guids[i] )
+        {
+            return i;
+        }
+    }
+
+    return -1;
 }
