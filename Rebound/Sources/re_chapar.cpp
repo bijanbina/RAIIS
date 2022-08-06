@@ -2,7 +2,8 @@
 #include <QDebug>
 #include <QQmlProperty>
 
-ReChapar::ReChapar(QObject *item, QObject *switcher, int isNative, QObject *parent) : QObject(parent)
+ReChapar::ReChapar(QObject *item, QObject *switcher,
+                   int isNative, QObject *parent) : QObject(parent)
 {
     ui = item;
     uiSwitcher = switcher;

@@ -1,5 +1,5 @@
-#ifndef RECHAPAR_H
-#define RECHAPAR_H
+#ifndef RE_CHAPAR_H
+#define RE_CHAPAR_H
 
 #include <QObject>
 #include <QTimer>
@@ -62,7 +62,8 @@ class ReChapar : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReChapar(QObject *item, QObject *switcher, int isNative, QObject *parent = nullptr);
+    explicit ReChapar(QObject *item, QObject *switcher, int isNative,
+                      QObject *parent = nullptr);
 
     void setPage(RePage page);
     QString getShortTitle(int index);
@@ -102,4 +103,4 @@ private:
 #endif
 };
 
-#endif // RECHAPAR_H
+#endif // RE_CHAPAR_H

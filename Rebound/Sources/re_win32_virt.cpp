@@ -6,7 +6,7 @@
 #include <strsafe.h> // StringCbPrintf
 #include <QDebug>
 
-ReWin32Virt::ReWin32Virt()
+ReWin32Virt::ReWin32Virt(QObject *parent): QObject(parent)
 {
     pDesktopManager = NULL;
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
@@ -25,6 +25,11 @@ ReWin32Virt::ReWin32Virt()
     pServiceProvider->Release();
 
     updateGUID();
+
+    timer = new QTimer;
+    connect(timer, SIGNAL(timout()),
+            this , SLOT(updateCurrDesktop()));
+//    timer->start(RE_VIRT_TIMEOUT);
 }
 
 ReWin32Virt::~ReWin32Virt()
@@ -68,10 +73,10 @@ void ReWin32Virt::setDesktop(int id)
     hr = pDesktopManager->SwitchDesktop(nextDesktop);
     nextDesktop->Release();
 
-    qDebug() << "getCurrDesktop()" << getCurrDesktop();
+    qDebug() << "getCurrDesktop()" << updateCurrDesktop();
 }
 
-int ReWin32Virt::getCurrDesktop()
+int ReWin32Virt::updateCurrDesktop()
 {
     IVirtualDesktop *currDesktop;
 

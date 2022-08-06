@@ -6,6 +6,8 @@
 #include <objbase.h>
 #include <ObjectArray.h>
 #include <QVector>
+#include <QObject>
+#include <QTimer>
 // https://github.com/senfiron/win10-virtual-desktop-switcher/tree/master/VirtualDesktopSwitcher/VirtualDesktopSwitcher
 // https://github.com/chuckrector/virtual_desktopper/blob/main/virtual_desktopper.h
 
@@ -95,19 +97,23 @@ public:
         /* [in] */ __RPC__in REFGUID desktopId) = 0;
 };
 
-class ReWin32Virt
+class ReWin32Virt: public QObject
 {
+    Q_OBJECT
 public:
-    explicit ReWin32Virt();
+    explicit ReWin32Virt(QObject *parent = nullptr);
     ~ReWin32Virt();
 
     void setDesktop(int id);
     int  current_workspace;
 
+private slots:
+    int  updateCurrDesktop();
+
 private:
     void updateGUID();
-    int  getCurrDesktop();
 
+    QTimer *timer;
     QVector<GUID> vd_guids;
     IVirtualDesktopManagerInternal* pDesktopManager;
 
