@@ -11,10 +11,6 @@
 // The buffer size specified should be small enough that your process will not run out of nonpaged pool,
 // but large enough to accommodate typical requests.
 #define BUFFER_SIZE (1024 * 8)
-#define INPUT_BUFFER_SIZE BUFFER_SIZE
-#define OUTPUT_BUFFER_SIZE BUFFER_SIZE
-
-#define COMMAND_SEPARATOR ","
 
 class ReChannelW : public QObject
 {
@@ -40,7 +36,7 @@ signals:
 
 private:
     void createPipe();
-    void processCommand(QString cmd, QString args);
+    void processCommand(QString k_type, QString k_code);
     void processLine(QString line);
 
     RePreProcessor *pre;

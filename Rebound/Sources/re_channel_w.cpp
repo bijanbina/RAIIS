@@ -89,8 +89,8 @@ void ReChannelW::createPipe()
                             PIPE_ACCESS_INBOUND,            // dwOpenMode. The flow of data in the pipe goes from client to server only
                             PIPE_TYPE_BYTE | PIPE_WAIT,     // dwPipeMode
                             1,                              // nMaxInstances
-                            OUTPUT_BUFFER_SIZE,             // nOutBufferSize
-                            INPUT_BUFFER_SIZE,              // nInBufferSize
+                            BUFFER_SIZE,                    // nOutBufferSize
+                            BUFFER_SIZE,                    // nInBufferSize
                             NMPWAIT_WAIT_FOREVER,           // nDefaultTimeOut
                             nullptr);                       // lpSecurityAttributes
 

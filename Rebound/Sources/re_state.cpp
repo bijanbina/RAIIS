@@ -178,8 +178,8 @@ void ReState::updateApp(ReWindow active_window)
     QString status = re_readStatus();
 
     QRegExp go_reg("^go");
-    QRegExp sky_reg("^sky");
-    QRegExp dive_reg("^dive");
+    QRegExp sky_reg("^Sky");
+    QRegExp dive_reg("^Dive");
     QRegExp number_reg("\\d*");
     if( status.contains(go_reg) )
     {

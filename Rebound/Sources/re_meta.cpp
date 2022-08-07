@@ -139,6 +139,24 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         system("~/.config/polybar/awesomewm/vpn_switch.sh");
     }
+    else if( val==KEY_LEFT )
+    {
+        cmd = "xdotool key --delay 200 Super+b";
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd = "xdotool key Menu";
+    }
+    else if( val==RE_META_CLOSE )
+    {
+        cmd = "xdotool key Alt+F4";
+    }
+    else if( val==KEY_UP )
+    {
+        cmd  = "dbus-send --dest=com.benjamin.chess";
+        cmd += " / com.benjamin.chess.show string:\"\"";
+    }
+
     else
     {
         qDebug() << "Unknown System" << val;
