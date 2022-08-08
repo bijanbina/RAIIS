@@ -33,7 +33,6 @@ private:
 
     void execModifier(CCommand command);
     void execMeta(CCommand command);
-    void releaseModifiers();
 
     void execCommand(CCommand command);
 

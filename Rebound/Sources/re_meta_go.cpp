@@ -169,7 +169,11 @@ void re_castGoFirefox(int val, CCommand *cmd)
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
+#ifdef WIN32
         cmd->mod_list.append(KEY_LEFTCTRL);
+#else
+        cmd->mod_list.append(KEY_LEFTALT);
+#endif
         cmd->val1 = val;
 
         cmd->val2 = 1;

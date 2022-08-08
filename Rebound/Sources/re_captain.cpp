@@ -47,29 +47,17 @@ void ReCaptain::execModifier(CCommand command)
         }
         else
         {
-            QThread::msleep(30); //little tweak
+            QThread::msleep(10); //little tweak
             key->sendKey(command.val1);
         }
     }
 
-    QThread::msleep(70); //little tweak
+    QThread::msleep(20); //little tweak
     for( int i=0 ; i<len ; i++ )
     {
         key->releaseKey(command.mod_list[len-i-1]);
     }
 //    qDebug() << "pressModifier" << modifiers.count();
-}
-
-void ReCaptain::releaseModifiers()
-{
-    int c = modifiers.count();
-    for( int i=c ; i>0 ; i-- )
-    {
-//        qDebug() << "releaseModifiers" << modifiers[i-1].val1;
-        key->releaseKey(modifiers[i-1].val1);
-        QThread::msleep(100); //little tweak
-    }
-    modifiers.clear();
 }
 
 void ReCaptain::execute(QVector<CCommand> commands)
@@ -98,7 +86,6 @@ void ReCaptain::execute(QVector<CCommand> commands)
             execCommand(commands[i]);
         }
     }
-//    releaseModifiers();
 }
 
 void ReCaptain::execCommand(CCommand command)

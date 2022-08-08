@@ -33,6 +33,7 @@ void re_mouseKey(int btn)
     QString cmd = "xdotool click ";;
 
     cmd += QString::number(btn);
+    system(cmd.toStdString().c_str());
 #endif
 }
 
@@ -56,5 +57,7 @@ void re_mouseMoveR(int x, int y)
     cmd += QString::number(x);
     cmd += " ";
     cmd += QString::number(y);
+
+    system(cmd.toStdString().c_str());
 #endif
 }
