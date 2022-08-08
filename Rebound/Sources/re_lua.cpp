@@ -1,15 +1,19 @@
 #include "re_lua.h"
 #include <QtDebug>
 #include <QDir>
+#include "backend.h"
 
 #define WS_SC_PATH "Scripts/Firefox/getWS.sh"
 
 ReLua::ReLua()
 {
+#ifdef WIN32
     lst = luaL_newstate();
     luaL_openlibs(lst);
+#endif
 }
 
+#ifdef WIN32
 QString ReLua::exec(const char *path)
 {
     QString current_dir = QDir::currentPath();
@@ -26,6 +30,7 @@ QString ReLua::exec(const char *path)
 
     return output;
 }
+#endif
 
 QStringList ReLua::getWSList()
 {
@@ -40,5 +45,7 @@ QStringList ReLua::getWSList()
 
 ReLua::~ReLua()
 {
+#ifdef WIN32
     lua_close(lst);
+#endif
 }

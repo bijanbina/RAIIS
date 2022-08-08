@@ -19,7 +19,9 @@ public:
     QStringList getWSList();
 
 private:
+#ifdef WIN32
     QString exec(const char *path);
+#endif
 
     lua_State *lst;
 };

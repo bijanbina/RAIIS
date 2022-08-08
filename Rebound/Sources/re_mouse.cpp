@@ -1,4 +1,8 @@
+#include "re_mouse.h"
+#ifdef WIN32
 #include "re_keyboard_w.h"
+#include <Windows.h>
+#endif
 
 void re_mouseKey(int btn)
 {

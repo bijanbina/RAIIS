@@ -128,8 +128,10 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     else if( val>=KEY_1 &&
              val<=KEY_9 )
     {
+#ifdef WIN32
         int desktop_id = val-KEY_1;
         state->super->virt->setDesktop(desktop_id);
+#endif
     }
     else if( val==KEY_T )
     {
@@ -141,20 +143,20 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==KEY_LEFT )
     {
-        cmd = "xdotool key --delay 200 Super+b";
+        system("xdotool key --delay 200 Super+b");
     }
     else if( val==KEY_RIGHT )
     {
-        cmd = "xdotool key Menu";
+        system("xdotool key Menu");
     }
     else if( val==RE_META_CLOSE )
     {
-        cmd = "xdotool key Alt+F4";
+        system("xdotool key Alt+F4");
     }
     else if( val==KEY_UP )
     {
-        cmd  = "dbus-send --dest=com.benjamin.chess";
-        cmd += " / com.benjamin.chess.show string:\"\"";
+        system("dbus-send --dest=com.benjamin.chess"
+               " / com.benjamin.chess.show string:\"\"");
     }
 
     else
@@ -169,8 +171,8 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
 
     if( val==RE_APP_LINK )
     {
-        cmd->mod_list.append(KEY_CTRL);
-        cmd->mod_list.append(KEY_SHIFT);
+        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->mod_list.append(KEY_LEFTSHIFT);
         cmd->val1 = KEY_F;
 
         cmd->val2 = 1;
@@ -282,7 +284,7 @@ void ReMeta::castPageCmd(int val, CCommand *cmd)
         }
         if( val==KEY_UP )
         {
-            cmd->val1  = KEY_PRIOR;
+            cmd->val1  = KEY_PAGEUP;
             cmd->val2  = 1; //press count
             cmd->type  = RE_COMMAND_DIRS;
             cmd->state = RE_CSTATE_0;

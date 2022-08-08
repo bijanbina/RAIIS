@@ -2,7 +2,6 @@
 #define RE_MOUSE_H
 
 #include <stdio.h>
-#include <Windows.h>
 #include <QVector>
 
 void re_mouseKey(int btn);

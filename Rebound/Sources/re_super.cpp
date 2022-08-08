@@ -3,9 +3,11 @@
 ReSuper::ReSuper(ReWindow *current_w, QObject *parent): QObject(parent)
 {
     app = current_w;
-    virt = new ReWin32Virt;
 
+#ifdef WIN32
+    virt = new ReWin32Virt;
     connectChessPipe();
+#endif
 }
 
 ReSuper::~ReSuper()
@@ -87,7 +89,7 @@ void ReSuper::getMetaCmd(CCommand *ret)
     else if( app->pname==RE_PROC_FIREFOX ||
              app->pname==RE_PROC_GEKO )
     {
-        ret->mod_list.append(KEY_CTRL);
+        ret->mod_list.append(KEY_LEFTCTRL);
         ret->val1 = KEY_W;
 
         ret->val2 = 1;
@@ -97,7 +99,7 @@ void ReSuper::getMetaCmd(CCommand *ret)
     }
     else if( app->pname==RE_PROC_EXPLORER )
     {
-        ret->mod_list.append(KEY_CTRL);
+        ret->mod_list.append(KEY_LEFTCTRL);
         ret->val1 = KEY_W;
 
         ret->val2 = 1;
@@ -118,7 +120,7 @@ void ReSuper::getCopyCmd(CCommand *ret)
     ret->type  = RE_COMMAND_MOD;
     ret->state = RE_CSTATE_0;
 
-    ret->mod_list.append(KEY_CTRL);
+    ret->mod_list.append(KEY_LEFTCTRL);
     ret->val1 = KEY_C;
 }
 
@@ -129,7 +131,7 @@ void ReSuper::getPasteCmd(CCommand *ret)
     ret->type  = RE_COMMAND_MOD;
     ret->state = RE_CSTATE_0;
 
-    ret->mod_list.append(KEY_CTRL);
+    ret->mod_list.append(KEY_LEFTCTRL);
     ret->val1 = KEY_V;
 }
 
@@ -168,7 +170,7 @@ void ReSuper::getLoveCmd(CCommand *ret)
     ret->type  = RE_COMMAND_MOD;
     ret->state = RE_CSTATE_0;
 
-    ret->mod_list.append(KEY_CTRL);
+    ret->mod_list.append(KEY_LEFTCTRL);
     ret->val1 = KEY_LEFT;
 }
 
@@ -179,7 +181,7 @@ void ReSuper::getRogerCmd(CCommand *ret)
     ret->type  = RE_COMMAND_MOD;
     ret->state = RE_CSTATE_0;
 
-    ret->mod_list.append(KEY_CTRL);
+    ret->mod_list.append(KEY_LEFTCTRL);
     ret->val1 = KEY_RIGHT;
 }
 
@@ -190,12 +192,15 @@ void ReSuper::getSwitchCmd(CCommand *ret)
     ret->type  = RE_COMMAND_MOD;
     ret->state = RE_CSTATE_0;
 
-    ret->mod_list.append(KEY_META);
+//    ret->mod_list.append(KEY_META); ///FIXME KEYS
     ret->val1 = KEY_B;
 }
 
+#ifdef WIN32
 void ReSuper::connectChessPipe()
 {
+    virt = new ReWin32Virt;
+    connectChessPipe();
     // 0: Default Wait Time
     int np_is_available = WaitNamedPipeA(CH_PIPE_PATH, 0);
     if( np_is_available )
@@ -249,3 +254,4 @@ void ReSuper::sendPipe(const char *data)
         sendPipe(data);
     }
 }
+#endif

@@ -32,7 +32,7 @@ SOURCES += Sources/main.cpp \
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_api_w.cpp \
                  Sources/re_channel_w.cpp \
-                 Sources/re_keyboard_W.cpp \
+                 Sources/re_keyboard_w.cpp \
                  Sources/re_thread_w.cpp \
                  Sources/re_hardware_w.cpp \
                  Sources/re_admin_win.cpp \

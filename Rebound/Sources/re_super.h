@@ -24,7 +24,9 @@ public:
 
     void castCmd(int cmd, CCommand *ret);
 
+#ifdef WIN32
     ReWin32Virt *virt;
+#endif
 private:
     void getMetaCmd(CCommand *ret);
     void getCopyCmd(CCommand *ret);
@@ -36,14 +38,16 @@ private:
     void getSideCmd();
     void getKickCmd();
 
-    void connectChessPipe();
-    void sendPipe(const char *data);
-
     int uinput_f;
 
     ReWindow *app;
 
+#ifdef WIN32
+    void connectChessPipe();
+    void sendPipe(const char *data);
+
     HANDLE hPipe;
+#endif
 };
 
 #endif //RE_SUPER_H

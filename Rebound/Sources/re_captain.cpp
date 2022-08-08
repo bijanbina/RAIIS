@@ -28,7 +28,7 @@ void ReCaptain::execModifier(CCommand command)
         if( command.val1==RE_SUPER_LOVE )
         {
             CCommand cmd;
-            cmd.mod_list.append(KEY_CTRL);
+            cmd.mod_list.append(KEY_LEFTCTRL);
             cmd.val1 = KEY_LEFT;
             cmd.val2 = 1;
             cmd.state = RE_CSTATE_0;
@@ -38,7 +38,7 @@ void ReCaptain::execModifier(CCommand command)
         else if( command.val1==RE_SUPER_ROGER )
         {
             CCommand cmd;
-            cmd.mod_list.append(KEY_CTRL);
+            cmd.mod_list.append(KEY_LEFTCTRL);
             cmd.val1 = KEY_RIGHT;
             cmd.val2 = 1;
             cmd.state = RE_CSTATE_0;

@@ -72,7 +72,7 @@ void re_getGoGitKraken(int val, CCommand *cmd)
     }
     else if( val==KEY_M )
     {
-        cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_LEFTCTRL);
         cmd->val1 = KEY_M;
 
         cmd->val2 = 1;
@@ -90,8 +90,8 @@ void re_getGoGitKraken(int val, CCommand *cmd)
     }
     else if( val==KEY_LEFT ) //tab
     {
-        cmd->mod_list.append(KEY_CTRL);
-        cmd->mod_list.append(KEY_SHIFT);
+        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->mod_list.append(KEY_LEFTSHIFT);
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
@@ -101,7 +101,7 @@ void re_getGoGitKraken(int val, CCommand *cmd)
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_LEFTCTRL);
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
@@ -112,7 +112,7 @@ void re_getGoGitKraken(int val, CCommand *cmd)
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
-        cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_LEFTCTRL);
         cmd->val1 = val;
 
         cmd->val2 = 1;
@@ -136,8 +136,8 @@ void re_castGoFirefox(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT ) //tab
     {
-        cmd->mod_list.append(KEY_CTRL);
-        cmd->mod_list.append(KEY_SHIFT);
+        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->mod_list.append(KEY_LEFTSHIFT);
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
@@ -147,7 +147,7 @@ void re_castGoFirefox(int val, CCommand *cmd)
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_LEFTCTRL);
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
@@ -157,8 +157,8 @@ void re_castGoFirefox(int val, CCommand *cmd)
     }
     else if( val==KEY_F ) //find
     {
-        cmd->mod_list.append(KEY_CTRL);
-        cmd->mod_list.append(KEY_SHIFT);
+        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->mod_list.append(KEY_LEFTSHIFT);
         cmd->val1 = KEY_F;
 
         cmd->val2 = 1;
@@ -169,7 +169,7 @@ void re_castGoFirefox(int val, CCommand *cmd)
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
-        cmd->mod_list.append(KEY_CTRL);
+        cmd->mod_list.append(KEY_LEFTCTRL);
         cmd->val1 = val;
 
         cmd->val2 = 1;
@@ -183,7 +183,7 @@ void re_getGoNautilus(int val, CCommand *cmd)
 {
     if( val==KEY_BACKSPACE )
     {
-        cmd->mod_list.append(KEY_ALT);
+        cmd->mod_list.append(KEY_LEFTALT);
         cmd->val1 = KEY_UP;
 
         cmd->val2 = 1;
@@ -194,7 +194,7 @@ void re_getGoNautilus(int val, CCommand *cmd)
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
-        cmd->mod_list.append(KEY_ALT);
+        cmd->mod_list.append(KEY_LEFTALT);
         cmd->val1 = val;
 
         cmd->val2 = 1;
