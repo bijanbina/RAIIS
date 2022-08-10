@@ -27,7 +27,7 @@ ReWin32Virt::ReWin32Virt(QObject *parent): QObject(parent)
     updateGUID();
 
     timer = new QTimer;
-    connect(timer, SIGNAL(timout()),
+    connect(timer, SIGNAL(timeout()),
             this , SLOT(updateCurrDesktop()));
 //    timer->start(RE_VIRT_TIMEOUT);
 }

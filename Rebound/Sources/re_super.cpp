@@ -192,15 +192,18 @@ void ReSuper::getSwitchCmd(CCommand *ret)
     ret->type  = RE_COMMAND_MOD;
     ret->state = RE_CSTATE_0;
 
-//    ret->mod_list.append(KEY_META); ///FIXME KEYS
+#ifdef WIN32
+    ret->mod_list.append(KEY_LEFTALT);
+    ret->val1 = KEY_TAB;
+#else
+    ret->mod_list.append(KEY_META); ///FIXME KEYS
     ret->val1 = KEY_B;
+#endif
 }
 
 #ifdef WIN32
 void ReSuper::connectChessPipe()
 {
-    virt = new ReWin32Virt;
-    connectChessPipe();
     // 0: Default Wait Time
     int np_is_available = WaitNamedPipeA(CH_PIPE_PATH, 0);
     if( np_is_available )
