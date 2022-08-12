@@ -118,3 +118,26 @@ QString re_getCloseQt(int val)
     cmd += "xdotool key End";
     return cmd;
 }
+
+void re_getGoQt(QVector<CCommand> *cmd_buf)
+{
+    CCommand cmd;
+    cmd.val1 = 0;
+    cmd.val2 = 0;
+    cmd.val3 = 0;
+    cmd.type = RE_COMMAND_QDIGIT;
+
+    CCommand cmd_go;
+    cmd_go.val1 = KEY_F9;
+    cmd_go.val2 = 1;
+    cmd_go.val3 = 1;
+    cmd_go.type = RE_COMMAND_DIRS;
+    cmd_buf->append(cmd_go);
+#ifdef WIN32
+#else
+    QString cmd_st = "echo 'go' > ";
+    cmd_st += "~/.config/polybar/awesomewm/ben_status";
+    system(cmd_st.toStdString().c_str());
+#endif
+    cmd_buf->append(cmd);
+}

@@ -264,15 +264,8 @@ void RePreProcessor::meta(const QString &text)
 
         if( val==RE_META_GO )
         {
-            CCommand cmd;
-            cmd.val1 = 0;
-            cmd.val2 = 0;
-            cmd.val3 = 0;
-            cmd.type = RE_COMMAND_QDIGIT;
-            cmd_buf.append(cmd);
-            QString cmd_st = "xdotool key F9; echo 'go' > ";
-            cmd_st += "~/.config/polybar/awesomewm/ben_status";
-            system(cmd_st.toStdString().c_str());
+            re_getGoQt(&cmd_buf);
+            execute();
             return;
         }
     }

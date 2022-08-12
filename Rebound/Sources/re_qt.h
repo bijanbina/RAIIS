@@ -12,6 +12,7 @@ bool re_qtDirProc(QVector<CCommand> *cmd_buf, QString text);
 void re_getQtCmd(CCommand val);
 QString re_getCloseQt(int val);
 QString re_getOpenQt(int val);
+void re_getGoQt(QVector<CCommand> *cmd_buf);
 
 void re_updateQtState(int buf);
 
