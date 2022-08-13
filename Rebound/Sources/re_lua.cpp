@@ -10,6 +10,7 @@ ReLua::ReLua()
 #ifdef WIN32
     lst = luaL_newstate();
     luaL_openlibs(lst);
+    exec("init.lua");
 #endif
 }
 

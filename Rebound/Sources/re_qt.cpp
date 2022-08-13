@@ -119,7 +119,7 @@ QString re_getCloseQt(int val)
     return cmd;
 }
 
-void re_getGoQt(QVector<CCommand> *cmd_buf)
+CCommand re_getGoQt(QVector<CCommand> *cmd_buf)
 {
     CCommand cmd;
     cmd.val1 = 0;
@@ -139,5 +139,5 @@ void re_getGoQt(QVector<CCommand> *cmd_buf)
     cmd_st += "~/.config/polybar/awesomewm/ben_status";
     system(cmd_st.toStdString().c_str());
 #endif
-    cmd_buf->append(cmd);
+    return cmd;
 }

@@ -264,8 +264,10 @@ void RePreProcessor::meta(const QString &text)
 
         if( val==RE_META_GO )
         {
-            re_getGoQt(&cmd_buf);
+            CCommand cmd = re_getGoQt(&cmd_buf);
             execute();
+
+            cmd_buf.append(cmd);
             return;
         }
     }
@@ -338,8 +340,13 @@ void RePreProcessor::super(const QString &text)
     {
         int last_i = cmd_buf.count()-1; //last index
 
-        cmd_buf[last_i].val1=text.toInt();
+        cmd_buf[last_i].val1 = text.toInt();
         execute();
+        return;
+    }
+
+    if( captain->state->isSleep() )
+    {
         return;
     }
 
