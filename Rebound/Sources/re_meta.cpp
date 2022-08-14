@@ -184,20 +184,55 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
 
 void ReMeta::castMusicCmd(int val, CCommand *cmd)
 {
+#ifdef WIN32
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_MOD;
+    cmd->state = RE_CSTATE_0;
+#else
     //////SHOULD GET FIXED WITH THE NEW SYSTEM
     QString cmd_str = "./Scripts/music.sh ";
+#endif
 
     if( val==KEY_ENTER )
     {
+#ifdef WIN32
+        cmd->val1 = VK_MEDIA_PLAY_PAUSE;
+#else
         cmd_str += "play";
+#endif
     }
     else if( val==KEY_LEFT )
     {
+#ifdef WIN32
+        cmd->val1 = VK_MEDIA_PREV_TRACK;
+#else
         cmd_str += "prev";
+#endif
     }
     else if( val==KEY_RIGHT )
     {
+#ifdef WIN32
+        cmd->val1 = VK_MEDIA_NEXT_TRACK;
+#else
         cmd_str += "next";
+#endif
+    }
+    else if( val==KEY_UP )
+    {
+#ifdef WIN32
+        cmd->val1 = VK_VOLUME_UP;
+#else
+        cmd_str += "up";
+#endif
+    }
+    else if( val==KEY_DOWN )
+    {
+#ifdef WIN32
+        cmd->val1 = VK_VOLUME_DOWN;
+#else
+        cmd_str += "down";
+#endif
     }
     else
     {
@@ -205,8 +240,10 @@ void ReMeta::castMusicCmd(int val, CCommand *cmd)
         return;
     }
 
+#ifdef __linux__
     cmd_str += " >/dev/null";
     system(cmd_str.toStdString().c_str());
+#endif
 }
 
 void ReMeta::execScrollCmd(int meta, int val)
