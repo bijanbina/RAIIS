@@ -27,3 +27,13 @@ function appendLine(file_name, text)
 	f:write(content)
 	f:close()
 end
+
+function replaceLine(file_name, pattern, text)
+	local f = io.open(file_name, "r")
+	local content = f:read("*all")
+	f:close()
+	content = content:gsub(pattern, text)
+	local f = io.open(file_name, "w")
+	f:write(content)
+	f:close()
+end

@@ -5,3 +5,11 @@ function getFirstMatch(text, pattern)
 		end
     end
 end
+
+function getEasyMatch(text, pattern)
+	for line in string.gmatch(text, "[^\r\n]+") do
+		if line:match(pattern) ~= nil then
+            return line
+		end
+    end
+end
