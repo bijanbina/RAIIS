@@ -204,7 +204,7 @@ QString ReApi::getLinkPathB(QString path)
     return target;
 }
 
-void lunnchExe(QString name)
+void lunchExe(QString name)
 {
     PROCESS_INFORMATION ProcessInfo; //This is what we get as an [out] parameter
     STARTUPINFOA StartupInfo; //This is an [in] parameter
@@ -231,19 +231,19 @@ void ReApi::openApp(int appid)
 {
     QString link_path;
 
-    if ( appid==RE_WIN_TELEGRAM )
+    if( appid==RE_WIN_TELEGRAM )
     {
         link_path = getLinkPath("Telegram Desktop\\Telegram.lnk");
-        lunnchExe(link_path);
+        lunchExe(link_path);
     }
-    else if ( appid==RE_WIN_FIREFOX )
+    else if( appid==RE_WIN_FIREFOX )
     {
         link_path = getLinkPathB("Firefox Developer Edition.lnk");
-        lunnchExe(link_path);
+        lunchExe(link_path);
     }
-    else if ( appid==RE_WIN_SPOTIFY )
+    else if( appid==RE_WIN_SPOTIFY )
     {
         link_path = getLinkPath("Spotify.lnk");
-        lunnchExe(link_path);
+        lunchExe(link_path);
     }
 }

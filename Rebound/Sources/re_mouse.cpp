@@ -57,7 +57,73 @@ void re_mouseMoveR(int x, int y)
     cmd += QString::number(x);
     cmd += " ";
     cmd += QString::number(y);
+#endif
+}
 
-    system(cmd.toStdString().c_str());
+void re_mouseMoveW(int x_offset, int y_offset)
+{
+#ifdef WIN32
+    RECT active_rect;
+    HWND active_win = GetForegroundWindow();
+    GetWindowRect(active_win, &active_rect);
+    int x = active_rect.right + x_offset;
+    int y = active_rect.bottom + y_offset;
+    SetCursorPos(x, y);
+#endif
+}
+
+void re_mousePress(int btn)
+{
+#ifdef WIN32
+    INPUT input;
+    input.type = INPUT_MOUSE;
+    input.mi.dx = 0;
+    input.mi.dy = 0;
+
+    if( btn==1 )
+    {
+        input.mi.dwFlags=(MOUSEEVENTF_LEFTDOWN);
+    }
+    else if( btn==2 )
+    {
+        input.mi.dwFlags=(MOUSEEVENTF_MIDDLEDOWN);
+    }
+    else if( btn==3 )
+    {
+        input.mi.dwFlags=(MOUSEEVENTF_RIGHTDOWN);
+    }
+
+    input.mi.mouseData = 0;
+    input.mi.dwExtraInfo = NULL;
+    input.mi.time = 0;
+    SendInput(1, &input,sizeof(INPUT));
+#endif
+}
+
+void re_mouseRelease(int btn)
+{
+#ifdef WIN32
+    INPUT input;
+    input.type = INPUT_MOUSE;
+    input.mi.dx = 0;
+    input.mi.dy = 0;
+
+    if( btn==1 )
+    {
+        input.mi.dwFlags=(MOUSEEVENTF_LEFTUP);
+    }
+    else if( btn==2 )
+    {
+        input.mi.dwFlags=(MOUSEEVENTF_MIDDLEUP);
+    }
+    else if( btn==3 )
+    {
+        input.mi.dwFlags=(MOUSEEVENTF_RIGHTUP);
+    }
+
+    input.mi.mouseData = 0;
+    input.mi.dwExtraInfo = NULL;
+    input.mi.time = 0;
+    SendInput(1, &input,sizeof(INPUT));
 #endif
 }

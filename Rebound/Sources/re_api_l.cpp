@@ -79,7 +79,7 @@ QString ReApi::getLinkPath(QString path)
     return lnk;
 }
 
-void lunnchExe(QString name)
+void lunchExe(QString name)
 {
 
 }
@@ -91,6 +91,6 @@ void ReApi::openApp(int appid)
     if ( appid==RE_WIN_TELEGRAM )
     {
         link_path = getLinkPath("Telegram Desktop\\Telegram.lnk");
-//        lunnchExe(link_path);
+//        lunchExe(link_path);
     }
 }
