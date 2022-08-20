@@ -1,4 +1,5 @@
 #include "re_super.h"
+#include <QThread>
 
 ReSuper::ReSuper(ReWindow *current_w, QObject *parent): QObject(parent)
 {
@@ -109,7 +110,11 @@ void ReSuper::getMetaCmd(CCommand *ret)
     }
     else if( app->pname==RE_PROC_TELEGRAM )
     {
+#ifdef WIN32
+        recordTelegram();
+#else
         system("./Scripts/telegram_voice.sh");
+#endif
     }
 }
 
@@ -256,5 +261,17 @@ void ReSuper::sendPipe(const char *data)
         hPipe = INVALID_HANDLE_VALUE;
         sendPipe(data);
     }
+}
+
+
+void ReSuper::recordTelegram()
+{
+    re_mouseMoveW(-30, -30);
+    QThread::msleep(1000);
+    re_mousePress(1);
+    QThread::msleep(1000);
+    re_mouseMoveW(-30, -400);
+    QThread::msleep(1000);
+    re_mouseRelease(1);
 }
 #endif

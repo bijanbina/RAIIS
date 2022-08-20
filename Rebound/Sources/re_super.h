@@ -5,6 +5,7 @@
 
 #include "re_config.h"
 #include "re_commands.h"
+#include "re_mouse.h"
 #ifdef WIN32
 #include "re_app_w.h"
 #include "re_keyboard_w.h"
@@ -45,6 +46,7 @@ private:
 #ifdef WIN32
     void connectChessPipe();
     void sendPipe(const char *data);
+    void recordTelegram();
 
     HANDLE hPipe;
 #endif
