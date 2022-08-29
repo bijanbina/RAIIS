@@ -7,7 +7,7 @@ function getProfPath()
 	prof_path = ff_path .. "\\profiles.ini"
 	
 	fileContent = readFile(prof_path);
-	prof_name = getFirstMatch(fileContent, "Default")
+	prof_name = getFirstDefault(fileContent, "Default")
 	
 	local pn_split = {}
 	for str in prof_name:gmatch("([^".."=".."]+)") do  

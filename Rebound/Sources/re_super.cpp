@@ -58,6 +58,10 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     {
         getRogerCmd(ret);
     }
+    else if( cmd==RE_SUPER_RESIST )
+    {
+        getResistCmd();
+    }
 }
 
 void ReSuper::getMetaCmd(CCommand *ret)
@@ -188,6 +192,16 @@ void ReSuper::getRogerCmd(CCommand *ret)
 
     ret->mod_list.append(KEY_LEFTCTRL);
     ret->val1 = KEY_RIGHT;
+}
+
+void ReSuper::getResistCmd()
+{
+#ifdef WIN32
+    sendPipe("persist" CH_NP_SEPARATOR);
+#else
+    system("dbus-send --dest=com.benjamin.chess"
+           " / com.benjamin.chess.show string:\"\"");
+#endif
 }
 
 void ReSuper::getSwitchCmd(CCommand *ret)

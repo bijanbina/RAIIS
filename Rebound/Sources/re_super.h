@@ -38,6 +38,7 @@ private:
     void getCamelCmd();
     void getSideCmd();
     void getKickCmd();
+    void getResistCmd();
 
     int uinput_f;
 
