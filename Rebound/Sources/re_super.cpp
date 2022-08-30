@@ -115,7 +115,14 @@ void ReSuper::getMetaCmd(CCommand *ret)
     else if( app->pname==RE_PROC_TELEGRAM )
     {
 #ifdef WIN32
+        ret->val2 = 0;
         recordTelegram();
+        ret->val1 = VK_SCROLL;
+
+        ret->val2 = 1;
+        ret->val3 = 1;
+        ret->type  = RE_COMMAND_NATO;
+        ret->state = RE_CSTATE_0;
 #else
         system("./Scripts/telegram_voice.sh");
 #endif
@@ -277,11 +284,11 @@ void ReSuper::sendPipe(const char *data)
     }
 }
 
-
 void ReSuper::recordTelegram()
 {
+    qDebug() << "recordTelegram";
     re_mouseMoveW(-30, -30);
-    QThread::msleep(1000);
+    QThread::msleep(100);
     re_mousePress(1);
     QThread::msleep(1000);
     re_mouseMoveW(-30, -400);
