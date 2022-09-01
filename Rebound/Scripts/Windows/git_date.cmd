@@ -7,13 +7,15 @@ set mon=%mydate%
 set mydate=%date:~10,4%
 set yer=%mydate%
 
-net stop w32time 
+::net stop w32time 
+reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NoSync
 
 :loop
 SET /P D=Enter day:
 if %D%==q (
-	net start w32time
+	::net start w32time
 	goto end
+	reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NTP
 	)
 if %D% LEQ %day% (
 	date %mon%-%D%-%yer%
