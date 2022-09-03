@@ -62,6 +62,7 @@ signals:
     void updateMode();
 
 private:
+    void writeStatus(QString input);
     int i_proc;
 };
 

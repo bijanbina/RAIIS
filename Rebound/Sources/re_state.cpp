@@ -245,6 +245,18 @@ void ReState::goToSleep()
 {
     sleep_state = 1;
 #ifdef WIN32
+    QString cmd;
+    cmd = "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}";
+    cmd += "  Sleep  %{A}%{B- F1-}";
+    writeStatus(cmd);
+#else
+    writeStatus("Sleep");
+#endif
+}
+
+void ReState::writeStatus(QString input)
+{
+#ifdef WIN32
     QString path = MOM_LABEL_DIR;
     path += MOM_LABEL_STATUS;
     QFile st_file(path);
@@ -257,12 +269,12 @@ void ReState::goToSleep()
         return;
     }
     QTextStream out(&st_file);
-    out << "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}"
-        << "  Sleep  "
-        << "%{A}%{B- F1-}";
+    out << input;
     st_file.close();
 #else
-    system("echo Sleep > ~/.config/polybar/awesomewm/ben_status");
+    QString cmd = "echo '" + input;
+    cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+    system(cmd.toStdString().c_str());
 #endif
 }
 
@@ -286,20 +298,28 @@ void ReState::wakeUp()
 // enable scroll
 void ReState::enScroll(int dir, int speed)
 {
-    QString cmd = "echo '";
+    QString cmd;
 
     if( dir==RE_META_SKY )
     {
-        cmd += "Sky ";
+        cmd = "Sky ";
         cmd += QString::number(speed);
-        cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+#ifdef WIN32
+        cmd = "%{B#0067aa}%{F#ffffff}  " + cmd;
+        cmd += "  %{B- F1-}";
+#endif
+        writeStatus(cmd);
         fl->scrollUp(speed, cmd);
     }
     else if( dir==RE_META_DIVE )
     {
-        cmd += "Dive ";
+        cmd = "Dive ";
         cmd += QString::number(speed);
-        cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+#ifdef WIN32
+        cmd = "%{B#0067aa}%{F#ffffff}  " + cmd;
+        cmd += "  %{B- F1-}";
+#endif
+        writeStatus(cmd);
         fl->scrollDown(speed, cmd);
     }
 }
