@@ -30,7 +30,6 @@ private:
     QWebSocket *socket;
     QString cmd_buf;
     QString url;
-    QString title;
     int     title_state = 0;
 };
 

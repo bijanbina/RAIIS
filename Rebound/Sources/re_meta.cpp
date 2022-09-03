@@ -71,7 +71,7 @@ CCommand ReMeta::castMeta(int meta, int arg)
         {
             return cmd;
         }
-        execScrollCmd(meta, arg-KEY_1);
+        execScrollCmd(meta, arg-KEY_1+1);
     }
     else if( meta==RE_META_MUSIC )
     {

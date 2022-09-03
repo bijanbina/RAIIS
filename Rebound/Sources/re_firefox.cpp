@@ -51,7 +51,7 @@ void ReFirefox::urlCheck(QString title, QString ws)
 #endif
     ws_buf = ws;
     socket->open(QUrl(ws));
-    qDebug() << ws;
+    qDebug() << "urlCheck:" << ws;
     reset();
 }
 
@@ -181,6 +181,7 @@ void ReFirefox::sendScroll()
             QString line = file.readLine();
             line.replace('\n', " ");
             line.replace('\t', " ");
+            line.replace('\r', " ");
             cmd += line;
         }
         file.close();
