@@ -7,8 +7,8 @@ set mon=%mydate%
 set mydate=%date:~10,4%
 set yer=%mydate%
 
-net stop w32time 
 reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NoSync
+net stop w32time 
 
 :loop
 SET /P D=Enter day:
@@ -23,7 +23,7 @@ if %D%==q (
 	goto end
 	)
 if %D% LEQ %day% (
-	date %mon%-%D%-%yer%
+	call :ChangeDay
 	)
 if %D% GTR %day% if %mon% GTR 01 (
 	call :ChangeMon
@@ -36,11 +36,20 @@ goto loop
 :end
 EXIT /B %ERRORLEVEL%
 
+:ChangeDay
+date %mon%-%D%-%yer%
+::date 9-%D%-%yer%
+reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NoSync
+net stop w32time 
+EXIT /B 0
+
 :ChangeMon
 set new_mon=1%mon%
 set /A new_mon=%new_mon%-101
 echo month changed to %new_mon%
 date %new_mon%-%D%-%yer%
+reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NoSync
+net stop w32time 
 EXIT /B 0
 
 :ChangeMonYer
@@ -49,4 +58,6 @@ set /A new_yer=%yer%-1
 echo 1 : %new_yer%
 echo year changed to %new_yer%
 date %new_mon%-%D%-%new_yer%
+reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NoSync
+net stop w32time 
 EXIT /B 0
