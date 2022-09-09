@@ -5,7 +5,7 @@ RePreProcessor::RePreProcessor(ReCaptain *cpt, QObject *parent) : QObject(parent
 {
     captain = cpt;
     special_c = 0;
-    captain->state->rmSpexFile();
+    re_rmSpex();
 }
 
 RePreProcessor::~RePreProcessor()
@@ -70,7 +70,7 @@ void RePreProcessor::digit(const QString &text)
         special_c--;
         if( special_c==0 )
         {
-            captain->state->rmSpexFile();
+            re_rmSpex();
             execute();
         }
     }

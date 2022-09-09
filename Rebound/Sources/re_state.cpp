@@ -29,79 +29,18 @@ ReState::~ReState()
 
 void ReState::readStatusFile()
 {
-#ifdef WIN32
-    ///POLYBAR INTEGRATION
-    QString path = MOM_LABEL_DIR;
-    path += MOM_LABEL_STATUS;
-#else
-    QString path = getenv("HOME");
-    path += "/.config/polybar/awesomewm/ben_status";
-#endif
-    QFile file(path);
-    if( file.open(QIODevice::ReadOnly) )
+    QString line = re_readStatus();
+    if( line.length() )
     {
-        QString line = file.readLine();
-        line.replace('\n', "");
-        file.close();
-
         if( line.contains("Sleep") )
         {
             sleep_state = 1;
         }
         else
         {
-            rmStatusFile();
+            re_rmStatus();
         }
     }
-}
-
-void ReState::rmStatusFile()
-{
-#ifdef WIN32
-    QString path = MOM_LABEL_DIR;
-    path += MOM_LABEL_STATUS;
-#else
-    QString path = getenv("HOME");
-    path += "/.config/polybar/awesomewm/ben_status";
-#endif
-    if( QFileInfo::exists(path) )
-    {
-#ifdef WIN32
-        QString cmd = "del ";
-#else
-        QString cmd = "rm ";
-#endif
-        cmd += path;
-
-        system(cmd.toStdString().c_str());
-    }
-}
-
-void ReState::rmSpexFile()
-{
-#ifdef WIN32
-    ///POLYBAR INTEGRATION
-#else
-    QString path = getenv("HOME");
-    path += "/.config/polybar/awesomewm/ben_spex";
-    if( QFileInfo::exists(path) )
-    {
-        QString cmd = "rm ";
-        cmd += path;
-
-        system(cmd.toStdString().c_str());
-    }
-#endif
-}
-
-void ReState::setMode(int mode)
-{
-    i_mode = mode;
-}
-
-int ReState::getMode()
-{
-    return i_mode;
 }
 
 void ReState::toggleUi(QObject *item)
@@ -116,15 +55,6 @@ void ReState::toggleUi(QObject *item)
     }
 }
 
-void ReState::showSwither(QObject *item)
-{
-    setMode(RE_MODE_SWITCH);
-
-    ///FIXME: UNCOMMENT THIS
-//    updateTitles(item);
-    QQmlProperty::write(item, "active_process", 1);
-    QQmlProperty::write(item, "visible", 1);
-}
 
 void ReState::setProcess(QString name)
 {
@@ -171,16 +101,16 @@ int ReState::getProcess()
 void ReState::updateApp(ReWindow active_window)
 {
     app = active_window;
-
-#ifdef WIN32
-    setProcess(app.pname);
-#else
     QString status = re_readStatus();
 
     QRegExp go_reg("^go");
     QRegExp sky_reg("^Sky");
     QRegExp dive_reg("^Dive");
     QRegExp number_reg("\\d*");
+
+#ifdef WIN32
+    setProcess(app.pname);
+#else
     if( status.contains(go_reg) )
     {
         return;
@@ -291,7 +221,7 @@ void ReState::wakeUp()
     }
     else
     {
-        rmStatusFile();
+        re_rmStatus();
     }
 }
 
@@ -346,13 +276,13 @@ void ReState::resetState()
     {
         fl->sc_dir = 0;
         fl->scrollEscape();
-        rmStatusFile();
+        re_rmStatus();
     }
 
     if( chess_mode )
     {
         chess_mode = 0;
-        rmStatusFile();
+        re_rmStatus();
     }
 }
 

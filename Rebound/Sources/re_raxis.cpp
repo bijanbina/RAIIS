@@ -12,7 +12,7 @@ void ReRAxis::buttonRightPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("raxis_right", RE_SCR_SPOTIFY);
         }
@@ -33,7 +33,7 @@ void ReRAxis::buttonLeftPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("raxis_left", RE_SCR_SPOTIFY);
         }
@@ -54,7 +54,7 @@ void ReRAxis::buttonUpPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("raxis_up", RE_SCR_SPOTIFY);
         }
@@ -75,7 +75,7 @@ void ReRAxis::buttonDownPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("raxis_down", RE_SCR_SPOTIFY);
         }

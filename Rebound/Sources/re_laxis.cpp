@@ -12,7 +12,7 @@ void ReLAxis::buttonRightPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("laxis_right", RE_SCR_SPOTIFY);
         }
@@ -33,7 +33,7 @@ void ReLAxis::buttonLeftPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("laxis_left", RE_SCR_SPOTIFY);
         }
@@ -54,7 +54,7 @@ void ReLAxis::buttonUpPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("laxis_up", RE_SCR_SPOTIFY);
         }
@@ -75,7 +75,7 @@ void ReLAxis::buttonDownPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("laxis_down", RE_SCR_SPOTIFY);
         }
