@@ -27,6 +27,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_laxis.cpp \
            Sources/re_raxis.cpp \
            Sources/re_bumpers.cpp \
+           Sources/re_status_file.cpp \
            Sources/re_super.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
@@ -70,6 +71,7 @@ HEADERS += Sources/backend.h \
            Sources/re_raxis.h \
            Sources/re_bumpers.h \
            Sources/re_state_const.h \
+           Sources/re_status_file.h \
            Sources/re_super.h
 
 win32:HEADERS += Sources/re_api_w.h \

@@ -13,7 +13,7 @@ void ReBumpers::buttonL1Pressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("l1", RE_SCR_SPOTIFY);
         }
@@ -49,7 +49,7 @@ void ReBumpers::buttonL2Pressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("l2", RE_SCR_SPOTIFY);
         }
@@ -70,7 +70,7 @@ void ReBumpers::buttonR1Pressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("r1", RE_SCR_SPOTIFY);
         }
@@ -91,7 +91,7 @@ void ReBumpers::buttonR2Pressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("r2", RE_SCR_SPOTIFY);
         }

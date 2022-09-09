@@ -21,7 +21,7 @@ void ReButtons::buttonAPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_APPLICATION )
+        if ( state->i_mode==RE_MODE_APPLICATION )
         {
             state->toggleUi(ui);
             state->api->openApp(RE_WIN_TELEGRAM);
@@ -42,7 +42,7 @@ void ReButtons::buttonBPressed()
 {
     if( state->ui_visible )
     {
-         if ( state->getMode()==RE_MODE_APPLICATION )
+         if ( state->i_mode==RE_MODE_APPLICATION )
          {
              state->toggleUi(ui);
 
@@ -55,7 +55,7 @@ void ReButtons::buttonBPressed()
                  system("rasdial MK2 km93057 48868");
              }
          }
-         else if ( state->getMode()==RE_MODE_SPOTIFY )
+         else if ( state->i_mode==RE_MODE_SPOTIFY )
          {
              executScript("b", RE_SCR_SPOTIFY);
          }
@@ -74,13 +74,13 @@ void ReButtons::buttonXPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_APPLICATION )
+        if ( state->i_mode==RE_MODE_APPLICATION )
         {
             state->toggleUi(ui);
             state->api->openApp(RE_WIN_FIREFOX);
             qDebug() << "openApp";
         }
-        else if ( state->getMode()==RE_MODE_SPOTIFY )
+        else if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("x", RE_SCR_SPOTIFY);
         }
@@ -101,13 +101,13 @@ void ReButtons::buttonYPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_APPLICATION )
+        if ( state->i_mode==RE_MODE_APPLICATION )
         {
             state->toggleUi(ui);
             state->api->openApp(RE_WIN_SPOTIFY);
             qDebug() << "openApp";
         }
-        else if ( state->getMode()==RE_MODE_SPOTIFY )
+        else if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("y", RE_SCR_SPOTIFY);
         }
@@ -153,11 +153,11 @@ void ReButtons::buttonSelectPressed()
 {
     if( state->ui_visible )
     {
-        if ( state->getMode()==RE_MODE_SPOTIFY )
+        if ( state->i_mode==RE_MODE_SPOTIFY )
         {
             executScript("button_select", RE_SCR_SPOTIFY);
         }
-        else if ( state->getMode()==RE_MODE_APPLICATION )
+        else if ( state->i_mode==RE_MODE_APPLICATION )
         {
             executeAhk("suspend");
         }
@@ -176,7 +176,7 @@ void ReButtons::buttonSelectPressed()
         }
         else
         {
-            state->showSwither(uiSwitcher);
+            showSwither();
         }
     }
 }
@@ -288,3 +288,13 @@ void ReButtons::buttonGuidePressed()
 }
 
 #endif
+
+void ReButtons::showSwither()
+{
+    state->i_mode = RE_MODE_SWITCH;
+
+    ///FIXME: UNCOMMENT THIS
+//    updateTitles(uiSwitcher);
+    QQmlProperty::write(uiSwitcher, "active_process", 1);
+    QQmlProperty::write(uiSwitcher, "visible", 1);
+}

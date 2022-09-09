@@ -20,7 +20,6 @@ struct screen_pos
 
 int getIntCommand(char *command);
 QString getStrCommand(QString command);
-QString re_readStatus();
 
 screen_pos getPrimaryScreen();
 void changeLaguageBack();

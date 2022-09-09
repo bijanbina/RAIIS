@@ -31,6 +31,7 @@ public slots:
     void buttonSelectPressed();
     void buttonGuidePressed();
 
+    void showSwither();
 #ifdef __linux__
     void tab_timeout();
 #endif

@@ -94,23 +94,6 @@ void updateScreenInfo(QObject *item)
     //    QMetaObject::invokeMethod(item, "show");
 }
 
-QString re_readStatus()
-{
-    QString path = getenv("HOME");
-    path += "/.config/polybar/awesomewm/ben_status";
-    QFile file(path);
-    QString buffer;
-
-    if( file.open(QIODevice::ReadOnly) )
-    {
-        buffer = file.readLine();
-        buffer.replace('\n', "");
-        file.close();
-    }
-
-    return buffer;
-}
-
 int isItemVisible(QObject *item)
 {
     if ( item != NULL )
