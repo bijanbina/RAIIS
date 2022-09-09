@@ -61,3 +61,27 @@ void re_rmSpex()
     }
 #endif
 }
+
+void re_writeStatus(QString input)
+{
+#ifdef WIN32
+    QString path = MOM_LABEL_DIR;
+    path += MOM_LABEL_STATUS;
+    QFile st_file(path);
+
+    if( !st_file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Error creating" << MOM_LABEL_STATUS;
+        qDebug() << "Trying to create" << MOM_LABEL_DIR;
+        system("mkdir " MOM_LABEL_DIR);
+        return;
+    }
+    QTextStream out(&st_file);
+    out << input;
+    st_file.close();
+#else
+    QString cmd = "echo '" + input;
+    cmd += "' > ~/.config/polybar/awesomewm/ben_status";
+    system(cmd.toStdString().c_str());
+#endif
+}

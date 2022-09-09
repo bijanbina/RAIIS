@@ -23,13 +23,8 @@ public:
 
     void readStatusFile();
 
-    void setProcess(QString name);
-    void setProcess(int proc);
-    int getProcess();
     void updateApp(ReWindow active_window);
     void toggleUi(QObject *item);
-    void propageteMode(int mode);
-    void updateTitles(QStringList wins_title, QObject *item);
 
     void goToSleep();
     void wakeUp();
@@ -54,10 +49,6 @@ public:
 
 signals:
     void updateMode();
-
-private:
-    void writeStatus(QString input);
-    int i_proc;
 };
 
 #endif // RE_STATE_H

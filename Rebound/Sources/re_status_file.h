@@ -9,6 +9,7 @@
 #include "re_state_const.h"
 
 QString re_readStatus();
+void    re_writeStatus(QString input);
 void    re_rmStatus();
 void    re_rmSpex();
 

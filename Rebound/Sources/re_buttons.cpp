@@ -29,7 +29,8 @@ void ReButtons::buttonAPressed()
         }
         else
         {
-            state->propageteMode(RE_MODE_APPLICATION);
+            state->i_mode = RE_MODE_APPLICATION;
+            emit state->updateMode();
         }
     }
     else
@@ -61,7 +62,8 @@ void ReButtons::buttonBPressed()
          }
          else
          {
-             state->propageteMode(RE_MODE_SPOTIFY);
+             state->i_mode = RE_MODE_SPOTIFY;
+             emit state->updateMode();
          }
     }
     else
@@ -113,7 +115,8 @@ void ReButtons::buttonYPressed()
         }
         else
         {
-            state->propageteMode(RE_MODE_SWITCH);
+            state->i_mode = RE_MODE_SWITCH;
+            emit state->updateMode();
         }
     }
     else

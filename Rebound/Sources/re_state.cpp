@@ -3,7 +3,6 @@
 ReState::ReState(QObject *parent) : QObject(parent)
 {
     i_mode = RE_MODE_HIDDEN;
-    i_proc = RE_WIN_UNKNOWN;
     ui_visible = false;
     fl = new ReFirefox;
     super = new ReSuper(&app);
@@ -45,7 +44,8 @@ void ReState::readStatusFile()
 
 void ReState::toggleUi(QObject *item)
 {
-    propageteMode(RE_MODE_MAIN);
+    i_mode = RE_MODE_MAIN;
+    emit updateMode();
 
     QMetaObject::invokeMethod(item, "uiToggle");
     ui_visible = QQmlProperty::read(item, "visible").toInt();
@@ -53,49 +53,6 @@ void ReState::toggleUi(QObject *item)
     {
         i_mode = RE_MODE_HIDDEN;
     }
-}
-
-
-void ReState::setProcess(QString name)
-{
-    if( name.contains("qtcreator.exe") )
-    {
-        setProcess(RE_WIN_QT);
-    }
-    else if( name.contains("firefox.exe") )
-    {
-        setProcess(RE_WIN_FIREFOX);
-    }
-    else if( name.contains("Spotify.exe") )
-    {
-        setProcess(RE_WIN_SPOTIFY);
-    }
-    else if( name.contains("FoxitPhantomPDF.exe") )
-    {
-        setProcess(RE_WIN_READING);
-    }
-    else if( name.contains("FoxitPhantomPDF.exe") )
-    {
-        setProcess(RE_WIN_READING);
-    }
-    else if( name.contains("atom.exe") )
-    {
-        setProcess(RE_WIN_TEXTEDITOR);
-    }
-    else if( name.contains("Clover.exe") )
-    {
-        setProcess(RE_WIN_EXPLORER);
-    }
-}
-
-void ReState::setProcess(int proc)
-{
-    i_proc = proc;
-}
-
-int ReState::getProcess()
-{
-    return i_proc;
 }
 
 void ReState::updateApp(ReWindow active_window)
@@ -108,9 +65,6 @@ void ReState::updateApp(ReWindow active_window)
     QRegExp dive_reg("^Dive");
     QRegExp number_reg("\\d*");
 
-#ifdef WIN32
-    setProcess(app.pname);
-#else
     if( status.contains(go_reg) )
     {
         return;
@@ -139,36 +93,15 @@ void ReState::updateApp(ReWindow active_window)
         return;
     }
 
-    QString cmd = "echo \"";
-    cmd += app.pname + "\"";
-    cmd += " > ~/.config/polybar/awesomewm/ben_status";
-    system(cmd.toStdString().c_str());
+    QString cmd;
+#ifdef WIN32
+    cmd = "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}  ";
+    cmd += app.pname;
+    cmd += "  %{A}%{B- F1-}";
+#else
+    cmd = app.pname;
 #endif
-}
-
-void ReState::propageteMode(int mode)
-{
-    i_mode = mode;
-    emit updateMode();
-}
-
-void ReState::updateTitles(QStringList wins_title, QObject *item)
-{
-    qDebug() << "updateTitles" << wins_title.size();
-
-    for(int i=0; i<6; i++)
-    {
-        QQmlProperty::write(item, "process_id", i+1);
-        if( i<wins_title.length() )
-        {
-            QQmlProperty::write(item, "process_title", wins_title[i]);
-        }
-        else
-        {
-            QQmlProperty::write(item, "process_title", "");
-        }
-        QMetaObject::invokeMethod(item, "updateProcessTitle");
-    }
+    re_writeStatus(cmd);
 }
 
 void ReState::goToSleep()
@@ -178,33 +111,9 @@ void ReState::goToSleep()
     QString cmd;
     cmd = "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}";
     cmd += "  Sleep  %{A}%{B- F1-}";
-    writeStatus(cmd);
+    re_writeStatus(cmd);
 #else
     writeStatus("Sleep");
-#endif
-}
-
-void ReState::writeStatus(QString input)
-{
-#ifdef WIN32
-    QString path = MOM_LABEL_DIR;
-    path += MOM_LABEL_STATUS;
-    QFile st_file(path);
-
-    if( !st_file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        qDebug() << "Error creating" << MOM_LABEL_STATUS;
-        qDebug() << "Trying to create" << MOM_LABEL_DIR;
-        system("mkdir " MOM_LABEL_DIR);
-        return;
-    }
-    QTextStream out(&st_file);
-    out << input;
-    st_file.close();
-#else
-    QString cmd = "echo '" + input;
-    cmd += "' > ~/.config/polybar/awesomewm/ben_status";
-    system(cmd.toStdString().c_str());
 #endif
 }
 
@@ -238,7 +147,7 @@ void ReState::enScroll(int dir, int speed)
         cmd = "%{B#0067aa}%{F#ffffff}  " + cmd;
         cmd += "  %{B- F1-}";
 #endif
-        writeStatus(cmd);
+        re_writeStatus(cmd);
         fl->scrollUp(speed, cmd);
     }
     else if( dir==RE_META_DIVE )
@@ -249,7 +158,7 @@ void ReState::enScroll(int dir, int speed)
         cmd = "%{B#0067aa}%{F#ffffff}  " + cmd;
         cmd += "  %{B- F1-}";
 #endif
-        writeStatus(cmd);
+        re_writeStatus(cmd);
         fl->scrollDown(speed, cmd);
     }
 }
