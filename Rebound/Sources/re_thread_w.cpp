@@ -239,7 +239,7 @@ void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
     if ( win.hWnd != thread_w->win_active.hWnd )
     {
         thread_w->windows.push_back(win);
-        qDebug() << "New Window" << win.title;
+//        qDebug() << "New Window" << win.title;
     }
 
 }
@@ -632,7 +632,7 @@ void ReThreadW::cleanWins()
     {
         if( windows[i].verify==0 )
         {
-            qDebug() << "Remove Window" << windows[i].title;
+//            qDebug() << "Remove Window" << windows[i].title;
             windows.remove(i);
             i--;
         }
