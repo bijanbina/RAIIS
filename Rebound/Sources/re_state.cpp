@@ -60,9 +60,10 @@ void ReState::updateApp(ReWindow active_window)
     app = active_window;
     QString status = re_readStatus();
 
-    QRegExp go_reg("^go");
-    QRegExp sky_reg("^Sky");
-    QRegExp dive_reg("^Dive");
+    QRegExp go_reg(" go");
+    QRegExp sky_reg(" Sky");
+    QRegExp dive_reg(" Dive");
+    QRegExp halt_reg(" Halt");
     QRegExp number_reg("\\d*");
 
     if( status.contains(go_reg) )
@@ -74,6 +75,10 @@ void ReState::updateApp(ReWindow active_window)
         return;
     }
     else if( status.contains(dive_reg) )
+    {
+        return;
+    }
+    else if( status.contains(halt_reg) )
     {
         return;
     }
@@ -95,9 +100,9 @@ void ReState::updateApp(ReWindow active_window)
 
     QString cmd;
 #ifdef WIN32
-    cmd = "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}  ";
+    cmd  = "%{B#0067aa}%{F#ffffff}  ";
     cmd += app.pname;
-    cmd += "  %{A}%{B- F1-}";
+    cmd += "  %{B- F1-}";
 #else
     cmd = app.pname;
 #endif
