@@ -74,13 +74,6 @@ void RePreProcessor::digit(const QString &text)
             execute();
         }
     }
-    else if( re_isLastMeta(cmd_buf) )
-    {
-        int last_i = cmd_buf.count()-1; //last index
-
-        cmd_buf[last_i].val2 = text.toInt();
-        execute();
-    }
     else if( captain->state->fl->sc_dir )
     {
         CCommand cmd;
@@ -90,6 +83,13 @@ void RePreProcessor::digit(const QString &text)
         cmd.type = RE_COMMAND_META;
 
         cmd_buf.append(cmd);
+        execute();
+    }
+    else if( re_isLastMeta(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
+
+        cmd_buf[last_i].val2 = text.toInt();
         execute();
     }
     else if( re_isLastMod(cmd_buf) )

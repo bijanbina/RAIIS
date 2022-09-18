@@ -12,7 +12,7 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
     char buffer[128];
     ReThreadW *thread_w = (ReThreadW *)lParam;
     int written = GetWindowTextA(hwnd, buffer, 128);
-    if(written && strlen(buffer) != 0 && strcmp(buffer, "Rebound") != 0)
+    if( written && strlen(buffer)!=0 )
     {
         re_AddHwnd(hwnd, thread_w);
     }
@@ -209,12 +209,10 @@ void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
                 thread_w->windows[0].verify = 1;
                 thread_w->windows[0].title = win.title;
             }
-            thread_w->thread_data->state->updateApp(win);
         }
         else
         {
             thread_w->windows.push_front(win);
-            thread_w->thread_data->state->updateApp(win);
             qDebug() << "First Time" << win.title;
             return;
         }
@@ -699,25 +697,11 @@ void ReThreadW::updateActiveWindow()
     GetWindowTextA(win_active.hWnd, buffer, 128);
 
     win_active.title = buffer;
-
-    if ( win_active.title.length()==0 ) //No active window
-    {
-        if ( windows.size()>0 )
-        {
-            win_active.hWnd = windows[0].hWnd; //Set last active window
-        }
-    }
-
     re_getType(&win_active);
 
-    if( win_active.type==RE_WIN_YOUTUBE )
-    {
-        thread_data->state->utube_mode = 1;
-    }
-    else
-    {
-        thread_data->state->utube_mode = 0;
-    }
+    win_active.pname = reGetPName(reGetPid(win_active.hWnd));
+    thread_data->state->updateApp(win_active);
+
 //    char class_name[128];
 //    GetClassNameA(HwndA, class_name, 128);
 //    QString class_a = class_name;
@@ -743,38 +727,24 @@ void reRunThread(void *thread_struct_void)
     CoUninitialize();
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
 
-    while(1)
+    while( 1 )
     {
-        if(cntr > 200)
+        if( re_state_mode==RE_MODE_HIDDEN )
         {
-            if(re_state_mode == RE_MODE_HIDDEN)
-            {
-                //Get Active Window Name
-                priv->updateActiveWindow();
+            //Get Active Window Name
+            priv->updateActiveWindow();
 
-                priv->clearWins();
-                EnumWindows(EnumWindowsProc, (LPARAM) priv);
-                priv->cleanWins();
-                priv->syncWinsTitle();
-            }
-            else if(re_state_mode == RE_MODE_MAIN)
-            {
-                priv->cleanElems();
-                priv->updateElements("spotifys", RE_SPOTIFY_ALBUM_PARENT,
-                                     RE_SPOTIFY_ALBUM_CHILD);
-//                priv->syncElemsName();
-            }
-            cntr = 0;
+            priv->clearWins();
+            EnumWindows(EnumWindowsProc, (LPARAM) priv);
+            priv->cleanWins();
+            priv->syncWinsTitle();
         }
-        if(!thread_data->message.isEmpty())
+        else if(re_state_mode == RE_MODE_MAIN)
         {
-            if(thread_data->message == "Launch Nuclear missiles")
-            {
-                qDebug() << "Launched";
-            }
-            thread_data->message.clear();
+            priv->cleanElems();
+            priv->updateElements("spotifys", RE_SPOTIFY_ALBUM_PARENT,
+                                 RE_SPOTIFY_ALBUM_CHILD);
         }
-        cntr++;
-        Sleep(5);
+        Sleep(200);
     }
 }

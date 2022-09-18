@@ -97,18 +97,18 @@ Window
         repeat: true
         onTriggered:
         {
-            var value_time = parseInt(label_timer.text)
-            if(value_time>50)
-            {
-                label_timer.text = value_time - interval
-            }
-            else
-            {
-                label_timer.text = 0
-                selectWindow(active_process)
-                running = false
-                window_switcher.visible = false
-            }
+//            var value_time = parseInt(label_timer.text)
+//            if(value_time>50)
+//            {
+//                label_timer.text = value_time - interval
+//            }
+//            else
+//            {
+//                label_timer.text = 0
+//                selectWindow(active_process)
+//                running = false
+//                window_switcher.visible = false
+//            }
         }
     }
 

@@ -32,6 +32,7 @@ typedef struct threadStruct
     QStringList *wins_title;
     QStringList *elems_name;
     QVector<ReWindow> windows;
+    ReKeyboard  *key;
 }threadStruct;
 
 class ReThreadW
@@ -49,7 +50,6 @@ public:
     void syncElemsName();
     void updateActiveWindow();
 
-
     QVector<ReWindow> windows;
     threadStruct *thread_data;
     QStringList elems_name;
@@ -61,6 +61,7 @@ private:
     int getIndex(QString app_name);
     HWND getHWND(QString title);
     QString renameAppName(QString app_name);
+    void checkFocus();
 
     QVector<ReElemSpec*> elems_spec;
     QString getElemName(int index);

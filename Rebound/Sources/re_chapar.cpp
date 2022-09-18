@@ -22,6 +22,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     thread_data->wins_title = &(state->api->wins_title);
     thread_data->elems_name = &(state->api->elems_name);
     thread_data->state = state;
+    thread_data->key = captain->key;
 
     sync_thread_timer = new QTimer(this); //FIXME: This line is
     api_thread = new std::thread(reRunThread, (void *)thread_data);
@@ -90,7 +91,7 @@ QString ReChapar::getShortTitle(int index)
 
     for ( int i=0 ; i<title.length() ; i++ )
     {
-        if ( title[i].unicode() == 65533 )
+        if ( title[i].unicode()==65533 )
         {
             return title.left(i);
         }
