@@ -175,20 +175,6 @@ void re_getType(ReWindow *win)
     }
 }
 
-int re_isVpnConnected()
-{
-    QString output = getStrCommand("netsh interface ipv4 show config | find \"MK2\"");
-
-    if ( output.length() )
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
 void re_InsertWindow(ReThreadW *thread_w, ReWindow win)
 {
     //Get clover child
@@ -313,82 +299,6 @@ void ReThreadW::sortApp()
     windows = sorted_apps + unsorted_apps;
 }
 
-void reListChildren(IAccessible *pAcc, QString path)
-{
-    QString pAcc_name = reGetAccName(pAcc, CHILDID_SELF);
-    qDebug() << "####### getChildren - acc path : " + pAcc_name;
-
-    long childCount;
-    long returnCount;
-    HRESULT hr = pAcc->get_accChildCount(&childCount);
-    VARIANT* pArray = new VARIANT[childCount];
-    hr = AccessibleChildren(pAcc, 0L, childCount, pArray, &returnCount);
-    path += QString("/");
-
-    for (int x = 0; x < returnCount; x++)
-    {
-        VARIANT vtChild = pArray[x];
-        if (vtChild.vt == VT_DISPATCH)
-        {
-            IDispatch* pDisp = vtChild.pdispVal;
-            IAccessible* pChild = NULL;
-            hr = pDisp->QueryInterface(IID_IAccessible, (void**) &pChild);
-            if (hr == S_OK)
-            {
-                QString child_name = reGetAccName(pChild, CHILDID_SELF);
-                long child_count = reGetChildCount(pChild);
-                qDebug() << "-> acc path : " + pAcc_name +
-                            " - child[" + QString::number(x) + "/" + QString::number(returnCount-1) + "], childname:" + child_name +
-                            "child count" + QString::number(child_count) + " path:" + path + QString::number(x);
-                if(child_count>0)
-                {
-                    reListChildren(pChild, path + QString::number(x));
-                }
-                pChild->Release();
-            }
-            pDisp->Release();
-        }
-        // Else it's a child element so we have to call accNavigate on the parent,
-        //   and we do not recurse because child elements can't have children.
-        else
-        {
-            qDebug() <<"-> acc path : " + pAcc_name +
-                        " - child[" + QString::number(x) + "/" + QString::number(returnCount-1) +
-                        "] ELEMENT - " + reGetAccName(pAcc, vtChild.lVal)
-                        + " path:" + path + QString::number(x);
-        }
-    }
-    delete[] pArray;
-    qDebug() <<"####### Exit getChildren - acc path : " + pAcc_name;
-}
-
-QString reGetPName(long pid)
-{
-    HANDLE processHandle = NULL;
-//    processHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
-    processHandle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
-    if(processHandle == NULL)
-    {
-        qDebug() << "Warning: couldn't get process handle from pid" << pid;
-        return "";
-    }
-
-    // get name of process handle
-    char path_buff[MAX_PATH];
-    if(GetProcessImageFileNameA(processHandle, path_buff, MAX_PATH) == 0)
-    {
-        qDebug() << "Error" << GetLastError() << " : Fail to get Pname of " << pid;
-        return "";
-    }
-
-    QString path_q = path_buff; //process filename
-    QStringList path_list = path_q.split("\\", QString::SkipEmptyParts);
-    QString filename = path_list.last();
-    filename.remove(".exe");
-
-    return filename;
-}
-
 HWND ReThreadW::getHWND(QString appname)
 {
     for(int i=0; i<windows.size(); i++)
@@ -399,88 +309,6 @@ HWND ReThreadW::getHWND(QString appname)
         }
     }
     return NULL;
-}
-
-long reGetPid(HWND hWnd)
-{
-    // get allegro pid of window handle
-    DWORD dwProcessId;
-    GetWindowThreadProcessId(hWnd, &dwProcessId);
-    if(long(dwProcessId) < 0)
-    {
-        qDebug() <<"Warning: couldn't get pid of allegro from window handle";
-        return -1;
-    }
-    return dwProcessId;
-}
-
-long reGetChildCount(IAccessible *pAcc)
-{
-    long cc;
-    pAcc->get_accChildCount(&cc);
-    return cc;
-}
-
-IAccessible* reGetPAcc(HWND hWnd)
-{
-    IAccessible *pAcc;
-
-    AccessibleObjectFromWindow(hWnd, OBJID_WINDOW,
-                               IID_IAccessible, (void**) &pAcc);
-    if(pAcc == NULL)
-    {
-        qDebug() <<"Error: window is not open now, open it and try again ... !";
-        return pAcc;
-    }
-    return pAcc;
-}
-
-int ReThreadW::getIndex(QString app_name)
-{
-    for( int i=0 ; i<windows.size() ; i++ )
-    {
-        if(windows[i].pname.contains(app_name, Qt::CaseInsensitive))
-        {
-            return i;
-        }
-    }
-    return -1;
-}
-
-QString reGetAccName(IAccessible *pAcc, long childId)
-{
-    BSTR bstrName;
-    VARIANT varChild;
-    varChild.vt = VT_I4;
-    varChild.lVal = childId;
-    /*HRESULT hr = */pAcc->get_accName(varChild, &bstrName);
-    return QString::fromWCharArray(bstrName);
-}
-
-ReElemSpec* ReThreadW::getElemSpec(QString name)
-{
-    for(auto e: elems_spec)
-    {
-        if(e->name == name)
-        {
-            return e;
-        }
-    }
-    return NULL;
-}
-
-ReWindow ReThreadW::getWinSpec(QString title)
-{
-    for(int i=0; i<windows.size(); i++)
-    {
-        if(title == windows[i].title)
-        {
-            return windows[i];
-        }
-    }
-
-    ReWindow shit;
-    return shit;
 }
 
 QString ReThreadW::getWinTitle(int index)
@@ -499,114 +327,6 @@ QString ReThreadW::getElemName(int index)
         return elems_spec[index]->name;
     }
     return "";
-}
-
-// return Acc specific chilren
-IAccessible* reFindAcc(QString path, IAccessible *pAcc)
-{
-    VARIANT vtChild;
-    if( path.size()>0 )
-    {
-        long childCount = reGetChildCount(pAcc);
-        long returnCount;
-        VARIANT* pArray = new VARIANT[childCount];
-
-        AccessibleChildren(pAcc, 0L, childCount, pArray, &returnCount);
-
-        int indx = QString(path.at(0)).toInt();
-        vtChild = pArray[indx];
-
-        qDebug() << QString("--path:") + path + " childCount:" + QString::number(childCount) + " " +
-                 reGetAccName(pAcc, CHILDID_SELF) + " indx:" + QString::number(indx) + " " + QString::number(returnCount);
-
-        // return if path is not correct
-        if(indx > childCount)
-        {
-            qDebug() <<"path is not correct, index greater than child";
-            return NULL;
-        }
-
-        if(vtChild.vt != VT_DISPATCH)
-        {
-            qDebug() <<"path is not correct, child is element, not Acc";
-            return NULL;
-        }
-
-        IDispatch* pDisp = vtChild.pdispVal;
-        IAccessible* pChild = NULL;
-        pDisp->QueryInterface(IID_IAccessible, (void**) &pChild);
-
-        return reFindAcc(path.mid(1), pChild);
-    }
-    else
-    {
-        return pAcc;
-    }
-}
-
-void ReThreadW::updateElements(QString app_name, QString parent_path,
-                               QString child_path)
-{
-    qDebug() << "updateElements" << app_name;
-
-    VARIANT vtChild;
-    int index = getIndex(app_name);
-    if( index<0 )
-    {
-        //Requested app_name not found
-//        qDebug() << "Error: can not found" << app_name;
-        return;
-    }
-    HWND app_hwnd = getHWND(app_name);
-    if( app_hwnd==NULL )
-    {
-        qDebug() << "Error: getHWND return null, pName:" << app_name;
-        return;
-    }
-
-    IAccessible *app_pacc = reGetPAcc(app_hwnd);
-    if( app_pacc==NULL )
-    {
-        return;
-    }
-
-    IAccessible *parent_pacc = NULL;
-    parent_pacc = reFindAcc(parent_path, app_pacc);
-    if( parent_pacc==NULL )
-    {
-        return;
-    }
-
-    long returnCount, childCount = reGetChildCount(parent_pacc);
-    VARIANT* pArray = new VARIANT[childCount];
-    AccessibleChildren(parent_pacc, 0L, childCount, pArray, &returnCount);
-    if(returnCount != childCount)
-    {
-        qDebug() << "Error: not found enough children when gathering them!";
-        return;
-    }
-    for(int i=0; i<childCount; i++)
-    {
-        vtChild = pArray[i];
-        if(vtChild.vt != VT_DISPATCH)
-        {
-            qDebug() <<"path is not correct, child is element, not Acc";
-            continue;
-        }
-        IDispatch *pDisp = vtChild.pdispVal;
-        IAccessible *pChild = NULL;
-        pDisp->QueryInterface(IID_IAccessible, (void**) &pChild);
-        pChild = reFindAcc(child_path, pChild);
-        if( pChild==NULL )
-        {
-            continue;
-        }
-        ReElemSpec *elem_spec = new ReElemSpec;
-        elem_spec->pAcc = pChild;
-        elem_spec->name = reGetAccName(pChild, CHILDID_SELF);
-        elems_spec.push_back(elem_spec);
-        elems_name.push_back(elem_spec->name);
-    }
 }
 
 ReThreadW::ReThreadW(threadStruct *thread_data)
@@ -637,16 +357,6 @@ void ReThreadW::cleanWins()
     }
 }
 
-void ReThreadW::cleanElems()
-{
-    for(auto e : elems_spec)
-    {
-        delete e;
-    }
-    elems_spec.clear();
-    elems_name.clear();
-}
-
 void ReThreadW::syncWinsTitle()
 {
     for(int i=0; i<windows.size(); i++)
@@ -667,26 +377,6 @@ void ReThreadW::syncWinsTitle()
     {
         thread_data->wins_title->removeAt(i);
         i--;
-    }
-}
-
-void ReThreadW::syncElemsName()
-{
-    for(int i=0; i<elems_name.size(); i++)
-    {
-        if(i < thread_data->elems_name->size())
-        {
-            (*(thread_data->elems_name))[i] = elems_name[i];
-        }
-        else
-        {
-            thread_data->elems_name->push_back(elems_name[i]);
-        }
-    }
-
-    while( elems_name.size()<thread_data->elems_name->size() )
-    {
-        thread_data->elems_name->pop_front();
     }
 }
 
@@ -738,12 +428,6 @@ void reRunThread(void *thread_struct_void)
             EnumWindows(EnumWindowsProc, (LPARAM) priv);
             priv->cleanWins();
             priv->syncWinsTitle();
-        }
-        else if(re_state_mode == RE_MODE_MAIN)
-        {
-            priv->cleanElems();
-            priv->updateElements("spotifys", RE_SPOTIFY_ALBUM_PARENT,
-                                 RE_SPOTIFY_ALBUM_CHILD);
         }
         Sleep(200);
     }
