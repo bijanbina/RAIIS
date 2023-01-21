@@ -12,7 +12,7 @@ net stop w32time
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d 1
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 2 /t REG_SZ /d 2
 :loop
-SET /P D=Enter day:
+SET /P D=Enter date(mm-d): 
 if %D%==q (
 	echo
 	reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d time.windows.com
@@ -24,6 +24,10 @@ if %D%==q (
 	::w32tm /query /peers
 	w32tm /resync /nowait
 	goto end
+	)
+if not x%D:-=%==x%D% (
+	call :ChangeMonDay
+	goto loop
 	)
 if %D% LEQ %day% (
 	call :ChangeDay
@@ -40,8 +44,8 @@ goto loop
 EXIT /B %ERRORLEVEL%
 
 :ChangeDay
-::date %mon%-%D%-%yer%
-date 9-%D%-%yer%
+echo day changed to %D%
+date %mon%-%D%-%yer%
 EXIT /B 0
 
 :ChangeMon
@@ -57,6 +61,11 @@ set /A new_yer=%yer%-1
 echo 1 : %new_yer%
 echo year changed to %new_yer%
 date %new_mon%-%D%-%new_yer%
+EXIT /B 0
+
+:ChangeMonDay
+echo month and day changed to %D%
+date %D%-%yer%
 EXIT /B 0
 
 :delay50
