@@ -35,10 +35,12 @@ private:
     void getLoveCmd(CCommand *ret);
     void getRogerCmd(CCommand *ret);
     void getSwitchCmd(CCommand *ret);
-    void getCamelCmd();
-    void getSideCmd();
-    void getKickCmd();
-    void getResistCmd();
+    void getLSwitchCmd(CCommand *ret);
+    void getCamelCmd(CCommand *ret);
+    void getSideCmd(CCommand *ret);
+    void getKickCmd(CCommand *ret);
+    void getResistCmd(CCommand *ret);
+    void makeNull(CCommand *ret);
 
     int uinput_f;
 
