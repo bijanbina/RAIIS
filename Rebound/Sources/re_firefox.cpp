@@ -22,7 +22,6 @@ void ReFirefox::refreshURL()
     QStringList ws_list = lua->getWSList();
     for( int i=0 ; i<ws_list.length() ; i++ )
     {
-        qDebug() << "LUA : " << ws_list[i];
         ReFirefoxWs *child = new ReFirefoxWs(ws_list[i]);
         QThread  *child_th = new QThread;
         child->moveToThread(child_th);

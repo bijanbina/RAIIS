@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-ReKeyboard::ReKeyboard()
+MmKeyEmulator::MmKeyEmulator()
 {
     struct uinput_setup usetup;
 
@@ -42,13 +42,13 @@ ReKeyboard::ReKeyboard()
     ioctl(uinput_f, UI_DEV_CREATE);
 }
 
-ReKeyboard::~ReKeyboard()
+MmKeyEmulator::~MmKeyEmulator()
 {
     ioctl(uinput_f, UI_DEV_DESTROY);
     close(uinput_f);
 }
 
-void ReKeyboard::setKey(int type, int code, int val)
+void MmKeyEmulator::setKey(int type, int code, int val)
 {
    struct input_event ie;
 
@@ -62,20 +62,20 @@ void ReKeyboard::setKey(int type, int code, int val)
    write(uinput_f, &ie, sizeof(ie));
 }
 
-void ReKeyboard::sendKey(int key_val)
+void MmKeyEmulator::sendKey(int key_val)
 {
     pressKey(key_val);
     releaseKey(key_val);
 }
 
-void ReKeyboard::pressKey(int key_val)
+void MmKeyEmulator::pressKey(int key_val)
 {
     /* Key press, report the event, send key release, and report again */
     setKey(EV_KEY, key_val, 1);
     setKey(EV_SYN, SYN_REPORT, 0);
 }
 
-void ReKeyboard::releaseKey(int key_val)
+void MmKeyEmulator::releaseKey(int key_val)
 {
     setKey(EV_KEY, key_val, 0);
     setKey(EV_SYN, SYN_REPORT, 0);

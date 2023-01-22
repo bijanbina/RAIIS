@@ -15,18 +15,18 @@ ReKeyboard::ReKeyboard()
     extended_keys << VK_RIGHT;
 }
 
-ReKeyboard::~ReKeyboard()
+MmKeyEmulator::~MmKeyEmulator()
 {
 
 }
 
-void ReKeyboard::sendKey(int key_val)
+void MmKeyEmulator::sendKey(int key_val)
 {
     pressKey(key_val);
     releaseKey(key_val);
 }
 
-void ReKeyboard::pressKey(int key_val)
+void MmKeyEmulator::pressKey(int key_val)
 {
     INPUT input;
     ZeroMemory(&input, sizeof(input));
@@ -41,7 +41,7 @@ void ReKeyboard::pressKey(int key_val)
     SendInput(1, &input, sizeof(INPUT));
 }
 
-void ReKeyboard::releaseKey(int key_val)
+void MmKeyEmulator::releaseKey(int key_val)
 {
     INPUT input;
     ZeroMemory(&input, sizeof(input));
@@ -57,7 +57,7 @@ void ReKeyboard::releaseKey(int key_val)
     SendInput(1, &input, sizeof(INPUT));
 }
 
-bool ReKeyboard::isExtended(int key_val)
+bool MmKeyEmulator::isExtended(int key_val)
 {
     if( extended_keys.contains(key_val) )
     {

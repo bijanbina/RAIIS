@@ -27,7 +27,7 @@ public:
     bool isLastRepeatable();
 
     ReState     *state;
-    ReKeyboard  *key;
+    MmKeyEmulator  *key;
 private:
     void handleScroll(CCommand command);
 

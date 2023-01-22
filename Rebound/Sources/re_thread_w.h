@@ -26,7 +26,7 @@ typedef struct threadStruct
     QStringList *wins_title;
     QStringList *elems_name;
     QVector<ReWindow> windows;
-    ReKeyboard  *key;
+    ReKeyEmulator    *key;
 }threadStruct;
 
 class ReThreadW

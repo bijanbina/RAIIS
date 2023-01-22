@@ -20,6 +20,12 @@ void RePreProcessor::execute()
         qDebug() << QTime::currentTime().toString("mm:ss:zzz") <<
                     "exec" << commands_str << special_c
                  << cmd_buf.last().val2;
+
+        if( "jordan arch"==commands_str )
+        {
+            qDebug() << "exec" << cmd_buf.length()
+                     << cmd_buf.first().type;
+        }
         commands_str.clear();
 
         captain->execute(cmd_buf);
