@@ -6,7 +6,7 @@ ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
     meta  = new ReMeta (state);
-    key   = new MmKeyEmulator;
+    key   = new ReKeyEmulator;
     state->last_cmd.type = RE_COMMAND_NULL;
 }
 
