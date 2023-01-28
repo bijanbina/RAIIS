@@ -10,5 +10,6 @@
 #define RE_PROC_EDITOR   ""
 #define RE_PROC_CHESS    "Chess"
 #define RE_PROC_TELEGRAM "Telegram"
+#define RE_PROC_ALTIUM   "X2.EXE"
 
 #endif // RE_APP_W_H

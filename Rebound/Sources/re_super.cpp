@@ -131,6 +131,18 @@ void ReSuper::getMetaCmd(CCommand *ret)
         system("./Scripts/telegram_voice.sh");
 #endif
     }
+    else if( app->pname==RE_PROC_ALTIUM )
+    {
+#ifdef WIN32
+        ret->mod_list.append(KEY_LEFTCTRL);
+        ret->val1 = KEY_F4;
+
+        ret->val2 = 1;
+        ret->val3 = 1;
+        ret->type  = RE_COMMAND_MOD;
+        ret->state = RE_CSTATE_0;
+#endif
+    }
 }
 
 void ReSuper::getCopyCmd(CCommand *ret)

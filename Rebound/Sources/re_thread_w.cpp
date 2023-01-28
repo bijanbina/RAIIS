@@ -408,10 +408,16 @@ void ReThreadW::updateActiveWindow()
 
 }
 
+// check if the focus is on start menu or shell window
+// put it back on the last active window by sending alt+tab
+void ReThreadW::checkFocus()
+{
+
+}
+
 void reRunThread(void *thread_struct_void)
 {
     qDebug() << "thread start";
-    int cntr = 0;
     threadStruct *thread_data = (threadStruct *)thread_struct_void;
     ReThreadW *priv = new ReThreadW(thread_data);
     CoUninitialize();
