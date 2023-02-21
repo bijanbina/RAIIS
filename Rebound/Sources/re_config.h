@@ -9,7 +9,8 @@
 
 #define RE_FIREFOX_DIR   "Scripts\\Firefox"
 #define MOM_LABEL_DIR    "..\\..\\Benjamin\\Mom\\Labels"
-#define MOM_LABEL_STATUS "\\r1_status.lbl"
+#define MOM_LABEL_PNAME  "\\r1_pname.lbl"
+#define MOM_LABEL_STATUS "\\r2_status.lbl"
 
 //#define RE_DEBUG_WIN //show window detection debug info
 

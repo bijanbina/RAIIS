@@ -10,6 +10,7 @@
 
 QString re_readStatus();
 void    re_writeStatus(QString input);
+void    re_writePStatus(QString input);
 void    re_rmStatus();
 void    re_rmSpex();
 

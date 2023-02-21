@@ -58,45 +58,6 @@ void ReState::toggleUi(QObject *item)
 void ReState::updateApp(ReWindow active_window)
 {
     app = active_window;
-    QString status = re_readStatus();
-
-    QRegExp go_reg(" go");
-    QRegExp sky_reg(" Sky");
-    QRegExp dive_reg(" Dive");
-    QRegExp halt_reg(" Halt");
-    QRegExp number_reg("\\d*");
-
-    if( status.contains(go_reg) )
-    {
-        return;
-    }
-    else if( status.contains(sky_reg) )
-    {
-        return;
-    }
-    else if( status.contains(dive_reg) )
-    {
-        return;
-    }
-    else if( status.contains(halt_reg) )
-    {
-        return;
-    }
-    else if( number_reg.exactMatch(status) )
-    {
-        if( status.length() )
-        {
-            return;
-        }
-    }
-    else if( status=="Sleep" )
-    {
-        return;
-    }
-    else if( status=="Halt" )
-    {
-        return;
-    }
 
     QString cmd;
 #ifdef WIN32
@@ -106,7 +67,7 @@ void ReState::updateApp(ReWindow active_window)
 #else
     cmd = app.pname;
 #endif
-    re_writeStatus(cmd);
+    re_writePStatus(cmd);
 }
 
 void ReState::goToSleep()
