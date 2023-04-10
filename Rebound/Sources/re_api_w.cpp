@@ -78,25 +78,25 @@ QString ReApi::getAccName(IAccessible *pAcc, long childId)
     return QString::fromWCharArray(bstrName);
 }
 
-void ReApi::setActiveWindow(HWND hWnd)
+void ReApi::setActiveWindow(HWND hwnd)
 {
     DWORD dwCurrentThread = GetCurrentThreadId();
     DWORD dwFGThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
     AttachThreadInput(dwCurrentThread, dwFGThread, TRUE);
 
     //Actions
-//    AllowSetForegroundWindow(ASFW_ANY);
-    SetForegroundWindow(hWnd);
+    AllowSetForegroundWindow(ASFW_ANY);
+    SetForegroundWindow(hwnd);
 //    SetCapture(hWnd);
-//    SetFocus(hWnd);
-    SetActiveWindow(hWnd);
-//    SetWindowPos(hWnd,HWND_TOPMOST,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE);
-//    SetWindowPos(hWnd,HWND_NOTOPMOST,0,0,0,0,SWP_SHOWWINDOW | SWP_NOMOVE | SWP_NOSIZE);
+    SetFocus(hwnd);
+    SetActiveWindow(hwnd);
+    SetWindowPos(hwnd,HWND_TOPMOST,0,0,0,0,SWP_NOMOVE | SWP_NOSIZE);
+    SetWindowPos(hwnd,HWND_NOTOPMOST,0,0,0,0,SWP_SHOWWINDOW | SWP_NOMOVE | SWP_NOSIZE);
 
     // If window is minimzed
-    if( IsIconic(hWnd) )
+    if( IsIconic(hwnd) )
     {
-        ShowWindow(hWnd, SW_RESTORE);
+        ShowWindow(hwnd, SW_RESTORE);
     }
 
     AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);

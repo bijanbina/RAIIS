@@ -3,7 +3,7 @@ strFileURL = "http://127.0.0.1:9222/json/list"
 strHDLocation = "list.json"
 
 ' Fetch the file
-Set objXMLHTTP = CreateObject("MSXML2.XMLHTTP")
+Set objXMLHTTP = CreateObject("MSXML2.ServerXMLHTTP")
 
 objXMLHTTP.open "GET", strFileURL, false
 objXMLHTTP.send()

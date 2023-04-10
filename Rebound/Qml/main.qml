@@ -131,7 +131,7 @@ Window
 
         onButton1Clicked:
         {
-            if (terminalPane.opacity == 1)
+            if ( terminalPane.opacity===1 )
             {
                 changeTabAnime.from = 1
                 changeTabAnime.to = 0;
@@ -140,7 +140,7 @@ Window
         }
         onButton2Clicked:
         {
-            if (terminalPane.opacity == 0)
+            if (terminalPane.opacity===0 )
             {
                 changeTabAnime.from = 0
                 changeTabAnime.to = 1;

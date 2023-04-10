@@ -3,7 +3,6 @@
 QString re_readStatus()
 {
 #ifdef WIN32
-    ///POLYBAR INTEGRATION
     QString path = MOM_LABEL_DIR;
     path += MOM_LABEL_STATUS;
 #else
@@ -49,6 +48,7 @@ void re_rmSpex()
 {
 #ifdef WIN32
     ///POLYBAR INTEGRATION
+    re_rmStatus();
 #else
     QString path = getenv("HOME");
     path += "/.config/polybar/awesomewm/ben_spex";

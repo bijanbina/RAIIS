@@ -35,7 +35,30 @@ void RePreProcessor::execute()
 
 void RePreProcessor::nato(const QString &text)
 {
-    if( re_isLastMeta(cmd_buf) )
+    if( special_c ) //FUNC KEY
+    {
+        CCommand cmd;
+
+        int f_num;
+#ifdef WIN32
+        f_num = text.toInt() - 'A' + 9;
+#else
+
+#endif
+        qDebug() << "fnum" << f_num;
+        cmd.val1 = RE_KEY_FMIN + f_num;
+        cmd.val2 = 1;
+        cmd.type = RE_COMMAND_DIRS;
+
+        cmd_buf.append(cmd);
+
+        special_c = 0;
+        re_rmSpex();
+        execute();
+
+        return;
+    }
+    else if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
         cmd_buf[last_i].val2 = text.toInt();
@@ -64,21 +87,21 @@ void RePreProcessor::nato(const QString &text)
 
 void RePreProcessor::digit(const QString &text)
 {
-    if( special_c>0 ) //FUNC KEY
+    if( special_c ) //FUNC KEY
     {
         CCommand cmd;
-        cmd.val1 = RE_KEY_FMIN + re_keyCode2Digit(text) - 1;
+
+        int f_num = re_keyCode2Digit(text) - 1;
+        qDebug() << "fnum" << f_num;
+        cmd.val1 = RE_KEY_FMIN + f_num;
         cmd.val2 = 1;
         cmd.type = RE_COMMAND_DIRS;
 
         cmd_buf.append(cmd);
 
-        special_c--;
-        if( special_c==0 )
-        {
-            re_rmSpex();
-            execute();
-        }
+        special_c = 0;
+        re_rmSpex();
+        execute();
     }
     else if( captain->state->fl->sc_dir )
     {
@@ -326,11 +349,15 @@ void RePreProcessor::spex(const QString &text)
 {
     if( !captain->state->isSleep() )
     {
-        special_c++;
+        special_c = 1;
         qDebug() << "special_c" << special_c;
 
 #ifdef WIN32
-    ///POLYBAR INTEGRATION
+        QString cmd = "Special";
+
+        cmd = "%{B#721b85}%{F#ffffff}  " + cmd;
+        cmd += "  %{B- F1-}";
+        re_writeStatus(cmd);
 #else
         QString cmd = "echo ";
         cmd += QString::number(special_c);
