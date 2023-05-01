@@ -76,7 +76,7 @@ void ReState::goToSleep()
 #ifdef WIN32
     QString cmd;
     cmd = "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}";
-    cmd += "  Sleep  %{A}%{B- F1-}";
+    cmd += "  Sleep  %{A1}%{B- F1-}";
     re_writeStatus(cmd);
 #else
     writeStatus("Sleep");

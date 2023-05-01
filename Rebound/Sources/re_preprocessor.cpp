@@ -210,7 +210,10 @@ void RePreProcessor::dirs(const QString &text) // direction keys
 
 void RePreProcessor::modifier(const QString &text)
 {
-    if( re_isLastMod(cmd_buf) )
+    //"super four" in <control super four> should be "super four"
+    // if sleep
+    if( re_isLastMod(cmd_buf) &&
+        captain->state->isSleep()==false )
     {
         int last_i = cmd_buf.count()-1; //last index
         if( cmd_buf[last_i].val1==0 )
@@ -250,14 +253,11 @@ void RePreProcessor::meta(const QString &text)
         return;
     }
     else if( re_isLastMeta(cmd_buf) )
-    {//"go wake" in <dive go wake> should be "go wake" if sleep
-        if( captain->state->isSleep()==false )
-        {
-            int last_i = cmd_buf.count()-1; //last index
-            cmd_buf[last_i].val2 = text.toInt();
-            execute();
-            return;
-        }
+    {
+        int last_i = cmd_buf.count()-1; //last index
+        cmd_buf[last_i].val2 = text.toInt();
+        execute();
+        return;
     }
     else if( captain->state->chess_mode )
     {

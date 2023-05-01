@@ -66,15 +66,16 @@ void ReCaptain::execute(QVector<CCommand> commands)
     {
         if( state->isSleep() )
         {
-            if( commands[i].type!=RE_COMMAND_META )
+            if( commands[i].type!=RE_COMMAND_MOD )
             {
                 continue;
             }
-            else //type==RE_COMMAND_META
+            else //type==RE_COMMAND_MOD
             {
                 if( isWakeUp(commands[i]) )
                 {
                     state->wakeUp();
+                    execCommand(commands[i]);
                     commands.clear();
                     qDebug() << "Wake Up";
                     return;
@@ -173,14 +174,23 @@ bool ReCaptain::isLastRepeatable()
 
 bool ReCaptain::isWakeUp(CCommand command)
 {
-    if( command.type==RE_COMMAND_META )
+    if( command.type!=RE_COMMAND_MOD )
     {
-        if( command.val1==RE_META_GO )
+        return false;
+    }
+
+    if( command.mod_list.size()==0 )
+    {
+        return false;
+    }
+
+    qDebug() << "isWake" << command.mod_list[0];
+    if( command.mod_list[0]==KEY_META )
+    {
+        if( command.val1>=KEY_1 &&
+            command.val1<KEY_7 )
         {
-            if( command.val2==KEY_W ) //wake->w->17
-            {
-                return true;
-            }
+            return true;
         }
     }
 

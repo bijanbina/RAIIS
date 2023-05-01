@@ -197,12 +197,14 @@ void ReSuper::getLSwitchCmd(CCommand *ret)
 void ReSuper::getSideCmd(CCommand *ret)
 {
 #ifdef WIN32
+    sendPipe("side" CH_NP_SEPARATOR);
 #else
     system("dbus-send --dest=com.benjamin.chess"
            " / com.benjamin.chess.show string:\"side\"");
 #endif
     makeNull(ret);
 }
+
 void ReSuper::getCamelCmd(CCommand *ret)
 {
     qDebug() << "CreateProcess 1";
