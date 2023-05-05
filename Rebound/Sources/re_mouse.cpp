@@ -11,21 +11,31 @@ void re_mouseKey(int btn)
     input.type = INPUT_MOUSE;
     input.mi.dx = 0;
     input.mi.dy = 0;
+    input.mi.mouseData = 0;
 
     if( btn==1 )
     {
-        input.mi.dwFlags=(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP);
+        input.mi.dwFlags = (MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP);
     }
     else if( btn==2 )
     {
-        input.mi.dwFlags=(MOUSEEVENTF_MIDDLEDOWN|MOUSEEVENTF_MIDDLEUP);
+        input.mi.dwFlags = (MOUSEEVENTF_MIDDLEDOWN|MOUSEEVENTF_MIDDLEUP);
     }
     else if( btn==3 )
     {
-        input.mi.dwFlags=(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP);
+        input.mi.dwFlags = (MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP);
+    }
+    else if( btn==4 )
+    {
+        input.mi.dwFlags = MOUSEEVENTF_WHEEL;
+        input.mi.mouseData = WHEEL_DELTA;
+    }
+    else if( btn==5 )
+    {
+        input.mi.dwFlags = MOUSEEVENTF_WHEEL;
+        input.mi.mouseData = -WHEEL_DELTA;
     }
 
-    input.mi.mouseData = 0;
     input.mi.dwExtraInfo = NULL;
     input.mi.time = 0;
     SendInput(1, &input,sizeof(INPUT));

@@ -40,7 +40,7 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     }
     else if( cmd==RE_SUPER_COMMENT )
     {
-        system("xdotool key --delay 200 ctrl+slash");
+        getCommentCmd(ret);
     }
     else if( cmd==RE_SUPER_COPY )
     {
@@ -53,6 +53,10 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     else if( cmd==RE_SUPER_SIDE )
     {
         getSideCmd(ret);
+    }
+    else if( cmd==RE_SUPER_DOUBLE )
+    {
+        getDoubleCmd(ret);
     }
     else if( cmd==RE_SUPER_LOVE )
     {
@@ -119,14 +123,8 @@ void ReSuper::getMetaCmd(CCommand *ret)
     else if( app->pname==RE_PROC_TELEGRAM )
     {
 #ifdef WIN32
-        ret->val2 = 0;
         recordTelegram();
-        ret->val1 = VK_SCROLL;
-
-        ret->val2 = 1;
-        ret->val3 = 1;
-        ret->type  = RE_COMMAND_NATO;
-        ret->state = RE_CSTATE_0;
+        ret->val3 = -1;
 #else
         system("./Scripts/telegram_voice.sh");
 #endif
@@ -201,6 +199,28 @@ void ReSuper::getSideCmd(CCommand *ret)
 #else
     system("dbus-send --dest=com.benjamin.chess"
            " / com.benjamin.chess.show string:\"side\"");
+#endif
+    makeNull(ret);
+}
+
+void ReSuper::getCommentCmd(CCommand *ret)
+{
+#ifdef WIN32
+    sendPipe("comment" CH_NP_SEPARATOR);
+#else
+    system("dbus-send --dest=com.benjamin.chess"
+           " / com.benjamin.chess.show string:\"comment\"");
+#endif
+    makeNull(ret);
+}
+
+void ReSuper::getDoubleCmd(CCommand *ret)
+{
+#ifdef WIN32
+    sendPipe("double" CH_NP_SEPARATOR);
+#else
+    system("dbus-send --dest=com.benjamin.chess"
+           " / com.benjamin.chess.show string:\"double\"");
 #endif
     makeNull(ret);
 }

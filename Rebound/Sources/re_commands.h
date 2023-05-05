@@ -51,6 +51,7 @@
 #define RE_SUPER_ROGER   110
 #define RE_SUPER_RESIST  111
 #define RE_SUPER_SPOTIFY 112
+#define RE_SUPER_DOUBLE  113
 
 #define RE_APP_FIREFOX  301
 #define RE_APP_FILES    302

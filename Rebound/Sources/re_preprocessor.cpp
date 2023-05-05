@@ -389,6 +389,11 @@ void RePreProcessor::super(const QString &text)
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_SUPER;
     captain->state->super->castCmd(text.toInt(), &cmd);
+    if( cmd.val3==-1 )
+    {
+        captain->state->goToSleep();
+        cmd.val3 = 3;
+    }
     cmd_buf.append(cmd);
 
     execute();

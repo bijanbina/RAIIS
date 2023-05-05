@@ -91,7 +91,6 @@ CCommand ReMeta::castMeta(int meta, int arg)
 
 void ReMeta::castMouseCmd(int val, CCommand *cmd)
 {
-
     if( val==KEY_LEFT )
     {
         re_mouseKey(1);
@@ -103,6 +102,14 @@ void ReMeta::castMouseCmd(int val, CCommand *cmd)
     else if( val==KEY_RIGHT )
     {
         re_mouseKey(3);
+    }
+    else if( val==KEY_UP )
+    {
+        re_mouseKey(4);
+    }
+    else if( val==KEY_DOWN )
+    {
+        re_mouseKey(5);
     }
 #ifndef WIN32
     else if( val==KEY_F ) //focus

@@ -38,6 +38,8 @@ private:
     void getLSwitchCmd(CCommand *ret);
     void getCamelCmd(CCommand *ret);
     void getSideCmd(CCommand *ret);
+    void getDoubleCmd(CCommand *ret);
+    void getCommentCmd(CCommand *ret);
     void getKickCmd(CCommand *ret);
     void getResistCmd(CCommand *ret);
     void makeNull(CCommand *ret);
