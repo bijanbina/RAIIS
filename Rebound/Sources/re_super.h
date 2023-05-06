@@ -41,6 +41,7 @@ private:
     void getDoubleCmd(CCommand *ret);
     void getCommentCmd(CCommand *ret);
     void getKickCmd(CCommand *ret);
+    void getSelectCmd(CCommand *ret);
     void getResistCmd(CCommand *ret);
     void makeNull(CCommand *ret);
 
@@ -54,6 +55,7 @@ private:
     void recordTelegram();
 
     HANDLE hPipe;
+    ReKeyEmulator key;
 #endif
 };
 

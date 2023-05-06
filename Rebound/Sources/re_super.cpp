@@ -58,6 +58,10 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     {
         getDoubleCmd(ret);
     }
+    else if( cmd==RE_SUPER_SELECT )
+    {
+        getSelectCmd(ret);
+    }
     else if( cmd==RE_SUPER_LOVE )
     {
         getLoveCmd(ret);
@@ -233,6 +237,20 @@ void ReSuper::getCamelCmd(CCommand *ret)
     system("./Scripts/camel");
 #endif
     makeNull(ret);
+}
+
+void ReSuper::getSelectCmd(CCommand *ret)
+{
+    key.sendKey(VK_END);
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
+
+    ret->mod_list.append(KEY_LEFTSHIFT);
+
+    ret->val1 = VK_HOME;
+    qDebug() << "select";
 }
 
 void ReSuper::getLoveCmd(CCommand *ret)
