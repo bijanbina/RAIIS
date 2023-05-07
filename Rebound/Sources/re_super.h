@@ -37,12 +37,9 @@ private:
     void getSwitchCmd(CCommand *ret);
     void getLSwitchCmd(CCommand *ret);
     void getCamelCmd(CCommand *ret);
-    void getSideCmd(CCommand *ret);
-    void getDoubleCmd(CCommand *ret);
+    void getChessCmd(CCommand *ret, QString cmd);
     void getCommentCmd(CCommand *ret);
-    void getKickCmd(CCommand *ret);
     void getSelectCmd(CCommand *ret);
-    void getResistCmd(CCommand *ret);
     void makeNull(CCommand *ret);
 
     int uinput_f;

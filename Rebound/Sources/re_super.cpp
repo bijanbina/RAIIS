@@ -36,7 +36,7 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     }
     else if( cmd==RE_SUPER_KICK )
     {
-        getKickCmd(ret);
+        getChessCmd(ret, "show");
     }
     else if( cmd==RE_SUPER_COMMENT )
     {
@@ -52,11 +52,11 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     }
     else if( cmd==RE_SUPER_SIDE )
     {
-        getSideCmd(ret);
+        getChessCmd(ret, "side");
     }
     else if( cmd==RE_SUPER_DOUBLE )
     {
-        getDoubleCmd(ret);
+        getChessCmd(ret, "double");
     }
     else if( cmd==RE_SUPER_SELECT )
     {
@@ -72,7 +72,7 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     }
     else if( cmd==RE_SUPER_RESIST )
     {
-        getResistCmd(ret);
+        getChessCmd(ret, "persist");
     }
 }
 
@@ -169,17 +169,6 @@ void ReSuper::getPasteCmd(CCommand *ret)
     ret->val1 = KEY_V;
 }
 
-void ReSuper::getKickCmd(CCommand *ret)
-{
-#ifdef WIN32
-    sendPipe("show" CH_NP_SEPARATOR);
-#else
-    system("dbus-send --dest=com.benjamin.chess"
-           " / com.benjamin.chess.show string:\"\"");
-#endif
-    makeNull(ret);
-}
-
 // Language switch
 void ReSuper::getLSwitchCmd(CCommand *ret)
 {
@@ -196,13 +185,17 @@ void ReSuper::getLSwitchCmd(CCommand *ret)
 #endif
 }
 
-void ReSuper::getSideCmd(CCommand *ret)
+void ReSuper::getChessCmd(CCommand *ret, QString cmd)
 {
 #ifdef WIN32
-    sendPipe("side" CH_NP_SEPARATOR);
+    QString pipe_data = cmd + CH_NP_SEPARATOR;
+    sendPipe(pipe_data.toStdString().c_str());
 #else
-    system("dbus-send --dest=com.benjamin.chess"
-           " / com.benjamin.chess.show string:\"side\"");
+    QString pipe_data = "dbus-send --dest=com.benjamin.chess";
+    pipe_data += "dbus-send --dest=com.benjamin.chess";
+    pipe_data += " / com.benjamin.chess.show string:\"";
+    pipe_data += cmd + "\"";
+    system(pipe_data.toStdString().c_str());
 #endif
     makeNull(ret);
 }
@@ -214,17 +207,6 @@ void ReSuper::getCommentCmd(CCommand *ret)
 #else
     system("dbus-send --dest=com.benjamin.chess"
            " / com.benjamin.chess.show string:\"comment\"");
-#endif
-    makeNull(ret);
-}
-
-void ReSuper::getDoubleCmd(CCommand *ret)
-{
-#ifdef WIN32
-    sendPipe("double" CH_NP_SEPARATOR);
-#else
-    system("dbus-send --dest=com.benjamin.chess"
-           " / com.benjamin.chess.show string:\"double\"");
 #endif
     makeNull(ret);
 }
@@ -273,17 +255,6 @@ void ReSuper::getRogerCmd(CCommand *ret)
 
     ret->mod_list.append(KEY_LEFTCTRL);
     ret->val1 = KEY_RIGHT;
-}
-
-void ReSuper::getResistCmd(CCommand *ret)
-{
-#ifdef WIN32
-    sendPipe("persist" CH_NP_SEPARATOR);
-#else
-    system("dbus-send --dest=com.benjamin.chess"
-           " / com.benjamin.chess.show string:\"\"");
-#endif
-    makeNull(ret);
 }
 
 void ReSuper::getSwitchCmd(CCommand *ret)
