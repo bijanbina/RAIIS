@@ -34,7 +34,7 @@ QString ReApi::getPName(long pid)
     HANDLE processHandle = NULL;
 //    processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
     processHandle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
-    if(processHandle == NULL)
+    if( processHandle==NULL )
     {
         qDebug() << "Warning: couldn't get process handle from pid" << pid;
         return "";
@@ -42,9 +42,8 @@ QString ReApi::getPName(long pid)
 
     // get name of process handle
     char filename[MAX_PATH];
-    if(GetProcessImageFileNameA(processHandle, filename, MAX_PATH) == 0)
+    if( GetProcessImageFileNameA(processHandle, filename, MAX_PATH)==0 )
     {
-//        qDebug("Warning: couldn't get name of process handle");
         return "";
     }
     return QString(filename);

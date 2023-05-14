@@ -1,6 +1,7 @@
 #include "re_meta.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
+#include "mm_api.h"
 #else
 #include "re_keyboard_l.h"
 #endif
@@ -164,6 +165,10 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"\"");
+    }
+    else if( val==KEY_C )
+    {
+        mm_launchLnk("Google Chrome", "https://speechnotes.co/dictate/");
     }
 
     else

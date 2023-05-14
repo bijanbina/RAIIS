@@ -27,16 +27,24 @@ QString reGetPName(long pid)
 
     // get name of process handle
     char path_buff[MAX_PATH];
-    if(GetProcessImageFileNameA(processHandle, path_buff, MAX_PATH) == 0)
+    if(GetModuleFileNameExA(processHandle, NULL, path_buff, MAX_PATH) == 0)
     {
         qDebug() << "Error" << GetLastError() << " : Fail to get Pname of " << pid;
         return "";
     }
 
-    QString path_q = path_buff; //process filename
+    // resolve short 8.3 format and get rid of ~
+    char path_r[MAX_PATH];
+    if( GetLongPathNameA(path_buff, path_r, MAX_PATH)==0 )
+    {
+        qDebug() << "Error" << GetLastError();
+    }
+
+    QString path_q = path_r; //process filename
     QStringList path_list = path_q.split("\\", QString::SkipEmptyParts);
     QString filename = path_list.last();
     filename.remove(".exe");
+//    qDebug() << "path_buff" << path_q;
 
     return filename;
 }

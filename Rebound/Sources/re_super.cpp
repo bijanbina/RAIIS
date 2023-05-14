@@ -74,6 +74,10 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     {
         getChessCmd(ret, "persist");
     }
+    else if( cmd==RE_SUPER_DRAG )
+    {
+        getChessCmd(ret, "drag");
+    }
 }
 
 void ReSuper::getMetaCmd(CCommand *ret)
@@ -101,6 +105,14 @@ void ReSuper::getMetaCmd(CCommand *ret)
     }
     else if( app->pname==RE_PROC_GIT )
     {
+        re_mouseKey(3);
+//        ret->val1 = KEY_UP;
+
+//        ret->val2 = 5;
+//        ret->val3 = 1;
+//        ret->type  = RE_COMMAND_DIRS;
+//        ret->state = RE_CSTATE_0;
+        qDebug() << "super";
 //        cmd = re_getGoGitKraken(val);
     }
     else if( app->pname==RE_PROC_FIREFOX ||

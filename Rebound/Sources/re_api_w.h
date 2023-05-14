@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QtDebug>
-#include "Windows.h"
+#include <Windows.h>
 #include <psapi.h> // For access to GetModuleFileNameEx
 #include <tchar.h> // to get file path
 #include <tlhelp32.h> // to get pid
