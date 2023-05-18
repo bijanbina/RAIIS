@@ -176,21 +176,6 @@ void RePreProcessor::dirs(const QString &text) // direction keys
         execute();
         return;
     }
-    else if( captain->state->chess_mode )
-    {
-        CCommand cmd;
-        cmd.val1 = RE_META_TOUCH;
-        cmd.val2 = text.toInt();
-        cmd.val3 = 1;
-        cmd.type = RE_COMMAND_META;
-
-        if( cmd.val2!=1 )
-        {
-            cmd_buf.append(cmd);
-            execute();
-            return;
-        }
-    }
     else if( captain->state->app.pname==RE_PROC_QT )
     {
         if( re_qtDirProc(&cmd_buf, text) )
@@ -388,7 +373,7 @@ void RePreProcessor::super(const QString &text)
     cmd.val2 = 1;
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_SUPER;
-    captain->state->super->castCmd(text.toInt(), &cmd);
+    captain->super->castCmd(text.toInt(), &cmd);
     if( cmd.val3==-1 )
     {
         captain->state->goToSleep();

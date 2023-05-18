@@ -137,8 +137,6 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
              val<=KEY_9 )
     {
 #ifdef WIN32
-        int desktop_id = val-KEY_1;
-        state->super->virt->setDesktop(desktop_id);
 #endif
     }
     else if( val==KEY_T )

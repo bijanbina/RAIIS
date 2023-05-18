@@ -5,7 +5,6 @@ ReState::ReState(QObject *parent) : QObject(parent)
     i_mode = RE_MODE_HIDDEN;
     ui_visible = false;
     fl = new ReFirefox;
-    super = new ReSuper(&app);
 
 #ifdef _WIN32
     api = new ReApi;
@@ -17,7 +16,6 @@ ReState::ReState(QObject *parent) : QObject(parent)
 
 ReState::~ReState()
 {
-    delete super;
     delete fl;
 
 #ifdef _WIN32
@@ -151,12 +149,6 @@ void ReState::resetState()
     {
         fl->sc_dir = 0;
         fl->scrollEscape();
-        re_rmStatus();
-    }
-
-    if( chess_mode )
-    {
-        chess_mode = 0;
         re_rmStatus();
     }
 }

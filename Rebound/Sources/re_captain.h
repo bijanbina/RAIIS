@@ -27,6 +27,7 @@ public:
     bool isLastRepeatable();
 
     ReState     *state;
+    ReSuper     *super;
     ReKeyEmulator  *key;
 private:
     void handleScroll(CCommand command);
