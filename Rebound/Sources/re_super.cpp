@@ -1,9 +1,9 @@
 #include "re_super.h"
 #include <QThread>
 
-ReSuper::ReSuper(ReWindow *current_w, QObject *parent): QObject(parent)
+ReSuper::ReSuper(ReState *st, QObject *parent): QObject(parent)
 {
-    app = current_w;
+    state = st;
 
 #ifdef WIN32
     virt = new ReWin32Virt;
@@ -86,24 +86,24 @@ void ReSuper::getMetaCmd(CCommand *ret)
     ret->val3 = 1;
     ret->type = RE_COMMAND_SUPER;
 
-    qDebug() << "Meta" << app->pname;
+    qDebug() << "Meta" << state->app.pname;
 
-    if( app->pname==RE_PROC_CHESS )
+    if( state->app.pname==RE_PROC_CHESS )
     {
         ret->val1 = KEY_F1;
         ret->type = RE_COMMAND_DIRS;
     }
-    else if( app->pname==RE_PROC_QT )
+    else if( state->app.pname==RE_PROC_QT )
     {
         ret->val1 = KEY_F1;
         ret->type = RE_COMMAND_DIRS;
     }
-    else if( app->pname==RE_PROC_VSCODE )
+    else if( state->app.pname==RE_PROC_VSCODE )
     {
         ret->val1 = KEY_F5;
         ret->type = RE_COMMAND_DIRS;
     }
-    else if( app->pname==RE_PROC_GIT )
+    else if( state->app.pname==RE_PROC_GIT )
     {
         re_mouseKey(3);
 //        ret->val1 = KEY_UP;
@@ -115,8 +115,8 @@ void ReSuper::getMetaCmd(CCommand *ret)
         qDebug() << "super";
 //        cmd = re_getGoGitKraken(val);
     }
-    else if( app->pname==RE_PROC_FIREFOX ||
-             app->pname==RE_PROC_GEKO )
+    else if( state->app.pname==RE_PROC_FIREFOX ||
+             state->app.pname==RE_PROC_GEKO )
     {
         ret->mod_list.append(KEY_LEFTCTRL);
         ret->val1 = KEY_W;
@@ -126,7 +126,7 @@ void ReSuper::getMetaCmd(CCommand *ret)
         ret->type  = RE_COMMAND_MOD;
         ret->state = RE_CSTATE_0;
     }
-    else if( app->pname==RE_PROC_EXPLORER )
+    else if( state->app.pname==RE_PROC_EXPLORER )
     {
         ret->mod_list.append(KEY_LEFTCTRL);
         ret->val1 = KEY_W;
@@ -136,7 +136,7 @@ void ReSuper::getMetaCmd(CCommand *ret)
         ret->type  = RE_COMMAND_MOD;
         ret->state = RE_CSTATE_0;
     }
-    else if( app->pname==RE_PROC_TELEGRAM )
+    else if( state->app.pname==RE_PROC_TELEGRAM )
     {
 #ifdef WIN32
         recordTelegram();
@@ -145,7 +145,7 @@ void ReSuper::getMetaCmd(CCommand *ret)
         system("./Scripts/telegram_voice.sh");
 #endif
     }
-    else if( app->pname==RE_PROC_ALTIUM )
+    else if( state->app.pname==RE_PROC_ALTIUM )
     {
 #ifdef WIN32
         ret->mod_list.append(KEY_LEFTCTRL);

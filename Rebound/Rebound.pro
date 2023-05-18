@@ -11,6 +11,7 @@ SOURCES += Sources/main.cpp \
            Sources/mm_api.cpp \
            Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
+           Sources/re_chess.cpp \
            Sources/re_client.cpp \
            Sources/re_commands.cpp \
            Sources/re_firefox.cpp \
@@ -56,6 +57,7 @@ HEADERS += Sources/backend.h \
            Sources/mm_api.h \
            Sources/re_captain.h \
            Sources/re_chapar.h \
+           Sources/re_chess.h \
            Sources/re_commands.h \
            Sources/re_config.h \
            Sources/re_firefox.h \

@@ -6,6 +6,7 @@
 #include "re_config.h"
 #include "re_commands.h"
 #include "re_mouse.h"
+#include "re_state.h"
 #ifdef WIN32
 #include "re_app_w.h"
 #include "re_keyboard_w.h"
@@ -20,10 +21,11 @@ class ReSuper : public QObject
     Q_OBJECT
 
 public:
-    ReSuper(ReWindow *current_w, QObject *parent = NULL);
+    ReSuper(ReState *st, QObject *parent = NULL);
     ~ReSuper();
 
     void castCmd(int cmd, CCommand *ret);
+    void sendPipe(const char *data);
 
 #ifdef WIN32
     ReWin32Virt *virt;
@@ -44,11 +46,10 @@ private:
 
     int uinput_f;
 
-    ReWindow *app;
+    ReState  *state;
 
 #ifdef WIN32
     void connectChessPipe();
-    void sendPipe(const char *data);
     void recordTelegram();
 
     HANDLE hPipe;
