@@ -5,6 +5,7 @@ RePreProcessor::RePreProcessor(ReCaptain *cpt, QObject *parent) : QObject(parent
 {
     captain = cpt;
     special_c = 0;
+    chess = new ReChess(captain);
     re_rmSpex();
 }
 

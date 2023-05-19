@@ -1,5 +1,5 @@
-#ifndef RE_PREPROCESSOR_H_L
-#define RE_PREPROCESSOR_H_L
+#ifndef RE_CHESS_H
+#define RE_CHESS_H
 
 #include <QObject>
 #include <QThread>
@@ -31,6 +31,4 @@ private:
     QString commands_str; //just for debug purpose
 };
 
-
-
-#endif // RE_PREPROCESSOR_H_L
+#endif // RE_CHESS_H

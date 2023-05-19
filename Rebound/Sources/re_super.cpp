@@ -36,11 +36,23 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     }
     else if( cmd==RE_SUPER_KICK )
     {
+        state->chess_mode = 1;
         getChessCmd(ret, "show");
     }
     else if( cmd==RE_SUPER_COMMENT )
     {
-        getCommentCmd(ret);
+        state->chess_mode = 1;
+        getChessCmd(ret, "comment");
+    }
+    else if( cmd==RE_SUPER_SIDE )
+    {
+        state->chess_mode = 1;
+        getChessCmd(ret, "side");
+    }
+    else if( cmd==RE_SUPER_DOUBLE )
+    {
+        state->chess_mode = 1;
+        getChessCmd(ret, "double");
     }
     else if( cmd==RE_SUPER_COPY )
     {
@@ -49,14 +61,6 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     else if( cmd==RE_SUPER_PASTE )
     {
         getPasteCmd(ret);
-    }
-    else if( cmd==RE_SUPER_SIDE )
-    {
-        getChessCmd(ret, "side");
-    }
-    else if( cmd==RE_SUPER_DOUBLE )
-    {
-        getChessCmd(ret, "double");
     }
     else if( cmd==RE_SUPER_SELECT )
     {
@@ -208,17 +212,6 @@ void ReSuper::getChessCmd(CCommand *ret, QString cmd)
     pipe_data += " / com.benjamin.chess.show string:\"";
     pipe_data += cmd + "\"";
     system(pipe_data.toStdString().c_str());
-#endif
-    makeNull(ret);
-}
-
-void ReSuper::getCommentCmd(CCommand *ret)
-{
-#ifdef WIN32
-    sendPipe("comment" CH_NP_SEPARATOR);
-#else
-    system("dbus-send --dest=com.benjamin.chess"
-           " / com.benjamin.chess.show string:\"comment\"");
 #endif
     makeNull(ret);
 }

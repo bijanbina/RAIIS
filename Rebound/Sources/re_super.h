@@ -40,12 +40,10 @@ private:
     void getLSwitchCmd(CCommand *ret);
     void getCamelCmd(CCommand *ret);
     void getChessCmd(CCommand *ret, QString cmd);
-    void getCommentCmd(CCommand *ret);
     void getSelectCmd(CCommand *ret);
     void makeNull(CCommand *ret);
 
     int uinput_f;
-
     ReState  *state;
 
 #ifdef WIN32
