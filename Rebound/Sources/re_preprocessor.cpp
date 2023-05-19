@@ -39,8 +39,9 @@ void RePreProcessor::nato(const QString &text)
     if( captain->state->chess_mode )
     {
         chess->nato(text);
+        return;
     }
-    if( special_c ) //FUNC KEY
+    else if( special_c ) //FUNC KEY
     {
         CCommand cmd;
 
@@ -95,8 +96,9 @@ void RePreProcessor::digit(const QString &text)
     if( captain->state->chess_mode )
     {
         chess->dirs(text);
+        return;
     }
-    if( special_c ) //FUNC KEY
+    else if( special_c ) //FUNC KEY
     {
         CCommand cmd;
 
@@ -169,7 +171,12 @@ void RePreProcessor::digit(const QString &text)
 
 void RePreProcessor::dirs(const QString &text) // direction keys
 {
-    if( re_isLastMeta(cmd_buf) )
+    if( captain->state->chess_mode )
+    {
+        chess->dirs(text);
+        return;
+    }
+    else if( re_isLastMeta(cmd_buf) )
     {
         qDebug() << "cmd_buf[last_i].val3";
         int last_i = cmd_buf.count()-1; //last index
@@ -363,7 +370,16 @@ void RePreProcessor::spex(const QString &text)
 
 void RePreProcessor::super(const QString &text)
 {
-    chess->super(text);
+    if( captain->state->isSleep()==0 )
+    {
+        chess->super(text);
+    }
+    if( captain->state->chess_mode )
+    {
+        // no need to process super mode while in
+        // chess mode
+        return;
+    }
     if( re_isLastMod(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index

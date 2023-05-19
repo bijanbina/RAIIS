@@ -39,7 +39,7 @@ void ReChess::super(const QString &text)
     if( val==RE_SUPER_META && captain->state->chess_mode )
     {
         meta_mode = 1;
-        cmd_count = 3;
+        cmd_count += 1;
         captain->super->sendPipe("Meta");
     }
     else if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
@@ -75,33 +75,33 @@ void ReChess::sendChessKey(QString text)
 
 void ReChess::showChess(int val)
 {
+    // This function only on valid val values
+    captain->state->chess_mode = 1;
+    cmd_count = 2;
     if( val==RE_SUPER_KICK )
     {
-        captain->state->chess_mode = 1;
         sendChessCmd("show");
     }
     else if( val==RE_SUPER_COMMENT )
     {
-        captain->state->chess_mode = 1;
         sendChessCmd("comment");
     }
     else if( val==RE_SUPER_SIDE )
     {
-        captain->state->chess_mode = 1;
         sendChessCmd("side");
     }
     else if( val==RE_SUPER_DOUBLE )
     {
-        captain->state->chess_mode = 1;
         sendChessCmd("double");
     }
     else if( val==RE_SUPER_RESIST )
     {
-        captain->state->chess_mode = 1;
+        cmd_count = 999; //some large num
         sendChessCmd("persist");
     }
     else if( val==RE_SUPER_DRAG )
     {
+        cmd_count = 4;
         sendChessCmd("drag");
     }
 }
