@@ -34,26 +34,6 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     {
         getLSwitchCmd(ret);
     }
-    else if( cmd==RE_SUPER_KICK )
-    {
-        state->chess_mode = 1;
-        getChessCmd(ret, "show");
-    }
-    else if( cmd==RE_SUPER_COMMENT )
-    {
-        state->chess_mode = 1;
-        getChessCmd(ret, "comment");
-    }
-    else if( cmd==RE_SUPER_SIDE )
-    {
-        state->chess_mode = 1;
-        getChessCmd(ret, "side");
-    }
-    else if( cmd==RE_SUPER_DOUBLE )
-    {
-        state->chess_mode = 1;
-        getChessCmd(ret, "double");
-    }
     else if( cmd==RE_SUPER_COPY )
     {
         getCopyCmd(ret);
@@ -74,14 +54,6 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     {
         getRogerCmd(ret);
     }
-    else if( cmd==RE_SUPER_RESIST )
-    {
-        getChessCmd(ret, "persist");
-    }
-    else if( cmd==RE_SUPER_DRAG )
-    {
-        getChessCmd(ret, "drag");
-    }
 }
 
 void ReSuper::getMetaCmd(CCommand *ret)
@@ -92,12 +64,7 @@ void ReSuper::getMetaCmd(CCommand *ret)
 
     qDebug() << "Meta" << state->app.pname;
 
-    if( state->app.pname==RE_PROC_CHESS )
-    {
-        ret->val1 = KEY_F1;
-        ret->type = RE_COMMAND_DIRS;
-    }
-    else if( state->app.pname==RE_PROC_QT )
+    if( state->app.pname==RE_PROC_QT )
     {
         ret->val1 = KEY_F1;
         ret->type = RE_COMMAND_DIRS;
@@ -199,21 +166,6 @@ void ReSuper::getLSwitchCmd(CCommand *ret)
 #else
     ///FIXME
 #endif
-}
-
-void ReSuper::getChessCmd(CCommand *ret, QString cmd)
-{
-#ifdef WIN32
-    QString pipe_data = cmd + CH_NP_SEPARATOR;
-    sendPipe(pipe_data.toStdString().c_str());
-#else
-    QString pipe_data = "dbus-send --dest=com.benjamin.chess";
-    pipe_data += "dbus-send --dest=com.benjamin.chess";
-    pipe_data += " / com.benjamin.chess.show string:\"";
-    pipe_data += cmd + "\"";
-    system(pipe_data.toStdString().c_str());
-#endif
-    makeNull(ret);
 }
 
 void ReSuper::getCamelCmd(CCommand *ret)

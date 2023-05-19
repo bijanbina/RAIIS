@@ -36,6 +36,10 @@ void RePreProcessor::execute()
 
 void RePreProcessor::nato(const QString &text)
 {
+    if( captain->state->chess_mode )
+    {
+        chess->nato(text);
+    }
     if( special_c ) //FUNC KEY
     {
         CCommand cmd;
@@ -88,6 +92,10 @@ void RePreProcessor::nato(const QString &text)
 
 void RePreProcessor::digit(const QString &text)
 {
+    if( captain->state->chess_mode )
+    {
+        chess->dirs(text);
+    }
     if( special_c ) //FUNC KEY
     {
         CCommand cmd;
@@ -355,6 +363,7 @@ void RePreProcessor::spex(const QString &text)
 
 void RePreProcessor::super(const QString &text)
 {
+    chess->super(text);
     if( re_isLastMod(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index

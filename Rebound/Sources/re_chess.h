@@ -20,7 +20,9 @@ public:
     void digit(const QString &arg);
 
 private:
-    void sendKeyChess(QString text);
+    void sendChessCmd(QString cmd);
+    void showChess(int val);
+    void sendChessKey(QString text);
     void resetChess();
 
     QObject  *root;

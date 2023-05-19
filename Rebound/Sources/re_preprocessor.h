@@ -6,6 +6,7 @@
 
 #include "backend.h"
 #include "re_captain.h"
+#include "re_chess.h"
 
 class RePreProcessor : public QObject
 {
@@ -31,8 +32,9 @@ public slots:
 private:
     void handleLastRepeatable(int input);
 
-    QObject  *root;
+    QObject   *root;
     ReCaptain *captain;
+    ReChess   *chess;
     int special_c; //count of special
 
     QVector<CCommand> cmd_buf;
