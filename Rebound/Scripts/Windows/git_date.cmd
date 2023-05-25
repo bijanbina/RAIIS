@@ -1,5 +1,17 @@
 ECHO OFF
 
+for /F "tokens=3 delims=: " %%H in ('sc query "w32time" ^| findstr "        STATE"') do (
+	echo %%H
+	if /I "%%H" NEQ "RUNNING" (
+		call :UpdateTime
+		goto end
+	) ELSE (
+		call :EnterDate
+		goto end
+	)
+)
+
+:EnterDate
 set mydate=%date:~7,2%
 set day=%mydate%
 set mydate=%date:~4,2%
@@ -11,34 +23,23 @@ reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters 
 net stop w32time 
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d 1
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 2 /t REG_SZ /d 2
-:loop
 SET /P D=Enter date(mm-d): 
-if %D%==q (
-	echo
-	reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d time.windows.com
-	reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 2 /t REG_SZ /d time.nist.gov
-	call :delay50
-	reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NTP
-	call :delay50
-	net start w32time
-	::w32tm /query /peers
-	w32tm /resync /nowait
-	goto end
-	)
 if not x%D:-=%==x%D% (
 	call :ChangeMonDay
-	goto loop
+	goto end
 	)
 if %D% LEQ %day% (
 	call :ChangeDay
+	goto end
 	)
 if %D% GTR %day% if %mon% GTR 01 (
 	call :ChangeMon
+	goto end
 	)
 if %D% GTR %day% if %mon% LEQ 01 (
 	call :ChangeMonYer
+	goto end
 	)
-goto loop
 
 :end
 EXIT /B %ERRORLEVEL%
@@ -66,6 +67,17 @@ EXIT /B 0
 :ChangeMonDay
 echo month and day changed to %D%
 date %D%-%yer%
+EXIT /B 0
+
+:UpdateTime
+reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d time.windows.com
+reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 2 /t REG_SZ /d time.nist.gov
+call :delay50
+reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NTP
+call :delay50
+net start w32time
+::w32tm /query /peers
+w32tm /resync /nowait
 EXIT /B 0
 
 :delay50
