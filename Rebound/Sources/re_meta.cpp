@@ -68,11 +68,18 @@ CCommand ReMeta::castMeta(int meta, int arg)
     else if( meta==RE_META_SKY ||
              meta==RE_META_DIVE )
     {
-        if( (arg<KEY_1) || (arg>KEY_9) )
+        if( (KEY_1<=arg && arg<=KEY_9) )
+        {
+            execScrollCmd(meta, arg-KEY_1+1);
+        }
+        else if( KEY_A<=arg && arg<=KEY_F )
+        {
+            execScrollCmd(meta, arg-KEY_A+10);
+        }
+        else
         {
             return cmd;
         }
-        execScrollCmd(meta, arg-KEY_1+1);
     }
     else if( meta==RE_META_MUSIC )
     {

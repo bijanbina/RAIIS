@@ -95,7 +95,7 @@ void RePreProcessor::digit(const QString &text)
 {
     if( captain->state->chess_mode )
     {
-        chess->dirs(text);
+        chess->digit(text);
         return;
     }
     else if( special_c ) //FUNC KEY
@@ -260,21 +260,6 @@ void RePreProcessor::meta(const QString &text)
         execute();
         return;
     }
-    else if( captain->state->chess_mode )
-    {
-        int val = text.toInt();
-        if( val==RE_META_TOUCH )
-        {
-            CCommand cmd;
-            cmd.val1 = RE_META_MOUSE;
-            cmd.val2 = KEY_LEFT;
-            cmd.val3 = 1;
-            cmd.type = RE_COMMAND_META;
-            cmd_buf.append(cmd);
-            execute();
-            return;
-        }
-    }
     else if( captain->state->app.pname==RE_PROC_QT )
     {
         int val = text.toInt();
@@ -373,6 +358,14 @@ void RePreProcessor::super(const QString &text)
     if( captain->state->isSleep()==0 )
     {
         chess->super(text);
+
+        int val = text.toInt();
+        if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
+            val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
+            val==RE_SUPER_RESIST || val==RE_SUPER_DRAG )
+        {
+            commands_str = "";
+        }
     }
     if( captain->state->chess_mode )
     {
@@ -417,6 +410,10 @@ void RePreProcessor::type(const QString &text)
 
 void RePreProcessor::debug(const QString &text)
 {
+    if( captain->state->chess_mode )
+    {
+        return;
+    }
     if( commands_str.length() )
     {
         commands_str += " ";

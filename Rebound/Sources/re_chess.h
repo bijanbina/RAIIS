@@ -7,6 +7,10 @@
 #include "backend.h"
 #include "re_captain.h"
 
+#define CH_DRAG_NORM   0
+#define CH_DRAG_STATE1 1
+#define CH_DRAG_STATE2 2
+
 class ReChess : public QObject
 {
     Q_OBJECT
@@ -24,12 +28,16 @@ private:
     void showChess(int val);
     void sendChessKey(QString text);
     void resetChess();
+    void handleBackspace();
+    void setCount(int val);
 
     QObject  *root;
     ReCaptain *captain;
 
     int cmd_count;
     int meta_mode;
+    int drag_mode;
+    int persist_mode;
     QString commands_str; //just for debug purpose
 };
 

@@ -9,6 +9,10 @@
 #include "re_commands.h"
 #include "re_lua.h"
 
+#define RE_FFGEAR_COUNT 16
+#define RE_FFGEAR_DELAY { 100, 50, 25, 10, 10, 5, 5, 5, 5, 5 ,  5, 5 }
+#define RE_FFGEAR_STEP  { 1  , 2 , 3 , 4 , 5 , 6, 7, 8, 9, 20, 25, 40}
+
 class ReFirefox : public QObject
 {
     Q_OBJECT
@@ -45,8 +49,8 @@ private:
     int      sc_dirb = 0;  // buffer (not final)
     QVector<ReFirefoxWs *> childs;
     QVector<QThread *>     childs_th;
-    int speed_table[10] = { 100, 50, 25, 10, 10, 5, 5, 5, 5 };
-    int step_table[10]  = { 1  , 2 , 3 , 4 , 5 , 6, 7, 8, 9 };
+    int speed_table[RE_FFGEAR_COUNT] = RE_FFGEAR_DELAY;
+    int step_table [RE_FFGEAR_COUNT] = RE_FFGEAR_STEP;
 };
 
 #endif // RE_FIREFOX_H
