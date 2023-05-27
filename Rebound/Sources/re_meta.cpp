@@ -171,9 +171,19 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"\"");
     }
-    else if( val==KEY_C )
+    else if( val==KEY_END )
     {
-        mm_launchLnk("Google Chrome", "https://speechnotes.co/dictate/");
+        mm_launchLnk("Google Chrome",
+                     "https://speechnotes.co/dictate/");
+        QThread::msleep(2500);
+        state->goToSleep();
+        SetCursorPos(1450, 380);
+        re_mouseKey(1);
+    }
+    else if( val==KEY_S )
+    {
+        sendChessCmd("screenshot");
+        state->ch_count = 4;
     }
 
     else
@@ -184,18 +194,30 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
 
 void ReMeta::castFoxCmd(int val, CCommand *cmd)
 {
-    state->last_cmd.type = RE_COMMAND_NULL;
+    //////SHOULD GET FIXED WITH THE NEW SYSTEM
+    qDebug() << "GO" << state->app.pname;
 
-    if( val==RE_APP_LINK )
+    if( state->app.pname==RE_PROC_EDITOR )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
-        cmd->val1 = KEY_F;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
+        re_getGoXed(val);
+    }
+    else if( state->app.pname==RE_PROC_QT ||
+             state->app.pname==RE_PROC_VSCODE )
+    {
+        re_getGoQt(val);
+    }
+    else if( state->app.pname==RE_PROC_GIT )
+    {
+        re_getGoGitKraken(val, cmd);
+    }
+    else if( state->app.pname==RE_PROC_FIREFOX ||
+             state->app.pname==RE_PROC_GEKO )
+    {
+        re_castGoFirefox(val, cmd);
+    }
+    else if( state->app.pname==RE_PROC_EXPLORER )
+    {
+        re_getGoNautilus(val, cmd);
     }
 }
 
@@ -280,31 +302,7 @@ void ReMeta::execScrollCmd(int meta, int val)
 
 void ReMeta::castGoCmd(int val, CCommand *cmd)
 {
-    //////SHOULD GET FIXED WITH THE NEW SYSTEM
-    qDebug() << "GO" << state->app.pname;
-
-    if( state->app.pname==RE_PROC_EDITOR )
-    {
-        re_getGoXed(val);
-    }
-    else if( state->app.pname==RE_PROC_QT ||
-             state->app.pname==RE_PROC_VSCODE )
-    {
-        re_getGoQt(val);
-    }
-    else if( state->app.pname==RE_PROC_GIT )
-    {
-        re_getGoGitKraken(val, cmd);
-    }
-    else if( state->app.pname==RE_PROC_FIREFOX ||
-             state->app.pname==RE_PROC_GEKO )
-    {
-        re_castGoFirefox(val, cmd);
-    }
-    else if( state->app.pname==RE_PROC_EXPLORER )
-    {
-        re_getGoNautilus(val, cmd);
-    }
+    state->last_cmd.type = RE_COMMAND_NULL;
 }
 
 void ReMeta::castPageCmd(int val, CCommand *cmd)
@@ -399,4 +397,19 @@ void ReMeta::castTouchCmd(int val, CCommand *cmd)
     {
         re_mouseMoveR(27, 22);
     }
+}
+
+void ReMeta::sendChessCmd(QString cmd)
+{
+#ifdef WIN32
+    QString pipe_data = cmd + CH_NP_SEPARATOR;
+    state->sendPipe(pipe_data.toStdString().c_str());
+    qDebug() << "pipe" << pipe_data;
+#else
+    QString pipe_data = "dbus-send --dest=com.benjamin.chess";
+    pipe_data += "dbus-send --dest=com.benjamin.chess";
+    pipe_data += " / com.benjamin.chess.show string:\"";
+    pipe_data += cmd + "\"";
+    system(pipe_data.toStdString().c_str());
+#endif
 }

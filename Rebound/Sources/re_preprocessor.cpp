@@ -36,7 +36,7 @@ void RePreProcessor::execute()
 
 void RePreProcessor::nato(const QString &text)
 {
-    if( captain->state->chess_mode )
+    if( captain->state->ch_count )
     {
         chess->nato(text);
         return;
@@ -93,7 +93,7 @@ void RePreProcessor::nato(const QString &text)
 
 void RePreProcessor::digit(const QString &text)
 {
-    if( captain->state->chess_mode )
+    if( captain->state->ch_count )
     {
         chess->digit(text);
         return;
@@ -171,7 +171,7 @@ void RePreProcessor::digit(const QString &text)
 
 void RePreProcessor::dirs(const QString &text) // direction keys
 {
-    if( captain->state->chess_mode )
+    if( captain->state->ch_count )
     {
         chess->dirs(text);
         return;
@@ -277,7 +277,7 @@ void RePreProcessor::meta(const QString &text)
             return;
         }
 
-        if( val==RE_META_GO )
+        if( val==RE_META_FOX )
         {
             CCommand cmd = re_getGoQt(&cmd_buf);
             execute();
@@ -306,7 +306,7 @@ void RePreProcessor::meta(const QString &text)
 
 void RePreProcessor::apps(const QString &text)
 {
-    if( re_isLastMeta(cmd_buf) )
+    if( re_isLastGo(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
         cmd_buf[last_i].val2 = 300 + text.toInt();
@@ -321,7 +321,7 @@ void RePreProcessor::apps(const QString &text)
         if( cmd_val==RE_APP_SLEEP )
         {
             captain->key->sendKey(KEY_ESC);
-            cmd_buf[last_i].val1 = RE_META_GO;
+            cmd_buf[last_i].val1 = RE_META_FOX;
             cmd_buf[last_i].val2 = cmd_val;
             cmd_buf[last_i].val3 = 1;
             cmd_buf[last_i].type = RE_COMMAND_META;
@@ -367,7 +367,7 @@ void RePreProcessor::super(const QString &text)
             commands_str = "";
         }
     }
-    if( captain->state->chess_mode )
+    if( captain->state->ch_count )
     {
         // no need to process super mode while in
         // chess mode
@@ -410,7 +410,7 @@ void RePreProcessor::type(const QString &text)
 
 void RePreProcessor::debug(const QString &text)
 {
-    if( captain->state->chess_mode )
+    if( captain->state->ch_count )
     {
         return;
     }
