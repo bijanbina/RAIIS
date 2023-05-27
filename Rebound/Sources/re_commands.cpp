@@ -31,13 +31,47 @@ bool re_isLastMeta(QVector<CCommand> commands)
 
     int last_i = commands.count()-1; //last index
     int cmd_type = commands[last_i].type;
+    int cmd_val1 = commands[last_i].val1;
     int cmd_val2 = commands[last_i].val2;
 
     if( cmd_type==RE_COMMAND_META )
     {
-        if( cmd_val2==0 )
+        if( cmd_val1!=RE_META_GO )
         {
-            return true;
+            if( cmd_val2==0 )
+            {
+                return true;
+            }
+        }
+        else
+        {
+            commands.removeLast();
+        }
+    }
+
+    return false;
+}
+
+bool re_isLastGo(QVector<CCommand> commands)
+{
+    if( commands.count()==0 )
+    {
+        return false;
+    }
+
+    int last_i = commands.count()-1; //last index
+    int cmd_type = commands[last_i].type;
+    int cmd_val1 = commands[last_i].val1;
+    int cmd_val2 = commands[last_i].val2;
+
+    if( cmd_type==RE_COMMAND_META )
+    {
+        if( cmd_val1==RE_META_GO )
+        {
+            if( cmd_val2==0 )
+            {
+                return true;
+            }
         }
     }
 

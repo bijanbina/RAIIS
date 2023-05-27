@@ -181,6 +181,17 @@ void re_castGoFirefox(int val, CCommand *cmd)
         cmd->type  = RE_COMMAND_MOD;
         cmd->state = RE_CSTATE_0;
     }
+    else if( val==KEY_L )
+    {
+        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->val1 = KEY_F;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
+    }
 }
 
 void re_getGoNautilus(int val, CCommand *cmd)

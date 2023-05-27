@@ -95,6 +95,7 @@ typedef struct CCommand
 bool re_isLastCmdFunction(QVector<CCommand> commands);
 bool re_isLastMeta(QVector<CCommand> commands);
 bool re_isLastMod(QVector<CCommand> commands);
+bool re_isLastGo(QVector<CCommand> commands);
 bool re_isLastQt(QVector<CCommand> commands);
 int  re_keyCode2Digit(QString key_code);
 int  re_keyCode2Digit(int code);
