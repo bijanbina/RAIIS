@@ -17,7 +17,7 @@ void ReChess::resetChess()
 {
     meta_mode = 0;
     persist_mode = 0;
-    captain->state->chess_mode = 0;
+    captain->state->ch_count = 0;
 }
 
 void ReChess::nato(const QString &text)
@@ -42,10 +42,10 @@ void ReChess::dirs(const QString &text) // direction keys
 void ReChess::super(const QString &text)
 {
     int val = text.toInt();
-    if( val==RE_SUPER_META && captain->state->chess_mode )
+    if( val==RE_SUPER_META && captain->state->ch_count )
     {
         meta_mode = 1;
-        setCount(cmd_count+1);
+        addCount(1);
         sendChessCmd("Meta");
     }
     else if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
@@ -82,9 +82,9 @@ void ReChess::handleBackspace()
         }
     }
 
-    if( cmd_count<max )
+    if( captain->state->ch_count<max )
     {
-        setCount(cmd_count+1);
+        addCount(1);
     }
 }
 
@@ -96,7 +96,7 @@ void ReChess::sendChessKey(QString text)
     {
         meta_mode = 0;
         setCount(0);
-        captain->state->chess_mode = 0;
+        captain->state->ch_count = 0;
     }
     else if( val==KEY_BACKSPACE )
     {
@@ -104,8 +104,8 @@ void ReChess::sendChessKey(QString text)
     }
     else
     {
-        setCount(cmd_count-1);
-        if( cmd_count==0 )
+        addCount(-1);
+        if( captain->state->ch_count==0 )
         {
             resetChess();
         }
@@ -118,7 +118,6 @@ void ReChess::sendChessKey(QString text)
 void ReChess::showChess(int val)
 {
     // This function only on valid val values
-    captain->state->chess_mode = 1;
     setCount(2);
     if( val==RE_SUPER_KICK )
     {
@@ -153,7 +152,7 @@ void ReChess::sendChessCmd(QString cmd)
 {
 #ifdef WIN32
     QString pipe_data = cmd + CH_NP_SEPARATOR;
-    captain->super->sendPipe(pipe_data.toStdString().c_str());
+    captain->state->sendPipe(pipe_data.toStdString().c_str());
     qDebug() << "pipe" << pipe_data;
 #else
     QString pipe_data = "dbus-send --dest=com.benjamin.chess";
@@ -166,9 +165,9 @@ void ReChess::sendChessCmd(QString cmd)
 
 void ReChess::setCount(int val)
 {
-    cmd_count = val;
+    captain->state->ch_count = val;
 
-    if( cmd_count )
+    if( val )
     {
 #ifdef WIN32
         QString cmd = "Chess ";
@@ -187,4 +186,11 @@ void ReChess::setCount(int val)
     {
         re_rmSpex();
     }
+}
+
+// set count relative
+void ReChess::addCount(int val)
+{
+    int count = captain->state->ch_count;
+    setCount(count+val);
 }

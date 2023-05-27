@@ -31,15 +31,19 @@ public:
     void enScroll(int dir, int speed);
     bool isEscape(CCommand command);
     void resetState();
+    void sendPipe(const char *data);
 
 #ifdef _WIN32
+    void connectChessPipe();
+
     ReApi *api;
     ReHardwareW *hardware;
+    HANDLE hPipe;
 #endif
     int  ui_visible;
     int  i_mode;
     bool sleep_state = 0;
-    bool chess_mode  = 0;
+    int  ch_count  = 0; //Chess Count
     int  utube_mode  = 0;
     ReWindow app; //Active Window
     CCommand last_cmd;

@@ -9,6 +9,7 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #ifdef _WIN32
     api = new ReApi;
     hardware = new ReHardwareW;
+    connectChessPipe();
 #endif
 
     readStatusFile();
@@ -88,7 +89,7 @@ void ReState::wakeUp()
     {
         enScroll(fl->sc_dir, fl->sc_speed);
     }
-    else if( chess_mode )
+    else if( ch_count )
     {
         system("echo 'Chess' > ~/.config/polybar/awesomewm/ben_status");
     }
@@ -156,4 +157,60 @@ void ReState::resetState()
 bool ReState::isSleep()
 {
     return sleep_state;
+}
+
+void ReState::connectChessPipe()
+{
+    // 0: Default Wait Time
+    int np_is_available = WaitNamedPipeA(CH_PIPE_PATH, 0);
+    if( np_is_available )
+    {
+        hPipe = CreateFileA(CH_PIPE_PATH, GENERIC_WRITE, // dwDesiredAccess
+                            0, nullptr,    // lpSecurityAttributes
+                            OPEN_EXISTING,  // dwCreationDisposition
+                            0, nullptr);    // hTemplateFile
+
+        if( hPipe==INVALID_HANDLE_VALUE )
+        {
+            qDebug() << "Error 120: Cannot create " CH_PIPE_PATH;
+        }
+    }
+    else
+    {
+        hPipe = INVALID_HANDLE_VALUE;
+        qDebug() << "Error 121: Pipe " CH_PIPE_PATH
+                    " not found";
+    }
+}
+
+void ReState::sendPipe(const char *data)
+{
+    DWORD len = strlen(data);
+    if( hPipe==INVALID_HANDLE_VALUE )
+    {
+        qDebug() << "Try to reconnect to"
+                 << CH_PIPE_PATH;
+
+        connectChessPipe();
+        if( hPipe==INVALID_HANDLE_VALUE )
+        {
+            return;
+        }
+    }
+
+    DWORD dwWritten;
+    int success = WriteFile(hPipe, data, len, &dwWritten, NULL);
+    if( !success )
+    {
+        qDebug() << "Error: NamedPipe writing failed," << GetLastError();
+    }
+
+    if( dwWritten!=len )
+    {
+        qDebug() << "Error: Wrong writing length."
+                    "Try to revive channel";
+        CloseHandle(hPipe);
+        hPipe = INVALID_HANDLE_VALUE;
+        sendPipe(data);
+    }
 }

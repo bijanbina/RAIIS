@@ -30,11 +30,11 @@ private:
     void resetChess();
     void handleBackspace();
     void setCount(int val);
+    void addCount(int val);
 
     QObject  *root;
     ReCaptain *captain;
 
-    int cmd_count;
     int meta_mode;
     int drag_mode;
     int persist_mode;

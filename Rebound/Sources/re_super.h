@@ -25,7 +25,6 @@ public:
     ~ReSuper();
 
     void castCmd(int cmd, CCommand *ret);
-    void sendPipe(const char *data);
 
 #ifdef WIN32
     ReWin32Virt *virt;
@@ -46,10 +45,7 @@ private:
     ReState  *state;
 
 #ifdef WIN32
-    void connectChessPipe();
     void recordTelegram();
-
-    HANDLE hPipe;
     ReKeyEmulator key;
 #endif
 };
