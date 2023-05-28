@@ -214,6 +214,11 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
              state->app.pname==RE_PROC_GEKO )
     {
         re_castGoFirefox(val, cmd);
+
+        if( val==KEY_L )
+        {
+            state->last_cmd.type = RE_COMMAND_NULL;
+        }
     }
     else if( state->app.pname==RE_PROC_EXPLORER )
     {

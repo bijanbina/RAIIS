@@ -20,7 +20,7 @@ public:
 
     void dirs (const QString &arg);
     void nato (const QString &arg);
-    void super(const QString &arg); //single shot meta cmd
+    void super(const QString &arg, CCommand command); //single shot meta cmd
     void digit(const QString &arg);
 
 private:
@@ -32,8 +32,11 @@ private:
     void setCount(int val);
     void addCount(int val);
 
-    QObject  *root;
+    QObject   *root;
     ReCaptain *captain;
+    ReKeyEmulator  *key;
+    CCommand  mod_cmd;
+
 
     int meta_mode;
     int drag_mode;

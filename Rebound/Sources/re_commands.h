@@ -22,6 +22,7 @@
 #define RE_COMMAND_SUPER  6
 #define RE_COMMAND_QDIGIT 7
 
+// Repeat count state (2-digit)
 #define RE_CSTATE_0  0
 #define RE_CSTATE_1  1
 #define RE_CSTATE_2  2

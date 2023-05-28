@@ -3,6 +3,7 @@
 
 ReChess::ReChess(ReCaptain *cpt, QObject *parent) : QObject(parent)
 {
+    key = new ReKeyEmulator;
     captain   = cpt;
     meta_mode = 0;
     persist_mode = 0;
@@ -17,7 +18,6 @@ void ReChess::resetChess()
 {
     meta_mode = 0;
     persist_mode = 0;
-    captain->state->ch_count = 0;
 }
 
 void ReChess::nato(const QString &text)
@@ -39,7 +39,7 @@ void ReChess::dirs(const QString &text) // direction keys
     }
 }
 
-void ReChess::super(const QString &text)
+void ReChess::super(const QString &text, CCommand command)
 {
     int val = text.toInt();
     if( val==RE_SUPER_META && captain->state->ch_count )
@@ -52,6 +52,16 @@ void ReChess::super(const QString &text)
              val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
              val==RE_SUPER_RESIST || val==RE_SUPER_DRAG )
     {
+        if( command.type==RE_COMMAND_MOD )
+        {
+            int len = command.mod_list.size();
+            for( int i=0 ; i<len ; i++ )
+            {
+                key->pressKey(command.mod_list[i]);
+                qDebug() << "sp2";
+            }
+            mod_cmd = command;
+        }
         showChess(val);
     }
 }
@@ -92,11 +102,13 @@ void ReChess::sendChessKey(QString text)
 {
     int val = text.toInt();
     QString cmd = "Key_";
+    cmd += text;
+    sendChessCmd(cmd.toStdString().c_str());
+
     if( val==KEY_ESC )
     {
         meta_mode = 0;
         setCount(0);
-        captain->state->ch_count = 0;
     }
     else if( val==KEY_BACKSPACE )
     {
@@ -105,14 +117,7 @@ void ReChess::sendChessKey(QString text)
     else
     {
         addCount(-1);
-        if( captain->state->ch_count==0 )
-        {
-            resetChess();
-        }
     }
-
-    cmd += text;
-    sendChessCmd(cmd.toStdString().c_str());
 }
 
 void ReChess::showChess(int val)
@@ -184,7 +189,19 @@ void ReChess::setCount(int val)
     }
     else
     {
+        if( mod_cmd.type==RE_COMMAND_MOD )
+        {
+            QThread::msleep(500);
+            int len = mod_cmd.mod_list.size();
+            for( int i=0 ; i<len ; i++ )
+            {
+                key->releaseKey(mod_cmd.mod_list[i]);
+                qDebug() << "sp5";
+            }
+        }
+        mod_cmd.type = RE_COMMAND_NULL;
         re_rmSpex();
+        resetChess();
     }
 }
 

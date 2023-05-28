@@ -357,15 +357,22 @@ void RePreProcessor::super(const QString &text)
 {
     if( captain->state->isSleep()==0 )
     {
-        chess->super(text);
-
+        CCommand cmd; //fake command
         int val = text.toInt();
         if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
             val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
             val==RE_SUPER_RESIST || val==RE_SUPER_DRAG )
         {
             commands_str = "";
+
+            if( re_isLastMod(cmd_buf) )
+            {
+                int last_i = cmd_buf.count()-1; //last index
+                cmd = cmd_buf[last_i];
+            }
         }
+
+        chess->super(text, cmd);
     }
     if( captain->state->ch_count )
     {
