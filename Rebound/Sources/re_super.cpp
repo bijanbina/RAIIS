@@ -110,7 +110,6 @@ void ReSuper::getMetaCmd(CCommand *ret)
     {
 #ifdef WIN32
         recordTelegram();
-        ret->val3 = -1;
 #else
         system("./Scripts/telegram_voice.sh");
 #endif
@@ -243,6 +242,7 @@ void ReSuper::makeNull(CCommand *ret)
 void ReSuper::recordTelegram()
 {
     qDebug() << "recordTelegram";
+    state->goToSleep();
     re_mouseMoveW(-30, -30);
     QThread::msleep(100);
     re_mousePress(1);

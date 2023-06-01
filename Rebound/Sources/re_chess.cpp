@@ -37,6 +37,10 @@ void ReChess::dirs(const QString &text) // direction keys
     {
         sendChessKey(text);
     }
+    else if( val==KEY_RIGHT || val==KEY_LEFT )
+    {
+        sendChessKey(text);
+    }
 }
 
 void ReChess::super(const QString &text, CCommand command)
@@ -114,7 +118,8 @@ void ReChess::sendChessKey(QString text)
     {
         handleBackspace();
     }
-    else
+    else if( val!=KEY_HOME  && val!=KEY_END &&
+             val!=KEY_RIGHT && val!=KEY_LEFT )
     {
         addCount(-1);
     }

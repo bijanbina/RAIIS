@@ -32,6 +32,7 @@
 #define KEY_ESC       VK_ESCAPE
 #define KEY_UP        VK_UP
 #define KEY_END       VK_END
+#define KEY_HOME      VK_HOME
 #define KEY_ENTER     VK_RETURN
 #define KEY_LEFT      VK_LEFT
 #define KEY_DOWN      VK_DOWN
