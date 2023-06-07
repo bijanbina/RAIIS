@@ -36,6 +36,7 @@ private:
     void execMeta(CCommand command);
 
     void execCommand(CCommand command);
+    void wakeDictate();
 
     bool isWakeUp(CCommand command);
 

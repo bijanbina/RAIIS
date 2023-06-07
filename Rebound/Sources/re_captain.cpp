@@ -75,6 +75,10 @@ void ReCaptain::execute(QVector<CCommand> commands)
             {
                 if( isWakeUp(commands[i]) )
                 {
+                    if( state->dictate_state )
+                    {
+                        wakeDictate();
+                    }
                     state->wakeUp();
                     execCommand(commands[i]);
                     commands.clear();
@@ -188,7 +192,7 @@ bool ReCaptain::isWakeUp(CCommand command)
     qDebug() << "isWake" << command.mod_list[0];
     if( command.mod_list[0]==KEY_META )
     {
-        if( command.val1>=KEY_1 &&
+        if( command.val1>=KEY_0 &&
             command.val1<KEY_7 )
         {
             return true;
@@ -221,4 +225,47 @@ void ReCaptain::execMeta(CCommand command)
             execModifier(translated);
         }
     }
+}
+
+void ReCaptain::wakeDictate()
+{
+    re_mouseKey(1);
+    state->dictate_state = 0;
+    QThread::msleep(500); //little tweak
+
+    // remove super+num
+    key->pressKey(KEY_LEFTCTRL);
+    key->pressKey(KEY_LEFTSHIFT);
+    key->sendKey(KEY_LEFT);
+    QThread::msleep(5); //little tweak
+    key->sendKey(KEY_LEFT);
+    key->releaseKey(KEY_LEFTSHIFT);
+    key->releaseKey(KEY_LEFTCTRL);
+
+    key->sendKey(KEY_BACKSPACE);
+    QThread::msleep(5); //little tweak
+    key->sendKey(KEY_BACKSPACE);
+    QThread::msleep(5); //little tweak
+
+    // select all
+    key->pressKey(KEY_LEFTCTRL);
+    key->sendKey(KEY_A);
+    key->releaseKey(KEY_LEFTCTRL);
+
+    // copy
+    key->pressKey(KEY_LEFTCTRL);
+    key->sendKey(KEY_C);
+    key->releaseKey(KEY_LEFTCTRL);
+    QThread::msleep(50);
+
+    // quit
+    key->pressKey(KEY_META);
+    key->sendKey(KEY_Q);
+    key->releaseKey(KEY_META);
+    QThread::msleep(500);
+
+    // paste
+    key->pressKey(KEY_LEFTCTRL);
+    key->sendKey(KEY_V);
+    key->releaseKey(KEY_LEFTCTRL);
 }
