@@ -4,6 +4,47 @@
 #include <QFileInfo>
 #include <shobjidl.h>
 #include <shlguid.h>
+#include <dwmapi.h>
+#include <psapi.h> //pname
+#include <QThread> //sleep
+
+HWND hwnd_g = NULL;
+
+BOOL CALLBACK EnumWindowsApp(HWND hwnd, LPARAM lParam)
+{
+    MmApplication *app = (MmApplication *)lParam; // requested pname
+    QString win_title = mm_getWinTitle(hwnd);
+
+    // skip hidden window
+    if( IsWindowVisible(hwnd)==0 )
+    {
+        return TRUE;
+    }
+
+    // skip windows bs windows
+    if( win_title.isEmpty() )
+    {
+        return TRUE;
+    }
+
+    long pid = mm_getPid(hwnd);
+    QString pname = mm_getPName(pid);
+    pname = QFileInfo(pname).completeBaseName();
+    if( pname==app->exe_name )
+    {
+        qDebug() << "EnumWindowsProc find HWND"
+                 << pname << app->exe_name << hwnd
+                 << win_title;
+
+        if( win_title.contains(app->win_title) )
+        {
+            hwnd_g = hwnd;
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+}
 
 void mm_getLinkPath(QString path, MmApplication *app)
 {
@@ -122,8 +163,21 @@ void mm_launchLnk(QString app_name, QString arg)
     app_name += ".lnk";
     MmApplication app;
     mm_getLinkPath(app_name, &app);
+    QFileInfo fi(app.exe_path);
+    app.exe_name = fi.completeBaseName();
 
     mm_launchApp(&app, arg);
+
+    app.hwnd = mm_getHWND(&app);
+    while( app.hwnd==NULL )
+    {
+        qDebug() << "hwnd" << app.hwnd
+                 << "exe_name" << app.exe_name
+                 << "exe_path" << app.exe_path;
+        QThread::msleep(200);
+        app.hwnd = mm_getHWND(&app);
+    }
+    mm_focus(app.hwnd);
 }
 
 void mm_launchApp(MmApplication *app, QString arg)
@@ -180,4 +234,79 @@ void mm_launchScript(QString path, QString arg)
         qDebug() << "Error 25: CreateProcess failed" << last_error
                  << "path" << path;
     }
+}
+
+void mm_focus(HWND hwnd)
+{
+    DWORD dwCurrentThread = GetCurrentThreadId();
+    DWORD dwFGThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
+    AttachThreadInput(dwCurrentThread, dwFGThread, TRUE);
+
+    AllowSetForegroundWindow(ASFW_ANY);
+    LockSetForegroundWindow(LSFW_UNLOCK);
+    BringWindowToTop(hwnd);
+    SetForegroundWindow(hwnd);
+    SetActiveWindow(hwnd);
+
+    // If window is minimzed
+    if( IsIconic(hwnd) )
+    {
+        ShowWindow(hwnd, SW_RESTORE);
+    }
+
+    AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
+}
+
+HWND mm_getHWND(MmApplication *app)
+{
+    hwnd_g = 0;
+    EnumWindows(EnumWindowsApp, (LPARAM) app);
+    return hwnd_g;
+}
+
+QString mm_getWinTitle(HWND hwnd)
+{
+    char buffer[MAX_TITLE_LEN];
+    int written = GetWindowTextA(hwnd, buffer, MAX_TITLE_LEN);
+    if( written==0 )
+    {
+        return "";
+    }
+
+    QString ret = buffer;
+    return ret;
+}
+
+long mm_getPid(HWND hWnd)
+{
+    // get allegro pid of window handle
+    DWORD dwProcessId;
+    GetWindowThreadProcessId(hWnd, &dwProcessId);
+    if(long(dwProcessId) < 0)
+    {
+        qDebug() <<"Warning: couldn't get pid of allegro from window handle";
+        return -1;
+    }
+    return dwProcessId;
+}
+
+QString mm_getPName(long pid)
+{
+    HANDLE processHandle = NULL;
+//    processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
+    processHandle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+    if(processHandle == NULL)
+    {
+        qDebug() << "Warning: couldn't get process handle from pid" << pid;
+        return "";
+    }
+
+    // get name of process handle
+    char filename[MAX_PATH];
+    if(GetProcessImageFileNameA(processHandle, filename, MAX_PATH) == 0)
+    {
+//        qDebug("Warning: couldn't get name of process handle");
+        return "";
+    }
+    return QString(filename);
 }
