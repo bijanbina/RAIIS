@@ -68,6 +68,10 @@ CCommand ReMeta::castMeta(int meta, int arg)
     else if( meta==RE_META_SKY ||
              meta==RE_META_DIVE )
     {
+        if( state->app.pname!=RE_PROC_FIREFOX )
+        {
+            return cmd;
+        }
         if( (KEY_1<=arg && arg<=KEY_9) )
         {
             execScrollCmd(meta, arg-KEY_1+1);
@@ -175,8 +179,8 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         mm_launchLnk("Google Chrome",
                      "https://speechnotes.co/dictate/");
-        QThread::msleep(2500);
-        state->goToSleep();
+        QThread::msleep(500);
+        state->goToDictate();
         SetCursorPos(1450, 380);
         re_mouseKey(1);
     }
@@ -204,7 +208,7 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     else if( state->app.pname==RE_PROC_QT ||
              state->app.pname==RE_PROC_VSCODE )
     {
-        re_getGoQt(val);
+        re_getGoCode(val, cmd);
     }
     else if( state->app.pname==RE_PROC_GIT )
     {

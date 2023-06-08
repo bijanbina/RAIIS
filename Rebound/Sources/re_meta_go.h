@@ -7,7 +7,7 @@
 #include "backend.h"
 #include "re_state.h"
 
-QString re_getGoQt(int val);
+void re_getGoCode(int val, CCommand *cmd);
 QString re_getGoXed(int val);
 void re_castGoFirefox(int val, CCommand *cmd);
 void re_getGoNautilus(int val, CCommand *cmd);

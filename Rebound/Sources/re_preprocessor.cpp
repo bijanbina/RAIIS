@@ -36,6 +36,7 @@ void RePreProcessor::execute()
 
 void RePreProcessor::nato(const QString &text)
 {
+    int val = text.toInt();
     if( captain->state->ch_count )
     {
         chess->nato(text);
@@ -60,6 +61,20 @@ void RePreProcessor::nato(const QString &text)
 
         special_c = 0;
         re_rmSpex();
+        execute();
+
+        return;
+    }
+    else if( captain->state->fl->sc_dir &&
+             KEY_A<=val && val<=KEY_F )
+    {
+        CCommand cmd;
+        cmd.val1 = captain->state->fl->sc_dir;
+        cmd.val2 = val;
+        cmd.val3 = 1;
+        cmd.type = RE_COMMAND_META;
+
+        cmd_buf.append(cmd);
         execute();
 
         return;
@@ -264,16 +279,8 @@ void RePreProcessor::meta(const QString &text)
     {
         int val = text.toInt();
 
-        if( captain->state->isSleep() ) // fix for go wake
+        if( captain->state->isSleep() ) // ignore sleep
         {
-            CCommand cmd;
-            cmd.val1 = text.toInt();
-            cmd.val2 = 0;
-            cmd.val3 = 1;
-            cmd.type = RE_COMMAND_META;
-
-            cmd_buf.append(cmd);
-            captain->state->last_cmd.type = RE_COMMAND_NULL;
             return;
         }
 
