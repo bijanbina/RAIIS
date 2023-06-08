@@ -26,6 +26,7 @@ public:
     void toggleUi(QObject *item);
 
     void goToSleep();
+    void goToDictate();
     void wakeUp();
     bool isSleep();
     void enScroll(int dir, int speed);
@@ -43,6 +44,7 @@ public:
     int  ui_visible;
     int  i_mode;
     bool sleep_state = 0;
+    bool dictate_state = 0;
     int  ch_count  = 0; //Chess Count
     int  utube_mode  = 0;
     ReWindow app; //Active Window

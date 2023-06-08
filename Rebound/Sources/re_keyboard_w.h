@@ -5,6 +5,7 @@
 #include <Windows.h>
 #include <QVector>
 
+#define KEY_0         '0'
 #define KEY_1         '1'
 #define KEY_2         '2'
 #define KEY_3         '3'
@@ -24,6 +25,7 @@
 #define KEY_M         'M'
 #define KEY_N         'N'
 #define KEY_P         'P'
+#define KEY_Q         'Q'
 #define KEY_R         'R'
 #define KEY_S         'S'
 #define KEY_T         'T'

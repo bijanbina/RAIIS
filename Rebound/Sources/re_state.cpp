@@ -82,6 +82,20 @@ void ReState::goToSleep()
 #endif
 }
 
+void ReState::goToDictate()
+{
+    sleep_state = 1;
+    dictate_state = 1;
+#ifdef WIN32
+    QString cmd;
+    cmd = "%{B#aa6700}%{F#ffffff}%{A1:$HS_CMD:}";
+    cmd += "  Dictate  %{A1}%{B- F1-}";
+    re_writeStatus(cmd);
+#else
+    writeStatus("Dictate");
+#endif
+}
+
 void ReState::wakeUp()
 {
     sleep_state = 0;
