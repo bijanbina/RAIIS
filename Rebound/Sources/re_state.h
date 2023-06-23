@@ -27,6 +27,7 @@ public:
 
     void goToSleep();
     void goToDictate();
+    void goToDrag();
     void wakeUp();
     bool isSleep();
     void enScroll(int dir, int speed);
@@ -45,6 +46,7 @@ public:
     int  i_mode;
     bool sleep_state = 0;
     bool dictate_state = 0;
+    bool drag_state = 0;
     int  ch_count  = 0; //Chess Count
     int  utube_mode  = 0;
     ReWindow app; //Active Window

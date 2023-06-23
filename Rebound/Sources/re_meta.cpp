@@ -179,7 +179,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         mm_launchLnk("Google Chrome",
                      "https://speechnotes.co/dictate/");
-        QThread::msleep(500);
+        QThread::msleep(2000);
         state->goToDictate();
         SetCursorPos(1450, 380);
         re_mouseKey(1);
@@ -227,6 +227,10 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     else if( state->app.pname==RE_PROC_EXPLORER )
     {
         re_getGoNautilus(val, cmd);
+    }
+    else if( state->app.pname==RE_PROC_ALTIUM )
+    {
+        re_getGoAltium(val, cmd);
     }
 }
 

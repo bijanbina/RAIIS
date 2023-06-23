@@ -96,6 +96,19 @@ void ReState::goToDictate()
 #endif
 }
 
+void ReState::goToDrag()
+{
+    drag_state = 1;
+#ifdef WIN32
+    QString cmd;
+    cmd = "%{B#67bb00}%{F#ffffff}%{A1:$HS_CMD:}";
+    cmd += "  Drag  %{A1}%{B- F1-}";
+    re_writeStatus(cmd);
+#else
+    writeStatus("Dictate");
+#endif
+}
+
 void ReState::wakeUp()
 {
     sleep_state = 0;

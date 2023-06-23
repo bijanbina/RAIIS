@@ -232,3 +232,62 @@ void re_getGoNautilus(int val, CCommand *cmd)
         cmd->state = RE_CSTATE_0;
     }
 }
+
+void re_getGoAltium(int val, CCommand *cmd)
+{
+    if( val==KEY_LEFT ) //next layer
+    {
+        cmd->val1 = VK_SUBTRACT;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_RIGHT )
+    {
+        cmd->val1 = VK_ADD;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_F ) //find
+    {
+        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->val1 = KEY_F;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val>=KEY_1 &&
+             val<=KEY_9 ) //tab
+    {
+#ifdef WIN32
+        cmd->mod_list.append(KEY_LEFTCTRL);
+#else
+        cmd->mod_list.append(KEY_LEFTALT);
+#endif
+        cmd->val1 = val;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_L )
+    {
+        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->val1 = KEY_F;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOD;
+        cmd->state = RE_CSTATE_0;
+    }
+}

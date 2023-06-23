@@ -178,16 +178,34 @@ void ReSuper::getCamelCmd(CCommand *ret)
 
 void ReSuper::getSelectCmd(CCommand *ret)
 {
-    key.sendKey(VK_END);
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
+    if( state->app.pname==RE_PROC_ALTIUM )
+    {
+        if( state->drag_state )
+        {
+            re_mouseRelease(1);
+            state->drag_state = 0;
+            re_rmStatus();
+        }
+        else
+        {
+            re_mousePress(1);
+            state->goToDrag();
+        }
+        makeNull(ret);
+    }
+    else
+    {
+        key.sendKey(VK_END);
+        ret->val2 = 1;
+        ret->val3 = 1;
+        ret->type  = RE_COMMAND_MOD;
+        ret->state = RE_CSTATE_0;
 
-    ret->mod_list.append(KEY_LEFTSHIFT);
+        ret->mod_list.append(KEY_LEFTSHIFT);
 
-    ret->val1 = VK_HOME;
-    qDebug() << "select";
+        ret->val1 = VK_HOME;
+        qDebug() << "select";
+    }
 }
 
 void ReSuper::getLoveCmd(CCommand *ret)
