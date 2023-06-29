@@ -46,14 +46,17 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
     {
         int cloaked;
         DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, &cloaked, 4);
-//        if(cloaked==0)
-        if(1)
+        if(cloaked==0)
+//        if(1)
         {
             HWND shell_window = GetShellWindow();
             GetWindowRect(hwnd, &rc);
             int width = rc.right - rc.left;
+            int height = rc.bottom - rc.top;
+            int opacity = re_getWindowOpacity(hwnd);
 
-            if((hwnd!=shell_window) && (width>100) ) //&& (rc.bottom>0)
+            if( (hwnd!=shell_window) && (width>MM_MINWIN_WIDTH) &&
+                (height>MM_MINWIN_HEIGHT) && (opacity>MM_MINWIN_OPACITY)  ) //&& (rc.bottom>0)
             {
                 int success = GetWindowTextA(hwnd, buffer, 128); //get title
 
@@ -61,7 +64,6 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
                 {
                     qDebug() << hwnd << "Failed to GetWindowTextA";
                 }
-
 
                 ReWindow current_win;
                 current_win.hWnd = hwnd;
@@ -71,6 +73,22 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
 //                current_win.title = thread_w->cleanTitle(current_win.title);
 
                 re_InsertWindow(thread_w, current_win);
+
+                if( current_win.pname=="Chess" ||
+                    current_win.title=="Qt Creator" )
+                {
+                    return;
+                }
+//                qDebug() << "process" << current_win.pname
+//                         << buffer;
+                if( thread_w->win_active.hWnd==hwnd )
+                {
+                    re_setWindowOpacity(hwnd, 255);
+                }
+                else
+                {
+                    re_setWindowOpacity(hwnd, 200);
+                }
             }
             else
             {

@@ -32,7 +32,7 @@ public:
     bool isSleep();
     void enScroll(int dir, int speed);
     bool isEscape(CCommand command);
-    void resetState();
+    int  resetState();
     void sendPipeChess(const char *data);
     void sendPipeMom(const char *data);
 

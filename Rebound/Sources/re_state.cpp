@@ -172,14 +172,16 @@ bool ReState::isEscape(CCommand command)
     return 1;
 }
 
-void ReState::resetState()
+int ReState::resetState()
 {
     if( fl->sc_dir )
     {
         fl->sc_dir = 0;
         fl->scrollEscape();
         re_rmStatus();
+        return 1;
     }
+    return 0;
 }
 
 bool ReState::isSleep()

@@ -19,6 +19,10 @@
 #define RE_FIREFOX_ID  1
 #define RE_SPOTIFY_ID  2
 
+#define MM_MINWIN_HEIGHT   50
+#define MM_MINWIN_WIDTH    100
+#define MM_MINWIN_OPACITY  100
+
 typedef struct threadStruct
 {
     QString  message;

@@ -193,6 +193,13 @@ void ReSuper::getSelectCmd(CCommand *ret)
         }
         makeNull(ret);
     }
+    else if( state->app.pname==RE_PROC_FIREFOX )
+    {
+        ret->val2 = 1;
+        ret->val3 = 1;
+        ret->val1 = KEY_F7;
+        ret->type = RE_COMMAND_DIRS;
+    }
     else
     {
         key.sendKey(VK_END);

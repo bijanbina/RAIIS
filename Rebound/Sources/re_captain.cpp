@@ -101,15 +101,18 @@ void ReCaptain::execCommand(CCommand command)
         command.type==RE_COMMAND_DIRS ||
         command.type==RE_COMMAND_DIGIT )
     {
+        if( state->isEscape(command) )
+        {
+            if( state->resetState() )
+            {
+                return;
+            }
+        }
+
         for( int j=0 ; j<command.val2 ; j++ )
         {
             key->sendKey(command.val1);
             QThread::msleep(5); //little tweak
-        }
-
-        if( state->isEscape(command) )
-        {
-            state->resetState();
         }
     }
     else if( command.type==RE_COMMAND_MOD )

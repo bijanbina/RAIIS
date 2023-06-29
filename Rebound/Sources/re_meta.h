@@ -7,6 +7,7 @@
 #include "re_state.h"
 #include "re_meta_go.h"
 #include "re_meta_oc.h"
+#include "re_meta_sys.h"
 #ifdef WIN32
 #include <windows.h>
 #include "re_app_w.h"

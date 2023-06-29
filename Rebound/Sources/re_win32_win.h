@@ -6,7 +6,9 @@
 #include <QDebug>
 
 long reGetPid(HWND hWnd);
+int  re_isVpnConnected();
+void re_setWindowOpacity(HWND hwnd, BYTE opacity);
+int  re_getWindowOpacity(HWND hwnd);
 QString reGetPName(long pid);
-int re_isVpnConnected();
 
 #endif // RE_WIN32_WIN_H

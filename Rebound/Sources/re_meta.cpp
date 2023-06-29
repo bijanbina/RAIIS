@@ -181,19 +181,13 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==KEY_END )
     {
-        mm_launchLnk("Google Chrome",
-                     "https://speechnotes.co/dictate/");
-        QThread::msleep(2000);
-        state->goToDictate();
-        SetCursorPos(1450, 380);
-        re_mouseKey(1);
+        re_getSysEnd(state);
     }
     else if( val==KEY_S )
     {
         sendChessCmd("screenshot");
         state->ch_count = 4;
     }
-
     else
     {
         qDebug() << "Unknown System" << val;
