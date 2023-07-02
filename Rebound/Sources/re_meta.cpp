@@ -148,6 +148,10 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
              val<=KEY_9 )
     {
 #ifdef WIN32
+        QString cmd_str = "Sys_";
+        cmd_str += QString::number(val-KEY_0);
+        cmd_str += CH_NP_SEPARATOR;
+        state->sendPipeMom(cmd_str.toStdString().c_str());
 #endif
     }
     else if( val==KEY_T )
@@ -416,7 +420,7 @@ void ReMeta::sendChessCmd(QString cmd)
 {
 #ifdef WIN32
     QString pipe_data = cmd + CH_NP_SEPARATOR;
-    state->sendPipe(pipe_data.toStdString().c_str());
+    state->sendPipeChess(pipe_data.toStdString().c_str());
     qDebug() << "pipe" << pipe_data;
 #else
     QString pipe_data = "dbus-send --dest=com.benjamin.chess";

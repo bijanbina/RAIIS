@@ -162,7 +162,7 @@ void ReChess::sendChessCmd(QString cmd)
 {
 #ifdef WIN32
     QString pipe_data = cmd + CH_NP_SEPARATOR;
-    captain->state->sendPipe(pipe_data.toStdString().c_str());
+    captain->state->sendPipeChess(pipe_data.toStdString().c_str());
     qDebug() << "pipe" << pipe_data;
 #else
     QString pipe_data = "dbus-send --dest=com.benjamin.chess";

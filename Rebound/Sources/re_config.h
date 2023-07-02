@@ -5,6 +5,7 @@
 #define ORG_NAME        "org.binaee.rebound"
 #define PIPE_PATH       "\\\\.\\pipe\\com_binaee_rebound"
 #define CH_PIPE_PATH    "\\\\.\\pipe\\com_binaee_chess"
+#define CH_PIPE_MOM     "\\\\.\\pipe\\com_binaee_mom"
 #define CH_NP_SEPARATOR ","
 
 #define RE_FIREFOX_DIR   "Scripts\\Firefox"

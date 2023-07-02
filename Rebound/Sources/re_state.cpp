@@ -9,7 +9,8 @@ ReState::ReState(QObject *parent) : QObject(parent)
 #ifdef _WIN32
     api = new ReApi;
     hardware = new ReHardwareW;
-    connectChessPipe();
+    pipe_chess = connectChessPipe(CH_PIPE_PATH);
+    pipe_mom   = connectChessPipe(CH_PIPE_MOM);
 #endif
 
     readStatusFile();
@@ -186,47 +187,51 @@ bool ReState::isSleep()
     return sleep_state;
 }
 
-void ReState::connectChessPipe()
+HANDLE ReState::connectChessPipe(const char *pipe_name)
 {
     // 0: Default Wait Time
-    int np_is_available = WaitNamedPipeA(CH_PIPE_PATH, 0);
-    if( np_is_available )
+    int ready = WaitNamedPipeA(pipe_name, 0);
+    HANDLE hPipe;
+    if( ready )
     {
-        hPipe = CreateFileA(CH_PIPE_PATH, GENERIC_WRITE, // dwDesiredAccess
+        hPipe = CreateFileA(pipe_name, GENERIC_WRITE, // dwDesiredAccess
                             0, nullptr,    // lpSecurityAttributes
                             OPEN_EXISTING,  // dwCreationDisposition
                             0, nullptr);    // hTemplateFile
 
         if( hPipe==INVALID_HANDLE_VALUE )
         {
-            qDebug() << "Error 120: Cannot create " CH_PIPE_PATH;
+            qDebug() << "Error 120: Cannot connect"
+                     << pipe_name;
         }
     }
     else
     {
         hPipe = INVALID_HANDLE_VALUE;
-        qDebug() << "Error 121: Pipe " CH_PIPE_PATH
-                    " not found";
+        qDebug() << "Error 121: Pipe "
+                 << pipe_name << " not found";
     }
+
+    return hPipe;
 }
 
-void ReState::sendPipe(const char *data)
+void ReState::sendPipeChess(const char *data)
 {
     DWORD len = strlen(data);
-    if( hPipe==INVALID_HANDLE_VALUE )
+    if( pipe_chess==INVALID_HANDLE_VALUE )
     {
         qDebug() << "Try to reconnect to"
                  << CH_PIPE_PATH;
 
-        connectChessPipe();
-        if( hPipe==INVALID_HANDLE_VALUE )
+        pipe_chess = connectChessPipe(CH_PIPE_PATH);
+        if( pipe_chess==INVALID_HANDLE_VALUE )
         {
             return;
         }
     }
 
     DWORD dwWritten;
-    int success = WriteFile(hPipe, data, len, &dwWritten, NULL);
+    int success = WriteFile(pipe_chess, data, len, &dwWritten, NULL);
     if( !success )
     {
         qDebug() << "Error: NamedPipe writing failed," << GetLastError();
@@ -236,8 +241,40 @@ void ReState::sendPipe(const char *data)
     {
         qDebug() << "Error: Wrong writing length."
                     "Try to revive channel";
-        CloseHandle(hPipe);
-        hPipe = INVALID_HANDLE_VALUE;
-        sendPipe(data);
+        CloseHandle(pipe_chess);
+        pipe_chess = INVALID_HANDLE_VALUE;
+        sendPipeChess(data);
+    }
+}
+
+void ReState::sendPipeMom(const char *data)
+{
+    DWORD len = strlen(data);
+    if( pipe_mom==INVALID_HANDLE_VALUE )
+    {
+        qDebug() << "Try to reconnect to"
+                 << CH_PIPE_MOM;
+
+        pipe_mom = connectChessPipe(CH_PIPE_MOM);
+        if( pipe_mom==INVALID_HANDLE_VALUE )
+        {
+            return;
+        }
+    }
+
+    DWORD dwWritten;
+    int success = WriteFile(pipe_mom, data, len, &dwWritten, NULL);
+    if( !success )
+    {
+        qDebug() << "Error: NamedPipe writing failed," << GetLastError();
+    }
+
+    if( dwWritten!=len )
+    {
+        qDebug() << "Error: Wrong writing length."
+                    "Try to revive channel";
+        CloseHandle(pipe_mom);
+        pipe_mom = INVALID_HANDLE_VALUE;
+        sendPipeChess(data);
     }
 }

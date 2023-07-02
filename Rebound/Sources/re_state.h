@@ -33,14 +33,16 @@ public:
     void enScroll(int dir, int speed);
     bool isEscape(CCommand command);
     void resetState();
-    void sendPipe(const char *data);
+    void sendPipeChess(const char *data);
+    void sendPipeMom(const char *data);
 
 #ifdef _WIN32
-    void connectChessPipe();
+    HANDLE connectChessPipe(const char *pipe_name);
 
     ReApi *api;
     ReHardwareW *hardware;
-    HANDLE hPipe;
+    HANDLE pipe_chess;
+    HANDLE pipe_mom;
 #endif
     int  ui_visible;
     int  i_mode;
