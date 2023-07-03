@@ -19,6 +19,9 @@ set mon=%mydate%
 set mydate=%date:~10,4%
 set yer=%mydate%
 
+rem Remove leading zeros from the zero-extended number
+for /f "tokens=* delims=0" %%a in ("%day%") do set "day=%%a"
+
 reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NoSync
 net stop w32time 
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d 1
