@@ -16,9 +16,10 @@ SOURCES += Sources/main.cpp \
            Sources/re_commands.cpp \
            Sources/re_firefox.cpp \
            Sources/re_firefox_ws.cpp \
+           Sources/re_inject.cpp \
            Sources/re_lua.cpp \
            Sources/re_meta.cpp \
-           Sources/re_meta_go.cpp \
+           Sources/re_meta_fox.cpp \
            Sources/re_meta_oc.cpp \
            Sources/re_meta_sys.cpp \
            Sources/re_mouse.cpp \
@@ -63,11 +64,12 @@ HEADERS += Sources/backend.h \
            Sources/re_config.h \
            Sources/re_firefox.h \
            Sources/re_firefox_ws.h \
+           Sources/re_inject.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
            Sources/re_lua.h \
            Sources/re_meta.h \
-           Sources/re_meta_go.h \
+           Sources/re_meta_fox.h \
            Sources/re_meta_sys.h \
            Sources/re_mouse.h \
            Sources/re_preprocessor.h \

@@ -71,13 +71,13 @@ typedef struct ReWindow
     int  type;
     QString title;
     QString pname;
+    int pid;
 #ifdef _WIN32
     HWND hWnd;
     IAccessible *pAcc;
 #endif
 #ifdef __linux__
-    unsigned long hWnd; //pid
-    int pid;
+    unsigned long hWnd;
     int desktop_id;
 #endif
 }ReWindow;
