@@ -9,6 +9,7 @@
 ReMeta::ReMeta(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
+    fox = new ReMetaFox(state);
 }
 
 ReMeta::~ReMeta()
@@ -197,25 +198,25 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
 void ReMeta::castFoxCmd(int val, CCommand *cmd)
 {
     //////SHOULD GET FIXED WITH THE NEW SYSTEM
-    qDebug() << "GO" << state->app.pname;
+    qDebug() << "FOX" << state->app.pname;
 
     if( state->app.pname==RE_PROC_EDITOR )
     {
-        re_getGoXed(val);
+        fox->castXed(val);
     }
     else if( state->app.pname==RE_PROC_QT ||
              state->app.pname==RE_PROC_VSCODE )
     {
-        re_getGoCode(val, cmd);
+        fox->castCode(val, cmd);
     }
     else if( state->app.pname==RE_PROC_GIT )
     {
-        re_getGoGitKraken(val, cmd);
+        fox->csatGitKraken(val, cmd);
     }
     else if( state->app.pname==RE_PROC_FIREFOX ||
              state->app.pname==RE_PROC_GEKO )
     {
-        re_castGoFirefox(val, cmd);
+        fox->castFirefox(val, cmd);
 
         if( val==KEY_L )
         {
@@ -224,11 +225,11 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     }
     else if( state->app.pname==RE_PROC_EXPLORER )
     {
-        re_getGoNautilus(val, cmd);
+        fox->castNautilus(val, cmd);
     }
     else if( state->app.pname==RE_PROC_ALTIUM )
     {
-        re_getGoAltium(val, cmd);
+        fox->castAltium(val, cmd);
     }
 }
 

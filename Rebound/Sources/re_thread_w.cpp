@@ -407,7 +407,9 @@ void ReThreadW::updateActiveWindow()
     win_active.title = buffer;
     re_getType(&win_active);
 
-    win_active.pname = reGetPName(reGetPid(win_active.hWnd));
+
+    win_active.pid = reGetPid(win_active.hWnd);
+    win_active.pname = reGetPName(win_active.pid);
     thread_data->state->updateApp(win_active);
 
 //    char class_name[128];

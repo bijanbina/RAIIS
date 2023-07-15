@@ -5,7 +5,7 @@
 
 #include "backend.h"
 #include "re_state.h"
-#include "re_meta_go.h"
+#include "re_meta_fox.h"
 #include "re_meta_oc.h"
 #include "re_meta_sys.h"
 #ifdef WIN32
@@ -37,7 +37,8 @@ private:
     void execScrollCmd(int meta, int val);
     void sendChessCmd(QString cmd);
 
-    ReState *state;
+    ReState   *state;
+    ReMetaFox *fox;
 };
 
 

@@ -1,11 +1,17 @@
-#include "re_meta_go.h"
+#include "re_meta_fox.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
 #else
 #include "re_keyboard_l.h"
 #endif
 
-QString re_getGoXed(int val)
+ReMetaFox::ReMetaFox(ReState *st, QObject *parent) : QObject(parent)
+{
+    state = st;
+    injector = new ReInject();
+}
+
+QString ReMetaFox::castXed(int val)
 {
     QString cmd;
 
@@ -28,7 +34,7 @@ QString re_getGoXed(int val)
 }
 
 // Or VsCode
-void re_getGoCode(int val, CCommand *cmd)
+void ReMetaFox::castCode(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT )
     {
@@ -78,7 +84,7 @@ void re_getGoCode(int val, CCommand *cmd)
     }
 }
 
-void re_getGoGitKraken(int val, CCommand *cmd)
+void ReMetaFox::csatGitKraken(int val, CCommand *cmd)
 {
     if( val==KEY_B )
     {
@@ -146,7 +152,7 @@ void re_getGoGitKraken(int val, CCommand *cmd)
     }
 }
 
-void re_castGoFirefox(int val, CCommand *cmd)
+void ReMetaFox::castFirefox(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT ) //tab
     {
@@ -208,7 +214,7 @@ void re_castGoFirefox(int val, CCommand *cmd)
     }
 }
 
-void re_getGoNautilus(int val, CCommand *cmd)
+void ReMetaFox::castNautilus(int val, CCommand *cmd)
 {
     if( val==KEY_BACKSPACE )
     {
@@ -233,7 +239,7 @@ void re_getGoNautilus(int val, CCommand *cmd)
     }
 }
 
-void re_getGoAltium(int val, CCommand *cmd)
+void ReMetaFox::castAltium(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT ) //next layer
     {
@@ -263,6 +269,12 @@ void re_getGoAltium(int val, CCommand *cmd)
         cmd->val3 = 1;
         cmd->type  = RE_COMMAND_MOD;
         cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_I ) //injection
+    {
+        int pid = state->app.pid;
+        qDebug() << ">>>>>>>>>>>>>>>INJA" << pid;
+        injector->inject(pid);
     }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
