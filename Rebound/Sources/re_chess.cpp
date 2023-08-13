@@ -33,7 +33,7 @@ void ReChess::digit(const QString &text)
 void ReChess::dirs(const QString &text) // direction keys
 {
     int val = text.toInt();
-    if( val==VK_ESCAPE || val==KEY_BACKSPACE )
+    if( val==KEY_ESC || val==KEY_BACKSPACE )
     {
         sendChessKey(text);
     }
@@ -187,7 +187,7 @@ void ReChess::setCount(int val)
         re_writeStatus(cmd);
 #else
         QString cmd = "echo ";
-        cmd += QString::number(special_c);
+        cmd += QString::number(val);
         cmd += " > ~/.config/polybar/awesomewm/ben_spex";
         system(cmd.toStdString().c_str());
 #endif

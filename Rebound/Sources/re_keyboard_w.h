@@ -48,6 +48,8 @@
 #define KEY_META      VK_LWIN
 #define KEY_PAGEUP    VK_PRIOR //Page Up
 #define KEY_NEXT      VK_NEXT  //Page Down
+#define KEY_MINUS     VK_SUBTRACT
+#define KEY_KPPLUS    VK_ADD
 
 #define KEY_F1        VK_F1
 #define KEY_F2        VK_F2

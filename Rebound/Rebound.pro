@@ -8,7 +8,6 @@ win32:QT += gamepad
 
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
-           Sources/mm_api.cpp \
            Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
            Sources/re_chess.cpp \
@@ -16,7 +15,6 @@ SOURCES += Sources/main.cpp \
            Sources/re_commands.cpp \
            Sources/re_firefox.cpp \
            Sources/re_firefox_ws.cpp \
-           Sources/re_inject.cpp \
            Sources/re_lua.cpp \
            Sources/re_meta.cpp \
            Sources/re_meta_fox.cpp \
@@ -32,17 +30,19 @@ SOURCES += Sources/main.cpp \
            Sources/re_raxis.cpp \
            Sources/re_bumpers.cpp \
            Sources/re_status_file.cpp \
-           Sources/re_super.cpp \
-           Sources/re_win32_acc.cpp \
-           Sources/re_win32_win.cpp
+           Sources/re_super.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
+                 Sources/mm_api.cpp \
                  Sources/re_api_w.cpp \
+                 Sources/re_admin_win.cpp \
                  Sources/re_channel_w.cpp \
+                 Sources/re_hardware_w.cpp \
+                 Sources/re_inject.cpp \
                  Sources/re_keyboard_w.cpp \
                  Sources/re_thread_w.cpp \
-                 Sources/re_hardware_w.cpp \
-                 Sources/re_admin_win.cpp \
+                 Sources/re_win32_acc.cpp \
+                 Sources/re_win32_win.cpp \
                  Sources/re_win32_virt.cpp \
                  Sources/re_xbox_win32.cpp \
                  Sources/re_xbox_w.cpp
@@ -64,7 +64,6 @@ HEADERS += Sources/backend.h \
            Sources/re_config.h \
            Sources/re_firefox.h \
            Sources/re_firefox_ws.h \
-           Sources/re_inject.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
            Sources/re_lua.h \
@@ -82,18 +81,19 @@ HEADERS += Sources/backend.h \
            Sources/re_bumpers.h \
            Sources/re_state_const.h \
            Sources/re_status_file.h \
-           Sources/re_super.h \
-           Sources/re_win32_acc.h \
-           Sources/re_win32_win.h
+           Sources/re_super.h
 
 win32:HEADERS += Sources/re_api_w.h \
                  Sources/re_app_w.h \
                  Sources/re_admin_win.h \
                  Sources/re_channel_w.h \
+                 Sources/re_hardware_w.h \
+                 Sources/re_inject.h \
                  Sources/re_keyboard_w.cpp \
                  Sources/re_thread_w.h \
                  Sources/re_server.h \
-                 Sources/re_hardware_w.h \
+                 Sources/re_win32_acc.h \
+                 Sources/re_win32_win.h \
                  Sources/re_win32_virt.h \
                  Sources/re_xbox_win32.h \
                  Sources/re_xbox_w.h
@@ -127,7 +127,7 @@ win32:LIBS += -L../../Benjamin/PNN/libs \
               -lDwmapi -lPsapi -lSetupapi \
               -llua54
 
-win32:INCLUDEPATH += ../../Benjamin/PNN/lua
+INCLUDEPATH += ../../Benjamin/PNN/lua
 
 win32:RC_FILE = rebound.rc
 

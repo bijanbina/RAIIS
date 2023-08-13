@@ -2,8 +2,9 @@
 #define MM_API_H
 
 #include <QString>
+#ifdef WIN32
 #include <Windows.h>
-
+#endif
 #define MAX_TITLE_LEN 200
 
 typedef struct MmApplication
@@ -13,12 +14,15 @@ typedef struct MmApplication
     QString exe_path;
     QString working_dir;
     QString win_title;
-    DWORD pid = 0;
     QString pname;
     int workspace;
+#ifdef WIN32
+    DWORD pid = 0;
     HWND hwnd = 0;
+#endif
 }MmApplication;
 
+#ifdef WIN32
 void mm_focus(HWND hwnd);
 long mm_getPid(HWND hWnd);
 HWND mm_getHWND(MmApplication *app);
@@ -31,5 +35,6 @@ void mm_getLinkPathAll(QString path, MmApplication *app);
 HRESULT mm_ResolveIt(LPCSTR lnk_path, MmApplication *app);
 QString mm_getPName(long pid);
 QString mm_getWinTitle(HWND hwnd);
+#endif
 
 #endif // MM_API_H

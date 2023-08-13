@@ -277,7 +277,7 @@ void ReButtons::buttonSelectPressed()
         }
         else
         {
-            state->showSwither(uiSwitcher);
+//            state->showSwitcher(uiSwitcher);
         }
     }
 }

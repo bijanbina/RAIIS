@@ -86,11 +86,4 @@ void lunchExe(QString name)
 
 void ReApi::openApp(int appid)
 {
-    QString link_path;
-
-    if ( appid==RE_WIN_TELEGRAM )
-    {
-        link_path = getLinkPath("Telegram Desktop\\Telegram.lnk");
-//        lunchExe(link_path);
-    }
 }
