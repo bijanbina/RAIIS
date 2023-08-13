@@ -227,10 +227,12 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     {
         fox->castNautilus(val, cmd);
     }
+#ifdef WIN32
     else if( state->app.pname==RE_PROC_ALTIUM )
     {
         fox->castAltium(val, cmd);
     }
+#endif
 }
 
 void ReMeta::castMusicCmd(int val, CCommand *cmd)

@@ -79,7 +79,7 @@ void ReState::goToSleep()
     cmd += "  Sleep  %{A1}%{B- F1-}";
     re_writeStatus(cmd);
 #else
-    writeStatus("Sleep");
+    re_writeStatus("Sleep");
 #endif
 }
 
@@ -93,7 +93,7 @@ void ReState::goToDictate()
     cmd += "  Dictate  %{A1}%{B- F1-}";
     re_writeStatus(cmd);
 #else
-    writeStatus("Dictate");
+    re_writeStatus("Dictate");
 #endif
 }
 
@@ -106,7 +106,7 @@ void ReState::goToDrag()
     cmd += "  Drag  %{A1}%{B- F1-}";
     re_writeStatus(cmd);
 #else
-    writeStatus("Dictate");
+    re_writeStatus("Dictate");
 #endif
 }
 
@@ -189,6 +189,7 @@ bool ReState::isSleep()
     return sleep_state;
 }
 
+#ifdef WIN32
 HANDLE ReState::connectChessPipe(const char *pipe_name)
 {
     // 0: Default Wait Time
@@ -280,3 +281,4 @@ void ReState::sendPipeMom(const char *data)
         sendPipeChess(data);
     }
 }
+#endif

@@ -8,7 +8,9 @@
 ReMetaFox::ReMetaFox(ReState *st, QObject *parent) : QObject(parent)
 {
     state = st;
+#ifdef WIN32
     injector = new ReInject();
+#endif
 }
 
 QString ReMetaFox::castXed(int val)
@@ -243,7 +245,7 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT ) //next layer
     {
-        cmd->val1 = VK_SUBTRACT;
+        cmd->val1 = KEY_MINUS;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
@@ -252,7 +254,7 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->val1 = VK_ADD;
+        cmd->val1 = KEY_KPPLUS;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
@@ -274,7 +276,9 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
     {
         int pid = state->app.pid;
         qDebug() << ">>>>>>>>>>>>>>>INJA" << pid;
+#ifdef WIN32
         injector->inject(pid);
+#endif
     }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab

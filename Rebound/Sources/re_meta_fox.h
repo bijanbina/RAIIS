@@ -6,8 +6,9 @@
 
 #include "backend.h"
 #include "re_state.h"
+#ifdef WIN32
 #include "re_inject.h"
-
+#endif
 
 class ReMetaFox : public QObject
 {
@@ -23,7 +24,9 @@ public:
 
 private:
     ReState  *state;
+#ifdef WIN32
     ReInject *injector;
+#endif
 };
 
 #endif // RE_META_FOX_H

@@ -9,6 +9,7 @@
 
 void re_getSysEnd(ReState *st)
 {
+#ifdef WIN32
     int x = 0;
     int y = 30;
     int w = 1920;
@@ -21,11 +22,11 @@ void re_getSysEnd(ReState *st)
     arg += QString::number(w) + ",";
     arg += QString::number(h) + ");window.location='";
     arg += url + "';</script></body></html>\"";
-
     mm_launchLnk("Google Chrome",
                  arg);
     QThread::msleep(3000);
     st->goToDictate();
     SetCursorPos(1450, 280);
     re_mouseKey(1);
+#endif
 }

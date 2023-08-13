@@ -16,6 +16,8 @@
 #include "re_app_l.h"
 #endif
 
+#define KEY_META    KEY_LEFTMETA
+
 class ReSuper : public QObject
 {
     Q_OBJECT
@@ -46,8 +48,8 @@ private:
 
 #ifdef WIN32
     void recordTelegram();
-    ReKeyEmulator key;
 #endif
+    ReKeyEmulator key;
 };
 
 #endif //RE_SUPER_H

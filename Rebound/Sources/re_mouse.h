@@ -2,8 +2,11 @@
 #define RE_MOUSE_H
 
 #include <stdio.h>
-#include <Windows.h>
 #include <QVector>
+
+#ifdef WIN32
+#include <Windows.h>
+#endif
 
 void re_mouseKey(int btn);
 void re_mouseMoveR(int x, int y);

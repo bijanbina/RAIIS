@@ -114,9 +114,9 @@ void ReSuper::getMetaCmd(CCommand *ret)
         system("./Scripts/telegram_voice.sh");
 #endif
     }
+#ifdef WIN32
     else if( state->app.pname==RE_PROC_ALTIUM )
     {
-#ifdef WIN32
         ret->mod_list.append(KEY_LEFTCTRL);
         ret->val1 = KEY_F4;
 
@@ -124,8 +124,8 @@ void ReSuper::getMetaCmd(CCommand *ret)
         ret->val3 = 1;
         ret->type  = RE_COMMAND_MOD;
         ret->state = RE_CSTATE_0;
-#endif
     }
+#endif
 }
 
 void ReSuper::getCopyCmd(CCommand *ret)
@@ -178,7 +178,15 @@ void ReSuper::getCamelCmd(CCommand *ret)
 
 void ReSuper::getSelectCmd(CCommand *ret)
 {
-    if( state->app.pname==RE_PROC_ALTIUM )
+    if( state->app.pname==RE_PROC_FIREFOX )
+    {
+        ret->val2 = 1;
+        ret->val3 = 1;
+        ret->val1 = KEY_F7;
+        ret->type = RE_COMMAND_DIRS;
+    }
+#ifdef WIN32
+    else if( state->app.pname==RE_PROC_ALTIUM )
     {
         if( state->drag_state )
         {
@@ -193,16 +201,10 @@ void ReSuper::getSelectCmd(CCommand *ret)
         }
         makeNull(ret);
     }
-    else if( state->app.pname==RE_PROC_FIREFOX )
-    {
-        ret->val2 = 1;
-        ret->val3 = 1;
-        ret->val1 = KEY_F7;
-        ret->type = RE_COMMAND_DIRS;
-    }
+#endif
     else
     {
-        key.sendKey(VK_END);
+        key.sendKey(KEY_END);
         ret->val2 = 1;
         ret->val3 = 1;
         ret->type  = RE_COMMAND_MOD;
@@ -210,7 +212,7 @@ void ReSuper::getSelectCmd(CCommand *ret)
 
         ret->mod_list.append(KEY_LEFTSHIFT);
 
-        ret->val1 = VK_HOME;
+        ret->val1 = KEY_HOME;
         qDebug() << "select";
     }
 }
