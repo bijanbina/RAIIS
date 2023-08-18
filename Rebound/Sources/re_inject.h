@@ -5,7 +5,7 @@
 #include <Windows.h>
 
 //#define INJ_DLL_ADDRESS "D:\\Work\\bijan\\Benjamin\\PNN\\sag\\Sag.dll"
-#define INJ_DLL_ADDRESS "Benjamin\\PNN\\sag\\Sag.dll"
+#define INJ_DLL_ADDRESS "Benjamin/PNN/sag/debug/Sag.dll"
 
 class ReInject : public QObject
 {

@@ -37,6 +37,7 @@ private:
 
     void execCommand(CCommand command);
     void wakeDictate();
+    void wakeRecord();
     void wakeRemote();
 
     bool isWakeUp(CCommand command);

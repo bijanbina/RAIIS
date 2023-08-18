@@ -79,11 +79,18 @@ void ReCaptain::execute(QVector<CCommand> commands)
                     {
                         wakeDictate();
                     }
-                    state->wakeUp();
-                    execCommand(commands[i]);
-                    commands.clear();
-                    qDebug() << "Wake Up";
-                    return;
+                    else if( state->record_state )
+                    {
+                        wakeRecord();
+                    }
+                    else
+                    {
+                        state->wakeUp();
+                        execCommand(commands[i]);
+                        commands.clear();
+                        qDebug() << "Wake Up";
+                        return;
+                    }
                 }
             }
         }
@@ -234,13 +241,13 @@ void ReCaptain::wakeDictate()
 {
     re_mouseKey(1);
     state->dictate_state = 0;
-    QThread::msleep(500); //little tweak
+    QThread::msleep(500);
 
     // remove super+num
     key->pressKey(KEY_LEFTCTRL);
     key->pressKey(KEY_LEFTSHIFT);
     key->sendKey(KEY_LEFT);
-    QThread::msleep(5); //little tweak
+    QThread::msleep(10); //little tweak
     key->sendKey(KEY_LEFT);
     key->releaseKey(KEY_LEFTSHIFT);
     key->releaseKey(KEY_LEFTCTRL);
@@ -254,23 +261,34 @@ void ReCaptain::wakeDictate()
     key->pressKey(KEY_LEFTCTRL);
     key->sendKey(KEY_A);
     key->releaseKey(KEY_LEFTCTRL);
+    QThread::msleep(500);
 
     // copy
     key->pressKey(KEY_LEFTCTRL);
     key->sendKey(KEY_C);
     key->releaseKey(KEY_LEFTCTRL);
-    QThread::msleep(50);
+    QThread::msleep(1000);
 
     // quit
     key->pressKey(KEY_META);
     key->sendKey(KEY_Q);
     key->releaseKey(KEY_META);
-    QThread::msleep(500);
+    QThread::msleep(200);
 
     // paste
     key->pressKey(KEY_LEFTCTRL);
     key->sendKey(KEY_V);
     key->releaseKey(KEY_LEFTCTRL);
+}
+
+void ReCaptain::wakeRecord()
+{
+    state->record_state = 0;
+    QThread::msleep(500);
+
+    re_mouseMoveW(30, 30);
+    QThread::msleep(100);
+    re_mouseKey(1);
 }
 
 void ReCaptain::wakeRemote()

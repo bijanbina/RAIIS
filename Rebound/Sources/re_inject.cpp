@@ -69,27 +69,27 @@ void ReInject::inject(int pid)
         return;
     }
 
-    LPTHREAD_START_ROUTINE fl_addr = (LPTHREAD_START_ROUTINE)
-            GetProcAddress(ker_h, "FreeLibrary");
-    HANDLE Free_thread = CreateRemoteThread(process_h, NULL, NULL,
-        fl_addr, (LPVOID)dll_handle, NULL, NULL);
-    WaitForSingleObject(Free_thread, INFINITE);
-    qDebug() << "KKKKKKKKKKKK" << dll_handle << (int *)fl_addr << Free_thread;
+//    LPTHREAD_START_ROUTINE fl_addr = (LPTHREAD_START_ROUTINE)
+//            GetProcAddress(ker_h, "FreeLibrary");
+//    HANDLE Free_thread = CreateRemoteThread(process_h, NULL, NULL,
+//        fl_addr, (LPVOID)dll_handle, NULL, NULL);
+//    WaitForSingleObject(Free_thread, INFINITE);
+//    qDebug() << "KKKKKKKKKKKK" << dll_handle << (int *)fl_addr << Free_thread;
 }
 
 QString ReInject::getDllPath()
 {
     QString dll_path = QDir::currentPath();
-    qDebug() << "getDllPath 1" << dll_path;
+//    qDebug() << "getDllPath 1" << dll_path;
     QStringList dll_path_split = dll_path.split("/", Qt::SkipEmptyParts);
     dll_path_split.removeLast(); // rebound
     dll_path_split.removeLast(); // raiis
     dll_path = dll_path_split.join("/");
-    qDebug() << "getDllPath 2" << dll_path;
+//    qDebug() << "getDllPath 2" << dll_path;
     dll_path += QDir::separator();
     dll_path += INJ_DLL_ADDRESS;
     dll_path.replace("/", "\\");
-    qDebug() << "getDllPath 3" << dll_path;
+//    qDebug() << "getDllPath 3" << dll_path;
     return  dll_path;
 }
 
@@ -118,7 +118,7 @@ HANDLE ReInject::getDllHandle(int pid, QString path)
     {
         QString module_name = QString::fromWCharArray(me.szModule);
         QString dll_path = QString::fromWCharArray(me.szExePath);
-        qDebug() << "==)) " << dll_path;
+//        qDebug() << "==)) " << dll_path;
         if( path==dll_path )
         {
             return handle;

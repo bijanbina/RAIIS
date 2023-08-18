@@ -24,11 +24,12 @@ typedef struct MmApplication
 
 #ifdef WIN32
 void mm_focus(HWND hwnd);
+void mm_focus(MmApplication app);
 long mm_getPid(HWND hWnd);
 HWND mm_getHWND(MmApplication *app);
 void mm_launchApp(MmApplication *app, QString arg="");
 void mm_launchScript(QString path, QString arg="");
-void mm_launchLnk(QString app_name, QString arg="");
+MmApplication mm_launchLnk(QString app_name, QString arg="");
 void mm_getLinkPath(QString path, MmApplication *app);
 void mm_getLinkPathUser(QString path, MmApplication *app);
 void mm_getLinkPathAll(QString path, MmApplication *app);

@@ -158,7 +158,7 @@ HRESULT mm_ResolveIt(LPCSTR lnk_path, MmApplication *app)
     return hr;
 }
 
-void mm_launchLnk(QString app_name, QString arg)
+MmApplication mm_launchLnk(QString app_name, QString arg)
 {
     app_name += ".lnk";
     MmApplication app;
@@ -168,16 +168,7 @@ void mm_launchLnk(QString app_name, QString arg)
 
     mm_launchApp(&app, arg);
 
-    app.hwnd = mm_getHWND(&app);
-    while( app.hwnd==NULL )
-    {
-        qDebug() << "hwnd" << app.hwnd
-                 << "exe_name" << app.exe_name
-                 << "exe_path" << app.exe_path;
-        QThread::msleep(200);
-        app.hwnd = mm_getHWND(&app);
-    }
-    mm_focus(app.hwnd);
+    return app;
 }
 
 void mm_launchApp(MmApplication *app, QString arg)
@@ -255,6 +246,21 @@ void mm_focus(HWND hwnd)
     }
 
     AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
+}
+
+void mm_focus(MmApplication app)
+{
+//    qDebug() << "app tit" << app.win_title;
+    app.hwnd = mm_getHWND(&app);
+    while( app.hwnd==NULL )
+    {
+//        qDebug() << "hwnd" << app.hwnd
+//                 << "exe_name" << app.exe_name
+//                 << "exe_path" << app.exe_path;
+        QThread::msleep(200);
+        app.hwnd = mm_getHWND(&app);
+    }
+    mm_focus(app.hwnd);
 }
 
 HWND mm_getHWND(MmApplication *app)
