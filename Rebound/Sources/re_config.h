@@ -17,9 +17,13 @@
 
 #define RE_CLIENT 0
 #define RE_SERVER 1
+//#define RE_REMOTE
 
 #define RE_PORT      7610
 #define RE_IP        "192.168.88.25"
+#define RE_CPORT0    5000
+#define RE_CPORT1    5001
+#define RE_CIP       "5.255.113.20"
 
 //#define RE_TEST_EN
 //#define RE_DUBUG_TCP

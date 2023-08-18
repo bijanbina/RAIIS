@@ -97,6 +97,20 @@ void ReState::goToDictate()
 #endif
 }
 
+void ReState::goToRemote()
+{
+    remote_state = 1;
+    sleep_state = 0;
+#ifdef WIN32
+    QString cmd;
+    cmd = "%{B#006700}%{F#ffffff}%{A1:$HS_CMD:}";
+    cmd += "  Remote  %{A1}%{B- F1-}";
+    re_writeStatus(cmd);
+#else
+    writeStatus("Remote");
+#endif
+}
+
 void ReState::goToDrag()
 {
     drag_state = 1;

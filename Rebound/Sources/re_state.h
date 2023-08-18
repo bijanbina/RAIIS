@@ -27,6 +27,7 @@ public:
 
     void goToSleep();
     void goToDictate();
+    void goToRemote();
     void goToDrag();
     void wakeUp();
     bool isSleep();
@@ -48,6 +49,7 @@ public:
     int  i_mode;
     bool sleep_state = 0;
     bool dictate_state = 0;
+    bool remote_state = 0;
     bool drag_state = 0;
     int  ch_count  = 0; //Chess Count
     int  utube_mode  = 0;
