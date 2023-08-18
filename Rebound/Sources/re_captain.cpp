@@ -272,3 +272,8 @@ void ReCaptain::wakeDictate()
     key->sendKey(KEY_V);
     key->releaseKey(KEY_LEFTCTRL);
 }
+
+void ReCaptain::wakeRemote()
+{
+    state->remote_state = 0;
+}

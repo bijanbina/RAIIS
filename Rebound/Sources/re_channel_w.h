@@ -19,6 +19,8 @@ public:
     ReChannelW(ReCaptain *cpt, QObject *parent = NULL);
     ~ReChannelW();
 
+    void initTCP();
+
 public slots:
     void ListenPipe();
 
@@ -34,12 +36,21 @@ signals:
     void debug(QString args);
     void modifier(QString args);
 
+private slots:
+    void connected();
+    void displayError(QAbstractSocket::SocketError socketError);
+    void disconnected();
+    void readyRead();
+
 private:
     void createPipe();
     void processCommand(QString k_type, QString k_code);
     void processLine(QString line);
+    void sendRemote(QString k_type, QString k_code);
 
     RePreProcessor *pre;
+    ReCaptain      *captain;
+    QTcpSocket      tcpClient;
     HANDLE hPipe;
 };
 

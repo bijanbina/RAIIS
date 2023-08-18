@@ -3,6 +3,8 @@
 
 ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent) : QObject(parent)
 {
+    captain = cpt;
+
     pre = new RePreProcessor(cpt);
     createPipe();
 
@@ -16,11 +18,26 @@ ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent) : QObject(parent)
     connect(this, SIGNAL(digit(QString)), pre, SLOT(digit(QString)));
     connect(this, SIGNAL(debug(QString)), pre, SLOT(debug(QString)));
     connect(this, SIGNAL(modifier(QString)), pre, SLOT(modifier(QString)));
+
+    initTCP();
 }
 
 ReChannelW::~ReChannelW()
 {
-    ;
+    tcpClient.close();
+}
+
+void ReChannelW::initTCP()
+{
+    connect(&tcpClient, SIGNAL(connected()), this, SLOT(connected()));
+    connect(&tcpClient, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    connect(&tcpClient, SIGNAL(error(QAbstractSocket::SocketError)),
+            this, SLOT(displayError(QAbstractSocket::SocketError)));
+#ifdef RE_REMOTE
+    tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT1 );
+#else
+    tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT0 );
+#endif
 }
 
 void ReChannelW::ListenPipe()
@@ -103,7 +120,11 @@ void ReChannelW::createPipe()
 
 void ReChannelW::processCommand(QString k_type, QString k_code)
 {
-    if( k_type=="dirs" )
+    if( captain->state->remote_state )
+    {
+        sendRemote(k_type, k_code);
+    }
+    else if( k_type=="dirs" )
     {
         emit dirs(k_code);
     }
@@ -143,4 +164,63 @@ void ReChannelW::processCommand(QString k_type, QString k_code)
     {
         emit modifier(k_code);
     }
+}
+
+void ReChannelW::sendRemote(QString k_type, QString k_code)
+{
+    if(!tcpClient.isOpen())
+    {
+        qDebug() << "Riidi, connecting to: " << RE_CIP << RE_CPORT0;
+        tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT0 );
+    }
+
+    QString data = k_type;
+    data += "::" + k_code + "\n";
+
+    tcpClient.write(data.toStdString().c_str());
+}
+
+void ReChannelW::displayError(QAbstractSocket::SocketError socketError)
+{
+    if( socketError==QTcpSocket::RemoteHostClosedError )
+    {
+        return;
+    }
+
+    qDebug() << "Network error:" << tcpClient.errorString();
+    tcpClient.close();
+}
+
+void ReChannelW::connected()
+{
+    qDebug() << "Client: Connected";
+    tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
+}
+
+void ReChannelW::disconnected()
+{
+    tcpClient.close();
+    qDebug() << "Client: Disconnected";
+}
+
+void ReChannelW::readyRead()
+{
+   QString read_data = tcpClient.readAll();
+   if( read_data.size()==0 )
+   {
+       return;
+   }
+
+   QStringList data_split = read_data.trimmed().split("::",
+                                        Qt::SkipEmptyParts);
+   qDebug() << "readyRead" << data_split;
+   if( data_split.size()!=2 )
+   {
+       qDebug() << "SHIR TUT" << data_split.size();
+       return;
+   }
+   QString k_type = data_split[0];
+   QString k_code = data_split[1];
+   processCommand(k_type, k_code);
 }
