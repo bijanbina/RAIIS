@@ -8,6 +8,7 @@ win32:QT += gamepad
 
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
+           Sources/ch_monitor.cpp \
            Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
            Sources/re_chess.cpp \
@@ -18,6 +19,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_lua.cpp \
            Sources/re_meta.cpp \
            Sources/re_meta_fox.cpp \
+           Sources/re_meta_mos.cpp \
            Sources/re_meta_oc.cpp \
            Sources/re_meta_sys.cpp \
            Sources/re_mouse.cpp \
@@ -56,7 +58,7 @@ linux:SOURCES += \
                  Sources/re_keyboard_l.cpp
 
 HEADERS += Sources/backend.h \
-           Sources/mm_api.h \
+           Sources/ch_monitor.h \
            Sources/re_captain.h \
            Sources/re_chapar.h \
            Sources/re_chess.h \
@@ -69,6 +71,7 @@ HEADERS += Sources/backend.h \
            Sources/re_lua.h \
            Sources/re_meta.h \
            Sources/re_meta_fox.h \
+           Sources/re_meta_mos.h \
            Sources/re_meta_sys.h \
            Sources/re_mouse.h \
            Sources/re_preprocessor.h \
@@ -84,6 +87,7 @@ HEADERS += Sources/backend.h \
            Sources/re_super.h
 
 win32:HEADERS += Sources/re_api_w.h \
+                 Sources/mm_api.h \
                  Sources/re_app_w.h \
                  Sources/re_admin_win.h \
                  Sources/re_channel_w.h \
