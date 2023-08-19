@@ -1,5 +1,5 @@
-#ifndef CHANNEL_H_W
-#define CHANNEL_H_W
+#ifndef RE_CHANNEL_W_H
+#define RE_CHANNEL_W_H
 
 #include <QObject>
 #include <QtCore/QObject>
@@ -19,10 +19,9 @@ public:
     ReChannelW(ReCaptain *cpt, QObject *parent = NULL);
     ~ReChannelW();
 
-    void initTCP();
-
 public slots:
     void ListenPipe();
+    void processCommand(QString k_type, QString k_code);
 
 signals:
     void dirs(const QString &args);
@@ -35,23 +34,15 @@ signals:
     void digit(QString args);
     void debug(QString args);
     void modifier(QString args);
-
-private slots:
-    void connected();
-    void displayError(QAbstractSocket::SocketError socketError);
-    void disconnected();
-    void readyRead();
+    void sendRemote(QString k_type, QString k_code);
 
 private:
     void createPipe();
-    void processCommand(QString k_type, QString k_code);
     void processLine(QString line);
-    void sendRemote(QString k_type, QString k_code);
 
     RePreProcessor *pre;
     ReCaptain      *captain;
-    QTcpSocket      tcpClient;
     HANDLE hPipe;
 };
 
-#endif // CHANNEL_H_W
+#endif // RE_CHANNEL_W_H

@@ -30,6 +30,7 @@
 #include "re_laxis.h"
 #include "re_raxis.h"
 #include "re_state.h"
+#include "re_remote.h"
 
 typedef struct RePage
 {
@@ -87,6 +88,7 @@ private:
     ReRAxis      *raxis;
 
     ReCaptain *captain;
+    ReRemote  *remote;
     ReApi     *api;
 #ifdef _WIN32
     ReXboxW *controller;

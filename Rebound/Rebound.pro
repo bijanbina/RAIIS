@@ -25,6 +25,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_mouse.cpp \
            Sources/re_preprocessor.cpp \
            Sources/re_qt.cpp \
+           Sources/re_remote.cpp \
            Sources/re_state.cpp \
            Sources/re_buttons.cpp \
            Sources/re_directions.cpp \
@@ -76,6 +77,7 @@ HEADERS += Sources/backend.h \
            Sources/re_mouse.h \
            Sources/re_preprocessor.h \
            Sources/re_qt.h \
+           Sources/re_remote.h \
            Sources/re_state.h \
            Sources/re_buttons.h \
            Sources/re_directions.h \
