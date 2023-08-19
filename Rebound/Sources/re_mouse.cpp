@@ -76,8 +76,8 @@ void re_mouseMoveW(int x_offset, int y_offset)
     RECT active_rect;
     HWND active_win = GetForegroundWindow();
     GetWindowRect(active_win, &active_rect);
-    int x = active_rect.right + x_offset;
-    int y = active_rect.bottom + y_offset;
+    int x = active_rect.right - x_offset;
+    int y = active_rect.bottom - y_offset;
     SetCursorPos(x, y);
 #endif
 }

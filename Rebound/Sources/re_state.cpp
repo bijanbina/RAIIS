@@ -8,9 +8,10 @@ ReState::ReState(QObject *parent) : QObject(parent)
 
 #ifdef _WIN32
     api = new ReApi;
-    hardware = new ReHardwareW;
+    hardware   = new ReHardwareW;
     pipe_chess = connectChessPipe(CH_PIPE_PATH);
     pipe_mom   = connectChessPipe(CH_PIPE_MOM);
+    mon        = new ChMonitor;
 #endif
 
     readStatusFile();
@@ -108,6 +109,20 @@ void ReState::goToRemote()
     re_writeStatus(cmd);
 #else
     writeStatus("Remote");
+#endif
+}
+
+void ReState::goToRecord()
+{
+    sleep_state = 1;
+    record_state = 1;
+#ifdef WIN32
+    QString cmd;
+    cmd = "%{B#aa1100}%{F#ffffff}%{A1:$HS_CMD:}";
+    cmd += "  Record  %{A1}%{B- F1-}";
+    re_writeStatus(cmd);
+#else
+    writeStatus("Record");
 #endif
 }
 

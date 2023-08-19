@@ -22,8 +22,10 @@ void re_getSysEnd(ReState *st)
     arg += QString::number(w) + ",";
     arg += QString::number(h) + ");window.location='";
     arg += url + "';</script></body></html>\"";
-    mm_launchLnk("Google Chrome",
-                 arg);
+
+    MmApplication app = mm_launchLnk("Google Chrome", arg);
+    app.win_title = "Speechnotes";
+    mm_focus(app);
     QThread::msleep(3000);
     st->goToDictate();
     SetCursorPos(1450, 280);

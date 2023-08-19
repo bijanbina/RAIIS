@@ -14,9 +14,10 @@
 #else
 #include "re_keyboard_l.h"
 #include "re_app_l.h"
-#endif
 
 #define KEY_META    KEY_LEFTMETA
+#endif
+
 
 class ReSuper : public QObject
 {

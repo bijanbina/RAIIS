@@ -75,12 +75,15 @@ void re_AddHwnd(HWND hwnd, ReThreadW *thread_w)
                 re_InsertWindow(thread_w, current_win);
 
                 if( current_win.pname=="Chess" ||
-                    current_win.title=="Qt Creator" )
+                    current_win.pname=="rustdesk" ||
+                    current_win.title=="Qt Creator" ||
+                    current_win.title=="AnyDesk" ||
+                    current_win.pname=="NLClientApp" )
                 {
                     return;
                 }
 //                qDebug() << "process" << current_win.pname
-//                         << buffer;
+//                         << current_win.title;
                 if( thread_w->win_active.hWnd==hwnd )
                 {
                     re_setWindowOpacity(hwnd, 255);

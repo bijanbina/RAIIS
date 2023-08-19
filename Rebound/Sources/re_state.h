@@ -1,4 +1,4 @@
-﻿#ifndef RE_STATE_H
+#ifndef RE_STATE_H
 #define RE_STATE_H
 
 #ifdef __linux__
@@ -11,6 +11,7 @@
 #include "backend.h"
 #include "re_firefox.h"
 #include "re_commands.h"
+#include "ch_monitor.h"
 #include "re_status_file.h"
 
 class ReState : public QObject
@@ -27,6 +28,7 @@ public:
 
     void goToSleep();
     void goToDictate();
+    void goToRecord();
     void goToRemote();
     void goToDrag();
     void wakeUp();
@@ -49,6 +51,7 @@ public:
     int  i_mode;
     bool sleep_state = 0;
     bool dictate_state = 0;
+    bool record_state = 0;
     bool remote_state = 0;
     bool drag_state = 0;
     int  ch_count  = 0; //Chess Count
@@ -56,6 +59,7 @@ public:
     ReWindow app; //Active Window
     CCommand last_cmd;
     ReFirefox *fl;
+    ChMonitor *mon;
 
 signals:
     void updateMode();
