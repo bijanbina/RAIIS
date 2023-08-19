@@ -9,7 +9,8 @@
 ReMeta::ReMeta(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
-    fox = new ReMetaFox(state);
+    fox   = new ReMetaFox(state);
+    mouse = new ReMetaMos(state);
 }
 
 ReMeta::~ReMeta()
@@ -123,6 +124,17 @@ void ReMeta::castMouseCmd(int val, CCommand *cmd)
     else if( val==KEY_DOWN )
     {
         re_mouseKey(5);
+    }
+    else if( val==KEY_P ||
+             val==KEY_S ||
+             val==KEY_L ||
+             val==KEY_R )
+    {
+        mouse->castMonitor(val);
+    }
+    else if( val==KEY_1 )
+    {
+        mouse->castMonitor(val);
     }
 #ifndef WIN32
     else if( val==KEY_F ) //focus
@@ -337,9 +349,21 @@ void ReMeta::castPageCmd(int val, CCommand *cmd)
         if( val==KEY_DOWN ||
             val==KEY_UP )
         {
-            cmd->val1  = KEY_DOWN;
+            cmd->val1  = val;
             cmd->val2  = 30; //press count
             cmd->type  = RE_COMMAND_DIRS;
+            cmd->state = RE_CSTATE_0;
+        }
+        if( val==KEY_RIGHT ||
+            val==KEY_LEFT )
+        {
+            cmd->mod_list.append(KEY_LEFTALT);
+            cmd->mod_list.append(KEY_LEFTSHIFT);
+            cmd->val1 = KEY_RIGHT;
+
+            cmd->val2 = 1;
+            cmd->val3 = 1;
+            cmd->type  = RE_COMMAND_MOD;
             cmd->state = RE_CSTATE_0;
         }
     }

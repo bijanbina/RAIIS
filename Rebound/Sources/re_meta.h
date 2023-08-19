@@ -8,13 +8,13 @@
 #include "re_meta_fox.h"
 #include "re_meta_oc.h"
 #include "re_meta_sys.h"
+#include "re_meta_mos.h"
 #ifdef WIN32
 #include <windows.h>
 #include "re_app_w.h"
 #else
 #include "re_app_l.h"
 #endif
-#include "re_mouse.h"
 
 class ReMeta : public QObject
 {
@@ -39,6 +39,7 @@ private:
 
     ReState   *state;
     ReMetaFox *fox;
+    ReMetaMos *mouse;
 };
 
 
