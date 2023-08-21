@@ -16,7 +16,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     laxis = new ReLAxis(ui, state);
     raxis = new ReRAxis(ui, state);
     captain = new ReCaptain(state);
-    remote = new ReRemote;
 
 #ifdef WIN32
     thread_data = new threadStruct;
@@ -32,10 +31,13 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
 
     channel = new ReChannelW(captain);
+    remote = new ReRemote(channel->pre);
     channel_thread = new QThread();
     channel->moveToThread(channel_thread);
 
     connect(this, SIGNAL(startChannel()), channel, SLOT(ListenPipe()));
+    connect(channel, SIGNAL(sendRemote(QString, QString)),
+            remote, SLOT(send(QString, QString)));
     channel_thread->start();
 
     emit startChannel();
@@ -84,11 +86,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     connect(state, SIGNAL(updateMode()), this, SLOT(updateMode()));
 
     connect(uiSwitcher, SIGNAL(selectWindow(int)), this, SLOT(switchWindow(int)));
-
-    connect(channel, SIGNAL(sendRemote(QString, QString)),
-            remote, SLOT(send(QString, QString)));
-    connect(remote, SIGNAL(process(QString, QString)),
-            channel, SLOT(processCommand(QString, QString)));
 }
 
 QString ReChapar::getShortTitle(int index)

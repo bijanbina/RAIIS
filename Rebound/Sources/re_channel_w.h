@@ -19,6 +19,8 @@ public:
     ReChannelW(ReCaptain *cpt, QObject *parent = NULL);
     ~ReChannelW();
 
+    RePreProcessor *pre;
+
 public slots:
     void ListenPipe();
     void processCommand(QString k_type, QString k_code);
@@ -40,7 +42,6 @@ private:
     void createPipe();
     void processLine(QString line);
 
-    RePreProcessor *pre;
     ReCaptain      *captain;
     HANDLE hPipe;
 };

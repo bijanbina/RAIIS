@@ -6,19 +6,29 @@
 #include <QHostAddress>
 
 #include "backend.h"
+#include "re_preprocessor.h"
 
 class ReRemote : public QObject
 {
     Q_OBJECT
 public:
-    ReRemote(QObject *parent = NULL);
+    ReRemote(RePreProcessor *pre, QObject *parent = NULL);
     ~ReRemote();
 
 public slots:
     void send(QString k_type, QString k_code);
 
 signals:
-    void process(QString k_type, QString k_code);
+    void dirs(const QString &args);
+    void nato(QString args);
+    void meta(QString args);
+    void apps(QString args);
+    void spex(QString args);
+    void type(QString args);
+    void super(QString args);
+    void digit(QString args);
+    void debug(QString args);
+    void modifier(QString args);
 
 private slots:
     void connected();
@@ -27,6 +37,8 @@ private slots:
     void readyRead();
 
 private:
+    void processCommand(QString k_type, QString k_code);
+
     QTcpSocket tcpClient;
 };
 
