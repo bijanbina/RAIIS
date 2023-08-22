@@ -2,6 +2,7 @@
 #include <QWindow>
 #include <QDebug>
 
+#ifdef WIN32
 static BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdc, LPRECT lprcMonitor, LPARAM pData)
 {
     ChMonitor *mon = (ChMonitor *)pData;
@@ -35,10 +36,13 @@ static BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdc, LPRECT lprcMoni
 
     return TRUE;
 }
+#endif
 
 ChMonitor::ChMonitor(QObject *parent) : QObject(parent)
 {
+#ifdef WIN32
     EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, (LPARAM)this);
+#endif
 }
 
 ChMonitor::~ChMonitor()

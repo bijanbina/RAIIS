@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     //check if app should start in server
     //or client mode
 
-    int isNative = 0;
+    int isNative = 1;
     if ( argc>1 )
     {
         QString argv_1 = argv[1]; bool ok;

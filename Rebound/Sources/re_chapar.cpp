@@ -31,13 +31,10 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     connect(controller, SIGNAL(requstSuspend()), this, SLOT(requstSuspend()));
 
     channel = new ReChannelW(captain);
-    remote = new ReRemote(channel->pre);
     channel_thread = new QThread();
     channel->moveToThread(channel_thread);
 
     connect(this, SIGNAL(startChannel()), channel, SLOT(ListenPipe()));
-    connect(channel, SIGNAL(sendRemote(QString, QString)),
-            remote, SLOT(send(QString, QString)));
     channel_thread->start();
 
     emit startChannel();
@@ -54,6 +51,9 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     api->setDisplay(disp);
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 #endif
+    remote = new ReRemote(channel->pre);
+    connect(channel, SIGNAL(sendRemote(QString, QString)),
+            remote, SLOT(send(QString, QString)));
 
     connect(controller, SIGNAL(buttonAPressed()), buttons, SLOT(buttonAPressed()));
     connect(controller, SIGNAL(buttonBPressed()), buttons, SLOT(buttonBPressed()));

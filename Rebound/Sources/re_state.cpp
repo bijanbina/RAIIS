@@ -108,7 +108,7 @@ void ReState::goToRemote()
     cmd += "  Remote  %{A1}%{B- F1-}";
     re_writeStatus(cmd);
 #else
-    writeStatus("Remote");
+    re_writeStatus("Remote");
 #endif
 }
 
@@ -122,7 +122,7 @@ void ReState::goToRecord()
     cmd += "  Record  %{A1}%{B- F1-}";
     re_writeStatus(cmd);
 #else
-    writeStatus("Record");
+    re_writeStatus("Record");
 #endif
 }
 

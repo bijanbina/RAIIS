@@ -5,7 +5,9 @@
 #include <QString>
 #include <QVector>
 
+#ifdef WIN32
 #include <Windows.h>
+#endif
 
 typedef struct ChScreen
 {

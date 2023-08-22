@@ -22,7 +22,6 @@ void ReMetaMos::castMonitor(int val)
         x += state->mon->primary.width/2;
         y  = state->mon->primary.y;
         y += state->mon->primary.height/2;
-        SetCursorPos(x, y);
     }
     else if( val==KEY_S ) //Secondary
     {
@@ -45,7 +44,10 @@ void ReMetaMos::castMonitor(int val)
         y  = state->mon->primary.y;
         y += state->mon->primary.height/2;
     }
+#ifdef WIN32
     SetCursorPos(x, y);
+#else
+#endif
 }
 
 // Or VsCode
@@ -258,7 +260,7 @@ void ReMetaMos::castAltium(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT ) //next layer
     {
-        cmd->val1 = VK_SUBTRACT;
+        cmd->val1 = KEY_MINUS;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
@@ -267,7 +269,7 @@ void ReMetaMos::castAltium(int val, CCommand *cmd)
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->val1 = VK_ADD;
+        cmd->val1 = KEY_KPPLUS;
 
         cmd->val2 = 1;
         cmd->val3 = 1;

@@ -11,8 +11,8 @@
 #include "backend.h"
 #include "re_firefox.h"
 #include "re_commands.h"
-#include "ch_monitor.h"
 #include "re_status_file.h"
+#include "ch_monitor.h"
 
 class ReState : public QObject
 {

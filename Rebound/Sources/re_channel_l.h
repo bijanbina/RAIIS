@@ -1,5 +1,5 @@
-#ifndef CHANNEL_H_L
-#define CHANNEL_H_L
+#ifndef RE_CHANNEL_L_H
+#define RE_CHANNEL_L_H
 
 #include <QObject>
 #include <QtCore/QObject>
@@ -18,12 +18,13 @@ public:
     ReChannelL(ReCaptain *cpt, QObject *parent = NULL);
     ~ReChannelL();
 
+    RePreProcessor *pre;
+
+signals:
+    void sendRemote(QString k_type, QString k_code);
+
 private:
     void ConnectDBus();
-
-    RePreProcessor *pre;
 };
 
-
-
-#endif // CHANNEL_H_L
+#endif // RE_CHANNEL_L_H
