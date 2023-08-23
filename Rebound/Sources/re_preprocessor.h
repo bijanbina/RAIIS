@@ -16,6 +16,8 @@ public:
 
     ~RePreProcessor();
 
+    ReCaptain *captain;
+
 public slots:
     void dirs (const QString &arg);
     void nato (const QString &arg);
@@ -33,7 +35,6 @@ private:
     void handleLastRepeatable(int input);
 
     QObject   *root;
-    ReCaptain *captain;
     ReChess   *chess;
     int special_c; //count of special
 

@@ -279,6 +279,8 @@ void ReCaptain::wakeDictate()
     key->pressKey(KEY_LEFTCTRL);
     key->sendKey(KEY_V);
     key->releaseKey(KEY_LEFTCTRL);
+
+    state->wakeUp();
 }
 
 void ReCaptain::wakeRecord()
@@ -289,9 +291,6 @@ void ReCaptain::wakeRecord()
     re_mouseMoveW(30, 30);
     QThread::msleep(100);
     re_mouseKey(1);
-}
 
-void ReCaptain::wakeRemote()
-{
-    state->remote_state = 0;
+    state->wakeUp();
 }

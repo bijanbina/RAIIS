@@ -36,7 +36,7 @@ signals:
     void digit(QString args);
     void debug(QString args);
     void modifier(QString args);
-    void sendRemote(QString k_type, QString k_code);
+    void sendRemote(QString k_code);
 
 private:
     void createPipe();

@@ -106,7 +106,10 @@ void ReChannelW::processCommand(QString k_type, QString k_code)
 {
     if( captain->state->remote_state )
     {
-        emit sendRemote(k_type, k_code);
+        if( k_type=="debug" )
+        {
+            emit sendRemote(k_code);
+        }
     }
     else if( k_type=="dirs" )
     {

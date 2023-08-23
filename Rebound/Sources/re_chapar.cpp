@@ -52,8 +52,8 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 #endif
     remote = new ReRemote(channel->pre);
-    connect(channel, SIGNAL(sendRemote(QString, QString)),
-            remote, SLOT(send(QString, QString)));
+    connect(channel, SIGNAL(sendRemote(QString)),
+            remote, SLOT(send(QString)));
 
     connect(controller, SIGNAL(buttonAPressed()), buttons, SLOT(buttonAPressed()));
     connect(controller, SIGNAL(buttonBPressed()), buttons, SLOT(buttonBPressed()));
