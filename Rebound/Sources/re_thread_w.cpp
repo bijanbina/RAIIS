@@ -415,20 +415,13 @@ void ReThreadW::updateActiveWindow()
     win_active.pname = reGetPName(win_active.pid);
     thread_data->state->updateApp(win_active);
 
-//    char class_name[128];
-//    GetClassNameA(HwndA, class_name, 128);
-//    QString class_a = class_name;
-//    if ( class_a=="CabinetWClass" )
-//    {
-//        HWND parent = GetAncestor(HwndA, GA_PARENT);
-//        HwndA = parent;
-//        char buffer_p[128];
-//        char class_name_p[128];
-//        GetWindowTextA(HwndA, buffer_p, 128);
-//        GetClassNameA(HwndA, class_name_p, 128);
-//        qDebug() << "Active Window" << titleA.length() << titleA << class_name << buffer_p << class_name_p << parent;
-//    }
-
+    if( win_active.pname=="rustdesk" )
+    {
+        if( thread_data->state->remote_state==0 )
+        {
+            thread_data->state->goToRemote();
+        }
+    }
 }
 
 // check if the focus is on start menu or shell window

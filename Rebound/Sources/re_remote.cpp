@@ -5,6 +5,11 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
     state = pre->captain->state;
+    chess = pre->chess;
+
+#ifdef WIN32
+    virt = new ReWin32Virt;
+#endif
 
     connect(&tcpClient, SIGNAL(connected()),
             this, SLOT(connected()));
@@ -49,17 +54,34 @@ ReRemote::~ReRemote()
 void ReRemote::send(QString word)
 {
     qDebug() << "sendRemote" << word;
-    if(!tcpClient.isOpen())
+    if( !tcpClient.isOpen() )
     {
         qDebug() << "Riidi, connecting to: " << RE_CIP << RE_CPORT0;
-        tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT0 );
+        tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT0);
     }
 
+    // handle wakeup word
     if( last_word=="system" && word=="romeo" )
     {
         wakeRemote();
     }
+    else if( last_word=="super")
+    {
+        if( procSuper(word) )
+        {
+            last_word = word;
+            return;
+        }
+    }
+
     last_word = word;
+
+    // handle mouse commands
+    if( procChess(word) )
+    {
+        return;
+    }
+
     QString data;
     data += "::" + word + "\n";
 
@@ -199,4 +221,78 @@ void ReRemote::wakeRemote()
 {
     state->remote_state = 0;
     state->wakeUp();
+}
+
+int ReRemote::procChess(QString word)
+{
+    int val = 0;
+    if( word=="kick" )
+    {
+        val = 104;
+    }
+    else if( word=="comment" )
+    {
+        val = 105;
+    }
+    else if( word=="side" )
+    {
+        val = 108;
+    }
+    else if( word=="double" )
+    {
+        val = 113;
+    }
+    else if( word=="resist" )
+    {
+        val = 111;
+    }
+    else if( word=="drag" )
+    {
+        val = 115;
+    }
+
+    if( val )
+    {
+        chess->showChess(val);
+        return 1;
+    }
+    return 0;
+}
+
+int ReRemote::procSuper(QString word)
+{
+    int val = 0;
+    if( word=="one" )
+    {
+        val = 1;
+    }
+    else if( word=="two" )
+    {
+        val = 2;
+    }
+    else if( word=="three" )
+    {
+        val = 3;
+    }
+    else if( word=="four" )
+    {
+        val = 4;
+    }
+    else if( word=="five" )
+    {
+        val = 5;
+    }
+    else if( word=="six" )
+    {
+        val = 6;
+    }
+
+    if( val )
+    {
+        virt->setDesktop(val-1);
+        virt->setFocus();
+        wakeRemote();
+        return 1;
+    }
+    return 0;
 }

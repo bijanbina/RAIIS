@@ -47,14 +47,18 @@ private slots:
 
 private:
     void processCommand(QString k_type, QString k_code);
+    int  procChess(QString word);
+    int  procSuper(QString word);
     void runLua(QString word);
     void wakeRemote();
 
+    ReState   *state;
+    ReChess   *chess;
+    QString    last_word;
     QTcpSocket tcpClient;
-    QString last_word;
-    ReState     *state;
 #ifdef WIN32
-    lua_State *lst;
+    lua_State   *lst;
+    ReWin32Virt *virt;
 #endif
 };
 
