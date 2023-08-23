@@ -29,9 +29,6 @@ public:
 
     void castCmd(int cmd, CCommand *ret);
 
-#ifdef WIN32
-    ReWin32Virt *virt;
-#endif
 private:
     void getMetaCmd(CCommand *ret);
     void getCopyCmd(CCommand *ret);

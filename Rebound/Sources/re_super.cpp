@@ -4,10 +4,6 @@
 ReSuper::ReSuper(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
-
-#ifdef WIN32
-    virt = new ReWin32Virt;
-#endif
 }
 
 ReSuper::~ReSuper()

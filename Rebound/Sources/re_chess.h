@@ -23,9 +23,10 @@ public:
     void super(const QString &arg, CCommand command); //single shot meta cmd
     void digit(const QString &arg);
 
+    void showChess(int val);
+
 private:
     void sendChessCmd(QString cmd);
-    void showChess(int val);
     void sendChessKey(QString text);
     void resetChess();
     void handleBackspace();

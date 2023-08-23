@@ -5,6 +5,8 @@
 #include <shobjidl.h> // IObjectArray, ObjectArray, IVirtualDesktopManager, VirtualDesktopManager
 #include <strsafe.h> // StringCbPrintf
 #include <QDebug>
+#include <QThread>
+#include "mm_api.h"
 
 ReWin32Virt::ReWin32Virt(QObject *parent): QObject(parent)
 {
@@ -75,6 +77,19 @@ void ReWin32Virt::setDesktop(int id)
 
     qDebug() << "getCurrDesktop()" << updateCurrDesktop();
 }
+
+void ReWin32Virt::setFocus()
+{
+    QThread::msleep(100);
+
+    POINT P;
+    GetCursorPos(&P);
+
+    HWND hwnd = WindowFromPoint(P);
+    mm_focus(hwnd);
+}
+
+
 
 int ReWin32Virt::updateCurrDesktop()
 {

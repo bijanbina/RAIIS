@@ -207,6 +207,11 @@ void ReChess::setCount(int val)
         mod_cmd.type = RE_COMMAND_NULL;
         re_rmSpex();
         resetChess();
+
+        if( captain->state->remote_state )
+        {
+            captain->state->goToRemote();
+        }
     }
 }
 

@@ -104,7 +104,8 @@ void ReChannelW::createPipe()
 
 void ReChannelW::processCommand(QString k_type, QString k_code)
 {
-    if( captain->state->remote_state )
+    if( captain->state->remote_state &&
+        captain->state->ch_count==0 )
     {
         if( k_type=="debug" )
         {

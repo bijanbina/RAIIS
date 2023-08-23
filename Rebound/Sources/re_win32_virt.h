@@ -105,6 +105,7 @@ public:
     ~ReWin32Virt();
 
     void setDesktop(int id);
+    void setFocus();
     int  current_workspace;
 
 private slots:
@@ -116,7 +117,6 @@ private:
     QTimer *timer;
     QVector<GUID> vd_guids;
     IVirtualDesktopManagerInternal* pDesktopManager;
-
 };
 
 #endif // RE_WIN32_VIRT_H

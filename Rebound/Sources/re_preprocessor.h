@@ -17,6 +17,7 @@ public:
     ~RePreProcessor();
 
     ReCaptain *captain;
+    ReChess   *chess;
 
 public slots:
     void dirs (const QString &arg);
@@ -35,7 +36,6 @@ private:
     void handleLastRepeatable(int input);
 
     QObject   *root;
-    ReChess   *chess;
     int special_c; //count of special
 
     QVector<CCommand> cmd_buf;
