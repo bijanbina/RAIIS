@@ -5,6 +5,15 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 
+#ifdef WIN32
+extern "C"
+{
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+}
+#endif
+
 #include "backend.h"
 #include "re_preprocessor.h"
 
@@ -16,7 +25,7 @@ public:
     ~ReRemote();
 
 public slots:
-    void send(QString k_type, QString k_code);
+    void send(QString word);
 
 signals:
     void dirs(const QString &args);
@@ -38,8 +47,15 @@ private slots:
 
 private:
     void processCommand(QString k_type, QString k_code);
+    void runLua(QString word);
+    void wakeRemote();
 
     QTcpSocket tcpClient;
+    QString last_word;
+    ReState     *state;
+#ifdef WIN32
+    lua_State *lst;
+#endif
 };
 
 #endif // RE_REMOTE_H
