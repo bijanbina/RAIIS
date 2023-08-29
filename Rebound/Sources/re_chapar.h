@@ -6,7 +6,7 @@
 
 #ifdef WIN32
     #include "re_xbox_w.h"
-    #include "re_thread_w.h"
+    #include "re_window_w.h"
     #include "re_channel_w.h"
     #ifdef RE_TEST_EN
         #include "re_client.h"
@@ -74,7 +74,6 @@ signals:
 
 private slots:
     void updateMode();
-    void switchWindow(int index);
     void requstSuspend();
 
 private:
@@ -92,9 +91,9 @@ private:
     ReApi     *api;
 #ifdef _WIN32
     ReXboxW *controller;
-    std::thread *api_thread;
-    QTimer *sync_thread_timer;
-    threadStruct *thread_data;
+    ReWindowW *window;
+    QThread   *window_thread;
+
     ReChannelW *channel;
     QThread *channel_thread;
 #else

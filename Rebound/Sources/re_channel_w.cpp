@@ -1,7 +1,8 @@
 #include "re_channel_w.h"
 #include <unistd.h>
 
-ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent) : QObject(parent)
+ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent)
+    : QObject(parent)
 {
     captain = cpt;
 
