@@ -132,6 +132,13 @@ void ReMeta::castMouseCmd(int val, CCommand *cmd)
     {
         mouse->castMonitor(val);
     }
+    else if( val==KEY_U ||
+             val==KEY_D ||
+             val==KEY_G ||
+             val==KEY_H )
+    {
+        mouse->castScroll(val);
+    }
     else if( val==KEY_1 )
     {
         mouse->castMonitor(val);

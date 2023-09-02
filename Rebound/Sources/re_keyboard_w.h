@@ -21,6 +21,8 @@
 #define KEY_D         'D'
 #define KEY_E         'E'
 #define KEY_F         'F'
+#define KEY_G         'G'
+#define KEY_H         'H'
 #define KEY_I         'I'
 #define KEY_L         'L'
 #define KEY_M         'M'
@@ -32,6 +34,7 @@
 #define KEY_T         'T'
 #define KEY_V         'V'
 #define KEY_W         'W'
+#define KEY_U         'U'
 #define KEY_ESC       VK_ESCAPE
 #define KEY_UP        VK_UP
 #define KEY_END       VK_END

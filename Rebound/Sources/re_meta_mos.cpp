@@ -50,6 +50,40 @@ void ReMetaMos::castMonitor(int val)
 #endif
 }
 
+void ReMetaMos::castScroll(int val)
+{
+    int key = 0;
+    int count = 4;
+
+    if( val==KEY_U ) //Up
+    {
+        key = 4;
+    }
+    else if( val==KEY_D ) //Down
+    {
+        key = 5;
+    }
+    else if( val==KEY_H ) //High
+    {
+        key = 4;
+        count = 6;
+    }
+    else if( val==KEY_G ) //Ground
+    {
+        key = 5;
+        count = 6;
+    }
+
+#ifdef WIN32
+    for( int i=0 ; i<count ; i++ )
+    {
+        QThread::msleep(10);
+        re_mouseKey(key);
+    }
+#else
+#endif
+}
+
 // Or VsCode
 void ReMetaMos::castCode(int val, CCommand *cmd)
 {
@@ -101,216 +135,3 @@ void ReMetaMos::castCode(int val, CCommand *cmd)
     }
 }
 
-void ReMetaMos::csatGitKraken(int val, CCommand *cmd)
-{
-    if( val==KEY_B )
-    {
-        system("xdotool type 'BaTool: '");
-    }
-    else if( val==KEY_M )
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->val1 = KEY_M;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_N )
-    {
-        system("xdotool type 'NATO: '"); ///FIXME windows
-    }
-    else if( val==KEY_R )
-    {
-        system("xdotool type 'Rebound-Linux: '");
-    }
-    else if( val==KEY_LEFT ) //tab
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
-        cmd->val1 = KEY_TAB;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_RIGHT )
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->val1 = KEY_TAB;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val>=KEY_1 &&
-             val<=KEY_9 ) //tab
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->val1 = val;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_P ) //push
-    {
-        system("xdotool key ctrl+Enter");
-        QThread::msleep(100); //little tweak
-        system("xdotool key ctrl+p");
-        QThread::msleep(100); //little tweak
-        system("xdotool type push");
-        QThread::msleep(100); //little tweak
-        system("xdotool key Enter");
-    }
-}
-
-void ReMetaMos::castFirefox(int val, CCommand *cmd)
-{
-    if( val==KEY_LEFT ) //tab
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
-        cmd->val1 = KEY_TAB;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_RIGHT )
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->val1 = KEY_TAB;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_F ) //find
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
-        cmd->val1 = KEY_F;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val>=KEY_1 &&
-             val<=KEY_9 ) //tab
-    {
-#ifdef WIN32
-        cmd->mod_list.append(KEY_LEFTCTRL);
-#else
-        cmd->mod_list.append(KEY_LEFTALT);
-#endif
-        cmd->val1 = val;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_L )
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
-        cmd->val1 = KEY_F;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-}
-
-void ReMetaMos::castNautilus(int val, CCommand *cmd)
-{
-    if( val==KEY_BACKSPACE )
-    {
-        cmd->mod_list.append(KEY_LEFTALT);
-        cmd->val1 = KEY_UP;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val>=KEY_1 &&
-             val<=KEY_9 ) //tab
-    {
-        cmd->mod_list.append(KEY_LEFTALT);
-        cmd->val1 = val;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-}
-
-void ReMetaMos::castAltium(int val, CCommand *cmd)
-{
-    if( val==KEY_LEFT ) //next layer
-    {
-        cmd->val1 = KEY_MINUS;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_NATO;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_RIGHT )
-    {
-        cmd->val1 = KEY_KPPLUS;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_NATO;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_F ) //find
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
-        cmd->val1 = KEY_F;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val>=KEY_1 &&
-             val<=KEY_9 ) //tab
-    {
-#ifdef WIN32
-        cmd->mod_list.append(KEY_LEFTCTRL);
-#else
-        cmd->mod_list.append(KEY_LEFTALT);
-#endif
-        cmd->val1 = val;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-    else if( val==KEY_L )
-    {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
-        cmd->val1 = KEY_F;
-
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
-        cmd->state = RE_CSTATE_0;
-    }
-}

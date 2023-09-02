@@ -110,6 +110,10 @@ void ReSuper::getMetaCmd(CCommand *ret)
         system("./Scripts/telegram_voice.sh");
 #endif
     }
+    else if( state->app.pname==RE_PROC_SLACK )
+    {
+        SetCursorPos(50, 500);
+    }
 #ifdef WIN32
     else if( state->app.pname==RE_PROC_ALTIUM )
     {
