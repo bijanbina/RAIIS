@@ -49,13 +49,15 @@ private:
     void processCommand(QString k_type, QString k_code);
     int  procChess(QString word);
     int  procSuper(QString word);
+    int  procMouse(QString word);
     void runLua(QString word);
     void wakeRemote();
 
-    ReState   *state;
-    ReChess   *chess;
-    QString    last_word;
-    QTcpSocket tcpClient;
+    ReState    *state;
+    ReChess    *chess;
+    QString     last_word;
+    QTcpSocket  tcpClient;
+    ReMetaMos  *mouse;
 #ifdef WIN32
     lua_State   *lst;
     ReWin32Virt *virt;

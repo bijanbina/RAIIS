@@ -392,11 +392,14 @@ void ReWindowW::updateActiveWindow()
     win_active.pname = reGetPName(win_active.pid);
     state->updateApp(win_active);
 
-    if( win_active.pname=="rustdesk" )
+    if( win_active.pname=="rustdesk" &&
+        win_active.title!="RustDesk" )
     {
         if( state->remote_state==0 &&
             state->sleep_state==0 )
         {
+            qDebug() << "win_active.title"
+                     << win_active.title;
             state->goToRemote();
         }
     }

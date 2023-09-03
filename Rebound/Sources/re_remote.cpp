@@ -6,6 +6,7 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
 {
     state = pre->captain->state;
     chess = pre->chess;
+    mouse = new ReMetaMos(state);
 
 #ifdef WIN32
     virt = new ReWin32Virt;
@@ -56,7 +57,8 @@ void ReRemote::send(QString word)
     qDebug() << "sendRemote" << word;
     if( !tcpClient.isOpen() )
     {
-        qDebug() << "Riidi, connecting to: " << RE_CIP << RE_CPORT0;
+        qDebug() << "Riidi, connecting to: "
+                 << RE_CIP << RE_CPORT0;
         tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT0);
     }
 
@@ -65,9 +67,22 @@ void ReRemote::send(QString word)
     {
         wakeRemote();
     }
-    else if( last_word=="super")
+    else if( last_word=="go" && word=="sleep" )
+    {
+        state->remote_state = 0;
+        state->goToSleep();
+    }
+    else if( last_word=="system" )
     {
         if( procSuper(word) )
+        {
+            last_word = word;
+            return;
+        }
+    }
+    else if( last_word=="mouse" )
+    {
+        if( procMouse(word) )
         {
             last_word = word;
             return;
@@ -292,6 +307,45 @@ int ReRemote::procSuper(QString word)
         virt->setDesktop(val-1);
         virt->setFocus();
         wakeRemote();
+        return 1;
+    }
+    return 0;
+}
+
+int ReRemote::procMouse(QString word)
+{
+    int val = 0;
+
+    if( word=="left" )
+    {
+        re_mouseKey(1);
+        return 1;
+    }
+    else if( word=="right" )
+    {
+        re_mouseKey(3);
+        return 1;
+    }
+    else if( word=="u" )
+    {
+        val = KEY_U;
+    }
+    else if( word=="delta" )
+    {
+        val = KEY_D;
+    }
+    else if( word=="golf" )
+    {
+        val = KEY_G;
+    }
+    else if( word=="hotel" )
+    {
+        val = KEY_H;
+    }
+
+    if( val )
+    {
+        mouse->castScroll(val);
         return 1;
     }
     return 0;
