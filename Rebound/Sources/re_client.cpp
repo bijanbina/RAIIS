@@ -41,7 +41,8 @@ void ReClient::displayError(QAbstractSocket::SocketError socketError)
     if (socketError == QTcpSocket::RemoteHostClosedError)
         return;
 
-    qDebug() << tr("Network error") << tr("The following error occurred: %1.").arg(tcpClient.errorString());
+    qDebug() << "Network error The following error occurred:"
+             << tcpClient.errorString();
     tcpClient.close();
     if ( !(timer->isActive()) )
     {
@@ -58,7 +59,7 @@ void ReClient::connected()
     tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
     watchdog->start(RE_WATCHDOG);
-    live->start(RE_Live);
+    live->start(RE_LIVE);
 
 //    timer->stop();
 }
@@ -196,7 +197,7 @@ void ReClient::sendData(const char *data, int size)
 {
     if ( tcpClient.isOpen() )
     {
-        live->start(RE_Live);//don't send live
+        live->start(RE_LIVE);//don't send live
 
         if(size == 2)
         {
@@ -211,6 +212,6 @@ void ReClient::sendData(const char *data, int size)
         tcpClient.waitForBytesWritten(50);
 
         qDebug() << "finisihed sending";
-        live->start(RE_Live);//don't send live
+        live->start(RE_LIVE);//don't send live
     }
 }

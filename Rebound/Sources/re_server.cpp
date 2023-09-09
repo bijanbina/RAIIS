@@ -60,7 +60,7 @@ void ReServer::acceptConnection()
     connect(connection_socket, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
 
-    live->start(RE_Live);
+    live->start(RE_LIVE);
     watchdog->start(RE_WATCHDOG);
     emit clientConnected();
 }
@@ -170,7 +170,7 @@ void ReServer::reboundSendKey(const char *data, int size)
     {
         if ( connection_socket->isOpen() )
         {
-            live->start(RE_Live);//don't send live
+            live->start(RE_LIVE);//don't send live
 
             if(size == 2)
             {
@@ -185,7 +185,7 @@ void ReServer::reboundSendKey(const char *data, int size)
             connection_socket->waitForBytesWritten(50);
 
             qDebug() << "finisihed sending";
-            live->start(RE_Live);//don't send live
+            live->start(RE_LIVE);//don't send live
         }
     }
 }

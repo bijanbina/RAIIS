@@ -18,23 +18,25 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
             this, SLOT(disconnected()));
     connect(&tcpClient, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(displayError(QAbstractSocket::SocketError)));
-#ifdef RE_REMOTE
-    tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT1 );
-#else
-    tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT0 );
-#endif
 
     connect(this, SIGNAL(dirs(const QString &)),
             pre, SLOT(dirs(const QString &)));
     connect(this, SIGNAL(nato(QString)),
             pre, SLOT(nato(QString)));
-    connect(this, SIGNAL(meta(QString)), pre, SLOT(meta(QString)));
-    connect(this, SIGNAL(apps(QString)), pre, SLOT(apps(QString)));
-    connect(this, SIGNAL(spex(QString)), pre, SLOT(spex(QString)));
-    connect(this, SIGNAL(type(QString)), pre, SLOT(type(QString)));
-    connect(this, SIGNAL(super(QString)), pre, SLOT(super(QString)));
-    connect(this, SIGNAL(digit(QString)), pre, SLOT(digit(QString)));
-    connect(this, SIGNAL(debug(QString)), pre, SLOT(debug(QString)));
+    connect(this, SIGNAL(meta(QString)),
+            pre, SLOT(meta(QString)));
+    connect(this, SIGNAL(apps(QString)),
+            pre, SLOT(apps(QString)));
+    connect(this, SIGNAL(spex(QString)),
+            pre, SLOT(spex(QString)));
+    connect(this, SIGNAL(type(QString)),
+            pre, SLOT(type(QString)));
+    connect(this, SIGNAL(super(QString)),
+            pre, SLOT(super(QString)));
+    connect(this, SIGNAL(digit(QString)),
+            pre, SLOT(digit(QString)));
+    connect(this, SIGNAL(debug(QString)),
+            pre, SLOT(debug(QString)));
     connect(this, SIGNAL(modifier(QString)),
             pre, SLOT(modifier(QString)));
 
@@ -42,6 +44,21 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     lst = luaL_newstate();
     luaL_openlibs(lst);
 #endif
+
+    live = new QTimer;
+    watchdog = new QTimer;
+    c_timer = new QTimer;
+
+    connect(live, SIGNAL(timeout()),
+            this, SLOT(live_timeout()));
+    connect(watchdog, SIGNAL(timeout()),
+            this, SLOT(connectToHost()));
+    connect(c_timer, SIGNAL(timeout()),
+            this, SLOT(connectToHost()));
+    connect(watchdog, SIGNAL(timeout()),
+            this, SLOT(watchdog_timeout()));
+    c_timer->start(RE_TIMEOUT);
+    connectToHost();
 }
 
 ReRemote::~ReRemote()

@@ -32,7 +32,7 @@
 
 #define RE_TIMEOUT        1000
 #define RE_WATCHDOG       1000  //Watchdog interval
-#define RE_Live           100   //Live send interval
+#define RE_LIVE           100   //Live send interval
 #define RE_CHECK_BTN      4     //Live send interval
 #define RE_CHECK_IN       4     //check input(native mode)
 #define RE_TAB_TIME       900   //Alt pressed time
