@@ -117,7 +117,9 @@ void ReRemote::send(QString word)
     QString data;
     data += "::" + word + "\n";
 
+    live->start(RE_LIVE);//don't send live
     tcpClient.write(data.toStdString().c_str());
+    live->start(RE_LIVE);//don't send live
 }
 
 void ReRemote::displayError(QAbstractSocket::SocketError socketError)
@@ -129,27 +131,60 @@ void ReRemote::displayError(QAbstractSocket::SocketError socketError)
 
     qDebug() << "Network error:" << tcpClient.errorString();
     tcpClient.close();
+
+    if ( !(c_timer->isActive()) )
+    {
+        c_timer->start(RE_TIMEOUT);
+        qDebug() << "Timer start";
+    }
 }
 
 void ReRemote::connected()
 {
-    qDebug() << "Client: Connected";
+    qDebug() << "Remote: Connected";
     tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
+    watchdog->start(RE_WATCHDOG);
+    live->start(RE_LIVE);
 }
 
 void ReRemote::disconnected()
 {
+    watchdog->stop();
+    live->stop();
     tcpClient.close();
-    qDebug() << "Client: Disconnected";
+
+    if ( !(c_timer->isActive()) )
+    {
+        c_timer->start(RE_TIMEOUT);
+        qDebug() << "Remote: Timer start";
+    }
+    qDebug() << "Remote: Disconnected";
 }
 
 void ReRemote::readyRead()
 {
     QString read_data = tcpClient.readAll();
+    if( read_data=="Live" )
+    {
+        watchdog->start(RE_WATCHDOG);
+        return;
+    }
+
     if( read_data.size()==0 )
     {
         return;
+    }
+
+    watchdog->start(RE_WATCHDOG);
+
+    if( read_data.contains("Live") )
+    {
+        read_data.replace("Live", "");
+        if( read_data.size()==0 )
+        {
+            return;
+        }
     }
 
     read_data = read_data.trimmed();
@@ -162,7 +197,7 @@ void ReRemote::readyRead()
         data_split = data_lines[i].split("::", Qt::SkipEmptyParts);
         if( data_split.size()!=1 )
         {
-            qDebug() << "SHIR TUT" << data_split.size();
+            qDebug() << "wrong input size:" << data_split.size();
             return;
         }
         QString word = data_split[0];
@@ -366,4 +401,61 @@ int ReRemote::procMouse(QString word)
         return 1;
     }
     return 0;
+}
+
+void ReRemote::connectToHost()
+{
+    if( tcpClient.isOpen()==0 )
+    {
+        qDebug() << "TimerTick, connecting to: " << RE_IP << RE_PORT;
+#ifdef RE_REMOTE
+        tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT1 );
+#else
+        tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT0 );
+#endif
+
+    }
+    else if( tcpClient.state()==QAbstractSocket::ConnectingState )
+    {
+        qDebug() << "TimerTick, Connecting";
+    }
+    else if( tcpClient.state()!=QAbstractSocket::ConnectedState )
+    {
+        qDebug() << "TimerTick State:" << tcpClient.state();
+    }
+}
+
+void ReRemote::watchdog_timeout()
+{
+    if( tcpClient.isOpen() )
+    {
+        qDebug() << "Remote: connection dropped:"
+                 << tcpClient.state();
+        disconnected();
+    }
+    else
+    {
+        qDebug() << "Remote: watchdog, tcpClient is closed";
+    }
+}
+
+void ReRemote::live_timeout()
+{
+    if( tcpClient.isOpen() )
+    {
+        if( tcpClient.state()==QAbstractSocket::ConnectedState )
+        {
+            tcpClient.write("Live");
+            tcpClient.waitForBytesWritten(50);
+        }
+        else
+        {
+            qDebug() << "Remote: live, not connected, State:"
+                     << tcpClient.state();
+        }
+    }
+    else
+    {
+        qDebug() << "Remote: live, tcpClient is closed";
+    }
 }

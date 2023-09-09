@@ -44,6 +44,9 @@ private slots:
     void displayError(QAbstractSocket::SocketError socketError);
     void disconnected();
     void readyRead();
+    void connectToHost();
+    void live_timeout();
+    void watchdog_timeout();
 
 private:
     void processCommand(QString k_type, QString k_code);
@@ -58,6 +61,11 @@ private:
     QString     last_word;
     QTcpSocket  tcpClient;
     ReMetaMos  *mouse;
+
+    QTimer *live;
+    QTimer *c_timer;
+    QTimer *watchdog;
+
 #ifdef WIN32
     lua_State   *lst;
     ReWin32Virt *virt;
