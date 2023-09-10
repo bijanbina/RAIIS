@@ -227,6 +227,18 @@ void mm_launchScript(QString path, QString arg)
     }
 }
 
+void mm_closeWindow()
+{
+    DWORD dwCurrentThread = GetCurrentThreadId();
+    DWORD dwFGThread = GetWindowThreadProcessId(GetForegroundWindow(), NULL);
+    AttachThreadInput(dwCurrentThread, dwFGThread, TRUE);
+
+    HWND hwnd = GetForegroundWindow();
+    PostMessage(hwnd, WM_CLOSE, 0, 0);
+
+    AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
+}
+
 void mm_focus(HWND hwnd)
 {
     DWORD dwCurrentThread = GetCurrentThreadId();

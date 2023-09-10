@@ -156,6 +156,11 @@ void ReChess::showChess(int val)
         drag_mode = CH_DRAG_STATE2;
         sendChessCmd("drag");
     }
+    else if( val==RE_SUPER_SHOT )
+    {
+        setCount(4);
+        sendChessCmd("screenshot");
+    }
 }
 
 void ReChess::sendChessCmd(QString cmd)

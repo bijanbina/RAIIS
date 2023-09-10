@@ -55,6 +55,7 @@
 #define RE_SUPER_DOUBLE  113
 #define RE_SUPER_SELECT  114
 #define RE_SUPER_DRAG    115
+#define RE_SUPER_SHOT    116
 
 #define RE_APP_FIREFOX  301
 #define RE_APP_FILES    302

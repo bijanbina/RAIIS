@@ -1,5 +1,6 @@
 #include "re_remote.h"
 #include <unistd.h>
+#include "mm_api.h"
 
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
@@ -105,6 +106,11 @@ void ReRemote::send(QString word)
             return;
         }
     }
+    else if( last_word=="super" && word=="back" )
+    {
+        QString cmd_str = "Meta,sound";
+        state->sendPipeMom(cmd_str.toStdString().c_str());
+    }
 
     last_word = word;
 
@@ -117,9 +123,9 @@ void ReRemote::send(QString word)
     QString data;
     data += "::" + word + "\n";
 
-    live->start(RE_LIVE);//don't send live
+//    live->start(RE_LIVE);//don't send live
     tcpClient.write(data.toStdString().c_str());
-    live->start(RE_LIVE);//don't send live
+//    live->start(RE_LIVE);//don't send live
 }
 
 void ReRemote::displayError(QAbstractSocket::SocketError socketError)
@@ -144,8 +150,8 @@ void ReRemote::connected()
     qDebug() << "Remote: Connected";
     tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
-    watchdog->start(RE_WATCHDOG);
-    live->start(RE_LIVE);
+//    watchdog->start(RE_WATCHDOG);
+//    live->start(RE_LIVE);
 }
 
 void ReRemote::disconnected()
@@ -167,7 +173,7 @@ void ReRemote::readyRead()
     QString read_data = tcpClient.readAll();
     if( read_data=="Live" )
     {
-        watchdog->start(RE_WATCHDOG);
+//        watchdog->start(RE_WATCHDOG);
         return;
     }
 
@@ -176,7 +182,7 @@ void ReRemote::readyRead()
         return;
     }
 
-    watchdog->start(RE_WATCHDOG);
+//    watchdog->start(RE_WATCHDOG);
 
     if( read_data.contains("Live") )
     {
@@ -352,6 +358,16 @@ int ReRemote::procSuper(QString word)
     else if( word=="six" )
     {
         val = 6;
+    }
+    else if( word=="quebec" )
+    {
+        mm_closeWindow();
+        return 1;
+    }
+    else if( word=="sierra" )
+    {
+        chess->showChess(RE_SUPER_SHOT);
+        return 1;
     }
 
     if( val )

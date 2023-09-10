@@ -23,6 +23,7 @@ typedef struct MmApplication
 }MmApplication;
 
 #ifdef WIN32
+void mm_closeWindow();
 void mm_focus(HWND hwnd);
 void mm_focus(MmApplication app);
 long mm_getPid(HWND hWnd);
