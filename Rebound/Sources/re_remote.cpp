@@ -89,6 +89,8 @@ void ReRemote::send(QString word)
     {
         state->remote_state = 0;
         state->goToSleep();
+        last_word = word;
+        return;
     }
     else if( last_word=="system" )
     {

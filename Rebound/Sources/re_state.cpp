@@ -74,6 +74,7 @@ void ReState::updateApp(ReWindow active_window)
 void ReState::goToSleep()
 {
     sleep_state = 1;
+    last_cmd.type = RE_COMMAND_NULL;
 #ifdef WIN32
     QString cmd;
     cmd = "%{B#0067aa}%{F#ffffff}%{A1:$HS_CMD:}";
