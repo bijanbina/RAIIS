@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     //or client mode
 
     int isNative = 1;
-    if ( argc>1 )
+    if( argc>1 )
     {
         QString argv_1 = argv[1]; bool ok;
         int argv_int = argv_1.toInt(&ok);

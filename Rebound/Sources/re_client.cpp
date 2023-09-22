@@ -20,8 +20,8 @@ ReClient::ReClient(QObject *item, QObject *parent) : QObject(parent)
     watchdog = new QTimer;
 //    timer->setSingleShot(true);
     connect(timer, SIGNAL(timeout()), this, SLOT(start()));
-    connect(live, SIGNAL(timeout()), this, SLOT(live_timeout()));
-    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
+    connect(live, SIGNAL(timeout()), this, SLOT(liveTimeout()));
+    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdogTimeout()));
     timer->start(RE_TIMEOUT);
     start();
 }
@@ -82,11 +82,12 @@ void ReClient::disconnected()
 }
 
 //Watchdog TimerTick
-void ReClient::watchdog_timeout()
+void ReClient::watchdogTimeout()
 {
     if(tcpClient.isOpen())
     {
-        qDebug() << "Client: watchdog shit happened:" << tcpClient.state();
+        qDebug() << "Client: watchdog shit happened:"
+                 << tcpClient.state();
         disconnected();
     }
     else
@@ -96,7 +97,7 @@ void ReClient::watchdog_timeout()
 }
 
 //Live TimerTick
-void ReClient::live_timeout()
+void ReClient::liveTimeout()
 {
     if(tcpClient.isOpen())
     {
@@ -124,18 +125,18 @@ void ReClient::live_timeout()
 //TimerTick
 void ReClient::start()
 {
-    if(!tcpClient.isOpen())
+    if( tcpClient.isOpen()==0 )
     {
-        qDebug() << "TimerTick, connecting to: " << RE_IP << RE_PORT;
+        qDebug() << "TimerTick connecting to: " << RE_IP << RE_PORT;
         tcpClient.connectToHost(QHostAddress(RE_IP), RE_PORT );
     }
-    else if(tcpClient.state() == QAbstractSocket::ConnectingState)
+    else if( tcpClient.state()==QAbstractSocket::ConnectingState )
     {
         qDebug() << "TimerTick, Connecting";
 //        tcpClient.close();
 //        tcpClient.connectToHost(QHostAddress(RE_IP), RE_PORT );
     }
-    else if(tcpClient.state() != QAbstractSocket::ConnectedState)
+    else if( tcpClient.state()!=QAbstractSocket::ConnectedState )
     {
         qDebug() << "TimerTick State:" << tcpClient.state();
     }

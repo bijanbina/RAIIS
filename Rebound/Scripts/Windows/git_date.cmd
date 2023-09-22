@@ -23,7 +23,8 @@ rem Remove leading zeros from the zero-extended number
 for /f "tokens=* delims=0" %%a in ("%day%") do set "day=%%a"
 
 reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NoSync
-net stop w32time 
+net stop w32time
+sc config w32time start= disabled
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d 1
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 2 /t REG_SZ /d 2
 SET /P D=Enter date(mm-d): 
@@ -77,6 +78,8 @@ reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Se
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 2 /t REG_SZ /d time.nist.gov
 call :delay50
 reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters /f /v Type /t REG_SZ /d NTP
+call :delay50
+sc config w32time start= demand
 call :delay50
 net start w32time
 ::w32tm /query /peers

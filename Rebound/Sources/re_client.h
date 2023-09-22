@@ -29,8 +29,8 @@ signals:
 private slots:
     void connected();
     void start();
-    void watchdog_timeout();
-    void live_timeout();
+    void watchdogTimeout();
+    void liveTimeout();
     void startTransfer(const char* command);
     void displayError(QAbstractSocket::SocketError socketError);
     void sendBuffer();

@@ -51,13 +51,13 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     c_timer = new QTimer;
 
     connect(live, SIGNAL(timeout()),
-            this, SLOT(live_timeout()));
-    connect(watchdog, SIGNAL(timeout()),
-            this, SLOT(connectToHost()));
+            this, SLOT(liveTimeout()));
+//    connect(watchdog, SIGNAL(timeout()),
+//            this, SLOT(connectToHost()));
     connect(c_timer, SIGNAL(timeout()),
             this, SLOT(connectToHost()));
     connect(watchdog, SIGNAL(timeout()),
-            this, SLOT(watchdog_timeout()));
+            this, SLOT(watchdogTimeout()));
     c_timer->start(RE_TIMEOUT);
     connectToHost();
 }
@@ -125,9 +125,8 @@ void ReRemote::send(QString word)
     QString data;
     data += "::" + word + "\n";
 
-//    live->start(RE_LIVE);//don't send live
     tcpClient.write(data.toStdString().c_str());
-//    live->start(RE_LIVE);//don't send live
+    live->start(RE_LIVE);//don't send live
 }
 
 void ReRemote::displayError(QAbstractSocket::SocketError socketError)
@@ -152,8 +151,8 @@ void ReRemote::connected()
     qDebug() << "Remote: Connected";
     tcpClient.setSocketOption(QAbstractSocket::LowDelayOption, 1);
     connect(&tcpClient, SIGNAL(readyRead()), this, SLOT(readyRead()));
-//    watchdog->start(RE_WATCHDOG);
-//    live->start(RE_LIVE);
+    watchdog->start(RE_WATCHDOG);
+    live->start(RE_LIVE);
 }
 
 void ReRemote::disconnected()
@@ -175,7 +174,7 @@ void ReRemote::readyRead()
     QString read_data = tcpClient.readAll();
     if( read_data=="Live" )
     {
-//        watchdog->start(RE_WATCHDOG);
+        watchdog->start(RE_WATCHDOG);
         return;
     }
 
@@ -184,7 +183,7 @@ void ReRemote::readyRead()
         return;
     }
 
-//    watchdog->start(RE_WATCHDOG);
+    watchdog->start(RE_WATCHDOG);
 
     if( read_data.contains("Live") )
     {
@@ -425,7 +424,8 @@ void ReRemote::connectToHost()
 {
     if( tcpClient.isOpen()==0 )
     {
-        qDebug() << "TimerTick, connecting to: " << RE_IP << RE_PORT;
+        qDebug() << "TimerTick, connecting to: "
+                 << RE_CIP << RE_CPORT0;
 #ifdef RE_REMOTE
         tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT1 );
 #else
@@ -443,7 +443,7 @@ void ReRemote::connectToHost()
     }
 }
 
-void ReRemote::watchdog_timeout()
+void ReRemote::watchdogTimeout()
 {
     if( tcpClient.isOpen() )
     {
@@ -457,7 +457,7 @@ void ReRemote::watchdog_timeout()
     }
 }
 
-void ReRemote::live_timeout()
+void ReRemote::liveTimeout()
 {
     if( tcpClient.isOpen() )
     {

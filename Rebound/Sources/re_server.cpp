@@ -18,8 +18,8 @@ ReServer::ReServer(ReState *st, QObject *parent) : QObject(parent)
     bufferTimer->setSingleShot(true);
 //    connect(bufferTimer, SIGNAL(timeout()), this, SLOT(sendBuffer()));
 //    bufferTimer->setInterval(JOYSTICK_DELAY);
-    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdog_timeout()));
-    connect(live, SIGNAL(timeout()), this, SLOT(live_timeout()));
+    connect(watchdog, SIGNAL(timeout()), this, SLOT(watchdogTimeout()));
+    connect(live, SIGNAL(timeout()), this, SLOT(liveTimeout()));
 
     server = new QTcpServer;
     connect(server, SIGNAL(newConnection()),
@@ -65,13 +65,14 @@ void ReServer::acceptConnection()
     emit clientConnected();
 }
 
-void ReServer::watchdog_timeout()
+// client lost, drop connection and reconnect
+void ReServer::watchdogTimeout()
 {
 //    bytesReceived += (int)connection_socket->bytesAvailable();
     qDebug() << "Watchdog: Miss Window" ;
     connection_socket->close();
 
-    if( connection_socket->state() != QAbstractSocket::UnconnectedState )
+    if( connection_socket->state()!=QAbstractSocket::UnconnectedState )
     {
         int success = connection_socket->waitForDisconnected();
 
@@ -99,16 +100,17 @@ void ReServer::watchdog_timeout()
 //    connection_socket->waitForBytesWritten();
 }
 
-void ReServer::live_timeout()
+// keep client alive
+void ReServer::liveTimeout()
 {
-    if(connection_socket->isOpen())
+    if( connection_socket->isOpen() )
     {
-        if(connection_socket->state() == QAbstractSocket::ConnectedState)
+        if( connection_socket->state()==QAbstractSocket::ConnectedState )
         {
             int byte_count = connection_socket->write("Live");
             connection_socket->waitForBytesWritten(50);
 
-            if( byte_count!= 4)
+            if( byte_count!=4 )
             {
                 qDebug() << "Client: live, Fuck Happened" << byte_count;
             }
@@ -127,11 +129,11 @@ void ReServer::live_timeout()
 void ReServer::readyRead()
 {
     QByteArray data = connection_socket->readAll();
-    if(data.length() == 4)
+    if( data.length()==4 )
     {
         watchdog->start(RE_WATCHDOG);
     }
-    else if (data.contains("Live"))
+    else if( data.contains("Live") )
     {
         qDebug() << "Server: Misterious Live" << data;
         watchdog->start(RE_WATCHDOG);
@@ -158,10 +160,12 @@ void ReServer::readyRead()
 
 void ReServer::displayError(QAbstractSocket::SocketError socketError)
  {
-     if (socketError == QTcpSocket::RemoteHostClosedError)
+     if( socketError==QTcpSocket::RemoteHostClosedError )
+     {
          return;
+     }
 
-     qDebug() <<  QString("Error Happened");
+     qDebug() << QString("Error Happened");
 }
 
 void ReServer::reboundSendKey(const char *data, int size)
@@ -172,7 +176,7 @@ void ReServer::reboundSendKey(const char *data, int size)
         {
             live->start(RE_LIVE);//don't send live
 
-            if(size == 2)
+            if( size==2 )
             {
                 qDebug() << "Sending " << data[0] << data[1];
             }

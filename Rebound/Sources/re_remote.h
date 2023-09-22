@@ -45,8 +45,8 @@ private slots:
     void disconnected();
     void readyRead();
     void connectToHost();
-    void live_timeout();
-    void watchdog_timeout();
+    void liveTimeout();
+    void watchdogTimeout();
 
 private:
     void processCommand(QString k_type, QString k_code);

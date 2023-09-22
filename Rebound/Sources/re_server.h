@@ -32,8 +32,8 @@ signals:
 public slots:
     void acceptConnection();
     void readyRead();
-    void live_timeout();
-    void watchdog_timeout();
+    void liveTimeout();
+    void watchdogTimeout();
     void displayError(QAbstractSocket::SocketError socketError);
 
 private:
