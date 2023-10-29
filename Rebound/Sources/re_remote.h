@@ -14,7 +14,7 @@ extern "C"
 }
 #endif
 
-#include "backend.h"
+#include "re_connection.h"
 #include "re_preprocessor.h"
 
 class ReRemote : public QObject
@@ -41,12 +41,10 @@ signals:
 
 private slots:
     void connected();
-    void displayError(QAbstractSocket::SocketError socketError);
+    void displayError();
     void disconnected();
-    void readyRead();
+    void readyRead(QString read_data);
     void connectToHost();
-    void liveTimeout();
-    void watchdogTimeout();
 
 private:
     void processCommand(QString k_type, QString k_code);
@@ -58,13 +56,12 @@ private:
 
     ReState    *state;
     ReChess    *chess;
-    QString     last_word;
-    QTcpSocket  tcpClient;
     ReMetaMos  *mouse;
+    QTimer     *c_timer;
+    QString     last_word;
+    QTcpSocket  tcp_client;
 
-    QTimer *live;
-    QTimer *c_timer;
-    QTimer *watchdog;
+    ReConnection *connection;
 
 #ifdef WIN32
     lua_State   *lst;
