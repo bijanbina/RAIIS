@@ -30,6 +30,9 @@
 //#define RE_TEST_EN
 //#define RE_DUBUG_TCP
 
+#define FA_LIVE           100   // Live send interval
+#define FA_WATCHDOG       1000  // Watchdog interval
+
 #define RE_TIMEOUT        1000
 #define RE_WATCHDOG       1000  //Watchdog interval
 #define RE_LIVE           100   //Live send interval

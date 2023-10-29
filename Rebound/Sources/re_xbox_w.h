@@ -49,7 +49,7 @@ public slots:
 
     void clientDisconnected();
     void clientConnected();
-    void clientReqSusspend();
+    void clientReqSuspend();
 
 signals:
     void buttonAPressed();

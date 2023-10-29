@@ -25,7 +25,7 @@ signals:
     void errorConnection();
     void clientDisconnected();
     void clientConnected();
-    void clientReqSusspend();
+    void clientReqSuspend();
 
 public slots:
     void acceptConnection();
