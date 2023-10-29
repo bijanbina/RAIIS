@@ -108,11 +108,13 @@ void ReRemote::send(QString word)
             return;
         }
     }
+#ifdef WIN32
     else if( last_word=="super" && word=="back" )
     {
         QString cmd_str = "Meta,sound";
         state->sendPipeMom(cmd_str.toStdString().c_str());
     }
+#endif
 
     last_word = word;
 
@@ -283,7 +285,7 @@ void ReRemote::runLua(QString word)
 
     QDir::setCurrent(current_dir);
 #else
-    cmd = KAL_SI_DIR"main_l.sh \"";
+    QString cmd = KAL_SI_DIR"/main_l.sh \"";
     cmd += word;
     cmd += "\"";
     system(cmd.toStdString().c_str());
@@ -360,6 +362,7 @@ int ReRemote::procSuper(QString word)
     {
         val = 6;
     }
+#ifdef WIN32
     else if( word=="quebec" )
     {
         mm_closeWindow();
@@ -378,6 +381,7 @@ int ReRemote::procSuper(QString word)
         wakeRemote();
         return 1;
     }
+#endif
     return 0;
 }
 

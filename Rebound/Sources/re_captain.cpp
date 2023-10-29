@@ -199,7 +199,6 @@ bool ReCaptain::isWakeUp(CCommand command)
         return false;
     }
 
-    qDebug() << "isWake" << command.mod_list[0];
     if( command.mod_list[0]==KEY_META )
     {
         if( command.val1>=KEY_0 &&

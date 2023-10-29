@@ -33,8 +33,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_raxis.cpp \
            Sources/re_bumpers.cpp \
            Sources/re_status_file.cpp \
-           Sources/re_super.cpp \
-           Sources/re_window_w.cpp
+           Sources/re_super.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/mm_api.cpp \
@@ -48,7 +47,8 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_win32_win.cpp \
                  Sources/re_win32_virt.cpp \
                  Sources/re_xbox_win32.cpp \
-                 Sources/re_xbox_w.cpp
+                 Sources/re_xbox_w.cpp \
+                 Sources/re_window_w.cpp
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
@@ -86,8 +86,7 @@ HEADERS += Sources/backend.h \
            Sources/re_bumpers.h \
            Sources/re_state_const.h \
            Sources/re_status_file.h \
-           Sources/re_super.h \
-           Sources/re_window_w.h
+           Sources/re_super.h
 
 win32:HEADERS += Sources/re_api_w.h \
                  Sources/mm_api.h \
@@ -102,7 +101,8 @@ win32:HEADERS += Sources/re_api_w.h \
                  Sources/re_win32_win.h \
                  Sources/re_win32_virt.h \
                  Sources/re_xbox_win32.h \
-                 Sources/re_xbox_w.h
+                 Sources/re_xbox_w.h \
+                 Sources/re_window_w.h
 
 linux:HEADERS += Sources/re_api_l.h \
                  Sources/re_app_l.h \

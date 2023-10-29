@@ -19,7 +19,7 @@
 
 #define RE_CLIENT 0
 #define RE_SERVER 1
-//#define RE_REMOTE
+#define RE_REMOTE
 
 #define RE_PORT      7610
 #define RE_IP        "192.168.88.25"
