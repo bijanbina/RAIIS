@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <QTimer>
 #include <QQmlProperty>
-#include "backend.h"
+#include "re_connection.h"
 
 class ReClient : public QObject
 {
@@ -29,32 +29,20 @@ signals:
 private slots:
     void connected();
     void start();
-    void watchdogTimeout();
-    void liveTimeout();
     void startTransfer(const char* command);
-    void displayError(QAbstractSocket::SocketError socketError);
     void sendBuffer();
+    void displayError();
     void disconnected();
-    void readyRead();
+    void readyRead(QString read_data);
 
 private:
-    QTcpSocket tcpClient;
+    QTcpSocket tcp_client;
+    ReConnection *connection;
 
-    QVector<QString> stack;
-    int code;
-    char code_char[4];
+    char char_buffer;
+    bool is_buffer_empty;
 
-    QString message;
-    char charBuffer;
-    bool isBufferEmpty;
-    bool commandMode;
-    int commandIndex;
-    short commandByte;
-
-    QTimer *live;
     QTimer *timer;
-    QTimer *watchdog;
-
     QObject *ui;
 };
 
