@@ -52,9 +52,7 @@ void ReChess::super(const QString &text, CCommand command)
         addCount(1);
         sendChessCmd("Meta");
     }
-    else if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
-             val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
-             val==RE_SUPER_RESIST || val==RE_SUPER_DRAG )
+    else if( isChessCmd(val) )
     {
         if( command.type==RE_COMMAND_MOD )
         {
@@ -62,7 +60,6 @@ void ReChess::super(const QString &text, CCommand command)
             for( int i=0 ; i<len ; i++ )
             {
                 key->pressKey(command.mod_list[i]);
-                qDebug() << "sp2";
             }
             mod_cmd = command;
         }
@@ -161,6 +158,10 @@ void ReChess::showChess(int val)
         setCount(4);
         sendChessCmd("screenshot");
     }
+    else if( val==RE_SUPER_MAGIC )
+    {
+        sendChessCmd("magic");
+    }
 }
 
 void ReChess::sendChessCmd(QString cmd)
@@ -225,4 +226,17 @@ void ReChess::addCount(int val)
 {
     int count = captain->state->ch_count;
     setCount(count+val);
+}
+
+int ReChess::isChessCmd(int val)
+{
+    if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
+        val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
+        val==RE_SUPER_RESIST || val==RE_SUPER_DRAG    ||
+        val==RE_SUPER_MAGIC )
+    {
+        return 1;
+    }
+
+    return 0;
 }

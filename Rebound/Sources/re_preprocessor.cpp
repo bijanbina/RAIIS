@@ -366,9 +366,7 @@ void RePreProcessor::super(const QString &text)
     {
         CCommand cmd; //fake command
         int val = text.toInt();
-        if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
-            val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
-            val==RE_SUPER_RESIST || val==RE_SUPER_DRAG )
+        if( chess->isChessCmd(val) )
         {
             commands_str = "";
 

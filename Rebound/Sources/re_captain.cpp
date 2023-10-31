@@ -92,6 +92,11 @@ void ReCaptain::execute(QVector<CCommand> commands)
                         return;
                     }
                 }
+                else if( isSpeakerSw(commands[i]) )
+                {
+                    execCommand(commands[i]);
+                    return;
+                }
             }
         }
         else
@@ -211,6 +216,30 @@ bool ReCaptain::isWakeUp(CCommand command)
     return false;
 }
 
+bool ReCaptain::isSpeakerSw(CCommand command)
+{
+    if( command.type!=RE_COMMAND_MOD )
+    {
+        return false;
+    }
+
+    if( command.mod_list.size()==0 )
+    {
+        return false;
+    }
+
+    if( command.mod_list[0]==KEY_META )
+    {
+        if( command.val1==KEY_BACKSPACE )
+        {
+            qDebug() << "HELLLL YEAH!";
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void ReCaptain::execMeta(CCommand command)
 {
     CCommand translated;
@@ -246,10 +275,11 @@ void ReCaptain::wakeDictate()
     key->pressKey(KEY_LEFTCTRL);
     key->pressKey(KEY_LEFTSHIFT);
     key->sendKey(KEY_LEFT);
-    QThread::msleep(10); //little tweak
+    QThread::msleep(10);
     key->sendKey(KEY_LEFT);
     key->releaseKey(KEY_LEFTSHIFT);
     key->releaseKey(KEY_LEFTCTRL);
+    QThread::msleep(100);
 
     key->sendKey(KEY_BACKSPACE);
     QThread::msleep(5); //little tweak
@@ -258,12 +288,15 @@ void ReCaptain::wakeDictate()
 
     // select all
     key->pressKey(KEY_LEFTCTRL);
+    QThread::msleep(5); //little tweak
     key->sendKey(KEY_A);
+    QThread::msleep(5); //little tweak
     key->releaseKey(KEY_LEFTCTRL);
-    QThread::msleep(500);
+    QThread::msleep(2000);
 
     // copy
     key->pressKey(KEY_LEFTCTRL);
+    QThread::msleep(5); //little tweak
     key->sendKey(KEY_C);
     key->releaseKey(KEY_LEFTCTRL);
     QThread::msleep(1000);
@@ -272,7 +305,7 @@ void ReCaptain::wakeDictate()
     key->pressKey(KEY_META);
     key->sendKey(KEY_Q);
     key->releaseKey(KEY_META);
-    QThread::msleep(200);
+    QThread::msleep(400);
 
     // paste
     key->pressKey(KEY_LEFTCTRL);

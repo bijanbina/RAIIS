@@ -40,7 +40,7 @@ private:
     void wakeRecord();
 
     bool isWakeUp(CCommand command);
-    bool isSystemRemote(CCommand command);
+    bool isSpeakerSw(CCommand command);
 
     int uinput_f;
 

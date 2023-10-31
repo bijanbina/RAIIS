@@ -73,6 +73,9 @@ void ReState::updateApp(ReWindow active_window)
 
 void ReState::goToSleep()
 {
+    // disable any current extra state(scroll, ...)
+    resetState();
+
     sleep_state = 1;
     last_cmd.type = RE_COMMAND_NULL;
 #ifdef WIN32

@@ -387,7 +387,6 @@ void ReWindowW::updateActiveWindow()
     win_active.title = buffer;
     re_getType(&win_active);
 
-
     win_active.pid = reGetPid(win_active.hWnd);
     win_active.pname = reGetPName(win_active.pid);
     state->updateApp(win_active);

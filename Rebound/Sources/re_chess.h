@@ -24,6 +24,7 @@ public:
     void digit(const QString &arg);
 
     void showChess(int val);
+    int  isChessCmd(int val);
 
 private:
     void sendChessCmd(QString cmd);
