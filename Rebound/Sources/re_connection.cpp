@@ -40,7 +40,8 @@ ReConnection::~ReConnection()
     }
 }
 
-void ReConnection::displayError(QAbstractSocket::SocketError socketError)
+void ReConnection::displayError(
+        QAbstractSocket::SocketError socketError)
  {
      if( socketError==QTcpSocket::RemoteHostClosedError )
      {
@@ -74,7 +75,7 @@ void ReConnection::handleDisconnect()
     emit clientDisconnected();
 }
 
-// client lost, drop connection and reconnect
+// connection lost, drop connection and reconnect
 void ReConnection::watchdogTimeout()
 {
     if( connection->isOpen() )
@@ -89,7 +90,7 @@ void ReConnection::watchdogTimeout()
     }
 }
 
-// keep client alive
+// send live packet
 void ReConnection::liveTimeout()
 {
     if( connection->isOpen() )
@@ -118,20 +119,15 @@ void ReConnection::liveTimeout()
 void ReConnection::readyRead()
 {
     QByteArray data = connection->readAll();
+    watchdog->start(RE_WATCHDOG);
 
-    if( data.length()==4 )
+    if( data=="Live" )
     {
-        watchdog->start(RE_WATCHDOG);
+        return;
     }
     else if( data.contains("Live") )
     {
-        qDebug() << "Server: Misterious Live" << data;
-        watchdog->start(RE_WATCHDOG);
         data.replace("Live", "");
-    }
-    else
-    {
-        qDebug() << "Server: Single watchdog failure," << data;
     }
 
     emit clientReadyRead(data);
