@@ -30,13 +30,10 @@
 //#define RE_TEST_EN
 //#define RE_DUBUG_TCP
 
-#define FA_LIVE           100   // Live send interval
-#define FA_WATCHDOG       1000  // Watchdog interval
-
 #define RE_TIMEOUT        1000
 #define RE_WATCHDOG       1000  //Watchdog interval
 #define RE_LIVE           100   //Live send interval
-#define RE_CHECK_BTN      4     //Live send interval
+#define RE_CHECK_BTN      4     //Xbox send interval
 #define RE_CHECK_IN       4     //check input(native mode)
 #define RE_TAB_TIME       900   //Alt pressed time
 #define RE_EXEC_TIMEOUT   2100  //Command execution timeout

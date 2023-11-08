@@ -65,7 +65,7 @@ ReXboxW::ReXboxW(ReState *st, QObject *parent) : QObject(parent)
 
     connect(tcp, SIGNAL(clientDisconnected()), this, SLOT(clientDisconnected()));
     connect(tcp, SIGNAL(clientConnected()), SLOT(clientConnected()));
-    connect(tcp, SIGNAL(clientReqSuspend()), SLOT(clientReqSuspend()));
+    connect(tcp, SIGNAL(clientReqSusspend()), SLOT(clientReqSuspend()));
 
 #endif
 

@@ -9,7 +9,7 @@ win32:QT += gamepad
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
            Sources/ch_monitor.cpp \
-           Sources/re_connection.cpp \
+           Sources/re_apache_cl.cpp \
            Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
            Sources/re_chess.cpp \
@@ -61,7 +61,7 @@ linux:SOURCES += \
 
 HEADERS += Sources/backend.h \
            Sources/ch_monitor.h \
-           Sources/re_connection.h \
+           Sources/re_apache_cl.h \
            Sources/re_captain.h \
            Sources/re_chapar.h \
            Sources/re_chess.h \

@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <QTimer>
 #include <QQmlProperty>
+#include "backend.h"
 #include "re_state.h"
-#include "re_connection.h"
 
 class ReServer : public QObject
 {
@@ -23,20 +23,40 @@ public:
 
     void reboundSendKey(const char *data, int size);
 
-    ReConnection *connection;
-
 signals:
+    void errorConnection();
     void clientDisconnected();
     void clientConnected();
-    void clientReqSuspend();
+    void clientReqSusspend();
 
 public slots:
     void acceptConnection();
-    void readyRead(QString data);
-    void handleDisconnect();
+    void readyRead();
+    void live_timeout();
+    void watchdog_timeout();
+    void displayError(QAbstractSocket::SocketError socketError);
 
 private:
+    long bytesReceived;
     QTcpServer *server;
+    QTcpSocket *connection_socket;
+
+    QVector<QString> stack;
+    int code;
+    char code_char[4];
+
+    QString message;
+    char charBuffer;
+    bool isBufferEmpty;
+    bool commandMode;
+    int commandIndex;
+    short commandByte;
+
+    QTimer *live;
+    QTimer *watchdog;
+    QTimer *bufferTimer;
+
+
     ReState *state;
 };
 
