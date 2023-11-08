@@ -13,9 +13,6 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     virt = new ReWin32Virt;
 #endif
 
-    connect(&tcp_client, SIGNAL(connected()),
-            this, SLOT(connected()));
-
     connect(this, SIGNAL(dirs(const QString &)),
             pre, SLOT(dirs(const QString &)));
     connect(this, SIGNAL(nato(QString)),
@@ -42,11 +39,10 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     luaL_openlibs(lst);
 #endif
 
-    c_timer = new QTimer;
-
-    connect(c_timer, SIGNAL(timeout()), this, SLOT(connectToHost()));
-    c_timer->start(RE_TIMEOUT);
-    connectToHost();
+    qDebug() << "Remote: Connected";
+    apache = new ReApacheCl;
+    connect(apache, SIGNAL(readyRead(QString)),
+            this, SLOT(readyRead(QString)));
 }
 
 ReRemote::~ReRemote()
@@ -59,12 +55,6 @@ ReRemote::~ReRemote()
 void ReRemote::send(QString word)
 {
     qDebug() << "sendRemote" << word;
-    if( !tcp_client.isOpen() )
-    {
-        qDebug() << "Riidi, connecting to: "
-                 << RE_CIP << RE_CPORT0;
-        tcp_client.connectToHost(QHostAddress(RE_CIP), RE_CPORT0);
-    }
 
     // handle wakeup word
     if( last_word=="system" && word=="romeo" )
@@ -112,50 +102,11 @@ void ReRemote::send(QString word)
 
     QString data;
     data += "::" + word + "\n";
-    connection->write(data);
-}
-
-void ReRemote::displayError()
-{
-    qDebug() << "Network error:" << tcp_client.errorString();
-    tcp_client.close();
-
-    if ( !(c_timer->isActive()) )
-    {
-        c_timer->start(RE_TIMEOUT);
-        qDebug() << "Timer start";
-    }
-}
-
-void ReRemote::connected()
-{
-    qDebug() << "Remote: Connected";
-    connection = new ReConnection(&tcp_client);
-    connect(connection, SIGNAL(clientReadyRead(QString)),
-            this, SLOT(readyRead(QString)));
-    connect(connection, SIGNAL(clientDisconnected()),
-            this, SLOT(disconnected()));
-    connect(connection, SIGNAL(clientError()),
-            this, SLOT(displayError()));
-}
-
-void ReRemote::disconnected()
-{
-    if( !c_timer->isActive() )
-    {
-        c_timer->start(RE_TIMEOUT);
-        qDebug() << "Remote: Timer start";
-    }
-    qDebug() << "Remote: Disconnected";
+    apache->write(data);
 }
 
 void ReRemote::readyRead(QString read_data)
 {
-    if( read_data.size()==0 )
-    {
-        return;
-    }
-
     read_data = read_data.trimmed();
     QStringList data_lines = read_data.split("\n", Qt::SkipEmptyParts);
 
@@ -382,27 +333,4 @@ int ReRemote::procMouse(QString word)
         return 1;
     }
     return 0;
-}
-
-void ReRemote::connectToHost()
-{
-    if( tcp_client.isOpen()==0 )
-    {
-        qDebug() << "TimerTick, connecting to: "
-                 << RE_CIP << RE_CPORT0;
-#ifdef RE_REMOTE
-        tcpClient.connectToHost(QHostAddress(RE_CIP), RE_CPORT1 );
-#else
-        tcp_client.connectToHost(QHostAddress(RE_CIP), RE_CPORT0 );
-#endif
-
-    }
-    else if( tcp_client.state()==QAbstractSocket::ConnectingState )
-    {
-        qDebug() << "TimerTick, Connecting";
-    }
-    else if( tcp_client.state()!=QAbstractSocket::ConnectedState )
-    {
-        qDebug() << "TimerTick State:" << tcp_client.state();
-    }
 }
