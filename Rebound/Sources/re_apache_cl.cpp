@@ -11,7 +11,7 @@ ReApacheCl::ReApacheCl(QObject *parent): QObject(parent)
     connect(con, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(tcpDisplayError(QAbstractSocket::SocketError)));
     connect(con, SIGNAL(disconnected()),
-            this, SLOT(tcpDisconnected()));
+            this, SLOT(reconnect()));
 
     live = new QTimer;
     watchdog = new QTimer;
@@ -63,7 +63,11 @@ void ReApacheCl::tcpDisplayError(QAbstractSocket::SocketError
      }
 
      qDebug() << "ReApacheCl::Error" << con->errorString();
-     emit error();
+
+     if( socketError==QTcpSocket::ConnectionRefusedError )
+     {
+         reconnect();
+     }
 }
 
 void ReApacheCl::write(QString data)
@@ -78,8 +82,9 @@ void ReApacheCl::write(QString data)
     }
 }
 
-void ReApacheCl::tcpDisconnected()
+void ReApacheCl::reconnect()
 {
+    qDebug() << "ReApacheCl::reconnect: Trying to reconnect";
     con->connectToHost(QHostAddress(c_ip), c_port);
 }
 
@@ -127,7 +132,7 @@ void ReApacheCl::tcpReadyRead()
 {
     QByteArray data = con->readAll();
     watchdog->start(RE_WATCHDOG);
-    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
+//    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
 
     if( data==FA_LIVE_PACKET )
     {

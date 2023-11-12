@@ -27,13 +27,12 @@ public:
 signals:
     void connected();
     void readyRead(QString data);
-    void error();
 
 public slots:
     void tcpConnected();
     void tcpReadyRead();
     void tcpDisplayError(QAbstractSocket::SocketError socketError);
-    void tcpDisconnected();
+    void reconnect();
     void watchdogTimeout();
     void liveTimeout();
 
