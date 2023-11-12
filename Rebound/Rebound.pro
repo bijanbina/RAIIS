@@ -115,7 +115,6 @@ linux:HEADERS += Sources/re_api_l.h \
                  Sources/re_xbox_l.h
 
 RESOURCES += Qml/ui.qrc \
-             Resources/images.qrc \
              Resources/fonts.qrc
 
 OTHER_FILES += Qml/*.qml

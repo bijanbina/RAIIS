@@ -11,6 +11,8 @@
 #include <QTimer>
 #include "backend.h"
 
+#define FA_LIVE_PACKET "<Live>\n"
+
 class ReApacheCl : public QObject
 {
     Q_OBJECT
@@ -36,7 +38,7 @@ public slots:
     void liveTimeout();
 
 private:
-    QTcpSocket *connection;
+    QTcpSocket *con;
     QTimer *live;
     QTimer *watchdog;
 

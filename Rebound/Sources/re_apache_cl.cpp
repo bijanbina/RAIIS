@@ -2,16 +2,15 @@
 
 ReApacheCl::ReApacheCl(QObject *parent): QObject(parent)
 {
-    connection = new QTcpSocket;
-    connection->setSocketOption(QAbstractSocket::LowDelayOption, 1);
+    con = new QTcpSocket;
 
-    connect(connection, SIGNAL(connected()),
+    connect(con, SIGNAL(connected()),
             this, SLOT(tcpConnected()));
-    connect(connection, SIGNAL(readyRead()),
+    connect(con, SIGNAL(readyRead()),
             this, SLOT(tcpReadyRead()));
-    connect(connection, SIGNAL(error(QAbstractSocket::SocketError)),
+    connect(con, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(tcpDisplayError(QAbstractSocket::SocketError)));
-    connect(connection, SIGNAL(disconnected()),
+    connect(con, SIGNAL(disconnected()),
             this, SLOT(tcpDisconnected()));
 
     live = new QTimer;
@@ -31,22 +30,24 @@ ReApacheCl::ReApacheCl(QObject *parent): QObject(parent)
 
 ReApacheCl::~ReApacheCl()
 {
-    if( connection->isOpen() )
+    if( con->isOpen() )
     {
-        connection->close();
+        con->close();
     }
-    delete connection;
+    delete con;
 }
 
 void ReApacheCl::start(QString ip, int port)
 {
     c_ip = ip;
     c_port = port;
-    connection->connectToHost(QHostAddress(c_ip), c_port);
+    con->connectToHost(QHostAddress(c_ip), c_port);
 }
 
 void ReApacheCl::tcpConnected()
 {
+    qDebug() << "Remote: Connected";
+    con->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     live->start(RE_LIVE);
     watchdog->start(RE_WATCHDOG);
 
@@ -61,39 +62,39 @@ void ReApacheCl::tcpDisplayError(QAbstractSocket::SocketError
          return;
      }
 
-     qDebug() << QString("ReConnection::Error Happened");
+     qDebug() << "ReApacheCl::Error" << con->errorString();
      emit error();
 }
 
 void ReApacheCl::write(QString data)
 {
-    if( connection->isOpen() )
+    if( con->isOpen() )
     {
         live->start(RE_LIVE);//don't send live
         QByteArray data_b(data.toStdString().c_str());
-        connection->write(data_b);
-        connection->waitForBytesWritten(50);
+        con->write(data_b);
+        con->waitForBytesWritten(50);
         live->start(RE_LIVE);//don't send live
     }
 }
 
 void ReApacheCl::tcpDisconnected()
 {
-    connection->connectToHost(QHostAddress(c_ip), c_port);
+    con->connectToHost(QHostAddress(c_ip), c_port);
 }
 
 // connection lost, drop connection and reconnect
 void ReApacheCl::watchdogTimeout()
 {
-    if( connection->isOpen() )
+    if( con->isOpen() )
     {
-        qDebug() << "Remote: connection dropped:"
-                 << connection->state();
+        qDebug() << "ReApacheCl::watchdogTimeout: connection dropped:"
+                 << con->state();
         watchdog->stop();
         live->stop();
 
         // in disconnect it will try to reconnect
-        connection->close();
+        con->close();
     }
     else
     {
@@ -104,21 +105,16 @@ void ReApacheCl::watchdogTimeout()
 // send live packet
 void ReApacheCl::liveTimeout()
 {
-    if( connection->isOpen() )
+    if( con->isOpen() )
     {
-        if( connection->state()==QAbstractSocket::ConnectedState )
+        if( con->state()==QAbstractSocket::ConnectedState )
         {
-            int byte_count = connection->write("Live");
-            connection->waitForBytesWritten(50);
-            if( byte_count!=4 )
-            {
-                qDebug() << "Client: live, byte_count:" << byte_count;
-            }
+            con->write(FA_LIVE_PACKET);
         }
         else
         {
-            qDebug() << "Remote: live, not connected, State:"
-                     << connection->state();
+            qDebug() << "ReApacheCl::liveTimeout: not connected, State:"
+                     << con->state();
         }
     }
     else
@@ -129,16 +125,17 @@ void ReApacheCl::liveTimeout()
 
 void ReApacheCl::tcpReadyRead()
 {
-    QByteArray data = connection->readAll();
+    QByteArray data = con->readAll();
     watchdog->start(RE_WATCHDOG);
+    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
 
-    if( data=="Live" )
+    if( data==FA_LIVE_PACKET )
     {
         return;
     }
-    else if( data.contains("Live") )
+    else if( data.contains(FA_LIVE_PACKET) )
     {
-        data.replace("Live", "");
+        data.replace(FA_LIVE_PACKET, "");
     }
 
     emit readyRead(data);

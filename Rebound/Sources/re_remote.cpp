@@ -39,10 +39,15 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     luaL_openlibs(lst);
 #endif
 
-    qDebug() << "Remote: Connected";
     apache = new ReApacheCl;
     connect(apache, SIGNAL(readyRead(QString)),
             this, SLOT(readyRead(QString)));
+
+#ifdef RE_REMOTE
+    apache->start(RE_CIP, RE_CPORT1);
+#else
+    apache->start(RE_CIP, RE_CPORT0);
+#endif
 }
 
 ReRemote::~ReRemote()
