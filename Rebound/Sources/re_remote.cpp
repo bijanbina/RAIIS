@@ -193,7 +193,7 @@ void ReRemote::runLua(QString word)
     lua_getglobal(lst, "k_type");
     QString ktype = lua_tostring(lst, -1);
 
-    qDebug() << "LUA : " << output << ktype;
+    qDebug() << "LUA:" << output << ktype;
 
     //Always send debug first
     QString k_code = QString::number(output);

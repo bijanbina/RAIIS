@@ -11,7 +11,9 @@
 #include <QTimer>
 #include "backend.h"
 
-#define FA_LIVE_PACKET "<Live>\n"
+#define FA_LIVE_PACKET  "--Live--"
+#define FA_START_PACKET "<START>\n"
+#define FA_END_PACKET   "\n<END>\n"
 
 class ReApacheCl : public QObject
 {
@@ -23,6 +25,7 @@ public:
 
     void write(QString data);
     void start(QString ip, int port);
+    QByteArray processBuffer();
 
 signals:
     void connected();
@@ -42,6 +45,7 @@ private:
     QTimer *watchdog;
 
     QString c_ip;
+    QByteArray read_buf;
     int c_port;
 };
 

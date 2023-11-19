@@ -76,6 +76,8 @@ void ReApacheCl::write(QString data)
     {
         live->start(RE_LIVE);//don't send live
         QByteArray data_b(data.toStdString().c_str());
+        data_b.prepend(FA_START_PACKET);
+        data_b.append(FA_END_PACKET);
         con->write(data_b);
         con->waitForBytesWritten(50);
         live->start(RE_LIVE);//don't send live
@@ -130,7 +132,9 @@ void ReApacheCl::liveTimeout()
 
 void ReApacheCl::tcpReadyRead()
 {
-    QByteArray data = con->readAll();
+    read_buf += con->readAll();
+    QString data = processBuffer();
+
     watchdog->start(RE_WATCHDOG);
 //    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
 
@@ -143,5 +147,33 @@ void ReApacheCl::tcpReadyRead()
         data.replace(FA_LIVE_PACKET, "");
     }
 
+    if( data.isEmpty() )
+    {
+        return;
+    }
+
     emit readyRead(data);
+}
+
+QByteArray ReApacheCl::processBuffer()
+{
+    if( read_buf.contains(FA_START_PACKET)==0 )
+    {
+        return "";
+    }
+    if( read_buf.contains(FA_END_PACKET)==0 )
+    {
+        return "";
+    }
+    int start_index = read_buf.indexOf(FA_START_PACKET);
+    start_index += strlen(FA_START_PACKET);
+    read_buf.remove(0, start_index);
+
+    int end_index = read_buf.indexOf(FA_END_PACKET);
+    QByteArray data = read_buf.mid(0, end_index);
+
+    end_index += strlen(FA_END_PACKET);
+    read_buf.remove(0, end_index);
+
+    return data;
 }
