@@ -100,7 +100,7 @@ void ReChannelW::createPipe()
     {
         qDebug(PIPE_PATH"Failed");
     }
-    qDebug() << PIPE_PATH << "pipe Created";
+//    qDebug() << PIPE_PATH << "pipe Created";
 }
 
 void ReChannelW::processCommand(QString k_type, QString k_code)

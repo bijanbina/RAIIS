@@ -10,7 +10,8 @@ ReXboxWin32::ReXboxWin32(QObject *parent) : QObject(parent)
 
     if(hXboxDll == NULL)
     {
-        qDebug() << "Could not load xinput1_3. Windows 10 detected trying xinput1_4.";
+//        qDebug() << "Could not load xinput1_3."
+//                 << "Windows 10 detected trying xinput1_4.";
 
         hXboxDll = LoadLibraryA("C:/Windows/System32/xinput1_4.dll");
 

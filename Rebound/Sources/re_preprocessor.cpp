@@ -18,9 +18,9 @@ void RePreProcessor::execute()
 {
     if( cmd_buf.length() )
     {
-        qDebug() << QTime::currentTime().toString("mm:ss:zzz") <<
-                    "exec" << commands_str << special_c
-                 << cmd_buf.last().val2;
+//        qDebug() << QTime::currentTime().toString("mm:ss:zzz")
+//                 << "exec" << commands_str << special_c
+//                 << cmd_buf.last().val2;
 
         if( "jordan arch"==commands_str )
         {
@@ -193,7 +193,6 @@ void RePreProcessor::dirs(const QString &text) // direction keys
     }
     else if( re_isLastMeta(cmd_buf) )
     {
-        qDebug() << "cmd_buf[last_i].val3";
         int last_i = cmd_buf.count()-1; //last index
         cmd_buf[last_i].val2 = text.toInt();
         execute();

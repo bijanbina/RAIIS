@@ -30,9 +30,9 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     connect(this, SIGNAL(startChannel()),
             window, SLOT(start()));
 
-    controller = new ReXboxW(state);
-    connect(controller, SIGNAL(requstSuspend()),
-            this, SLOT(requstSuspend()));
+//    controller = new ReXboxW(state);
+//    connect(controller, SIGNAL(requstSuspend()),
+//            this, SLOT(requstSuspend()));
 
     channel = new ReChannelW(captain);
     channel_thread = new QThread();
@@ -59,33 +59,33 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     connect(channel, SIGNAL(sendRemote(QString)),
             remote, SLOT(send(QString)));
 
-    connect(controller, SIGNAL(buttonAPressed()), buttons, SLOT(buttonAPressed()));
-    connect(controller, SIGNAL(buttonBPressed()), buttons, SLOT(buttonBPressed()));
-    connect(controller, SIGNAL(buttonXPressed()), buttons, SLOT(buttonXPressed()));
-    connect(controller, SIGNAL(buttonYPressed()), buttons, SLOT(buttonYPressed()));
-    connect(controller, SIGNAL(buttonGuidePressed()) , buttons, SLOT(buttonGuidePressed()));
-    connect(controller, SIGNAL(buttonSelectPressed()), buttons, SLOT(buttonSelectPressed()));
-    connect(controller, SIGNAL(buttonStartPressed()) , buttons, SLOT(buttonStartPressed()));
+//    connect(controller, SIGNAL(buttonAPressed()), buttons, SLOT(buttonAPressed()));
+//    connect(controller, SIGNAL(buttonBPressed()), buttons, SLOT(buttonBPressed()));
+//    connect(controller, SIGNAL(buttonXPressed()), buttons, SLOT(buttonXPressed()));
+//    connect(controller, SIGNAL(buttonYPressed()), buttons, SLOT(buttonYPressed()));
+//    connect(controller, SIGNAL(buttonGuidePressed()) , buttons, SLOT(buttonGuidePressed()));
+//    connect(controller, SIGNAL(buttonSelectPressed()), buttons, SLOT(buttonSelectPressed()));
+//    connect(controller, SIGNAL(buttonStartPressed()) , buttons, SLOT(buttonStartPressed()));
 
-    connect(controller, SIGNAL(buttonL1Pressed()), bumpers, SLOT(buttonL1Pressed()));
-    connect(controller, SIGNAL(buttonL2Pressed()), bumpers, SLOT(buttonL2Pressed()));
-    connect(controller, SIGNAL(buttonR1Pressed()), bumpers, SLOT(buttonR1Pressed()));
-    connect(controller, SIGNAL(buttonR2Pressed()), bumpers, SLOT(buttonR2Pressed()));
+//    connect(controller, SIGNAL(buttonL1Pressed()), bumpers, SLOT(buttonL1Pressed()));
+//    connect(controller, SIGNAL(buttonL2Pressed()), bumpers, SLOT(buttonL2Pressed()));
+//    connect(controller, SIGNAL(buttonR1Pressed()), bumpers, SLOT(buttonR1Pressed()));
+//    connect(controller, SIGNAL(buttonR2Pressed()), bumpers, SLOT(buttonR2Pressed()));
 
-    connect(controller, SIGNAL(buttonRightPressed()), directions, SLOT(buttonRightPressed()));
-    connect(controller, SIGNAL(buttonDownPressed()) , directions, SLOT(buttonDownPressed()));
-    connect(controller, SIGNAL(buttonLeftPressed()) , directions, SLOT(buttonLeftPressed()));
-    connect(controller, SIGNAL(buttonUpPressed())   , directions, SLOT(buttonUpPressed()));
+//    connect(controller, SIGNAL(buttonRightPressed()), directions, SLOT(buttonRightPressed()));
+//    connect(controller, SIGNAL(buttonDownPressed()) , directions, SLOT(buttonDownPressed()));
+//    connect(controller, SIGNAL(buttonLeftPressed()) , directions, SLOT(buttonLeftPressed()));
+//    connect(controller, SIGNAL(buttonUpPressed())   , directions, SLOT(buttonUpPressed()));
 
-    connect(controller, SIGNAL(buttonLAxisRight()) , laxis, SLOT(buttonRightPressed()));
-    connect(controller, SIGNAL(buttonLAxisDown())  , laxis, SLOT(buttonDownPressed()));
-    connect(controller, SIGNAL(buttonLAxisLeft())  , laxis, SLOT(buttonLeftPressed()));
-    connect(controller, SIGNAL(buttonLAxisUp())    , laxis, SLOT(buttonUpPressed()));
+//    connect(controller, SIGNAL(buttonLAxisRight()) , laxis, SLOT(buttonRightPressed()));
+//    connect(controller, SIGNAL(buttonLAxisDown())  , laxis, SLOT(buttonDownPressed()));
+//    connect(controller, SIGNAL(buttonLAxisLeft())  , laxis, SLOT(buttonLeftPressed()));
+//    connect(controller, SIGNAL(buttonLAxisUp())    , laxis, SLOT(buttonUpPressed()));
 
-    connect(controller, SIGNAL(buttonRAxisRight()) , raxis, SLOT(buttonRightPressed()));
-    connect(controller, SIGNAL(buttonRAxisDown())  , raxis, SLOT(buttonDownPressed()));
-    connect(controller, SIGNAL(buttonRAxisLeft())  , raxis, SLOT(buttonLeftPressed()));
-    connect(controller, SIGNAL(buttonRAxisUp())    , raxis, SLOT(buttonUpPressed()));
+//    connect(controller, SIGNAL(buttonRAxisRight()) , raxis, SLOT(buttonRightPressed()));
+//    connect(controller, SIGNAL(buttonRAxisDown())  , raxis, SLOT(buttonDownPressed()));
+//    connect(controller, SIGNAL(buttonRAxisLeft())  , raxis, SLOT(buttonLeftPressed()));
+//    connect(controller, SIGNAL(buttonRAxisUp())    , raxis, SLOT(buttonUpPressed()));
 
     connect(state, SIGNAL(updateMode()), this, SLOT(updateMode()));
 }

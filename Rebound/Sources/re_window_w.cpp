@@ -415,7 +415,6 @@ void ReWindowW::updateActiveWindow()
 
 void ReWindowW::start()
 {
-    qDebug() << "thread start";
     CoUninitialize();
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
 

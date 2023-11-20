@@ -16,9 +16,9 @@ static BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdc, LPRECT lprcMoni
     }
 
     int isPrimary = mi.dwFlags;
-    qDebug() << "is primary ="
-             << isPrimary
-             << mi.szDevice;
+//    qDebug() << "is primary ="
+//             << isPrimary
+//             << mi.szDevice;
     if( isPrimary )
     {
         mon->primary.x = mi.rcWork.left;

@@ -18,12 +18,12 @@ ReWin32Virt::ReWin32Virt(QObject *parent): QObject(parent)
                         CLSID_ImmersiveShell, NULL, CLSCTX_LOCAL_SERVER,
                         __uuidof(IServiceProvider), (PVOID*)&pServiceProvider);
 
-    qDebug() << "S_OK" << S_OK << hr;
+//    qDebug() << "S_OK" << S_OK << hr;
     hr = pServiceProvider->QueryService(CLSID_VirtualDesktopAPI_Unknown,
                                         IID_IVirtualDesktopManagerInternal,
                                         (void **)&pDesktopManager);
 
-    qDebug() << "S_OK" << S_OK << hr;
+//    qDebug() << "S_OK" << S_OK << hr;
     pServiceProvider->Release();
 
     updateGUID();
