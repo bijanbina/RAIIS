@@ -28,6 +28,8 @@ void updateScreenInfo(QObject *item);
 
 int isItemVisible(QObject *item);
 
+QString getDiffTime(clock_t start);
+
 #ifdef _WIN32
 void executeAhk(QString name);
 void executScript(QString name, int id);

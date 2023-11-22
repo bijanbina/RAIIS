@@ -12,8 +12,8 @@
 #include "backend.h"
 
 #define FA_LIVE_PACKET  "--Live--"
-#define FA_START_PACKET "<START>\n"
-#define FA_END_PACKET   "\n<END>\n"
+#define FA_START_PACKET "<START>\r\n"
+#define FA_END_PACKET   "\r\n<END>\r\n"
 
 class ReApacheCl : public QObject
 {
@@ -35,7 +35,7 @@ public slots:
     void tcpConnected();
     void tcpReadyRead();
     void tcpDisplayError(QAbstractSocket::SocketError socketError);
-    void reconnect();
+    void disconnected();
     void watchdogTimeout();
     void liveTimeout();
 
@@ -46,6 +46,7 @@ private:
 
     QString c_ip;
     QByteArray read_buf;
+    clock_t start_of_app;
     int c_port;
 };
 

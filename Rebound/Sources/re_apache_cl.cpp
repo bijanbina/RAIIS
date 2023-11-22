@@ -11,7 +11,7 @@ ReApacheCl::ReApacheCl(QObject *parent): QObject(parent)
     connect(con, SIGNAL(error(QAbstractSocket::SocketError)),
             this, SLOT(tcpDisplayError(QAbstractSocket::SocketError)));
     connect(con, SIGNAL(disconnected()),
-            this, SLOT(reconnect()));
+            this, SLOT(disconnected()));
 
     live = new QTimer;
     watchdog = new QTimer;
@@ -20,6 +20,8 @@ ReApacheCl::ReApacheCl(QObject *parent): QObject(parent)
             this, SLOT(liveTimeout()));
     connect(watchdog, SIGNAL(timeout()),
             this, SLOT(watchdogTimeout()));
+
+    start_of_app = clock();
 
 //#ifdef RE_REMOTE
 //    connection->connectToHost(QHostAddress(RE_CIP), RE_CPORT1 );
@@ -41,33 +43,38 @@ void ReApacheCl::start(QString ip, int port)
 {
     c_ip = ip;
     c_port = port;
+    con->setSocketOption(QAbstractSocket::LowDelayOption, 1);
     con->connectToHost(QHostAddress(c_ip), c_port);
 }
 
 void ReApacheCl::tcpConnected()
 {
-    qDebug() << "Remote: Connected";
-    con->setSocketOption(QAbstractSocket::LowDelayOption, 1);
-    live->start(RE_LIVE);
-    watchdog->start(RE_WATCHDOG);
-
-    emit connected();
+    if( con->state()==QAbstractSocket::ConnectedState )
+    { //Qt Bug: This code executed even wo any real connection
+        qDebug() << "Remote: Connected";
+        live->start(RE_LIVE);
+        watchdog->start(RE_WATCHDOG);
+        emit connected();
+    }
 }
 
 void ReApacheCl::tcpDisplayError(QAbstractSocket::SocketError
                               socketError)
  {
-     if( socketError==QTcpSocket::RemoteHostClosedError )
-     {
-         return;
-     }
+    qDebug() << "ReApacheCl::Error" << con->errorString();
 
-     qDebug() << "ReApacheCl::Error" << con->errorString();
-
-     if( socketError==QTcpSocket::ConnectionRefusedError )
-     {
-         reconnect();
-     }
+    con->close();
+    live->stop();
+    watchdog->start(RE_RECONNECT);
+    if( con->state()!=QTcpSocket::UnconnectedState )
+    {
+        con->waitForDisconnected();
+        con->abort();
+    }
+    if( socketError==QTcpSocket::RemoteHostClosedError )
+    {
+        return;
+    }
 }
 
 void ReApacheCl::write(QString data)
@@ -84,28 +91,30 @@ void ReApacheCl::write(QString data)
     }
 }
 
-void ReApacheCl::reconnect()
+// also calls watchdog close the connection
+void ReApacheCl::disconnected()
 {
-    qDebug() << "ReApacheCl::reconnect: Trying to reconnect";
-    con->connectToHost(QHostAddress(c_ip), c_port);
+    qDebug() << "ReApacheCl::disconnected";
 }
 
 // connection lost, drop connection and reconnect
 void ReApacheCl::watchdogTimeout()
 {
-    if( con->isOpen() )
+    if( con->state()==QAbstractSocket::ConnectedState )
     {
-        qDebug() << "ReApacheCl::watchdogTimeout: connection dropped:"
+        qDebug() << getDiffTime(start_of_app)
+                 << "ReApacheCl::watchdogTimeout: connection dropped:"
                  << con->state();
-        watchdog->stop();
+        watchdog->start(RE_RECONNECT);
         live->stop();
 
-        // in disconnect it will try to reconnect
         con->close();
+        con->waitForDisconnected();
+        con->connectToHost(QHostAddress(c_ip), c_port);
     }
-    else
+    else if( con->state()!=QAbstractSocket::ConnectingState )
     {
-        qDebug() << "Remote: watchdog, tcpClient is closed";
+        con->connectToHost(QHostAddress(c_ip), c_port);
     }
 }
 
@@ -116,12 +125,13 @@ void ReApacheCl::liveTimeout()
     {
         if( con->state()==QAbstractSocket::ConnectedState )
         {
-            con->write(FA_LIVE_PACKET);
+            write(FA_LIVE_PACKET);
         }
         else
         {
             qDebug() << "ReApacheCl::liveTimeout: not connected, State:"
                      << con->state();
+            live->stop();
         }
     }
     else

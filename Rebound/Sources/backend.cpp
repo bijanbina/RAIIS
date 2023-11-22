@@ -107,6 +107,16 @@ int isItemVisible(QObject *item)
     }
 }
 
+QString getDiffTime(clock_t start)
+{
+    QString ret;
+    clock_t end = clock();
+    double cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    ret  = QString::number(qRound(cpu_time_used*1000));
+    ret += "ms";
+    return  ret;
+}
+
 #ifdef WIN32
 
 void executeAhk(QString name)
