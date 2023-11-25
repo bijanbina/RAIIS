@@ -46,7 +46,6 @@ private:
 
     QString c_ip;
     QByteArray read_buf;
-    clock_t start_of_app;
     int c_port;
 };
 

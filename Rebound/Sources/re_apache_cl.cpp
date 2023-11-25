@@ -20,14 +20,6 @@ ReApacheCl::ReApacheCl(QObject *parent): QObject(parent)
             this, SLOT(liveTimeout()));
     connect(watchdog, SIGNAL(timeout()),
             this, SLOT(watchdogTimeout()));
-
-    start_of_app = clock();
-
-//#ifdef RE_REMOTE
-//    connection->connectToHost(QHostAddress(RE_CIP), RE_CPORT1 );
-//#else
-//    connection->connectToHost(QHostAddress(RE_CIP), RE_CPORT0 );
-//#endif
 }
 
 ReApacheCl::~ReApacheCl()
@@ -102,8 +94,7 @@ void ReApacheCl::watchdogTimeout()
 {
     if( con->state()==QAbstractSocket::ConnectedState )
     {
-        qDebug() << getDiffTime(start_of_app)
-                 << "ReApacheCl::watchdogTimeout: connection dropped:"
+        qDebug() << "ReApacheCl::watchdogTimeout: connection dropped:"
                  << con->state();
         watchdog->start(RE_RECONNECT);
         live->stop();
@@ -136,7 +127,8 @@ void ReApacheCl::liveTimeout()
     }
     else
     {
-        qDebug() << "Remote: live, tcpClient is closed";
+        qDebug() << "ReApacheCl::liveTimeout: socket is closed";
+        live->stop();
     }
 }
 
@@ -146,7 +138,7 @@ void ReApacheCl::tcpReadyRead()
     QString data = processBuffer();
 
     watchdog->start(RE_WATCHDOG);
-//    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
+    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
 
     if( data==FA_LIVE_PACKET )
     {

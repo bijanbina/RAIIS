@@ -300,7 +300,7 @@ long mm_getPid(HWND hWnd)
     // get allegro pid of window handle
     DWORD dwProcessId;
     GetWindowThreadProcessId(hWnd, &dwProcessId);
-    if(long(dwProcessId) < 0)
+    if( dwProcessId<0 )
     {
         qDebug() <<"Warning: couldn't get pid of allegro from window handle";
         return -1;
@@ -311,20 +311,32 @@ long mm_getPid(HWND hWnd)
 QString mm_getPName(long pid)
 {
     HANDLE processHandle = NULL;
-//    processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
     processHandle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
-    if(processHandle == NULL)
+    if( processHandle==NULL )
     {
-        qDebug() << "Warning: couldn't get process handle from pid" << pid;
+//        qDebug() << "Warning: couldn't get process handle from pid" << pid;
         return "";
     }
 
     // get name of process handle
-    char filename[MAX_PATH];
-    if(GetProcessImageFileNameA(processHandle, filename, MAX_PATH) == 0)
+    char path_buff[MAX_PATH];
+    if( GetModuleFileNameExA(processHandle, NULL, path_buff, MAX_PATH)==0 )
     {
-//        qDebug("Warning: couldn't get name of process handle");
+        qDebug() << "Error" << GetLastError() << " : Fail to get Pname of " << pid;
         return "";
     }
-    return QString(filename);
+
+    // resolve short 8.3 format and get rid of ~
+    char path_r[MAX_PATH];
+    if( GetLongPathNameA(path_buff, path_r, MAX_PATH)==0 )
+    {
+        qDebug() << "Error" << GetLastError();
+    }
+
+    QString path_q = path_r; //process filename
+    QStringList path_list = path_q.split("\\", QString::SkipEmptyParts);
+    QString filename = path_list.last();
+    filename.remove(".exe");
+//    qDebug() << "path_buff" << path_q;
+    return filename;
 }
