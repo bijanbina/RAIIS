@@ -1,5 +1,6 @@
 #include "re_window_w.h"
 #include "backend.h"
+#include "mm_api.h"
 
 #define re_state_mode thread_data->state->i_mode
 
@@ -68,7 +69,7 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
                 ReWindow current_win;
                 current_win.hWnd = hwnd;
                 current_win.title = buffer;
-                current_win.pname = reGetPName(reGetPid(hwnd));
+                current_win.pname = mm_getPName(mm_getPid(hwnd));
                 current_win.verify = 1; //always new windows are verified
 //                current_win.title = thread_w->cleanTitle(current_win.title);
 
@@ -387,8 +388,8 @@ void ReWindowW::updateActiveWindow()
     win_active.title = buffer;
     re_getType(&win_active);
 
-    win_active.pid = reGetPid(win_active.hWnd);
-    win_active.pname = reGetPName(win_active.pid);
+    win_active.pid = mm_getPid(win_active.hWnd);
+    win_active.pname = mm_getPName(win_active.pid);
     state->updateApp(win_active);
 
     if( win_active.pname=="rustdesk" &&
