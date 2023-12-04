@@ -8,7 +8,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     ui = item;
     uiSwitcher = switcher;
 
-    api   = new ReApi;
     state = new ReState;
     bumpers = new ReBumpers(ui, switcher, state);
     buttons = new ReButtons(ui, switcher, state);
@@ -23,8 +22,8 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     window_thread = new QThread();
     window->moveToThread(window_thread);
     window_thread->start();
-    window->wins_title = &(state->api->wins_title);
-    window->elems_name = &(state->api->elems_name);
+    window->wins_title = &(state->wins_title);
+    window->elems_name = &(state->elems_name);
     window->key = captain->key;
 
     connect(this, SIGNAL(startChannel()),
@@ -58,62 +57,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     remote = new ReRemote(channel->pre);
     connect(channel, SIGNAL(sendRemote(QString)),
             remote, SLOT(send(QString)));
-
-//    connect(controller, SIGNAL(buttonAPressed()), buttons, SLOT(buttonAPressed()));
-//    connect(controller, SIGNAL(buttonBPressed()), buttons, SLOT(buttonBPressed()));
-//    connect(controller, SIGNAL(buttonXPressed()), buttons, SLOT(buttonXPressed()));
-//    connect(controller, SIGNAL(buttonYPressed()), buttons, SLOT(buttonYPressed()));
-//    connect(controller, SIGNAL(buttonGuidePressed()) , buttons, SLOT(buttonGuidePressed()));
-//    connect(controller, SIGNAL(buttonSelectPressed()), buttons, SLOT(buttonSelectPressed()));
-//    connect(controller, SIGNAL(buttonStartPressed()) , buttons, SLOT(buttonStartPressed()));
-
-//    connect(controller, SIGNAL(buttonL1Pressed()), bumpers, SLOT(buttonL1Pressed()));
-//    connect(controller, SIGNAL(buttonL2Pressed()), bumpers, SLOT(buttonL2Pressed()));
-//    connect(controller, SIGNAL(buttonR1Pressed()), bumpers, SLOT(buttonR1Pressed()));
-//    connect(controller, SIGNAL(buttonR2Pressed()), bumpers, SLOT(buttonR2Pressed()));
-
-//    connect(controller, SIGNAL(buttonRightPressed()), directions, SLOT(buttonRightPressed()));
-//    connect(controller, SIGNAL(buttonDownPressed()) , directions, SLOT(buttonDownPressed()));
-//    connect(controller, SIGNAL(buttonLeftPressed()) , directions, SLOT(buttonLeftPressed()));
-//    connect(controller, SIGNAL(buttonUpPressed())   , directions, SLOT(buttonUpPressed()));
-
-//    connect(controller, SIGNAL(buttonLAxisRight()) , laxis, SLOT(buttonRightPressed()));
-//    connect(controller, SIGNAL(buttonLAxisDown())  , laxis, SLOT(buttonDownPressed()));
-//    connect(controller, SIGNAL(buttonLAxisLeft())  , laxis, SLOT(buttonLeftPressed()));
-//    connect(controller, SIGNAL(buttonLAxisUp())    , laxis, SLOT(buttonUpPressed()));
-
-//    connect(controller, SIGNAL(buttonRAxisRight()) , raxis, SLOT(buttonRightPressed()));
-//    connect(controller, SIGNAL(buttonRAxisDown())  , raxis, SLOT(buttonDownPressed()));
-//    connect(controller, SIGNAL(buttonRAxisLeft())  , raxis, SLOT(buttonLeftPressed()));
-//    connect(controller, SIGNAL(buttonRAxisUp())    , raxis, SLOT(buttonUpPressed()));
-
-    connect(state, SIGNAL(updateMode()), this, SLOT(updateMode()));
-}
-
-QString ReChapar::getShortTitle(int index)
-{
-    QString title = api->getWinTitle(index);
-
-    for ( int i=0 ; i<title.length() ; i++ )
-    {
-        if ( title[i].unicode()==65533 )
-        {
-            return title.left(i);
-        }
-    }
-
-    if ( title.length()>20 )
-    {
-        qDebug() << title[19].unicode() << title[18] << title[17];
-        return  title.left(20);
-    }
-
-    return title;
-}
-
-void ReChapar::updateMode()
-{
-
 }
 
 void ReChapar::requstSuspend()

@@ -91,7 +91,7 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
                 }
                 else
                 {
-                    re_setWindowOpacity(hwnd, 200);
+                    re_setWindowOpacity(hwnd, 255);
                 }
             }
             else
@@ -113,100 +113,8 @@ ReWindowW::ReWindowW(ReState *st)
     state = st;
 }
 
-void re_getType(ReWindow *win)
-{
-    char buffer[128];
-    GetClassNameA(win->hWnd, buffer, 128);
-    QString class_name = buffer;
-
-    if( class_name.contains("Clover_WidgetWin") )
-    {
-        HWND ret = NULL;
-        EnumChildWindows(win->hWnd, EnumChildProc, (LPARAM) &ret);
-        win->hWnd = ret;
-        win->type = RE_WIN_EXPLORER;
-
-        if ( win->title.contains(" - Clover"))
-        {
-            QString title = "Explor: ";
-            title += win->title.split(" - Clover").at(0);
-            win->title = title;
-        }
-    }
-    else if( class_name.contains("Qt") && class_name.contains("QWindowIcon") )
-    {
-        win->type = RE_WIN_QT;
-
-        if ( win->title.contains(" - Qt Creator"))
-        {
-            QString title = "Qt Cre: ";
-            title += win->title.split(" (").at(0);
-            win->title = title;
-        }
-    }
-    else if( class_name.contains("Chrome_WidgetWin") )
-    {
-        if ( win->pname.contains("Spotify.exe") )
-        {
-            win->type = RE_WIN_SPOTIFY;
-
-            QString title = "Spotiy: ";
-            title += win->title;
-            win->title = title;
-        }
-        else if ( win->pname.contains("atom.exe") )
-        {
-            win->type = RE_WIN_TEXTEDITOR;
-
-            QString title = "Atom : ";
-            title += win->title.split("\ufffd").at(0);
-            win->title = title;
-        }
-        else
-        {
-            win->type = RE_WIN_UNKNOWN;
-            if( win_thread_debug )
-            {
-                qDebug() << class_name << win->pname;
-            }
-        }
-    }
-    else if( class_name.contains("MozillaWindowClass") )
-    {
-        win->type = RE_WIN_FIREFOX;
-        if ( win->title.contains(" - YouTube"))
-        {
-            win->type = RE_WIN_YOUTUBE;
-        }
-
-        QString title = "Firef : ";
-        title += win->title.split("\ufffd").at(0);
-        win->title = title;
-    }
-    else if( class_name.contains("ConsoleWindowClass") )
-    {
-        win->type = RE_WIN_TERMINAL;
-
-        QString title = "CMD  : ";
-        title += win->title.split("\ufffd").at(0);
-//        win->title = title;
-
-    }
-    else
-    {
-        win->type = RE_WIN_UNKNOWN;
-        if( win_thread_debug )
-        {
-            qDebug() << class_name << win->pname;
-        }
-    }
-}
-
 void re_InsertWindow(ReWindowW *thread_w, ReWindow win)
 {
-    //Get clover child
-    re_getType(&win);
-
     //push active window to front
     if( win.hWnd==thread_w->win_active.hWnd )
     {
@@ -386,8 +294,6 @@ void ReWindowW::updateActiveWindow()
     GetWindowTextA(win_active.hWnd, buffer, 128);
 
     win_active.title = buffer;
-    re_getType(&win_active);
-
     win_active.pid = mm_getPid(win_active.hWnd);
     win_active.pname = mm_getPName(win_active.pid);
     state->updateApp(win_active);

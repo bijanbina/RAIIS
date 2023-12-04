@@ -11,7 +11,6 @@
     #ifdef RE_TEST_EN
         #include "re_client.h"
     #endif
-    #include "re_api_w.h"
 #endif
 
 #ifdef __linux__
@@ -67,13 +66,11 @@ public:
                       QObject *parent = nullptr);
 
     void setPage(RePage page);
-    QString getShortTitle(int index);
 
 signals:
     void startChannel();
 
 private slots:
-    void updateMode();
     void requstSuspend();
 
 private:
@@ -88,7 +85,6 @@ private:
 
     ReCaptain *captain;
     ReRemote  *remote;
-    ReApi     *api;
 #ifdef _WIN32
     ReXboxW *controller;
     ReWindowW *window;

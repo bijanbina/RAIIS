@@ -55,7 +55,6 @@ private:
 };
 
 void re_AddHwnd(HWND hwnd, ReWindowW *thread_w);
-void re_getType(ReWindow *win);
 void re_InsertWindow(ReWindowW *thread_w, ReWindow win);
 
 int reSelectButton(QString name);

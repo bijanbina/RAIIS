@@ -2,7 +2,6 @@
 #define RE_COMMANDS_H
 
 #ifdef _WIN32
-#include "re_api_w.h"
 #include "re_hardware_w.h"
 #include "re_keyboard_w.h"
 #endif
@@ -70,13 +69,11 @@ typedef struct ReWindow
 {
     // Verify Clear On Each Enumeration To
     int  verify; //verify hwnd still exist
-    int  type;
     QString title;
     QString pname;
     int pid;
 #ifdef _WIN32
     HWND hWnd;
-    IAccessible *pAcc;
 #endif
 #ifdef __linux__
     unsigned long hWnd;

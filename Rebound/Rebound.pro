@@ -39,7 +39,6 @@ SOURCES += Sources/main.cpp \
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/mm_api.cpp \
-                 Sources/re_api_w.cpp \
                  Sources/re_admin_win.cpp \
                  Sources/re_channel_w.cpp \
                  Sources/re_hardware_w.cpp \
@@ -92,7 +91,7 @@ HEADERS += Sources/backend.h \
            Sources/re_status_file.h \
            Sources/re_super.h
 
-win32:HEADERS += Sources/re_api_w.h \
+win32:HEADERS += \
                  Sources/mm_api.h \
                  Sources/re_app_w.h \
                  Sources/re_admin_win.h \

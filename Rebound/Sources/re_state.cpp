@@ -7,7 +7,6 @@ ReState::ReState(QObject *parent) : QObject(parent)
     fl = new ReFirefox;
 
 #ifdef _WIN32
-    api = new ReApi;
     hardware   = new ReHardwareW;
     pipe_chess = connectChessPipe(CH_PIPE_PATH);
     pipe_mom   = connectChessPipe(CH_PIPE_MOM);
@@ -22,7 +21,6 @@ ReState::~ReState()
     delete fl;
 
 #ifdef _WIN32
-    delete api;
     delete hardware;
 #endif
 }
@@ -46,7 +44,6 @@ void ReState::readStatusFile()
 void ReState::toggleUi(QObject *item)
 {
     i_mode = RE_MODE_MAIN;
-    emit updateMode();
 
     QMetaObject::invokeMethod(item, "uiToggle");
     ui_visible = QQmlProperty::read(item, "visible").toInt();

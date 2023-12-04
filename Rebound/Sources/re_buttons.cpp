@@ -23,14 +23,10 @@ void ReButtons::buttonAPressed()
     {
         if ( state->i_mode==RE_MODE_APPLICATION )
         {
-            state->toggleUi(ui);
-            state->api->openApp(RE_WIN_TELEGRAM);
-            qDebug() << "openApp";
         }
         else
         {
             state->i_mode = RE_MODE_APPLICATION;
-            emit state->updateMode();
         }
     }
     else
@@ -63,7 +59,6 @@ void ReButtons::buttonBPressed()
          else
          {
              state->i_mode = RE_MODE_SPOTIFY;
-             emit state->updateMode();
          }
     }
     else
@@ -78,9 +73,6 @@ void ReButtons::buttonXPressed()
     {
         if ( state->i_mode==RE_MODE_APPLICATION )
         {
-            state->toggleUi(ui);
-            state->api->openApp(RE_WIN_FIREFOX);
-            qDebug() << "openApp";
         }
         else if ( state->i_mode==RE_MODE_SPOTIFY )
         {
@@ -105,9 +97,6 @@ void ReButtons::buttonYPressed()
     {
         if ( state->i_mode==RE_MODE_APPLICATION )
         {
-            state->toggleUi(ui);
-            state->api->openApp(RE_WIN_SPOTIFY);
-            qDebug() << "openApp";
         }
         else if ( state->i_mode==RE_MODE_SPOTIFY )
         {
@@ -116,7 +105,6 @@ void ReButtons::buttonYPressed()
         else
         {
             state->i_mode = RE_MODE_SWITCH;
-            emit state->updateMode();
         }
     }
     else

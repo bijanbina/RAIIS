@@ -42,7 +42,6 @@ public:
 #ifdef _WIN32
     HANDLE connectChessPipe(const char *pipe_name);
 
-    ReApi *api;
     ReHardwareW *hardware;
     HANDLE pipe_chess;
     HANDLE pipe_mom;
@@ -56,13 +55,12 @@ public:
     bool drag_state = 0;
     int  ch_count  = 0; //Chess Count
     int  utube_mode  = 0;
+    QStringList wins_title;
+    QStringList elems_name;
     ReWindow app; //Active Window
     CCommand last_cmd;
     ReFirefox *fl;
     ChMonitor *mon;
-
-signals:
-    void updateMode();
 };
 
 #endif // RE_STATE_H
