@@ -154,4 +154,8 @@ void ReChannelW::processCommand(QString k_type, QString k_code)
     {
         emit modifier(k_code);
     }
+    else if( k_type=="wake" )
+    {
+        captain->state->wakeUp();
+    }
 }

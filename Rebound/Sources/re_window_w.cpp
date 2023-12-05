@@ -78,7 +78,7 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
                 if( current_win.pname=="Chess" ||
                     current_win.pname=="rustdesk" ||
                     current_win.title=="Qt Creator" ||
-                    current_win.title=="AnyDesk" ||
+                    current_win.pname=="AnyDesk" ||
                     current_win.pname=="NLClientApp" )
                 {
                     return;

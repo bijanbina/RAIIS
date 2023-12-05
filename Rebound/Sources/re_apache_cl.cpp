@@ -138,7 +138,7 @@ void ReApacheCl::tcpReadyRead()
     QString data = processBuffer();
 
     watchdog->start(RE_WATCHDOG);
-    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
+//    qDebug() << "ReApacheCl::tcpReadyRead()" << data;
 
     if( data==FA_LIVE_PACKET )
     {

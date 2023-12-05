@@ -40,10 +40,10 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
 #endif
 
     apache = new ReApacheCl;
-    connect(apache, SIGNAL(readyRead(QString)),
-            this, SLOT(readyRead(QString)));
 
 #ifdef RE_REMOTE
+    connect(apache, SIGNAL(readyRead(QString)),
+            this, SLOT(readyRead(QString)));
     apache->start(RE_CIP, RE_CPORT1);
 #else
     apache->start(RE_CIP, RE_CPORT0);
@@ -234,7 +234,7 @@ int ReRemote::procChess(QString word)
     {
         val = 113;
     }
-    else if( word=="resist" )
+    else if( word=="touch" )
     {
         val = 111;
     }
