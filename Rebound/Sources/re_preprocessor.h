@@ -23,7 +23,6 @@ public slots:
     void dirs (const QString &arg);
     void nato (const QString &arg);
     void meta (const QString &arg);
-    void apps (const QString &arg);
     void type (const QString &arg); //No Repeat on LastCmd
     void spex (const QString &arg); //special
     void super(const QString &arg); //single shot meta cmd

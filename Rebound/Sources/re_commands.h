@@ -57,14 +57,6 @@
 #define RE_SUPER_SHOT    116
 #define RE_SUPER_MAGIC   117
 
-#define RE_APP_FIREFOX  301
-#define RE_APP_FILES    302
-#define RE_APP_SPOTIFY  303
-#define RE_APP_ATOM     304
-#define RE_APP_DING     305 //fox ding
-#define RE_APP_LINK     306 //fox link
-#define RE_APP_SLEEP    307 //go sleep
-
 typedef struct ReWindow
 {
     // Verify Clear On Each Enumeration To

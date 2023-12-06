@@ -58,14 +58,7 @@ CCommand ReMeta::castMeta(int meta, int arg)
     }
     else if( meta==RE_META_GO )
     {
-        if( arg==RE_APP_SLEEP )
-        {
-            state->goToSleep();
-        }
-        else
-        {
-            castGoCmd(arg, &cmd);
-        }
+        state->last_cmd.type = RE_COMMAND_NULL;
     }
     else if( meta==RE_META_SKY ||
              meta==RE_META_DIVE )
@@ -335,11 +328,6 @@ void ReMeta::execScrollCmd(int meta, int val)
     }
 
     state->enScroll(meta, val);
-}
-
-void ReMeta::castGoCmd(int val, CCommand *cmd)
-{
-    state->last_cmd.type = RE_COMMAND_NULL;
 }
 
 void ReMeta::castPageCmd(int val, CCommand *cmd)

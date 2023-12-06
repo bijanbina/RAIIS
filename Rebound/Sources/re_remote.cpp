@@ -19,8 +19,6 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
             pre, SLOT(nato(QString)));
     connect(this, SIGNAL(meta(QString)),
             pre, SLOT(meta(QString)));
-    connect(this, SIGNAL(apps(QString)),
-            pre, SLOT(apps(QString)));
     connect(this, SIGNAL(spex(QString)),
             pre, SLOT(spex(QString)));
     connect(this, SIGNAL(type(QString)),
@@ -143,10 +141,6 @@ void ReRemote::processCommand(QString k_type, QString k_code)
     else if( k_type=="meta" )
     {
         emit meta(k_code);
-    }
-    else if( k_type=="apps" )
-    {
-        emit apps(k_code);
     }
     else if( k_type=="spex" )
     {

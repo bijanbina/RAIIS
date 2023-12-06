@@ -12,7 +12,6 @@ ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent)
     connect(this, SIGNAL(dirs(const QString &)), pre, SLOT(dirs(const QString &)));
     connect(this, SIGNAL(nato(QString)), pre, SLOT(nato(QString)));
     connect(this, SIGNAL(meta(QString)), pre, SLOT(meta(QString)));
-    connect(this, SIGNAL(apps(QString)), pre, SLOT(apps(QString)));
     connect(this, SIGNAL(spex(QString)), pre, SLOT(spex(QString)));
     connect(this, SIGNAL(type(QString)), pre, SLOT(type(QString)));
     connect(this, SIGNAL(super(QString)), pre, SLOT(super(QString)));
@@ -125,10 +124,6 @@ void ReChannelW::processCommand(QString k_type, QString k_code)
     else if( k_type=="meta" )
     {
         emit meta(k_code);
-    }
-    else if( k_type=="apps" )
-    {
-        emit apps(k_code);
     }
     else if( k_type=="spex" )
     {

@@ -31,7 +31,6 @@ signals:
     void dirs(const QString &args);
     void nato(QString args);
     void meta(QString args);
-    void apps(QString args);
     void spex(QString args);
     void type(QString args);
     void super(QString args);

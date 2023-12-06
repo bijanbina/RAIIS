@@ -79,6 +79,15 @@ void RePreProcessor::nato(const QString &text)
 
         return;
     }
+    else if( re_isLastGo(cmd_buf) )
+    {
+        if( val==KEY_S )
+        {
+            captain->state->goToSleep();
+            cmd_buf.clear();
+            return;
+        }
+    }
     else if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -308,33 +317,6 @@ void RePreProcessor::meta(const QString &text)
 
     cmd_buf.append(cmd);
     captain->state->last_cmd.type = RE_COMMAND_NULL;
-}
-
-void RePreProcessor::apps(const QString &text)
-{
-    if( re_isLastGo(cmd_buf) )
-    {
-        int last_i = cmd_buf.count()-1; //last index
-        cmd_buf[last_i].val2 = 300 + text.toInt();
-        execute();
-        return;
-    }
-    else if( re_isLastQt(cmd_buf) ) // Fix for go sleep
-    {
-        int last_i  = cmd_buf.count()-1; //last index
-        int cmd_val = 300 + text.toInt();
-
-        if( cmd_val==RE_APP_SLEEP )
-        {
-            captain->key->sendKey(KEY_ESC);
-            cmd_buf[last_i].val1 = RE_META_FOX;
-            cmd_buf[last_i].val2 = cmd_val;
-            cmd_buf[last_i].val3 = 1;
-            cmd_buf[last_i].type = RE_COMMAND_META;
-            execute();
-            return;
-        }
-    }
 }
 
 void RePreProcessor::spex(const QString &text)
