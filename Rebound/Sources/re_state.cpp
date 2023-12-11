@@ -99,8 +99,12 @@ void ReState::goToDictate()
 #endif
 }
 
-void ReState::goToRemote()
+void ReState::goToRemote(int rid)
 {
+    if( rid )
+    {
+        remote_id = rid;
+    }
     remote_state = 1;
     sleep_state = 0 ;
 #ifdef WIN32

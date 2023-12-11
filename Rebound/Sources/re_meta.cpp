@@ -201,10 +201,6 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         sendChessCmd("screenshot");
         state->ch_count = 4;
     }
-    else if( val==KEY_R )
-    {
-        state->goToRemote();
-    }
     else
     {
         qDebug() << "Unknown System" << val;

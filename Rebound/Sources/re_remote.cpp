@@ -42,6 +42,7 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
 #ifdef RE_REMOTE
     connect(apache, SIGNAL(readyRead(QString)),
             this, SLOT(readyRead(QString)));
+    state->remote_id = RE_REMOTE;
     apache->start(RE_CIP, RE_CPORT1);
 #else
     apache->start(RE_CIP, RE_CPORT0);
@@ -103,8 +104,8 @@ void ReRemote::send(QString word)
         return;
     }
 
-    QString data;
-    data += "::" + word + "\n";
+    QString data = QString::number(remote_id) + "::";
+    data += word + "\n";
     apache->write(data);
 }
 
@@ -118,12 +119,17 @@ void ReRemote::readyRead(QString read_data)
     for( int i=0 ; i<len ; i++ )
     {
         data_split = data_lines[i].split("::", Qt::SkipEmptyParts);
-        if( data_split.size()!=1 )
+        if( data_split.size()!=2 )
         {
             qDebug() << "wrong input size:" << data_split.size();
             return;
         }
-        QString word = data_split[0];
+        QString rx_id = data_split[0];
+        if( rx_id.toInt()!=remote_id )
+        {
+            return;
+        }
+        QString word = data_split[1];
         runLua(word);
     }
 }

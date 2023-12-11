@@ -306,7 +306,8 @@ void ReWindowW::updateActiveWindow()
         {
             qDebug() << "win_active.title"
                      << win_active.title;
-            state->goToRemote();
+            int rid = 12; /// FIXME: DARAR
+            state->goToRemote(rid);
         }
     }
     else

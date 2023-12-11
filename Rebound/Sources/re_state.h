@@ -29,7 +29,7 @@ public:
     void goToSleep();
     void goToDictate();
     void goToRecord();
-    void goToRemote();
+    void goToRemote(int rid=-1);
     void goToDrag();
     void wakeUp();
     bool isSleep();
@@ -46,6 +46,7 @@ public:
     HANDLE pipe_chess;
     HANDLE pipe_mom;
 #endif
+    int  remote_id = 0;
     int  ui_visible;
     int  i_mode;
     bool sleep_state = 0;
