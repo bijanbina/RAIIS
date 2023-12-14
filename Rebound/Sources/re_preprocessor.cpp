@@ -343,7 +343,14 @@ void RePreProcessor::spex(const QString &text)
 
 void RePreProcessor::super(const QString &text)
 {
-    if( captain->state->isSleep()==0 )
+    if( re_isLastMeta(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
+        cmd_buf[last_i].val2 = text.toInt();
+        execute();
+        return;
+    }
+    else if( captain->state->isSleep()==0 )
     {
         CCommand cmd; //fake command
         int val = text.toInt();

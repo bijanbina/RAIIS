@@ -14,8 +14,10 @@ ReFirefoxWs::~ReFirefoxWs()
 void ReFirefoxWs::run()
 {
     socket = new QWebSocket;
-    connect(socket, SIGNAL(connected()),    this, SLOT(onConnected()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+    connect(socket, SIGNAL(connected()),
+            this, SLOT(onConnected()));
+    connect(socket, SIGNAL(disconnected()),
+            this, SLOT(onDisconnected()));
     socket->open(QUrl(url));
 }
 

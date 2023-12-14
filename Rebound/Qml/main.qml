@@ -149,7 +149,7 @@ Window
         }
         onButton3Clicked:
         {
-            if (terminalPane.opacity == 1)
+            if( terminalPane.opacity===1 )
             {
                 changeTabAnime.from = 1
                 changeTabAnime.to = 0;

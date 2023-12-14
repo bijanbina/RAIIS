@@ -5,8 +5,10 @@
 ReFirefox::ReFirefox(QObject *parent) : QObject(parent)
 {
     socket = new QWebSocket;
-    connect(socket, SIGNAL(connected()),    this, SLOT(onConnected()));
-    connect(socket, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+    connect(socket, SIGNAL(connected()),
+            this, SLOT(onConnected()));
+    connect(socket, SIGNAL(disconnected()),
+            this, SLOT(onDisconnected()));
     ws_buf = "";
     lua = new ReLua;
 }

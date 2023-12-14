@@ -24,6 +24,7 @@
 #define KEY_G         'G'
 #define KEY_H         'H'
 #define KEY_I         'I'
+#define KEY_K         'K'
 #define KEY_L         'L'
 #define KEY_M         'M'
 #define KEY_N         'N'

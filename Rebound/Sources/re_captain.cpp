@@ -230,9 +230,9 @@ bool ReCaptain::isSpeakerSw(CCommand command)
 
     if( command.mod_list[0]==KEY_META )
     {
-        if( command.val1==KEY_BACKSPACE )
+        if( command.val1==KEY_BACKSPACE &&
+            command.val2==1 )
         {
-            qDebug() << "HELLLL YEAH!";
             return true;
         }
     }
