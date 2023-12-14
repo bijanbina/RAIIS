@@ -153,11 +153,7 @@ void ReMeta::castMouseCmd(int val, CCommand *cmd)
 
 void ReMeta::castSystemCmd(int val, CCommand *cmd)
 {
-    if( val==KEY_A )
-    {
-        system("xdotool set_desktop 0");
-    }
-    else if( val>=KEY_1 &&
+    if( val>=KEY_1 &&
              val<=KEY_9 )
     {
 #ifdef WIN32
@@ -167,9 +163,32 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         state->sendPipeMom(cmd_str.toStdString().c_str());
 #endif
     }
+    else if( val==KEY_A )
+    {
+        system("xdotool set_desktop 0");
+    }
+    else if( val==KEY_K )
+    {
+        // Multimedia CPanel Recording Tab
+        system("calc");
+    }
+    else if( val==KEY_M )
+    {
+        // Multimedia CPanel Recording Tab
+        system("mmsys.cpl,1");
+    }
     else if( val==KEY_T )
     {
         system("gnome-terminal");
+    }
+    else if( val==KEY_S )
+    {
+        sendChessCmd("screenshot");
+        state->ch_count = 4;
+    }
+    else if( val==KEY_R )
+    {
+        state->goToRemote();
     }
     else if( val==KEY_V )
     {
@@ -196,9 +215,29 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         re_getSysEnd(state);
     }
-    else if( val==KEY_S )
+    else if( val==RE_SUPER_KICK )
     {
-        sendChessCmd("screenshot");
+        sendChessCmd("system", "show");
+        state->ch_count = 2;
+    }
+    else if( val==RE_SUPER_SIDE )
+    {
+        sendChessCmd("system", "side");
+        state->ch_count = 2;
+    }
+    else if( val==RE_SUPER_COMMENT )
+    {
+        sendChessCmd("system", "comment");
+        state->ch_count = 2;
+    }
+    else if( val==RE_SUPER_DOUBLE )
+    {
+        sendChessCmd("system", "double");
+        state->ch_count = 2;
+    }
+    else if( val==RE_SUPER_DRAG )
+    {
+        sendChessCmd("system", "drag");
         state->ch_count = 4;
     }
     else
@@ -432,10 +471,10 @@ void ReMeta::castTouchCmd(int val, CCommand *cmd)
     }
 }
 
-void ReMeta::sendChessCmd(QString cmd)
+void ReMeta::sendChessCmd(QString cmd, QString arg)
 {
 #ifdef WIN32
-    QString pipe_data = cmd + CH_NP_SEPARATOR;
+    QString pipe_data = cmd + CH_NP_SEPARATOR + arg;
     state->sendPipeChess(pipe_data.toStdString().c_str());
 //    qDebug() << "pipe" << pipe_data;
 #else

@@ -104,7 +104,7 @@ void ReRemote::send(QString word)
         return;
     }
 
-    QString data = QString::number(remote_id) + "::";
+    QString data = QString::number(state->remote_id) + "::";
     data += word + "\n";
     apache->write(data);
 }
@@ -125,7 +125,7 @@ void ReRemote::readyRead(QString read_data)
             return;
         }
         QString rx_id = data_split[0];
-        if( rx_id.toInt()!=remote_id )
+        if( rx_id.toInt()!=state->remote_id )
         {
             return;
         }

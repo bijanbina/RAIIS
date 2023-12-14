@@ -34,7 +34,7 @@ private:
     void castSystemCmd(int val, CCommand *cmd);
     void castFoxCmd(int val, CCommand *cmd);
     void execScrollCmd(int meta, int val);
-    void sendChessCmd(QString cmd);
+    void sendChessCmd(QString cmd, QString arg="");
 
     ReState   *state;
     ReMetaFox *fox;
