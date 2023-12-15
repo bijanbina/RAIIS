@@ -16,7 +16,7 @@
 #define RE_COMMAND_DIRS   1
 #define RE_COMMAND_NATO   2
 #define RE_COMMAND_DIGIT  3
-#define RE_COMMAND_MOD    4 //Modifiers
+#define RE_COMMAND_MOUSE  4
 #define RE_COMMAND_META   5
 #define RE_COMMAND_SUPER  6
 #define RE_COMMAND_QDIGIT 7
@@ -56,6 +56,15 @@
 #define RE_SUPER_DRAG    115
 #define RE_SUPER_SHOT    116
 #define RE_SUPER_MAGIC   117
+#define RE_SUPER_WINDOW  118
+#define RE_SUPER_GAS     119
+#define RE_SUPER_CARROT  120
+#define RE_SUPER_DUKE    121
+#define RE_SUPER_MEDIA   122
+#define RE_SUPER_FRONT   123
+#define RE_SUPER_LAST    124
+#define RE_SUPER_POWER   125
+#define RE_SUPER_RUN     126
 
 typedef struct ReWindow
 {
@@ -79,9 +88,13 @@ typedef struct CCommand
     int val1;
     int val2;
     int val3;
-    int type = RE_COMMAND_NULL;
-    int state = RE_CSTATE_0;
-    QVector<int> mod_list; //modifiers list
+    int type  = RE_COMMAND_NULL;
+    int state = RE_CSTATE_0; //for repeat digit
+
+    int is_shift = 0;
+    int is_ctrl  = 0;
+    int is_alt   = 0;
+    int is_super = 0; // win key
 }CCommand;
 
 bool re_isLastCmdFunction(QVector<CCommand> commands);

@@ -24,6 +24,7 @@ SOURCES += Sources/main.cpp \
            Sources/re_meta_mos.cpp \
            Sources/re_meta_oc.cpp \
            Sources/re_meta_sys.cpp \
+           Sources/re_modifier.cpp \
            Sources/re_mouse.cpp \
            Sources/re_preprocessor.cpp \
            Sources/re_qt.cpp \
@@ -77,6 +78,7 @@ HEADERS += Sources/backend.h \
            Sources/re_meta_fox.h \
            Sources/re_meta_mos.h \
            Sources/re_meta_sys.h \
+           Sources/re_modifier.h \
            Sources/re_mouse.h \
            Sources/re_preprocessor.h \
            Sources/re_qt.h \

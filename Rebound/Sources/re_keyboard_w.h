@@ -68,21 +68,22 @@
 #define RE_KEY_FMIN    VK_F1    //0x6f
 #define RE_KEY_FMAX    VK_F12+1 //0x7C
 
-class ReKeyEmulator
+class ReKeyboard
 {
 public:
-    ReKeyEmulator();
-    ~ReKeyEmulator();
+    ReKeyboard();
+    ~ReKeyboard();
 
-    void sendKey(int key_val);
-    void pressKey(int key_val);
-    void releaseKey(int key_val);
+    static void init();
+    static void sendKey(int key_val);
+    static void pressKey(int key_val);
+    static void releaseKey(int key_val);
 
 private:
-    bool isExtended(int key_val);
+    static bool isExtended(int key_val);
 
-    QVector<int> extended_keys;
-    int uinput_f;
+    static QVector<int> extended_keys;
+    static int uinput_f;
 };
 
 

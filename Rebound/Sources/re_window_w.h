@@ -39,7 +39,7 @@ public:
     ReState *state;
     QStringList *wins_title;
     QStringList *elems_name;
-    ReKeyEmulator    *key;
+    ReKeyboard    *key;
     ReWindow win_active;
 
 public slots:

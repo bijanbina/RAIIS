@@ -89,23 +89,23 @@ void ReMetaMos::castCode(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl = 1;
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
 //    else if( val==KEY_M )
@@ -125,12 +125,12 @@ void ReMetaMos::castCode(int val, CCommand *cmd)
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
-        cmd->mod_list.append(KEY_LEFTALT);
+        cmd->is_alt = 1;
         cmd->val1 = val;
 
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
 }
