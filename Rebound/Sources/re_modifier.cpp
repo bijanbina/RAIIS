@@ -37,6 +37,11 @@ void re_modApplyVal(CCommand *cmd, int val)
 
 void re_modPress(CCommand cmd)
 {
+    if( cmd.type==RE_COMMAND_NULL )
+    {
+        return;
+    }
+
     if( cmd.is_alt )
     {
         ReKeyboard::pressKey(KEY_LEFTALT);
@@ -60,6 +65,11 @@ void re_modPress(CCommand cmd)
 
 void re_modRelease(CCommand cmd)
 {
+    if( cmd.type==RE_COMMAND_NULL )
+    {
+        return;
+    }
+
     re_modWait(cmd);
     if( cmd.is_alt )
     {
@@ -82,12 +92,11 @@ void re_modRelease(CCommand cmd)
     }
 }
 
-void re_modWait (CCommand cmd)
+void re_modWait (CCommand cmd, int val)
 {
     if( cmd.is_alt  || cmd.is_shift ||
         cmd.is_ctrl || cmd.is_super )
     {
-        ReKeyboard::releaseKey(KEY_META);
+        QThread::msleep(val); //little tweak
     }
-    QThread::msleep(20); //little tweak
 }

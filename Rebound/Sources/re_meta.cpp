@@ -291,7 +291,7 @@ void ReMeta::castMusicCmd(int val, CCommand *cmd)
 #ifdef WIN32
     cmd->val2 = 1;
     cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_MOD;
+    cmd->type  = RE_COMMAND_DIRS;
     cmd->state = RE_CSTATE_0;
 #else
     //////SHOULD GET FIXED WITH THE NEW SYSTEM
@@ -387,13 +387,13 @@ void ReMeta::castPageCmd(int val, CCommand *cmd)
         if( val==KEY_RIGHT ||
             val==KEY_LEFT )
         {
-            cmd->mod_list.append(KEY_LEFTALT);
-            cmd->mod_list.append(KEY_LEFTSHIFT);
+            cmd->is_alt   = 1;
+            cmd->is_shift = 1;
             cmd->val1 = KEY_RIGHT;
 
-            cmd->val2 = 1;
-            cmd->val3 = 1;
-            cmd->type  = RE_COMMAND_MOD;
+            cmd->val2  = 1;
+            cmd->val3  = 1;
+            cmd->type  = RE_COMMAND_DIRS;
             cmd->state = RE_CSTATE_0;
         }
     }

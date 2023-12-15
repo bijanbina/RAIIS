@@ -40,23 +40,23 @@ void ReMetaFox::castCode(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl = 1;
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
 //    else if( val==KEY_M )
@@ -76,12 +76,12 @@ void ReMetaFox::castCode(int val, CCommand *cmd)
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
-        cmd->mod_list.append(KEY_LEFTALT);
+        cmd->is_alt = 1;
         cmd->val1 = val;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
 }
@@ -94,12 +94,12 @@ void ReMetaFox::csatGitKraken(int val, CCommand *cmd)
     }
     else if( val==KEY_M )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl = 1;
         cmd->val1 = KEY_M;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_N )
@@ -112,34 +112,34 @@ void ReMetaFox::csatGitKraken(int val, CCommand *cmd)
     }
     else if( val==KEY_LEFT ) //tab
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl  = 1;
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl  = 1;
         cmd->val1 = val;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_P ) //push
@@ -158,60 +158,60 @@ void ReMetaFox::castFirefox(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT ) //tab
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_TAB;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_RIGHT )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl  = 1;
         cmd->val1 = KEY_TAB;
 
-        cmd->val2 = 1;
-        cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_F ) //find
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_F;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
 #ifdef WIN32
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl  = 1;
 #else
-        cmd->mod_list.append(KEY_LEFTALT);
+        cmd->is_alt = 1;
 #endif
         cmd->val1 = val;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_L )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_F;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
 }
@@ -220,23 +220,23 @@ void ReMetaFox::castNautilus(int val, CCommand *cmd)
 {
     if( val==KEY_BACKSPACE )
     {
-        cmd->mod_list.append(KEY_LEFTALT);
+        cmd->is_alt = 1;
         cmd->val1 = KEY_UP;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
-        cmd->mod_list.append(KEY_LEFTALT);
+        cmd->is_alt = 1;
         cmd->val1 = val;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_DIGIT;
         cmd->state = RE_CSTATE_0;
     }
 }
@@ -263,13 +263,13 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
     }
     else if( val==KEY_F ) //find
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_F;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_I ) //injection
@@ -284,26 +284,26 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
              val<=KEY_9 ) //tab
     {
 #ifdef WIN32
-        cmd->mod_list.append(KEY_LEFTCTRL);
+        cmd->is_ctrl  = 1;
 #else
-        cmd->mod_list.append(KEY_LEFTALT);
+        cmd->is_alt = 1;
 #endif
         cmd->val1 = val;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_L )
     {
-        cmd->mod_list.append(KEY_LEFTCTRL);
-        cmd->mod_list.append(KEY_LEFTSHIFT);
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
         cmd->val1 = KEY_F;
 
         cmd->val2 = 1;
         cmd->val3 = 1;
-        cmd->type  = RE_COMMAND_MOD;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
 }

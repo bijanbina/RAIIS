@@ -192,16 +192,8 @@ void ReChess::setCount(int val)
     }
     else
     {
-        if( mod_cmd.type==RE_COMMAND_MOD )
-        {
-            QThread::msleep(500);
-            int len = mod_cmd.mod_list.size();
-            for( int i=0 ; i<len ; i++ )
-            {
-                key->releaseKey(mod_cmd.mod_list[i]);
-                qDebug() << "sp5";
-            }
-        }
+        re_modWait(mod_cmd, 500);
+        re_modRelease(mod_cmd);
         mod_cmd.type = RE_COMMAND_NULL;
         re_rmSpex();
         resetChess();
