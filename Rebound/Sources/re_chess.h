@@ -36,7 +36,6 @@ private:
 
     QObject   *root;
     ReCaptain *captain;
-    ReKeyEmulator  *key;
     CCommand  mod_cmd;
 
 

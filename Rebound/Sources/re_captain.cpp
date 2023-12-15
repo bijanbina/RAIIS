@@ -7,7 +7,6 @@ ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
     state = st;
     meta  = new ReMeta (state);
     super = new ReSuper(state);
-    key   = new ReKeyEmulator;
     state->last_cmd.type = RE_COMMAND_NULL;
 }
 
@@ -16,48 +15,38 @@ ReCaptain::~ReCaptain()
     delete meta;
 }
 
-void ReCaptain::execModifier(CCommand command)
+void ReCaptain::execKeyboard(CCommand command)
 {
-    int len = command.mod_list.size();
-    for( int i=0 ; i<len ; i++ )
-    {
-        key->pressKey(command.mod_list[i]);
-    }
+    re_modPress(command);
 
     for( int j=0 ; j<command.val2 ; j++ )
     {
         if( command.val1==RE_SUPER_LOVE )
         {
             CCommand cmd;
-            cmd.mod_list.append(KEY_LEFTCTRL);
+            cmd.is_ctrl = 1;
             cmd.val1 = KEY_LEFT;
             cmd.val2 = 1;
-            cmd.state = RE_CSTATE_0;
 
-            execModifier(cmd);
+            execKeyboard(cmd);
         }
         else if( command.val1==RE_SUPER_ROGER )
         {
             CCommand cmd;
-            cmd.mod_list.append(KEY_LEFTCTRL);
+            cmd.is_ctrl = 1;
             cmd.val1 = KEY_RIGHT;
             cmd.val2 = 1;
-            cmd.state = RE_CSTATE_0;
 
-            execModifier(cmd);
+            execKeyboard(cmd);
         }
         else
         {
             QThread::msleep(10); //little tweak
-            key->sendKey(command.val1);
+            ReKeyboard::sendKey(command.val1);
         }
     }
 
-    QThread::msleep(20); //little tweak
-    for( int i=0 ; i<len ; i++ )
-    {
-        key->releaseKey(command.mod_list[len-i-1]);
-    }
+    re_modRelease(command);
 //    qDebug() << "pressModifier" << modifiers.count();
 }
 
@@ -129,7 +118,7 @@ void ReCaptain::execCommand(CCommand command)
     }
     else if( command.type==RE_COMMAND_MOD )
     {
-        execModifier(command);
+        execKeyboard(command);
     }
     else if( command.type==RE_COMMAND_META )
     {
@@ -260,7 +249,7 @@ void ReCaptain::execMeta(CCommand command)
         }
         else if( translated.type==RE_COMMAND_MOD )
         {
-            execModifier(translated);
+            execKeyboard(translated);
         }
     }
 }

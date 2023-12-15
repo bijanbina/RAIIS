@@ -1,7 +1,20 @@
 #include "re_keyboard_w.h"
 #include <QDebug>
 
-ReKeyEmulator::ReKeyEmulator()
+QVector<int> ReKeyboard::extended_keys  = QVector<int>();
+
+ReKeyboard::ReKeyboard()
+{
+
+}
+
+ReKeyboard::~ReKeyboard()
+{
+
+}
+
+
+void ReKeyboard::init()
 {
     extended_keys << VK_INSERT;
     extended_keys << VK_DELETE;
@@ -15,18 +28,13 @@ ReKeyEmulator::ReKeyEmulator()
     extended_keys << VK_RIGHT;
 }
 
-ReKeyEmulator::~ReKeyEmulator()
-{
-
-}
-
-void ReKeyEmulator::sendKey(int key_val)
+void ReKeyboard::sendKey(int key_val)
 {
     pressKey(key_val);
     releaseKey(key_val);
 }
 
-void ReKeyEmulator::pressKey(int key_val)
+void ReKeyboard::pressKey(int key_val)
 {
     INPUT input;
     ZeroMemory(&input, sizeof(input));
@@ -41,7 +49,7 @@ void ReKeyEmulator::pressKey(int key_val)
     SendInput(1, &input, sizeof(INPUT));
 }
 
-void ReKeyEmulator::releaseKey(int key_val)
+void ReKeyboard::releaseKey(int key_val)
 {
     INPUT input;
     ZeroMemory(&input, sizeof(input));
@@ -57,7 +65,7 @@ void ReKeyEmulator::releaseKey(int key_val)
     SendInput(1, &input, sizeof(INPUT));
 }
 
-bool ReKeyEmulator::isExtended(int key_val)
+bool ReKeyboard::isExtended(int key_val)
 {
     if( extended_keys.contains(key_val) )
     {

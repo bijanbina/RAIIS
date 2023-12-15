@@ -3,7 +3,6 @@
 
 ReChess::ReChess(ReCaptain *cpt, QObject *parent) : QObject(parent)
 {
-    key = new ReKeyEmulator;
     captain   = cpt;
     meta_mode = 0;
     persist_mode = 0;
@@ -54,15 +53,8 @@ void ReChess::super(const QString &text, CCommand command)
     }
     else if( isChessCmd(val) )
     {
-        if( command.type==RE_COMMAND_MOD )
-        {
-            int len = command.mod_list.size();
-            for( int i=0 ; i<len ; i++ )
-            {
-                key->pressKey(command.mod_list[i]);
-            }
-            mod_cmd = command;
-        }
+        re_modPress(command);
+        mod_cmd = command;
         showChess(val);
     }
 }

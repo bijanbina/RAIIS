@@ -9,6 +9,7 @@
 #include "re_meta.h"
 #include "re_super.h"
 #include "re_qt.h"
+#include "re_modifier.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
 #else
@@ -28,11 +29,10 @@ public:
 
     ReState     *state;
     ReSuper     *super;
-    ReKeyEmulator  *key;
 private:
     void handleScroll(CCommand command);
 
-    void execModifier(CCommand command);
+    void execKeyboard(CCommand command);
     void execMeta(CCommand command);
 
     void execCommand(CCommand command);

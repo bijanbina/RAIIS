@@ -8,11 +8,11 @@
 #define RE_KEY_FMIN    59 //F1
 #define RE_KEY_FMAX    68 //F10
 
-class ReKeyEmulator
+class ReKeyboard
 {
 public:
-    ReKeyEmulator();
-    ~ReKeyEmulator();
+    ReKeyboard();
+    ~ReKeyboard();
 
     void sendKey(int key_val);
     void pressKey(int key_val);

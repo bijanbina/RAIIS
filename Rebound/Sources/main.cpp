@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
             isNative = argv_int;
         }
     }
+    ReKeyboard::init();
     ReChapar *chaper = new ReChapar(item, itemSwitcher, isNative);
 
 #ifdef RE_TEST_EN
