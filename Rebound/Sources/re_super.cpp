@@ -49,6 +49,38 @@ void ReSuper::castCmd(int cmd, CCommand *ret)
     {
         getRogerCmd(ret);
     }
+    else if( cmd==RE_SUPER_GAS )
+    {
+        getRogerCmd(ret);
+    }
+    else if( cmd==RE_SUPER_CARROT )
+    {
+        getRogerCmd(ret);
+    }
+    else if( cmd==RE_SUPER_DUKE )
+    {
+        getRogerCmd(ret);
+    }
+    else if( cmd==RE_SUPER_MEDIA )
+    {
+        getRogerCmd(ret);
+    }
+    else if( cmd==RE_SUPER_FRONT )
+    {
+        getFrontCmd(ret);
+    }
+    else if( cmd==RE_SUPER_LAST )
+    {
+        getLastCmd(ret);
+    }
+    else if( cmd==RE_SUPER_POWER )
+    {
+        getRogerCmd(ret);
+    }
+    else if( cmd==RE_SUPER_RUN )
+    {
+        getRogerCmd(ret);
+    }
 }
 
 void ReSuper::getMetaCmd(CCommand *ret)
@@ -229,6 +261,27 @@ void ReSuper::getLoveCmd(CCommand *ret)
 }
 
 void ReSuper::getRogerCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
+
+    ret->mod_list.append(KEY_LEFTCTRL);
+    ret->val1 = KEY_RIGHT;
+}
+
+void ReSuper::getFrontCmd(CCommand *ret)
+{
+    ret->val2 = 1;
+    ret->val3 = 1;
+    ret->type  = RE_COMMAND_MOD;
+    ret->state = RE_CSTATE_0;
+
+    ret->mod_list.append(KEY_LEFTCTRL);
+    ret->val1 = KEY_RIGHT;
+}
+void ReSuper::getLastCmd(CCommand *ret)
 {
     ret->val2 = 1;
     ret->val3 = 1;

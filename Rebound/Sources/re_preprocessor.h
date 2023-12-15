@@ -7,6 +7,7 @@
 #include "backend.h"
 #include "re_captain.h"
 #include "re_chess.h"
+#include "re_modifier.h"
 
 class RePreProcessor : public QObject
 {

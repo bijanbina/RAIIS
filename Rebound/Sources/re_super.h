@@ -30,11 +30,14 @@ public:
     void castCmd(int cmd, CCommand *ret);
 
 private:
-    void getMetaCmd(CCommand *ret);
-    void getCopyCmd(CCommand *ret);
+    void getMetaCmd (CCommand *ret);
+    void getCopyCmd (CCommand *ret);
     void getPasteCmd(CCommand *ret);
-    void getLoveCmd(CCommand *ret);
+    void getLoveCmd (CCommand *ret);
     void getRogerCmd(CCommand *ret);
+    void getFrontCmd(CCommand *ret);
+    void getLastCmd (CCommand *ret);
+
     void getSwitchCmd(CCommand *ret);
     void getLSwitchCmd(CCommand *ret);
     void getCamelCmd(CCommand *ret);
@@ -47,7 +50,7 @@ private:
 #ifdef WIN32
     void recordTelegram();
 #endif
-    ReKeyEmulator key;
+    ReKeyboard key;
 };
 
 #endif //RE_SUPER_H

@@ -242,19 +242,13 @@ void RePreProcessor::modifier(const QString &text)
         int last_i = cmd_buf.count()-1; //last index
         if( cmd_buf[last_i].val1==0 )
         {
-            cmd_buf[last_i].mod_list.append(text.toInt());
+            re_modApplyVal(&cmd_buf[last_i], text.toInt());
             return;
         }
     }
 
 //    qDebug() << "modifier re_isLastMod";
-    CCommand cmd;
-    cmd.val1  = 0;
-    cmd.val2  = 1;
-    cmd.type  = RE_COMMAND_MOD;
-    cmd.state = RE_CSTATE_0;
-    cmd.mod_list.append(text.toInt());
-
+    CCommand cmd = re_modCreate(text);
     cmd_buf.append(cmd);
     captain->state->last_cmd.type = RE_COMMAND_NULL;
 }
