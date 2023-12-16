@@ -83,7 +83,6 @@ private:
     static bool isExtended(int key_val);
 
     static QVector<int> extended_keys;
-    static int uinput_f;
 };
 
 

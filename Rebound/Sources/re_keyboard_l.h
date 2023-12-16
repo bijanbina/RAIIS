@@ -14,13 +14,14 @@ public:
     ReKeyboard();
     ~ReKeyboard();
 
-    void sendKey(int key_val);
-    void pressKey(int key_val);
-    void releaseKey(int key_val);
-    void setKey(int type, int code, int val);
+    static void init();
+    static void sendKey(int key_val);
+    static void pressKey(int key_val);
+    static void releaseKey(int key_val);
+    static void setKey(int type, int code, int val);
 
 private:
-    int uinput_f;
+    static int uinput_f;
 };
 
 

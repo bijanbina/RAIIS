@@ -45,12 +45,11 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     channel = new ReChannelL(captain, ui);
 
     thread_data = new threadStruct;
-    thread_data->wins_title = &(api->wins_title);
-    thread_data->elems_name = &(api->elems_name);
+    thread_data->wins_title = new QStringList;
+    thread_data->elems_name = new QStringList;
     thread_data->state = state;
 
     Display *disp = reX11_init();
-    api->setDisplay(disp);
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 #endif
     remote = new ReRemote(channel->pre);

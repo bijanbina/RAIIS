@@ -29,7 +29,7 @@ void re_modApplyVal(CCommand *cmd, int val)
     {
         cmd->is_ctrl = 1;
     }
-    else if( val==KEY_META )
+    else if( val==KEY_LEFTMETA )
     {
         cmd->is_super = 1;
     }
@@ -88,7 +88,7 @@ void re_modRelease(CCommand cmd)
 
     if( cmd.is_super )
     {
-        ReKeyboard::releaseKey(KEY_META);
+        ReKeyboard::releaseKey(KEY_LEFTMETA);
     }
 }
 

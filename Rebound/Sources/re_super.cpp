@@ -297,7 +297,7 @@ void ReSuper::castSwitchCmd(CCommand *cmd)
     cmd->is_alt = 1;
     cmd->val1   = KEY_TAB;
 #else
-    cmd->mod_list.append(KEY_META); ///FIXME KEYS
+    cmd->is_super = 1;
     cmd->val1 = KEY_B;
 #endif
 

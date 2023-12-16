@@ -1,8 +1,20 @@
 #include "re_keyboard_l.h"
 #include <unistd.h>
 #include <fcntl.h>
+int ReKeyboard::uinput_f = 0;
 
 ReKeyboard::ReKeyboard()
+{
+
+}
+
+ReKeyboard::~ReKeyboard()
+{
+    ioctl(uinput_f, UI_DEV_DESTROY);
+    close(uinput_f);
+}
+
+void ReKeyboard::init()
 {
     struct uinput_setup usetup;
 
@@ -40,12 +52,6 @@ ReKeyboard::ReKeyboard()
 
     ioctl(uinput_f, UI_DEV_SETUP, &usetup);
     ioctl(uinput_f, UI_DEV_CREATE);
-}
-
-ReKeyboard::~ReKeyboard()
-{
-    ioctl(uinput_f, UI_DEV_DESTROY);
-    close(uinput_f);
 }
 
 void ReKeyboard::setKey(int type, int code, int val)

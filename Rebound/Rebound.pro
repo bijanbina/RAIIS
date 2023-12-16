@@ -9,7 +9,6 @@ win32:QT += gamepad
 SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
            Sources/ch_monitor.cpp \
-           Sources/mm_win32_guid.cpp \
            Sources/re_apache_cl.cpp \
            Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
@@ -40,6 +39,7 @@ SOURCES += Sources/main.cpp \
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/mm_api.cpp \
+                 Sources/mm_win32_guid.cpp \
                  Sources/re_admin_win.cpp \
                  Sources/re_channel_w.cpp \
                  Sources/re_hardware_w.cpp \
@@ -62,7 +62,6 @@ linux:SOURCES += \
 
 HEADERS += Sources/backend.h \
            Sources/ch_monitor.h \
-           Sources/mm_win32_guid.h \
            Sources/re_apache_cl.h \
            Sources/re_captain.h \
            Sources/re_chapar.h \
@@ -96,6 +95,7 @@ HEADERS += Sources/backend.h \
 win32:HEADERS += \
                  Sources/mm_api.h \
                  Sources/re_app_w.h \
+                 Sources/mm_win32_guid.h \
                  Sources/re_admin_win.h \
                  Sources/re_channel_w.h \
                  Sources/re_hardware_w.h \
