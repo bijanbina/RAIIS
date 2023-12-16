@@ -11,128 +11,128 @@ ReSuper::~ReSuper()
     ;
 }
 
-void ReSuper::castCmd(int cmd, CCommand *ret)
+void ReSuper::castCmd(int val, CCommand *cmd)
 {
-    if( cmd==RE_SUPER_META )
+    if( val==RE_SUPER_META )
     {
-        getMetaCmd(ret);
+        castMetaCmd(cmd);
     }
-    else if( cmd==RE_SUPER_CAMEL )
+    else if( val==RE_SUPER_CAMEL )
     {
-        getCamelCmd(ret);
+        castCamelCmd(cmd);
     }
-    else if( cmd==RE_SUPER_SWITCH )
+    else if( val==RE_SUPER_SWITCH )
     {
-        getSwitchCmd(ret);
+        castSwitchCmd(cmd);
     }
-    else if( cmd==RE_SUPER_SPOTIFY )
+    else if( val==RE_SUPER_SPOTIFY )
     {
-        getLSwitchCmd(ret);
+        castLSwitchCmd(cmd);
     }
-    else if( cmd==RE_SUPER_COPY )
+    else if( val==RE_SUPER_COPY )
     {
-        getCopyCmd(ret);
+        castCopyCmd(cmd);
     }
-    else if( cmd==RE_SUPER_PASTE )
+    else if( val==RE_SUPER_PASTE )
     {
-        getPasteCmd(ret);
+        castPasteCmd(cmd);
     }
-    else if( cmd==RE_SUPER_SELECT )
+    else if( val==RE_SUPER_SELECT )
     {
-        getSelectCmd(ret);
+        castSelectCmd(cmd);
     }
-    else if( cmd==RE_SUPER_LOVE )
+    else if( val==RE_SUPER_LOVE )
     {
-        getLoveCmd(ret);
+        castLoveCmd(cmd);
     }
-    else if( cmd==RE_SUPER_ROGER )
+    else if( val==RE_SUPER_ROGER )
     {
-        getRogerCmd(ret);
+        castRogerCmd(cmd);
     }
-    else if( cmd==RE_SUPER_GAS )
+    else if( val==RE_SUPER_GAS )
     {
-        getRogerCmd(ret);
+        castRogerCmd(cmd);
     }
-    else if( cmd==RE_SUPER_CARROT )
+    else if( val==RE_SUPER_CARROT )
     {
-        getRogerCmd(ret);
+        castRogerCmd(cmd);
     }
-    else if( cmd==RE_SUPER_DUKE )
+    else if( val==RE_SUPER_DUKE )
     {
-        getRogerCmd(ret);
+        castRogerCmd(cmd);
     }
-    else if( cmd==RE_SUPER_MEDIA )
+    else if( val==RE_SUPER_MEDIA )
     {
-        getRogerCmd(ret);
+        castRogerCmd(cmd);
     }
-    else if( cmd==RE_SUPER_FRONT )
+    else if( val==RE_SUPER_FRONT )
     {
-        getFrontCmd(ret);
+        castFrontCmd(cmd);
     }
-    else if( cmd==RE_SUPER_LAST )
+    else if( val==RE_SUPER_LAST )
     {
-        getLastCmd(ret);
+        castLastCmd(cmd);
     }
-    else if( cmd==RE_SUPER_POWER )
+    else if( val==RE_SUPER_POWER )
     {
-        getRogerCmd(ret);
+        castRogerCmd(cmd);
     }
-    else if( cmd==RE_SUPER_RUN )
+    else if( val==RE_SUPER_RUN )
     {
-        getRogerCmd(ret);
+        castRogerCmd(cmd);
     }
 }
 
-void ReSuper::getMetaCmd(CCommand *ret)
+void ReSuper::castMetaCmd(CCommand *cmd)
 {
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type = RE_COMMAND_SUPER;
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_SUPER;
 
     qDebug() << "Meta" << state->app.pname;
 
     if( state->app.pname==RE_PROC_QT )
     {
-        ret->val1 = KEY_F1;
-        ret->type = RE_COMMAND_DIRS;
+        cmd->val1 = KEY_F1;
+        cmd->type = RE_COMMAND_DIRS;
     }
     else if( state->app.pname==RE_PROC_VSCODE )
     {
-        ret->val1 = KEY_F5;
-        ret->type = RE_COMMAND_DIRS;
+        cmd->val1 = KEY_F5;
+        cmd->type = RE_COMMAND_DIRS;
     }
     else if( state->app.pname==RE_PROC_GIT )
     {
         re_mouseKey(3);
-//        ret->val1 = KEY_UP;
+//        cmd->val1 = KEY_UP;
 
-//        ret->val2 = 5;
-//        ret->val3 = 1;
-//        ret->type  = RE_COMMAND_DIRS;
-//        ret->state = RE_CSTATE_0;
+//        cmd->val2 = 5;
+//        cmd->val3 = 1;
+//        cmd->type  = RE_COMMAND_DIRS;
+//        cmd->state = RE_CSTATE_0;
         qDebug() << "super";
 //        cmd = re_getGoGitKraken(val);
     }
     else if( state->app.pname==RE_PROC_FIREFOX ||
              state->app.pname==RE_PROC_GEKO )
     {
-        ret->mod_list.append(KEY_LEFTCTRL);
-        ret->val1 = KEY_W;
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_W;
 
-        ret->val2 = 1;
-        ret->val3 = 1;
-        ret->type  = RE_COMMAND_MOD;
-        ret->state = RE_CSTATE_0;
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
     else if( state->app.pname==RE_PROC_EXPLORER )
     {
-        ret->mod_list.append(KEY_LEFTCTRL);
-        ret->val1 = KEY_W;
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_W;
 
-        ret->val2 = 1;
-        ret->val3 = 1;
-        ret->type  = RE_COMMAND_MOD;
-        ret->state = RE_CSTATE_0;
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
     else if( state->app.pname==RE_PROC_TELEGRAM )
     {
@@ -149,41 +149,41 @@ void ReSuper::getMetaCmd(CCommand *ret)
     }
     else if( state->app.pname==RE_PROC_ALTIUM )
     {
-        ret->mod_list.append(KEY_LEFTCTRL);
-        ret->val1 = KEY_F4;
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_F4;
 
-        ret->val2 = 1;
-        ret->val3 = 1;
-        ret->type  = RE_COMMAND_MOD;
-        ret->state = RE_CSTATE_0;
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
 #endif
 }
 
-void ReSuper::getCopyCmd(CCommand *ret)
+void ReSuper::castCopyCmd(CCommand *cmd)
 {
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
+    cmd->is_ctrl = 1;
+    cmd->val1    = KEY_C;
 
-    ret->mod_list.append(KEY_LEFTCTRL);
-    ret->val1 = KEY_C;
+    cmd->val2  = 1;
+    cmd->val3  = 1;
+    cmd->type  = RE_COMMAND_NATO;
+    cmd->state = RE_CSTATE_0;
 }
 
-void ReSuper::getPasteCmd(CCommand *ret)
+void ReSuper::castPasteCmd(CCommand *cmd)
 {
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
+    cmd->is_ctrl = 1;
+    cmd->val1    = KEY_V;
 
-    ret->mod_list.append(KEY_LEFTCTRL);
-    ret->val1 = KEY_V;
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_NATO;
+    cmd->state = RE_CSTATE_0;
 }
 
 // Language switch
-void ReSuper::getLSwitchCmd(CCommand *ret)
+void ReSuper::castLSwitchCmd(CCommand *cmd)
 {
 #ifdef WIN32
     // Switch to next language
@@ -192,30 +192,30 @@ void ReSuper::getLSwitchCmd(CCommand *ret)
     HWND handle = GetForegroundWindow();
     PostMessage(handle, WM_INPUTLANGCHANGEREQUEST,
                 0, (LPARAM)HKL_NEXT);
-    makeNull(ret);
+    makeNull(cmd);
 #else
     ///FIXME
 #endif
 }
 
-void ReSuper::getCamelCmd(CCommand *ret)
+void ReSuper::castCamelCmd(CCommand *cmd)
 {
     qDebug() << "CreateProcess 1";
 #ifdef WIN32
 #else
     system("./Scripts/camel");
 #endif
-    makeNull(ret);
+    makeNull(cmd);
 }
 
-void ReSuper::getSelectCmd(CCommand *ret)
+void ReSuper::castSelectCmd(CCommand *cmd)
 {
     if( state->app.pname==RE_PROC_FIREFOX )
     {
-        ret->val2 = 1;
-        ret->val3 = 1;
-        ret->val1 = KEY_F7;
-        ret->type = RE_COMMAND_DIRS;
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->val1 = KEY_F7;
+        cmd->type = RE_COMMAND_DIRS;
     }
 #ifdef WIN32
     else if( state->app.pname==RE_PROC_ALTIUM )
@@ -231,91 +231,94 @@ void ReSuper::getSelectCmd(CCommand *ret)
             re_mousePress(1);
             state->goToDrag();
         }
-        makeNull(ret);
+        makeNull(cmd);
     }
 #endif
     else
     {
         key.sendKey(KEY_END);
-        ret->val2 = 1;
-        ret->val3 = 1;
-        ret->type  = RE_COMMAND_MOD;
-        ret->state = RE_CSTATE_0;
+        cmd->is_shift = 1;
+        cmd->val1     = KEY_HOME;
 
-        ret->mod_list.append(KEY_LEFTSHIFT);
-
-        ret->val1 = KEY_HOME;
-        qDebug() << "select";
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
     }
 }
 
-void ReSuper::getLoveCmd(CCommand *ret)
+void ReSuper::castLoveCmd(CCommand *cmd)
 {
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
+    cmd->is_ctrl = 1;
+    cmd->val1    = KEY_LEFT;
 
-    ret->mod_list.append(KEY_LEFTCTRL);
-    ret->val1 = KEY_LEFT;
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_DIRS;
+    cmd->state = RE_CSTATE_0;
 }
 
-void ReSuper::getRogerCmd(CCommand *ret)
+void ReSuper::castRogerCmd(CCommand *cmd)
 {
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
+    cmd->is_ctrl = 1;
+    cmd->val1    = KEY_RIGHT;
 
-    ret->mod_list.append(KEY_LEFTCTRL);
-    ret->val1 = KEY_RIGHT;
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_DIRS;
+    cmd->state = RE_CSTATE_0;
 }
 
-void ReSuper::getFrontCmd(CCommand *ret)
+void ReSuper::castFrontCmd(CCommand *cmd)
 {
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
+    cmd->is_ctrl = 1;
+    cmd->val1    = KEY_RIGHT;
 
-    ret->mod_list.append(KEY_LEFTCTRL);
-    ret->val1 = KEY_RIGHT;
-}
-void ReSuper::getLastCmd(CCommand *ret)
-{
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
-
-    ret->mod_list.append(KEY_LEFTCTRL);
-    ret->val1 = KEY_RIGHT;
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_DIRS;
+    cmd->state = RE_CSTATE_0;
 }
 
-void ReSuper::getSwitchCmd(CCommand *ret)
+void ReSuper::castLastCmd(CCommand *cmd)
 {
-    ret->val2 = 1;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_MOD;
-    ret->state = RE_CSTATE_0;
+    cmd->is_ctrl = 1;
+    cmd->val1    = KEY_RIGHT;
 
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_DIRS;
+    cmd->state = RE_CSTATE_0;
+}
+
+void ReSuper::castSwitchCmd(CCommand *cmd)
+{
 #ifdef WIN32
-    ret->mod_list.append(KEY_LEFTALT);
-    ret->val1 = KEY_TAB;
+    cmd->is_alt = 1;
+    cmd->val1   = KEY_TAB;
 #else
-    ret->mod_list.append(KEY_META); ///FIXME KEYS
-    ret->val1 = KEY_B;
+    cmd->mod_list.append(KEY_META); ///FIXME KEYS
+    cmd->val1 = KEY_B;
 #endif
+
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_DIRS;
+    cmd->state = RE_CSTATE_0;
 }
 
-void ReSuper::makeNull(CCommand *ret)
+void ReSuper::makeNull(CCommand *cmd)
 {
-    ret->val1 = 0;
-    ret->val2 = 0;
-    ret->val3 = 1;
-    ret->type  = RE_COMMAND_NULL;
-    ret->state = RE_CSTATE_0;
-    ret->mod_list.clear();
+    cmd->is_alt   = 0;
+    cmd->is_ctrl  = 0;
+    cmd->is_shift = 0;
+    cmd->is_super = 0;
+    cmd->val1 = 0;
+
+    cmd->val2 = 0;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_NULL;
+    cmd->state = RE_CSTATE_0;
 }
 
 #ifdef WIN32

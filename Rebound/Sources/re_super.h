@@ -27,22 +27,22 @@ public:
     ReSuper(ReState *st, QObject *parent = NULL);
     ~ReSuper();
 
-    void castCmd(int cmd, CCommand *ret);
+    void castCmd(int val, CCommand *cmd);
 
 private:
-    void getMetaCmd (CCommand *ret);
-    void getCopyCmd (CCommand *ret);
-    void getPasteCmd(CCommand *ret);
-    void getLoveCmd (CCommand *ret);
-    void getRogerCmd(CCommand *ret);
-    void getFrontCmd(CCommand *ret);
-    void getLastCmd (CCommand *ret);
+    void castMetaCmd (CCommand *cmd);
+    void castCopyCmd (CCommand *cmd);
+    void castPasteCmd(CCommand *cmd);
+    void castLoveCmd (CCommand *cmd);
+    void castRogerCmd(CCommand *cmd);
+    void castFrontCmd(CCommand *cmd);
+    void castLastCmd (CCommand *cmd);
 
-    void getSwitchCmd(CCommand *ret);
-    void getLSwitchCmd(CCommand *ret);
-    void getCamelCmd(CCommand *ret);
-    void getSelectCmd(CCommand *ret);
-    void makeNull(CCommand *ret);
+    void castSwitchCmd(CCommand *cmd);
+    void castLSwitchCmd(CCommand *cmd);
+    void castCamelCmd(CCommand *cmd);
+    void castSelectCmd(CCommand *cmd);
+    void makeNull(CCommand *cmd);
 
     int uinput_f;
     ReState  *state;

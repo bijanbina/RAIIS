@@ -34,7 +34,7 @@ public:
     void wakeUp();
     bool isSleep();
     void enScroll(int dir, int speed);
-    bool isEscape(CCommand command);
+    bool isEscape(CCommand cmd);
     int  resetState();
     void sendPipeChess(const char *data);
     void sendPipeMom(const char *data);

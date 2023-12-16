@@ -6,6 +6,7 @@
 
 #include "backend.h"
 #include "re_captain.h"
+#include "re_modifier.h"
 
 #define CH_DRAG_NORM   0
 #define CH_DRAG_STATE1 1

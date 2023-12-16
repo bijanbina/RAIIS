@@ -24,7 +24,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     window_thread->start();
     window->wins_title = &(state->wins_title);
     window->elems_name = &(state->elems_name);
-    window->key = captain->key;
 
     connect(this, SIGNAL(startChannel()),
             window, SLOT(start()));

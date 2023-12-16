@@ -56,11 +56,12 @@ void ReCaptain::execute(QVector<CCommand> commands)
     {
         if( state->isSleep() )
         {
-            if( commands[i].type!=RE_COMMAND_MOD )
+            if( commands[i].type==RE_COMMAND_NULL ||
+                commands[i].is_super==0 )
             {
                 continue;
             }
-            else //type==RE_COMMAND_MOD
+            else // is_super==1
             {
                 if( isWakeUp(commands[i]) )
                 {
@@ -110,14 +111,6 @@ void ReCaptain::execCommand(CCommand command)
             }
         }
 
-        for( int j=0 ; j<command.val2 ; j++ )
-        {
-            key->sendKey(command.val1);
-            QThread::msleep(5); //little tweak
-        }
-    }
-    else if( command.type==RE_COMMAND_MOD )
-    {
         execKeyboard(command);
     }
     else if( command.type==RE_COMMAND_META )
@@ -166,16 +159,20 @@ bool ReCaptain::isLastRepeatable()
             return true;
         }
     }
-    else if( cmd_type==RE_COMMAND_MOD )
-    {
-        if( state->last_cmd.val1 )
-        {
-            return true;
-        }
-    }
     else if( cmd_type==RE_COMMAND_SUPER )
     {
         return true;
+    }
+    else if( cmd_type!=RE_COMMAND_NULL )
+    {
+        if( state->last_cmd.is_alt  || state->last_cmd.is_shift ||
+            state->last_cmd.is_ctrl || state->last_cmd.is_super )
+        {
+            if( state->last_cmd.val1 )
+            {
+                return true;
+            }
+        }
     }
 
     return false;
@@ -183,23 +180,23 @@ bool ReCaptain::isLastRepeatable()
 
 bool ReCaptain::isWakeUp(CCommand command)
 {
-    if( command.type!=RE_COMMAND_MOD )
+    if( command.type==RE_COMMAND_NULL )
     {
         return false;
     }
 
-    if( command.mod_list.size()==0 )
+    if( command.is_super==0 ||
+        command.is_alt  ==1 ||
+        command.is_ctrl ==1 ||
+        command.is_shift==1 )
     {
         return false;
     }
 
-    if( command.mod_list[0]==KEY_META )
+    if( command.val1>=KEY_0 &&
+        command.val1<KEY_7 )
     {
-        if( command.val1>=KEY_0 &&
-            command.val1<KEY_7 )
-        {
-            return true;
-        }
+        return true;
     }
 
     return false;
@@ -207,23 +204,24 @@ bool ReCaptain::isWakeUp(CCommand command)
 
 bool ReCaptain::isSpeakerSw(CCommand command)
 {
-    if( command.type!=RE_COMMAND_MOD )
+
+    if( command.type==RE_COMMAND_NULL )
     {
         return false;
     }
 
-    if( command.mod_list.size()==0 )
+    if( command.is_super==0 ||
+        command.is_alt  ==1 ||
+        command.is_ctrl ==1 ||
+        command.is_shift==1 )
     {
         return false;
     }
 
-    if( command.mod_list[0]==KEY_META )
+    if( command.val1==KEY_BACKSPACE &&
+        command.val2==1 )
     {
-        if( command.val1==KEY_BACKSPACE &&
-            command.val2==1 )
-        {
-            return true;
-        }
+        return true;
     }
 
     return false;
@@ -241,14 +239,6 @@ void ReCaptain::execMeta(CCommand command)
             translated.type==RE_COMMAND_DIRS ||
             translated.type==RE_COMMAND_DIGIT )
         {
-            for( int j=0 ; j<translated.val2 ; j++ )
-            {
-                key->sendKey(translated.val1);
-                QThread::msleep(5); //little tweak
-            }
-        }
-        else if( translated.type==RE_COMMAND_MOD )
-        {
             execKeyboard(translated);
         }
     }
@@ -261,45 +251,45 @@ void ReCaptain::wakeDictate()
     QThread::msleep(500);
 
     // remove super+num
-    key->pressKey(KEY_LEFTCTRL);
-    key->pressKey(KEY_LEFTSHIFT);
-    key->sendKey(KEY_LEFT);
+    ReKeyboard::pressKey(KEY_LEFTCTRL);
+    ReKeyboard::pressKey(KEY_LEFTSHIFT);
+    ReKeyboard::sendKey(KEY_LEFT);
     QThread::msleep(10);
-    key->sendKey(KEY_LEFT);
-    key->releaseKey(KEY_LEFTSHIFT);
-    key->releaseKey(KEY_LEFTCTRL);
+    ReKeyboard::sendKey(KEY_LEFT);
+    ReKeyboard::releaseKey(KEY_LEFTSHIFT);
+    ReKeyboard::releaseKey(KEY_LEFTCTRL);
     QThread::msleep(100);
 
-    key->sendKey(KEY_BACKSPACE);
+    ReKeyboard::sendKey(KEY_BACKSPACE);
     QThread::msleep(5); //little tweak
-    key->sendKey(KEY_BACKSPACE);
+    ReKeyboard::sendKey(KEY_BACKSPACE);
     QThread::msleep(5); //little tweak
 
     // select all
-    key->pressKey(KEY_LEFTCTRL);
+    ReKeyboard::pressKey(KEY_LEFTCTRL);
     QThread::msleep(5); //little tweak
-    key->sendKey(KEY_A);
+    ReKeyboard::sendKey(KEY_A);
     QThread::msleep(5); //little tweak
-    key->releaseKey(KEY_LEFTCTRL);
+    ReKeyboard::releaseKey(KEY_LEFTCTRL);
     QThread::msleep(2000);
 
     // copy
-    key->pressKey(KEY_LEFTCTRL);
+    ReKeyboard::pressKey(KEY_LEFTCTRL);
     QThread::msleep(5); //little tweak
-    key->sendKey(KEY_C);
-    key->releaseKey(KEY_LEFTCTRL);
+    ReKeyboard::sendKey(KEY_C);
+    ReKeyboard::releaseKey(KEY_LEFTCTRL);
     QThread::msleep(1000);
 
     // quit
-    key->pressKey(KEY_META);
-    key->sendKey(KEY_Q);
-    key->releaseKey(KEY_META);
+    ReKeyboard::pressKey(KEY_META);
+    ReKeyboard::sendKey(KEY_Q);
+    ReKeyboard::releaseKey(KEY_META);
     QThread::msleep(400);
 
     // paste
-    key->pressKey(KEY_LEFTCTRL);
-    key->sendKey(KEY_V);
-    key->releaseKey(KEY_LEFTCTRL);
+    ReKeyboard::pressKey(KEY_LEFTCTRL);
+    ReKeyboard::sendKey(KEY_V);
+    ReKeyboard::releaseKey(KEY_LEFTCTRL);
 
     state->wakeUp();
 }

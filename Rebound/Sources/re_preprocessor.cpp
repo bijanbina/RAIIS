@@ -173,7 +173,7 @@ void RePreProcessor::digit(const QString &text)
         re_qtDigitProc(&cmd_buf, text);
 
         int key_code = text.toInt();
-        captain->key->sendKey(key_code);
+        ReKeyboard::sendKey(key_code);
     }
     else if( captain->isLastRepeatable() ) //max 2 digit
     {

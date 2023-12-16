@@ -191,14 +191,20 @@ void ReState::enScroll(int dir, int speed)
 }
 
 // is escape command
-bool ReState::isEscape(CCommand command)
+bool ReState::isEscape(CCommand cmd)
 {
-    if( command.type!=RE_COMMAND_DIRS )
+    if( cmd.type!=RE_COMMAND_DIRS )
     {
         return 0;
     }
 
-    if( command.val1!=KEY_ESC )
+    if( cmd.val1!=KEY_ESC )
+    {
+        return 0;
+    }
+
+    if( cmd.is_alt  || cmd.is_shift ||
+        cmd.is_ctrl || cmd.is_super )
     {
         return 0;
     }

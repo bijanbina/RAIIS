@@ -88,9 +88,12 @@ bool re_isLastMod(QVector<CCommand> commands)
     int last_i = commands.count()-1; //last index
     int cmd_type = commands[last_i].type;
 
-    if( cmd_type==RE_COMMAND_MOD )
+    if( cmd_type!=RE_COMMAND_NULL )
     {
-        return true;
+        return commands[last_i].is_alt   ||
+               commands[last_i].is_shift ||
+               commands[last_i].is_ctrl  ||
+               commands[last_i].is_super;
     }
 
     return false;
