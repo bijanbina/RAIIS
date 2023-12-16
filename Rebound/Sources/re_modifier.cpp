@@ -42,6 +42,11 @@ void re_modPress(CCommand cmd)
         return;
     }
 
+    if( cmd.is_super )
+    {
+        ReKeyboard::pressKey(KEY_META);
+    }
+
     if( cmd.is_alt )
     {
         ReKeyboard::pressKey(KEY_LEFTALT);
@@ -55,11 +60,6 @@ void re_modPress(CCommand cmd)
     if( cmd.is_ctrl )
     {
         ReKeyboard::pressKey(KEY_LEFTCTRL);
-    }
-
-    if( cmd.is_super )
-    {
-        ReKeyboard::pressKey(KEY_META);
     }
 }
 

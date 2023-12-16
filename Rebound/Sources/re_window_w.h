@@ -31,7 +31,6 @@ public:
     void cleanWins();
     void clearWins();
     void selectButton(QString name);
-    QString cleanTitle(QString title);
     void sortApp();
     void updateActiveWindow();
 
@@ -56,6 +55,7 @@ private:
 
 void re_AddHwnd(HWND hwnd, ReWindowW *thread_w);
 void re_InsertWindow(ReWindowW *thread_w, ReWindow win);
+int  re_cleanRemoteId(QString title);
 
 int reSelectButton(QString name);
 

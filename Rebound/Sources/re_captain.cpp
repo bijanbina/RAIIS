@@ -56,37 +56,11 @@ void ReCaptain::execute(QVector<CCommand> commands)
     {
         if( state->isSleep() )
         {
-            if( commands[i].type==RE_COMMAND_NULL ||
-                commands[i].is_super==0 )
+            int ret = execSleep(commands[i]);
+            if( ret )
             {
-                continue;
-            }
-            else // is_super==1
-            {
-                if( isWakeUp(commands[i]) )
-                {
-                    if( state->dictate_state )
-                    {
-                        wakeDictate();
-                    }
-                    else if( state->record_state )
-                    {
-                        wakeRecord();
-                    }
-                    else
-                    {
-                        state->wakeUp();
-                        execCommand(commands[i]);
-                        commands.clear();
-                        qDebug() << "Wake Up";
-                        return;
-                    }
-                }
-                else if( isSpeakerSw(commands[i]) )
-                {
-                    execCommand(commands[i]);
-                    return;
-                }
+                commands.clear();
+                return;
             }
         }
         else
@@ -94,6 +68,43 @@ void ReCaptain::execute(QVector<CCommand> commands)
             execCommand(commands[i]);
         }
     }
+}
+
+int ReCaptain::execSleep(CCommand command)
+{
+    if( command.type==RE_COMMAND_NULL ||
+        command.is_super==0 )
+    {
+        return 0;
+    }
+    else // is_super==1
+    {
+        if( isWakeUp(command) )
+        {
+            if( state->dictate_state )
+            {
+                wakeDictate();
+            }
+            else if( state->record_state )
+            {
+                wakeRecord();
+            }
+            else
+            {
+                state->wakeUp();
+                execCommand(command);
+                qDebug() << "Wake Up";
+                return 1;
+            }
+        }
+        else if( isSpeakerSw(command) )
+        {
+            execCommand(command);
+            return 0;
+        }
+    }
+
+    return 0;
 }
 
 void ReCaptain::execCommand(CCommand command)
@@ -140,6 +151,18 @@ bool ReCaptain::isLastRepeatable()
         return false;
     }
 
+    if( cmd_type!=RE_COMMAND_NULL )
+    {
+        if( state->last_cmd.is_alt  || state->last_cmd.is_shift ||
+            state->last_cmd.is_ctrl || state->last_cmd.is_super )
+        {
+            if( state->last_cmd.val1 )
+            {
+                return true;
+            }
+        }
+    }
+
     if( cmd_type==RE_COMMAND_DIRS )
     {
         return true;
@@ -163,17 +186,7 @@ bool ReCaptain::isLastRepeatable()
     {
         return true;
     }
-    else if( cmd_type!=RE_COMMAND_NULL )
-    {
-        if( state->last_cmd.is_alt  || state->last_cmd.is_shift ||
-            state->last_cmd.is_ctrl || state->last_cmd.is_super )
-        {
-            if( state->last_cmd.val1 )
-            {
-                return true;
-            }
-        }
-    }
+
 
     return false;
 }

@@ -71,9 +71,14 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
                 current_win.title = buffer;
                 current_win.pname = mm_getPName(mm_getPid(hwnd));
                 current_win.verify = 1; //always new windows are verified
-//                current_win.title = thread_w->cleanTitle(current_win.title);
 
                 re_InsertWindow(thread_w, current_win);
+
+                if( current_win.pname=="rustdesk" )
+                {
+                    int r_id = re_cleanRemoteId(current_win.title);
+                    thread_w->state->remote_id = r_id;
+                }
 
                 if( current_win.pname=="Chess" ||
                     current_win.pname=="rustdesk" ||
@@ -91,7 +96,7 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
                 }
                 else
                 {
-                    re_setWindowOpacity(hwnd, 255);
+                    re_setWindowOpacity(hwnd, 200);
                 }
             }
             else
@@ -163,17 +168,12 @@ void re_InsertWindow(ReWindowW *thread_w, ReWindow win)
 
 }
 
-QString ReWindowW::cleanTitle(QString app_title)
+int re_cleanRemoteId(QString title)
 {
-    QStringList title_split = app_title.split('-', QString::SkipEmptyParts);
-    QString app_name = renameAppName(title_split.last().simplified());
-    QStringList filename_split = title_split[0].split(" ", QString::SkipEmptyParts);
-    app_title = app_name + ": " + title_split[0].simplified();
-    if(filename_split.size()>1)
-    {
-        app_title += " " + filename_split[1].simplified();
-    }
-    return app_title;
+    QStringList split = title.split('-');
+    QStringList id_split = split[0].split(" ");
+
+    return id_split[0].toInt();
 }
 
 QString ReWindowW::renameAppName(QString app_name)

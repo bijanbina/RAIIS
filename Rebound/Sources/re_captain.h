@@ -35,6 +35,7 @@ private:
     void execKeyboard(CCommand command);
     void execMeta(CCommand command);
 
+    int execSleep(CCommand command);
     void execCommand(CCommand command);
     void wakeDictate();
     void wakeRecord();
