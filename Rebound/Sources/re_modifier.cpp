@@ -44,7 +44,7 @@ void re_modPress(CCommand cmd)
 
     if( cmd.is_super )
     {
-        ReKeyboard::pressKey(KEY_META);
+        ReKeyboard::pressKey(KEY_LEFTMETA);
     }
 
     if( cmd.is_alt )

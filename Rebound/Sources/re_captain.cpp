@@ -294,9 +294,9 @@ void ReCaptain::wakeDictate()
     QThread::msleep(1000);
 
     // quit
-    ReKeyboard::pressKey(KEY_META);
+    ReKeyboard::pressKey(KEY_LEFTMETA);
     ReKeyboard::sendKey(KEY_Q);
-    ReKeyboard::releaseKey(KEY_META);
+    ReKeyboard::releaseKey(KEY_LEFTMETA);
     QThread::msleep(400);
 
     // paste

@@ -43,8 +43,10 @@ private slots:
 
 private:
     void processCommand(QString k_type, QString k_code);
+    int  procSpecialKey(QString word);
     int  procChess(QString word);
     int  procSuper(QString word);
+    int  procDigit(QString word);
     int  procMouse(QString word);
     void runLua(QString word);
     void wakeRemote();
@@ -53,6 +55,7 @@ private:
     ReChess    *chess;
     ReMetaMos  *mouse;
     QString     last_word;
+    int         is_last_mouse;
 
     ReApacheCl *apache;
 

@@ -48,8 +48,8 @@
 #define KEY_LEFTALT   VK_MENU
 #define KEY_LEFTCTRL  VK_CONTROL
 #define KEY_LEFTSHIFT VK_SHIFT
+#define KEY_LEFTMETA  VK_LWIN
 #define KEY_TAB       VK_TAB
-#define KEY_META      VK_LWIN
 #define KEY_PAGEUP    VK_PRIOR //Page Up
 #define KEY_NEXT      VK_NEXT  //Page Down
 #define KEY_MINUS     VK_SUBTRACT

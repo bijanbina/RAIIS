@@ -8,6 +8,7 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     state = pre->captain->state;
     chess = pre->chess;
     mouse = new ReMetaMos(state);
+    is_last_mouse = 0;
 
 #ifdef WIN32
     virt = new ReWin32Virt;
@@ -60,41 +61,14 @@ void ReRemote::send(QString word)
 {
     qDebug() << "sendRemote" << word;
 
-    // handle wakeup word
-    if( last_word=="system" && word=="romeo" )
+    if( word=="two" )
     {
-        wakeRemote();
+
     }
-    else if( last_word=="go" && word=="sleep" )
+    if( procSpecialKey(word) )
     {
-        state->remote_state = 0;
-        state->goToSleep();
-        last_word = word;
         return;
     }
-    else if( last_word=="system" )
-    {
-        if( procSuper(word) )
-        {
-            last_word = word;
-            return;
-        }
-    }
-    else if( last_word=="mouse" )
-    {
-        if( procMouse(word) )
-        {
-            last_word = word;
-            return;
-        }
-    }
-#ifdef WIN32
-    else if( last_word=="super" && word=="back" )
-    {
-        QString cmd_str = "Meta,sound";
-        state->sendPipeMom(cmd_str.toStdString().c_str());
-    }
-#endif
 
     last_word = word;
 
@@ -337,5 +311,97 @@ int ReRemote::procMouse(QString word)
         mouse->castScroll(val);
         return 1;
     }
+    return 0;
+}
+
+int ReRemote::procSpecialKey(QString word)
+{
+    if( last_word=="go" && word=="sierra" )
+    {
+        state->remote_state = 0;
+        state->goToSleep();
+        last_word = word;
+        return 1;
+    }
+    else if( last_word=="system" )
+    {
+        if( procSuper(word) )
+        {
+            last_word = word;
+            return 1;
+        }
+    }
+    else if( last_word=="mouse" )
+    {
+        if( procMouse(word) )
+        {
+            last_word = word;
+            is_last_mouse = 1;
+            return 1;
+        }
+    }
+#ifdef WIN32
+    else if( last_word=="super" && word=="back" )
+    {
+        QString cmd_str = "Meta,sound";
+        state->sendPipeMom(cmd_str.toStdString().c_str());
+        return 1;
+    }
+    else if( is_last_mouse )
+    {
+        int val = procDigit(word);
+        if( val )
+        {
+            for( int i=0 ; i<val-1 ; i++ )
+            {
+                procMouse(last_word);
+            }
+            return 1;
+        }
+    }
+#endif
+    is_last_mouse = 0;
+    return 0;
+}
+
+int ReRemote::procDigit(QString word)
+{
+    if( word=="one" )
+    {
+        return 1;
+    }
+    else if( word=="two" )
+    {
+        return 2;
+    }
+    else if( word=="three" )
+    {
+        return 3;
+    }
+    else if( word=="four" )
+    {
+        return 4;
+    }
+    else if( word=="five" )
+    {
+        return 5;
+    }
+    else if( word=="six" )
+    {
+        return 6;
+    }
+    else if( word=="seven" )
+    {
+        return 7;
+    }
+    else if( word=="eight" )
+    {
+        return 8;
+    }
+    else if( word=="nine" )
+    {
+        return 9;
+    }
+
     return 0;
 }
