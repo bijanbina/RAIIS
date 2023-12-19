@@ -29,6 +29,13 @@ public:
     void scrollUp(int speed, QString st_cmd);
     void scrollEscape();
 
+#ifdef WIN32
+    HANDLE connectPipe(const char *pipe_name);
+    void sendPipe(const char *data);
+
+    HANDLE pipe_firefox;
+#endif
+
     int sc_speed = 5;
     int sc_dir   = 0;  // 0 deactive, other active
 

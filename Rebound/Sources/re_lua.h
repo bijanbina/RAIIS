@@ -20,6 +20,7 @@ public:
 
 private:
 #ifdef WIN32
+    void addRegistry();
     QString exec(const char *path);
 #endif
 

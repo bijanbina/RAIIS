@@ -5,6 +5,7 @@
 ReFirefox::ReFirefox(QObject *parent) : QObject(parent)
 {
     socket = new QWebSocket;
+    pipe_firefox = connectPipe(RE_PIPE_FIREFOX);
     connect(socket, SIGNAL(connected()),
             this, SLOT(onConnected()));
     connect(socket, SIGNAL(disconnected()),
@@ -208,4 +209,72 @@ void ReFirefox::send_js(QString cmd)
 
     socket->sendTextMessage(en_runtime);
     cmd_buf = cmd;
+
+#ifdef WIN32
+//    sendPipe(cmd.toStdString().c_str());
+#else
+    ///FIXME: Implement for unix too
+#endif
 }
+
+#ifdef WIN32
+HANDLE ReFirefox::connectPipe(const char *pipe_name)
+{
+    // 0: Default Wait Time
+    int ready = WaitNamedPipeA(pipe_name, 0);
+    HANDLE hPipe;
+    if( ready )
+    {
+        hPipe = CreateFileA(pipe_name, GENERIC_WRITE, // dwDesiredAccess
+                            0, nullptr,    // lpSecurityAttributes
+                            OPEN_EXISTING,  // dwCreationDisposition
+                            0, nullptr);    // hTemplateFile
+
+        if( hPipe==INVALID_HANDLE_VALUE )
+        {
+            qDebug() << "Error 120: Cannot connect"
+                     << pipe_name;
+        }
+    }
+    else
+    {
+        hPipe = INVALID_HANDLE_VALUE;
+        qDebug() << "Error 121: Pipe "
+                 << pipe_name << " not found";
+    }
+
+    return hPipe;
+}
+
+void ReFirefox::sendPipe(const char *data)
+{
+    DWORD len = strlen(data);
+    if( pipe_firefox==INVALID_HANDLE_VALUE )
+    {
+        qDebug() << "Try to reconnect to"
+                 << RE_PIPE_FIREFOX;
+
+        pipe_firefox = connectPipe(RE_PIPE_FIREFOX);
+        if( pipe_firefox==INVALID_HANDLE_VALUE )
+        {
+            return;
+        }
+    }
+
+    DWORD dwWritten;
+    int success = WriteFile(pipe_firefox, data, len, &dwWritten, NULL);
+    if( !success )
+    {
+        qDebug() << "Error: NamedPipe writing failed," << GetLastError();
+    }
+
+    if( dwWritten!=len )
+    {
+        qDebug() << "Error: Wrong writing length."
+                    "Try to revive channel";
+        CloseHandle(pipe_firefox);
+        pipe_firefox = INVALID_HANDLE_VALUE;
+        sendPipe(data);
+    }
+}
+#endif

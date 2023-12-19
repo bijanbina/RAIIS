@@ -1,7 +1,9 @@
 #include "re_lua.h"
 #include <QtDebug>
 #include <QDir>
+#include <QSettings>
 #include "backend.h"
+
 
 #define WS_SC_PATH "Scripts/Firefox/getWS.sh"
 
@@ -11,6 +13,7 @@ ReLua::ReLua()
     lst = luaL_newstate();
     luaL_openlibs(lst);
     exec("init.lua");
+    addRegistry();
 #endif
 }
 
@@ -50,3 +53,30 @@ ReLua::~ReLua()
     lua_close(lst);
 #endif
 }
+
+#ifdef WIN32
+void ReLua::addRegistry()
+{
+    HKEY hKey;
+    QString reg = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Mozilla\\"
+                  "NativeMessagingHosts\\link";
+    QString json_path = QDir::currentPath();
+    json_path.replace("/", QDir::separator());
+    QStringList path_split = json_path.split(QDir::separator(),
+                                             Qt::SkipEmptyParts);
+    path_split.removeLast(); // remove Rebound
+    path_split.removeLast(); // remove RAIIS
+    json_path = path_split.join(QDir::separator());
+    json_path += "\\Benjamin\\Link\\Resources\\manifest.json";
+    QSettings settings(reg, QSettings::NativeFormat);
+    long reg_exist = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+            TEXT("SOFTWARE\\Mozilla\\NativeMessagingHosts\\link"),
+            0, KEY_READ, &hKey);
+    if( reg_exist==ERROR_SUCCESS )
+    {
+        return;
+    }
+
+    settings.setValue("Default", json_path);
+}
+#endif

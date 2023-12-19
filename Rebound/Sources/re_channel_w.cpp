@@ -33,7 +33,7 @@ void ReChannelW::ListenPipe()
         // wait for someone to connect to the pipe
         if( ConnectNamedPipe(hPipe, nullptr)!=FALSE )
         {
-            qDebug() << "Connect client";
+            qDebug() << "ReChannelW::Connect client";
             while( ReadFile(hPipe, buffer, sizeof(buffer)-1, &dwRead, nullptr)!=FALSE )
             {
                 // add terminating zero
@@ -49,13 +49,14 @@ void ReChannelW::ListenPipe()
             }
         }
 
-        qDebug() << "Client Disconnected";
+        qDebug() << "ReChannelW::Client Disconnected";
         DisconnectNamedPipe(hPipe);
     }
 }
 
 void ReChannelW::processLine(QString line)
 {
+    qDebug() << "ReChannelW::processLine" << line;
     line = line.trimmed();
     QStringList fields = line.split(RE_NP_SEPARATOR,
                                QString::SkipEmptyParts);
@@ -86,7 +87,7 @@ void ReChannelW::createPipe()
 {
     // To create an instance of a named pipe by using CreateNamedPipe,
     // the user must have FILE_CREATE_PIPE_INSTANCE access to the named pipe object.
-    hPipe = CreateNamedPipe(TEXT(PIPE_PATH),
+    hPipe = CreateNamedPipe(TEXT(RE_PIPE_PATH),
                             PIPE_ACCESS_INBOUND,            // dwOpenMode. The flow of data in the pipe goes from client to server only
                             PIPE_TYPE_BYTE | PIPE_WAIT,     // dwPipeMode
                             1,                              // nMaxInstances
@@ -97,7 +98,7 @@ void ReChannelW::createPipe()
 
     if( hPipe==INVALID_HANDLE_VALUE )
     {
-        qDebug(PIPE_PATH"Failed");
+        qDebug(RE_PIPE_PATH"Failed");
     }
 //    qDebug() << PIPE_PATH << "pipe Created";
 }
