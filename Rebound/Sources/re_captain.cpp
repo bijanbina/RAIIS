@@ -128,14 +128,6 @@ void ReCaptain::execCommand(CCommand command)
     {
         execMeta(command);
     }
-    else if( command.type==RE_COMMAND_SUPER )
-    {
-        for( int j=0 ; j<command.val2 ; j++ )
-        {
-            CCommand cmd; //dummy var
-            super->castCmd(command.val1, &cmd);
-        }
-    }
     else if( command.type==RE_COMMAND_QDIGIT )
     {
         re_getQtCmd(command);

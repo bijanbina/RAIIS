@@ -56,7 +56,7 @@ void ReChannelW::ListenPipe()
 
 void ReChannelW::processLine(QString line)
 {
-    qDebug() << "ReChannelW::processLine" << line;
+//    qDebug() << "ReChannelW::processLine" << line;
     line = line.trimmed();
     QStringList fields = line.split(RE_NP_SEPARATOR,
                                QString::SkipEmptyParts);

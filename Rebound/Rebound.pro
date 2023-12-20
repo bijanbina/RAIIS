@@ -35,7 +35,8 @@ SOURCES += Sources/main.cpp \
            Sources/re_raxis.cpp \
            Sources/re_bumpers.cpp \
            Sources/re_status_file.cpp \
-           Sources/re_super.cpp
+           Sources/re_super.cpp \
+           Sources/re_super_app.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/mm_api.cpp \
