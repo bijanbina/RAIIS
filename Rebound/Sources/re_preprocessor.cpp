@@ -22,11 +22,11 @@ void RePreProcessor::execute()
 //                 << "exec" << commands_str << special_c
 //                 << cmd_buf.last().val2;
 
-        if( "jordan arch"==commands_str )
-        {
-            qDebug() << "exec" << cmd_buf.length()
-                     << cmd_buf.first().type;
-        }
+//        if( commands_str=="jordan arch" )
+//        {
+//            qDebug() << "exec" << cmd_buf.length()
+//                     << cmd_buf.first().type;
+//        }
         commands_str.clear();
 
         captain->execute(cmd_buf);
@@ -337,6 +337,11 @@ void RePreProcessor::spex(const QString &text)
 
 void RePreProcessor::super(const QString &text)
 {
+    if( captain->state->isSleep() )
+    {
+        return;
+    }
+
     if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -344,40 +349,21 @@ void RePreProcessor::super(const QString &text)
         execute();
         return;
     }
-    else if( captain->state->isSleep()==0 )
-    {
-        CCommand cmd; //fake command
-        int val = text.toInt();
-        if( chess->isChessCmd(val) )
-        {
-            commands_str = "";
+    chess->super(text, cmd_buf);
 
-            if( re_isLastMod(cmd_buf) )
-            {
-                int last_i = cmd_buf.count()-1; //last index
-                cmd = cmd_buf[last_i];
-            }
-        }
-
-        chess->super(text, cmd);
-    }
     if( captain->state->ch_count )
     {
         // no need to process super mode while in
         // chess mode
         return;
     }
+
     if( re_isLastMod(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
 
         cmd_buf[last_i].val1 = text.toInt();
         execute();
-        return;
-    }
-
-    if( captain->state->isSleep() )
-    {
         return;
     }
 

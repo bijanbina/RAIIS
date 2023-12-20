@@ -1,14 +1,9 @@
 #include "re_super.h"
 #include <QThread>
 
-ReSuper::ReSuper(ReState *st, QObject *parent): QObject(parent)
+ReSuper::ReSuper(ReState *st)
 {
     state = st;
-}
-
-ReSuper::~ReSuper()
-{
-    ;
 }
 
 void ReSuper::castCmd(int val, CCommand *cmd)
@@ -87,7 +82,7 @@ void ReSuper::castMetaCmd(CCommand *cmd)
 {
     cmd->val2 = 1;
     cmd->val3 = 1;
-    cmd->type = RE_COMMAND_SUPER;
+    cmd->type = RE_COMMAND_NULL;
 
     qDebug() << "Meta" << state->app.pname;
 
@@ -186,9 +181,8 @@ void ReSuper::castPasteCmd(CCommand *cmd)
 void ReSuper::castLSwitchCmd(CCommand *cmd)
 {
 #ifdef WIN32
-    // Switch to next language
-    // Need an hwnd to work for console
-    // applications
+    // Switch to next language Need an hwnd
+    // to work for console applications
     HWND handle = GetForegroundWindow();
     PostMessage(handle, WM_INPUTLANGCHANGEREQUEST,
                 0, (LPARAM)HKL_NEXT);

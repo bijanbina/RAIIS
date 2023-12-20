@@ -21,11 +21,12 @@ public:
 
     void dirs (const QString &arg);
     void nato (const QString &arg);
-    void super(const QString &arg, CCommand command); //single shot meta cmd
+    void super(const QString &arg,
+               QVector<CCommand> cmd_buf); //single shot meta cmd
     void digit(const QString &arg);
 
     void showChess(int val);
-    int  isChessCmd(int val);
+    int  isChessCmd(QString text);
 
 private:
     void sendChessCmd(QString cmd);

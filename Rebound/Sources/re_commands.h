@@ -20,6 +20,7 @@
 #define RE_COMMAND_META   5
 #define RE_COMMAND_SUPER  6
 #define RE_COMMAND_QDIGIT 7
+#define RE_COMMAND_CHESS  8
 
 // Repeat count state (2-digit)
 #define RE_CSTATE_0  0
@@ -65,6 +66,17 @@
 #define RE_SUPER_LAST    124
 #define RE_SUPER_POWER   125
 #define RE_SUPER_RUN     126
+
+#define RE_CHESS_KICK    201
+#define RE_CHESS_COMMENT 202
+#define RE_CHESS_SIDE    203
+#define RE_CHESS_DOUBLE  204
+#define RE_CHESS_RESIST  205
+#define RE_CHESS_DRAG    206
+#define RE_CHESS_SHOT    207
+#define RE_CHESS_MAGIC   208
+#define RE_CHESS_RUN     209
+
 
 typedef struct ReWindow
 {

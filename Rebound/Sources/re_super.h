@@ -14,18 +14,12 @@
 #else
 #include "re_keyboard_l.h"
 #include "re_app_l.h"
-
-#define KEY_META    KEY_LEFTMETA
 #endif
 
-
-class ReSuper : public QObject
+class ReSuper
 {
-    Q_OBJECT
-
 public:
-    ReSuper(ReState *st, QObject *parent = NULL);
-    ~ReSuper();
+    ReSuper(ReState *st);
 
     void castCmd(int val, CCommand *cmd);
 
@@ -43,6 +37,9 @@ private:
     void castCamelCmd(CCommand *cmd);
     void castSelectCmd(CCommand *cmd);
     void makeNull(CCommand *cmd);
+
+    // super_app
+    void castRunCmd(CCommand *cmd);
 
     int uinput_f;
     ReState  *state;

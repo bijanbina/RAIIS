@@ -42,7 +42,8 @@ void ReChess::dirs(const QString &text) // direction keys
     }
 }
 
-void ReChess::super(const QString &text, CCommand command)
+void ReChess::super(const QString &text,
+                    QVector<CCommand> cmd_buf)
 {
     int val = text.toInt();
     if( val==RE_SUPER_META && captain->state->ch_count )
@@ -51,10 +52,14 @@ void ReChess::super(const QString &text, CCommand command)
         addCount(1);
         sendChessCmd("Meta");
     }
-    else if( isChessCmd(val) )
+    else if( isChessCmd(text) )
     {
-        re_modPress(command);
-        mod_cmd = command;
+        if( re_isLastMod(cmd_buf) )
+        {
+            int last_i = cmd_buf.count()-1; //last index
+            mod_cmd = cmd_buf[last_i];
+            re_modPress(mod_cmd);
+        }
         showChess(val);
     }
 }
@@ -212,8 +217,9 @@ void ReChess::addCount(int val)
     setCount(count+val);
 }
 
-int ReChess::isChessCmd(int val)
+int ReChess::isChessCmd(QString text)
 {
+    int val = text.toInt();
     if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
         val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
         val==RE_SUPER_RESIST || val==RE_SUPER_DRAG    ||
