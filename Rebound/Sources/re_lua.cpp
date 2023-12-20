@@ -13,7 +13,7 @@ ReLua::ReLua()
     lst = luaL_newstate();
     luaL_openlibs(lst);
     exec("init.lua");
-    addRegistry();
+    addRegisteryKeys();
 #endif
 }
 
@@ -55,28 +55,54 @@ ReLua::~ReLua()
 }
 
 #ifdef WIN32
-void ReLua::addRegistry()
+void ReLua::addRegisteryKeys()
 {
-    HKEY hKey;
-    QString reg = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Mozilla\\"
-                  "NativeMessagingHosts\\link";
-    QString json_path = QDir::currentPath();
-    json_path.replace("/", QDir::separator());
-    QStringList path_split = json_path.split(QDir::separator(),
-                                             Qt::SkipEmptyParts);
-    path_split.removeLast(); // remove Rebound
-    path_split.removeLast(); // remove RAIIS
-    json_path = path_split.join(QDir::separator());
-    json_path += "\\Benjamin\\Link\\Resources\\manifest.json";
-    QSettings settings(reg, QSettings::NativeFormat);
-    long reg_exist = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
-            TEXT("SOFTWARE\\Mozilla\\NativeMessagingHosts\\link"),
-            0, KEY_READ, &hKey);
-    if( reg_exist==ERROR_SUCCESS )
+    QString reg = "HKEY_LOCAL_MACHINE\\SOFTWARE\\"
+                  "Mozilla\\NativeMessagingHosts\\link";
+    if( regExist(reg)==0 )
     {
-        return;
+        QString json_path = QDir::currentPath();
+        json_path.replace("/", QDir::separator());
+        QStringList path_split = json_path.split(QDir::separator(),
+                                                 Qt::SkipEmptyParts);
+        path_split.removeLast(); // remove Rebound
+        path_split.removeLast(); // remove RAIIS
+        json_path = path_split.join(QDir::separator());
+        json_path += "\\Benjamin\\Link\\Resources\\manifest.json";
+        QSettings settings(reg, QSettings::NativeFormat);
+        settings.setValue("Default", json_path);
     }
 
-    settings.setValue("Default", json_path);
+    reg = "HKLM\\SOFTWARE\\Policies\\Mozilla\\Firefox";
+    if( regExist(reg)==0 )
+    {
+        QSettings settings(reg, QSettings::NativeFormat);
+        settings.setValue("DisableAppUpdate", 1);
+    }
+
+    reg = "HKCU\\Control Panel\\Desktop";
+    if( regExist(reg)==0 )
+    {
+        QSettings settings(reg, QSettings::NativeFormat);
+        settings.setValue("AutoEndTasks ", "1");
+    }
 }
+
+int ReLua::regExist(QString path)
+{
+    HKEY hKey;
+    QStringList path_split = path.split(QDir::separator(),
+                                        Qt::SkipEmptyParts);
+    path_split.removeFirst();
+    QString path_noHKLM = path_split.join(QDir::separator());
+    long reg_exist = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+            (LPCTSTR)(path_noHKLM.toStdString().c_str()),
+            0, KEY_READ, &hKey);
+    if( reg_exist!=ERROR_SUCCESS )
+    {
+        return false;
+    }
+    return true;
+}
+
 #endif

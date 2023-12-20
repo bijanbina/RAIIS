@@ -20,8 +20,9 @@ public:
 
 private:
 #ifdef WIN32
-    void addRegistry();
+    void addRegisteryKeys();
     QString exec(const char *path);
+    int regExist(QString path);
 #endif
 
     lua_State *lst;

@@ -46,8 +46,6 @@ if getFirstMatch(pref_content, UPD_PATTERN) == nil then
 	appendLine(pref_path, UPD_LINE)
 end
 
-
-
 print(osName())
 if osName() == "Windows" then
 	chrome_path = getChromePath()
