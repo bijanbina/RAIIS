@@ -5,6 +5,7 @@
 ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
 {
     state = st;
+    chess = new ReChess(state);
     meta  = new ReMeta (state);
     super = new ReSuper(state);
     state->last_cmd.type = RE_COMMAND_NULL;

@@ -1,10 +1,10 @@
 #include "re_chess.h"
 #include <unistd.h>
 
-ReChess::ReChess(ReCaptain *cpt, QObject *parent) : QObject(parent)
+ReChess::ReChess(ReState *st, QObject *parent) : QObject(parent)
 {
-    captain   = cpt;
-    meta_mode = 0;
+    state        = st;
+    meta_mode    = 0;
     persist_mode = 0;
 }
 
@@ -46,7 +46,7 @@ void ReChess::super(const QString &text,
                     QVector<CCommand> cmd_buf)
 {
     int val = text.toInt();
-    if( val==RE_SUPER_META && captain->state->ch_count )
+    if( val==RE_SUPER_META && state->ch_count )
     {
         meta_mode = 1;
         addCount(1);
@@ -90,7 +90,7 @@ void ReChess::handleBackspace()
         }
     }
 
-    if( captain->state->ch_count<max )
+    if( state->ch_count<max )
     {
         addCount(1);
     }
@@ -165,7 +165,7 @@ void ReChess::sendChessCmd(QString cmd, QString arg)
 {
 #ifdef WIN32
     QString pipe_data = cmd + CH_NP_SEPARATOR + arg;
-    captain->state->sendPipeChess(pipe_data.toStdString().c_str());
+    state->sendPipeChess(pipe_data.toStdString().c_str());
 //    qDebug() << "pipe" << pipe_data;
 #else
     QString pipe_data = "dbus-send --dest=com.benjamin.chess";
@@ -178,7 +178,7 @@ void ReChess::sendChessCmd(QString cmd, QString arg)
 
 void ReChess::setCount(int val)
 {
-    captain->state->ch_count = val;
+    state->ch_count = val;
 
     if( val )
     {
@@ -203,9 +203,9 @@ void ReChess::setCount(int val)
         re_rmSpex();
         resetChess();
 
-        if( captain->state->remote_state )
+        if( state->remote_state )
         {
-            captain->state->goToRemote();
+            state->goToRemote();
         }
     }
 }
@@ -213,7 +213,7 @@ void ReChess::setCount(int val)
 // set count relative
 void ReChess::addCount(int val)
 {
-    int count = captain->state->ch_count;
+    int count = state->ch_count;
     setCount(count+val);
 }
 

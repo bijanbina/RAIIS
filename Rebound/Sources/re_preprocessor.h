@@ -6,7 +6,6 @@
 
 #include "backend.h"
 #include "re_captain.h"
-#include "re_chess.h"
 #include "re_modifier.h"
 
 class RePreProcessor : public QObject
@@ -18,7 +17,6 @@ public:
     ~RePreProcessor();
 
     ReCaptain *captain;
-    ReChess   *chess;
 
 public slots:
     void dirs (const QString &arg);

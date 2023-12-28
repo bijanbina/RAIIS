@@ -5,7 +5,6 @@ RePreProcessor::RePreProcessor(ReCaptain *cpt, QObject *parent) : QObject(parent
 {
     captain = cpt;
     special_c = 0;
-    chess = new ReChess(captain);
     re_rmSpex();
 }
 
@@ -39,7 +38,7 @@ void RePreProcessor::nato(const QString &text)
     int val = text.toInt();
     if( captain->state->ch_count )
     {
-        chess->nato(text);
+        captain->chess->nato(text);
         return;
     }
     else if( special_c ) //FUNC KEY
@@ -119,7 +118,7 @@ void RePreProcessor::digit(const QString &text)
 {
     if( captain->state->ch_count )
     {
-        chess->digit(text);
+        captain->chess->digit(text);
         return;
     }
     else if( special_c ) //FUNC KEY
@@ -197,7 +196,7 @@ void RePreProcessor::dirs(const QString &text) // direction keys
 {
     if( captain->state->ch_count )
     {
-        chess->dirs(text);
+        captain->chess->dirs(text);
         return;
     }
     else if( re_isLastMeta(cmd_buf) )
@@ -349,7 +348,7 @@ void RePreProcessor::super(const QString &text)
         execute();
         return;
     }
-    chess->super(text, cmd_buf);
+    captain->chess->super(text, cmd_buf);
 
     if( captain->state->ch_count )
     {

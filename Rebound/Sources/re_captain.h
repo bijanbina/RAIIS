@@ -10,6 +10,7 @@
 #include "re_super.h"
 #include "re_qt.h"
 #include "re_modifier.h"
+#include "re_chess.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
 #else
@@ -27,8 +28,9 @@ public:
     void execute(QVector<CCommand> commands);
     bool isLastRepeatable();
 
-    ReState     *state;
-    ReSuper     *super;
+    ReState   *state;
+    ReSuper   *super;
+    ReChess   *chess;
 private:
     void handleScroll(CCommand command);
 

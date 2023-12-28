@@ -7,7 +7,7 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
     state = pre->captain->state;
-    chess = pre->chess;
+    chess = pre->captain->chess;
     mouse = new ReMetaMos(state);
     is_last_mouse = 0;
 

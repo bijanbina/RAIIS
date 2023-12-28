@@ -5,7 +5,7 @@
 #include <QThread>
 
 #include "backend.h"
-#include "re_captain.h"
+#include "re_state.h"
 #include "re_modifier.h"
 
 #define CH_DRAG_NORM   0
@@ -16,7 +16,7 @@ class ReChess : public QObject
 {
     Q_OBJECT
 public:
-    ReChess(ReCaptain *cpt, QObject *parent = NULL);
+    ReChess(ReState *st, QObject *parent = NULL);
     ~ReChess();
 
     void dirs (const QString &arg);
@@ -37,8 +37,8 @@ private:
     void addCount(int val);
 
     QObject   *root;
-    ReCaptain *captain;
-    CCommand  mod_cmd;
+    ReState   *state;
+    CCommand   mod_cmd;
 
 
     int meta_mode;
