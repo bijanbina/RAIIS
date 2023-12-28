@@ -61,7 +61,7 @@ void ReChess::super(const QString &text,
             re_modPress(mod_cmd);
         }
         showChess(val);
-    }
+ ;   }
 }
 
 void ReChess::handleBackspace()
@@ -161,10 +161,10 @@ void ReChess::showChess(int val)
     }
 }
 
-void ReChess::sendChessCmd(QString cmd)
+void ReChess::sendChessCmd(QString cmd, QString arg)
 {
 #ifdef WIN32
-    QString pipe_data = cmd + CH_NP_SEPARATOR;
+    QString pipe_data = cmd + CH_NP_SEPARATOR + arg;
     captain->state->sendPipeChess(pipe_data.toStdString().c_str());
 //    qDebug() << "pipe" << pipe_data;
 #else

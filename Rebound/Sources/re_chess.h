@@ -27,13 +27,13 @@ public:
 
     void showChess(int val);
     int  isChessCmd(QString text);
+    void sendChessCmd(QString cmd, QString arg="");
+    void setCount(int val);
 
 private:
-    void sendChessCmd(QString cmd);
     void sendChessKey(QString text);
     void resetChess();
     void handleBackspace();
-    void setCount(int val);
     void addCount(int val);
 
     QObject   *root;

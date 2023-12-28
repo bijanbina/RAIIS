@@ -202,37 +202,25 @@ void ReRemote::wakeRemote()
 
 int ReRemote::procChess(QString word)
 {
-    int val = 0;
-    if( word=="kick" )
+    if( word=="kick"    || word=="comment" || word=="side" ||
+        word=="double"  || word=="touch"   || word=="drag" )
     {
-        val = 104;
-    }
-    else if( word=="comment" )
-    {
-        val = 105;
-    }
-    else if( word=="side" )
-    {
-        val = 108;
-    }
-    else if( word=="double" )
-    {
-        val = 113;
-    }
-    else if( word=="touch" )
-    {
-        val = 111;
-    }
-    else if( word=="drag" )
-    {
-        val = 115;
-    }
-
-    if( val )
-    {
-        chess->showChess(val);
+        chess->sendChessCmd("system", word);
+        if( word=="touch" )
+        {
+            chess->setCount(999); //some large num
+        }
+        else if( word=="drag")
+        {
+            chess->setCount(4);
+        }
+        else
+        {
+            chess->setCount(2);
+        }
         return 1;
     }
+
     return 0;
 }
 

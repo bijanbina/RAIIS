@@ -362,7 +362,9 @@ void RePreProcessor::super(const QString &text)
     {
         int last_i = cmd_buf.count()-1; //last index
 
+        cmd_buf[last_i].type = RE_COMMAND_SUPER;
         cmd_buf[last_i].val1 = text.toInt();
+        captain->super->castCmd(text.toInt(), &cmd_buf[last_i]);
         execute();
         return;
     }
