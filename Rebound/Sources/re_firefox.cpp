@@ -5,13 +5,15 @@
 ReFirefox::ReFirefox(QObject *parent) : QObject(parent)
 {
     socket = new QWebSocket;
-    pipe_firefox = connectPipe(RE_PIPE_FIREFOX);
     connect(socket, SIGNAL(connected()),
             this, SLOT(onConnected()));
     connect(socket, SIGNAL(disconnected()),
             this, SLOT(onDisconnected()));
     ws_buf = "";
     lua = new ReLua;
+#ifdef WIN32
+    pipe_firefox = connectPipe(RE_PIPE_FIREFOX);
+#endif
 }
 
 ReFirefox::~ReFirefox()

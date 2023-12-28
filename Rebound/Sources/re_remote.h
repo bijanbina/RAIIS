@@ -16,6 +16,15 @@ extern "C"
 
 #include "re_apache_cl.h"
 #include "re_preprocessor.h"
+#define BT_BAR_RESULT     "bar_result"
+#define BT_HISTORY_UPDATE 300  // update interval in ms
+#define BT_HISTORY_LEN    10   // maximum number of words in history
+
+typedef struct BtHistory
+{
+    QString word;
+    time_t  time;
+}BtHistory;
 
 class ReRemote : public QObject
 {
@@ -26,6 +35,7 @@ public:
 
 public slots:
     void send(QString word);
+    void shiftHistory();
 
 signals:
     void dirs(const QString &args);
@@ -48,8 +58,12 @@ private:
     int  procSuper(QString word);
     int  procDigit(QString word);
     int  procMouse(QString word);
+    void writeResult();
     void runLua(QString word);
     void wakeRemote();
+
+    QVector<BtHistory>  history;
+    QTimer    *timer_history;
 
     ReState    *state;
     ReChess    *chess;

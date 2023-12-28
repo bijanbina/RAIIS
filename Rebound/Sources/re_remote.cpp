@@ -1,5 +1,6 @@
 #include "re_remote.h"
 #include <unistd.h>
+#include <QColor>
 #include "mm_api.h"
 
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
@@ -37,6 +38,11 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     lst = luaL_newstate();
     luaL_openlibs(lst);
 #endif
+
+    timer_history = new QTimer;
+    connect(timer_history, SIGNAL(timeout()),
+            this, SLOT(shiftHistory()));
+    timer_history->start(BT_HISTORY_UPDATE);
 
     apache = new ReApacheCl;
 
@@ -175,6 +181,11 @@ void ReRemote::runLua(QString word)
 
     QDir::setCurrent(current_dir);
 #else
+    BtHistory tmp;
+    tmp.time = time(NULL);
+    tmp.word = word;
+    history.append(tmp);
+    writeResult();
     QString cmd = KAL_SI_DIR"/main_l.sh \"";
     cmd += word;
     cmd += "\"";
@@ -312,6 +323,60 @@ int ReRemote::procMouse(QString word)
         return 1;
     }
     return 0;
+}
+
+void ReRemote::writeResult()
+{
+#ifdef WIN32
+    QString bar_path = BT_BAR_DIR_WS;
+    bar_path += BT_BAR_RESULT_WS;
+#else
+    QString bar_path = getenv("HOME");
+    bar_path += "/.config/polybar/awesomewm/";
+    bar_path += BT_BAR_RESULT;
+#endif
+    QFile bar_file(bar_path);
+
+    if( !bar_file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        qDebug() << "Error creating" << bar_path;
+#ifdef WIN32
+        qDebug() << "Trying to create" << BT_BAR_DIR_WS;
+        system("mkdir " BT_BAR_DIR_WS);
+#endif
+        return;
+    }
+    QTextStream out(&bar_file);
+
+    for( int i=0 ; i<history.length() ; i++ )
+    {
+        out << "%{F#ddd}%{u";
+        out << QColor::fromHsv(150, 200, 200).name();
+        out << "}%{+u}";
+        out << history[i].word;
+        out << "%{-u} ";
+    }
+
+    out << "\n";
+
+    bar_file.close();
+}
+
+void ReRemote::shiftHistory()
+{
+    time_t start_treshold = time(NULL)-10;
+
+    for( int i=0 ; i<history.length() ; i++ )
+    {
+        if( (history[i].time<start_treshold) || //5 second history size
+            (history.length()>BT_HISTORY_LEN) ) // max len = 8
+        {
+            history.remove(i);
+            i--;
+        }
+    }
+
+    writeResult();
 }
 
 int ReRemote::procSpecialKey(QString word)
