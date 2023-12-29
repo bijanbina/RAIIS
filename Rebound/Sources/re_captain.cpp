@@ -16,6 +16,57 @@ ReCaptain::~ReCaptain()
     delete meta;
 }
 
+void ReCaptain::execute(QVector<CCommand> commands)
+{
+    for( int i=0 ; i<commands.length() ; i++ )
+    {
+        if( state->isSleep() )
+        {
+            int ret = execSleep(commands[i]);
+            if( ret )
+            {
+                commands.clear();
+                return;
+            }
+        }
+        else
+        {
+            execCommand(commands[i]);
+        }
+    }
+}
+
+void ReCaptain::execCommand(CCommand command)
+{
+    state->last_cmd = command;
+    if( command.type==RE_COMMAND_NATO ||
+        command.type==RE_COMMAND_DIRS ||
+        command.type==RE_COMMAND_DIGIT )
+    {
+        if( state->isEscape(command) )
+        {
+            if( state->resetState() )
+            {
+                return;
+            }
+        }
+
+        execKeyboard(command);
+    }
+    else if( command.type==RE_COMMAND_META )
+    {
+        execMeta(command);
+    }
+    else if( command.type==RE_COMMAND_CHESS )
+    {
+        execChess(command);
+    }
+    else if( command.type==RE_COMMAND_QDIGIT )
+    {
+        re_getQtCmd(command);
+    }
+}
+
 void ReCaptain::execKeyboard(CCommand command)
 {
     re_modPress(command);
@@ -51,22 +102,36 @@ void ReCaptain::execKeyboard(CCommand command)
 //    qDebug() << "pressModifier" << modifiers.count();
 }
 
-void ReCaptain::execute(QVector<CCommand> commands)
+void ReCaptain::execMeta(CCommand command)
 {
-    for( int i=0 ; i<commands.length() ; i++ )
+    CCommand translated;
+    for( int j=0 ; j<command.val3 ; j++ )
     {
-        if( state->isSleep() )
+        translated = meta->castMeta(command.val1,
+                                    command.val2);
+
+        if( translated.type==RE_COMMAND_NATO ||
+            translated.type==RE_COMMAND_DIRS ||
+            translated.type==RE_COMMAND_DIGIT )
         {
-            int ret = execSleep(commands[i]);
-            if( ret )
-            {
-                commands.clear();
-                return;
-            }
+            execKeyboard(translated);
         }
-        else
+    }
+}
+
+void ReCaptain::execChess(CCommand command)
+{
+    CCommand translated;
+    for( int j=0 ; j<command.val3 ; j++ )
+    {
+        translated = meta->castMeta(command.val1,
+                                    command.val2);
+
+        if( translated.type==RE_COMMAND_NATO ||
+            translated.type==RE_COMMAND_DIRS ||
+            translated.type==RE_COMMAND_DIGIT )
         {
-            execCommand(commands[i]);
+            execKeyboard(translated);
         }
     }
 }
@@ -106,33 +171,6 @@ int ReCaptain::execSleep(CCommand command)
     }
 
     return 0;
-}
-
-void ReCaptain::execCommand(CCommand command)
-{
-    state->last_cmd = command;
-    if( command.type==RE_COMMAND_NATO ||
-        command.type==RE_COMMAND_DIRS ||
-        command.type==RE_COMMAND_DIGIT )
-    {
-        if( state->isEscape(command) )
-        {
-            if( state->resetState() )
-            {
-                return;
-            }
-        }
-
-        execKeyboard(command);
-    }
-    else if( command.type==RE_COMMAND_META )
-    {
-        execMeta(command);
-    }
-    else if( command.type==RE_COMMAND_QDIGIT )
-    {
-        re_getQtCmd(command);
-    }
 }
 
 bool ReCaptain::isLastRepeatable()
@@ -231,23 +269,6 @@ bool ReCaptain::isSpeakerSw(CCommand command)
     }
 
     return false;
-}
-
-void ReCaptain::execMeta(CCommand command)
-{
-    CCommand translated;
-    for( int j=0 ; j<command.val3 ; j++ )
-    {
-        translated = meta->castMeta(command.val1,
-                                    command.val2);
-
-        if( translated.type==RE_COMMAND_NATO ||
-            translated.type==RE_COMMAND_DIRS ||
-            translated.type==RE_COMMAND_DIGIT )
-        {
-            execKeyboard(translated);
-        }
-    }
 }
 
 void ReCaptain::wakeDictate()

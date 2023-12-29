@@ -35,7 +35,8 @@ private:
     void handleScroll(CCommand command);
 
     void execKeyboard(CCommand command);
-    void execMeta(CCommand command);
+    void execMeta (CCommand command);
+    void execChess(CCommand command);
 
     int execSleep(CCommand command);
     void execCommand(CCommand command);
