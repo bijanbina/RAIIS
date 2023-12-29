@@ -136,27 +136,26 @@ void ReApacheCl::tcpReadyRead()
 {
     read_buf += con->readAll();
     QString data = processBuffer();
+    watchdog->start(RE_WATCHDOG);
 
     while( data.length() )
     {
-        watchdog->start(RE_WATCHDOG);
 //        qDebug() << "ReApacheCl::tcpReadyRead()" << data;
 
         if( data==FA_LIVE_PACKET )
         {
-            return;
+            data = processBuffer(); //process multi packet
+            continue;
         }
         else if( data.contains(FA_LIVE_PACKET) )
         {
             data.replace(FA_LIVE_PACKET, "");
         }
 
-        if( data.isEmpty() )
+        if( data.length() )
         {
-            return;
+            emit readyRead(data);
         }
-
-        emit readyRead(data);
 
         data = processBuffer(); //process multi packet
     }

@@ -29,11 +29,20 @@ function appendLine(file_name, text)
 end
 
 function replaceLine(file_name, pattern, text)
-	local f = io.open(file_name, "r")
-	local content = f:read("*all")
-	f:close()
-	content = content:gsub(pattern, text)
-	local f = io.open(file_name, "w")
-	f:write(content)
-	f:close()
+	-- read line by line and replace pattern
+	-- replace on whole file is buggy
+	local file = io.open(file_name, "r")
+    local content = {}
+    for line in file:lines() do
+		line = line:gsub(pattern, text)
+        table.insert (content, line)
+    end
+    file:close()
+
+	-- write back all lines
+    file = io.open(file_name, 'w')
+    for index, value in ipairs(content) do
+        file:write(value..'\n')
+    end
+    file:close()
 end

@@ -12,7 +12,7 @@ AFF_PATTERN = '%"signon.autofillForms'
 RSO_PATTERN = '%"signon.rememberSignons'
 RTC_PATTERN = '%"privacy.webrtc.hideGlobalIndicator'
 NAV_PATTERN = '%"media.navigator.permission.disabled'
-PLY_PATTERN = '%"media.block-autoplay-until-in-foreground' -- youtube autoplay
+PLY_PATTERN = '%"media.block%-autoplay%-until%-in%-foreground' -- youtube autoplay
 RST_PATTERN = '%"extensions.webextensions.restrictedDomains' -- remove addon restriction
 FNG_PATTERN = '%"privacy.resistFingerprinting.block_mozAddonManager' -- remove addon restriction
 
@@ -28,7 +28,7 @@ RTC_F = 'user_pref%(%"privacy.webrtc.hideGlobalIndicator%", false%);' -- before
 NAV_T = 'user_pref("media.navigator.permission.disabled", true);' -- after
 NAV_F = 'user_pref%(%"media.navigator.permission.disabled%", false%);' -- before
 
-PLY_T = 'user_pref%(%"media.block-autoplay-until-in-foreground%", true%);' -- before
+PLY_T = 'user_pref%(%"media.block%-autoplay%-until%-in%-foreground%", true%);' -- before
 PLY_F = 'user_pref("media.block-autoplay-until-in-foreground", false);' -- after
 
 RST_A = 'user_pref("extensions.webextensions.restrictedDomains", "");' -- after
