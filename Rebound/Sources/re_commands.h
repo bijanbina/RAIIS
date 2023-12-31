@@ -77,6 +77,12 @@
 #define RE_CHESS_MAGIC   208
 #define RE_CHESS_RUN     209
 
+#define RE_MOUSE_LEFT    301
+#define RE_MOUSE_MIDDLE  302
+#define RE_MOUSE_RIGHT   303
+#define RE_MOUSE_UP      304
+#define RE_MOUSE_DOWN    305
+
 
 typedef struct ReWindow
 {

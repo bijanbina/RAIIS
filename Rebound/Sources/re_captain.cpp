@@ -45,7 +45,7 @@ void ReCaptain::execCommand(CCommand command)
     {
         if( state->isEscape(command) )
         {
-            if( state->resetState() )
+            if( state->stopFFScroll() )
             {
                 return;
             }
@@ -60,6 +60,10 @@ void ReCaptain::execCommand(CCommand command)
     else if( command.type==RE_COMMAND_CHESS )
     {
         execChess(command);
+    }
+    else if( command.type==RE_COMMAND_MOUSE )
+    {
+        execMouse(command);
     }
     else if( command.type==RE_COMMAND_QDIGIT )
     {
@@ -124,14 +128,44 @@ void ReCaptain::execChess(CCommand command)
     CCommand translated;
     for( int j=0 ; j<command.val3 ; j++ )
     {
-        translated = meta->castMeta(command.val1,
-                                    command.val2);
+        ///SHOULD be written
+//        translated = meta->castMeta(command.val1,
+//                                    command.val2);
 
-        if( translated.type==RE_COMMAND_NATO ||
-            translated.type==RE_COMMAND_DIRS ||
-            translated.type==RE_COMMAND_DIGIT )
+//        if( translated.type==RE_COMMAND_NATO ||
+//            translated.type==RE_COMMAND_DIRS ||
+//            translated.type==RE_COMMAND_DIGIT )
+//        {
+//            execKeyboard(translated);
+//        }
+    }
+}
+
+void ReCaptain::execMouse(CCommand command)
+{
+    CCommand translated;
+    int count = command.val2 * command.val3;
+    for( int j=0 ; j<count ; j++ )
+    {
+        if( command.val1==RE_MOUSE_LEFT )
         {
-            execKeyboard(translated);
+            re_mouseKey(1);
+        }
+        else if( command.val1==RE_MOUSE_MIDDLE )
+        {
+            re_mouseKey(2);
+        }
+        else if( command.val1==RE_MOUSE_RIGHT )
+        {
+            re_mouseKey(3);
+        }
+        else if( command.val1==RE_MOUSE_UP )
+        {
+            re_mouseKey(4);
+        }
+        else if( command.val1==RE_MOUSE_DOWN )
+        {
+            re_mouseKey(5);
         }
     }
 }

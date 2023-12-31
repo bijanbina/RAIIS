@@ -6,7 +6,7 @@ ReSuper::ReSuper(ReState *st)
     state = st;
 }
 
-void ReSuper::castCmd(int val, CCommand *cmd)
+void ReSuper::cast(int val, CCommand *cmd)
 {
     if( val==RE_SUPER_META )
     {
@@ -266,22 +266,22 @@ void ReSuper::castRogerCmd(CCommand *cmd)
 void ReSuper::castFrontCmd(CCommand *cmd)
 {
     cmd->is_ctrl = 1;
-    cmd->val1    = KEY_RIGHT;
+    cmd->val1    = RE_MOUSE_UP;
 
-    cmd->val2 = 1;
+    cmd->val2 = 5;
     cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_DIRS;
+    cmd->type  = RE_COMMAND_MOUSE;
     cmd->state = RE_CSTATE_0;
 }
 
 void ReSuper::castLastCmd(CCommand *cmd)
 {
     cmd->is_ctrl = 1;
-    cmd->val1    = KEY_RIGHT;
+    cmd->val1    = RE_MOUSE_DOWN;
 
-    cmd->val2 = 1;
+    cmd->val2 = 5;
     cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_DIRS;
+    cmd->type  = RE_COMMAND_MOUSE;
     cmd->state = RE_CSTATE_0;
 }
 
