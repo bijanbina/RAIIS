@@ -1,9 +1,6 @@
 #ifndef RE_STATE_H
 #define RE_STATE_H
 
-#ifdef __linux__
-#endif
-
 #include <QObject>
 #include <QString>
 #include <QQmlProperty>
@@ -35,7 +32,7 @@ public:
     bool isSleep();
     void enScroll(int dir, int speed);
     bool isEscape(CCommand cmd);
-    int  resetState();
+    int  stopFFScroll();
     void sendPipeChess(const char *data);
     void sendPipeMom(const char *data);
 
@@ -61,7 +58,6 @@ public:
     ReWindow app; //Active Window
     CCommand last_cmd;
     ReFirefox *fl;
-    ChMonitor *mon;
 };
 
 #endif // RE_STATE_H

@@ -21,7 +21,7 @@ class ReSuper
 public:
     ReSuper(ReState *st);
 
-    void castCmd(int val, CCommand *cmd);
+    void cast(int val, CCommand *cmd);
 
 private:
     void castMetaCmd (CCommand *cmd);

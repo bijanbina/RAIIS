@@ -12,7 +12,7 @@ class ReMetaMos: public QObject
 {
     Q_OBJECT
 public:
-    explicit ReMetaMos(ReState *st, QObject *parent = nullptr);
+    explicit ReMetaMos(QObject *parent = nullptr);
 
     void castCode(int val, CCommand *cmd);
     void castMonitor(int val);
@@ -20,7 +20,7 @@ public:
     void castFirefox(int val, CCommand *cmd);
 
 private:
-    ReState  *state;
+    ChMonitor *mon;
 };
 
 #endif // RE_META_MOS_H

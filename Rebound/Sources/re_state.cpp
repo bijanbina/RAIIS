@@ -7,10 +7,8 @@ ReState::ReState(QObject *parent) : QObject(parent)
     fl = new ReFirefox;
 
 #ifdef _WIN32
-    hardware   = new ReHardwareW;
     pipe_chess = connectChessPipe(CH_PIPE_PATH);
     pipe_mom   = connectChessPipe(CH_PIPE_MOM);
-    mon        = new ChMonitor;
 #endif
 
     readStatusFile();
@@ -71,7 +69,7 @@ void ReState::updateApp(ReWindow active_window)
 void ReState::goToSleep()
 {
     // disable any current extra state(scroll, ...)
-    resetState();
+    stopFFScroll();
 
     sleep_state = 1;
     last_cmd.type = RE_COMMAND_NULL;
@@ -212,7 +210,7 @@ bool ReState::isEscape(CCommand cmd)
     return 1;
 }
 
-int ReState::resetState()
+int ReState::stopFFScroll()
 {
     if( fl->sc_dir )
     {

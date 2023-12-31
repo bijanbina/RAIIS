@@ -192,7 +192,8 @@ void RePreProcessor::digit(const QString &text)
     }
 }
 
-void RePreProcessor::dirs(const QString &text) // direction keys
+// direction keys
+void RePreProcessor::dirs(const QString &text)
 {
     if( captain->state->ch_count )
     {
@@ -314,6 +315,8 @@ void RePreProcessor::meta(const QString &text)
 
 void RePreProcessor::spex(const QString &text)
 {
+    (void)text; // to suppress unused warning
+
     if( !captain->state->isSleep() )
     {
         special_c = 1;
@@ -363,7 +366,7 @@ void RePreProcessor::super(const QString &text)
 
         cmd_buf[last_i].type = RE_COMMAND_SUPER;
         cmd_buf[last_i].val1 = text.toInt();
-        captain->super->castCmd(text.toInt(), &cmd_buf[last_i]);
+        captain->super->cast(text.toInt(), &cmd_buf[last_i]);
         execute();
         return;
     }
@@ -373,7 +376,7 @@ void RePreProcessor::super(const QString &text)
     cmd.val2 = 1;
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_SUPER;
-    captain->super->castCmd(text.toInt(), &cmd);
+    captain->super->cast(text.toInt(), &cmd);
     if( cmd.val3==-1 )
     {
         captain->state->goToSleep();
@@ -386,7 +389,13 @@ void RePreProcessor::super(const QString &text)
 
 void RePreProcessor::type(const QString &text)
 {
-    captain->state->last_cmd.type = RE_COMMAND_NATO;
+    (void)text; // to suppress unused warning
+
+    captain->state->last_cmd.type     = RE_COMMAND_NATO;
+    captain->state->last_cmd.is_alt   = 0;
+    captain->state->last_cmd.is_ctrl  = 0;
+    captain->state->last_cmd.is_shift = 0;
+    captain->state->last_cmd.is_super = 0;
 }
 
 void RePreProcessor::debug(const QString &text)
