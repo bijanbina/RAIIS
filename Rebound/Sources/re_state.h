@@ -26,7 +26,7 @@ public:
     void goToSleep();
     void goToDictate();
     void goToRecord();
-    void goToRemote(int rid=-1);
+    void goToRemote(int rid=0);
     void goToDrag();
     void wakeUp();
     bool isSleep();
@@ -37,7 +37,7 @@ public:
     void sendPipeMom(const char *data);
 
 #ifdef _WIN32
-    HANDLE connectChessPipe(const char *pipe_name);
+    HANDLE connectPipe(const char *pipe_name);
 
     ReHardwareW *hardware;
     HANDLE pipe_chess;

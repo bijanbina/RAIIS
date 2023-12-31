@@ -4,8 +4,8 @@
 #define COM_NAME        "com.binaee.rebound"
 #define ORG_NAME        "org.binaee.rebound"
 #define RE_PIPE_PATH    "\\\\.\\pipe\\com_binaee_rebound"
-#define CH_PIPE_PATH    "\\\\.\\pipe\\com_binaee_chess"
-#define CH_PIPE_MOM     "\\\\.\\pipe\\com_binaee_mom"
+#define RE_PIPE_CHESS   "\\\\.\\pipe\\com_binaee_chess"
+#define RE_PIPE_MOM     "\\\\.\\pipe\\com_binaee_mom"
 #define RE_PIPE_FIREFOX "\\\\.\\pipe\\com_binaee_firefox"
 #define CH_NP_SEPARATOR ","
 

@@ -18,7 +18,7 @@ extern "C"
 #include "re_preprocessor.h"
 
 #define BT_BAR_RESULT     "bar_result"
-#define BT_BAR_DIR_WS     "..\\Mom\\Labels\\"
+#define BT_BAR_DIR_WS     "..\\..\\Benjamin\\Mom\\Labels\\"
 #define BT_BAR_RESULT_WS  "l1_benjamin.lbl"
 #define BT_HISTORY_UPDATE 300  // update interval in ms
 #define BT_HISTORY_LEN    10   // maximum number of words in history

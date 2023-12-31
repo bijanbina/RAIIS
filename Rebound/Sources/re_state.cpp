@@ -7,8 +7,8 @@ ReState::ReState(QObject *parent) : QObject(parent)
     fl = new ReFirefox;
 
 #ifdef _WIN32
-    pipe_chess = connectChessPipe(CH_PIPE_PATH);
-    pipe_mom   = connectChessPipe(CH_PIPE_MOM);
+    pipe_chess = connectPipe(RE_PIPE_CHESS);
+    pipe_mom   = connectPipe(RE_PIPE_MOM);
 #endif
 
     readStatusFile();
@@ -228,7 +228,7 @@ bool ReState::isSleep()
 }
 
 #ifdef WIN32
-HANDLE ReState::connectChessPipe(const char *pipe_name)
+HANDLE ReState::connectPipe(const char *pipe_name)
 {
     // 0: Default Wait Time
     int ready = WaitNamedPipeA(pipe_name, 0);
@@ -262,9 +262,9 @@ void ReState::sendPipeChess(const char *data)
     if( pipe_chess==INVALID_HANDLE_VALUE )
     {
         qDebug() << "Try to reconnect to"
-                 << CH_PIPE_PATH;
+                 << RE_PIPE_CHESS;
 
-        pipe_chess = connectChessPipe(CH_PIPE_PATH);
+        pipe_chess = connectPipe(RE_PIPE_CHESS);
         if( pipe_chess==INVALID_HANDLE_VALUE )
         {
             return;
@@ -294,9 +294,9 @@ void ReState::sendPipeMom(const char *data)
     if( pipe_mom==INVALID_HANDLE_VALUE )
     {
         qDebug() << "Try to reconnect to"
-                 << CH_PIPE_MOM;
+                 << RE_PIPE_MOM;
 
-        pipe_mom = connectChessPipe(CH_PIPE_MOM);
+        pipe_mom = connectPipe(RE_PIPE_MOM);
         if( pipe_mom==INVALID_HANDLE_VALUE )
         {
             return;

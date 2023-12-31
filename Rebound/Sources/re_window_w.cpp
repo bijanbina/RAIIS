@@ -74,11 +74,13 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
 
                 re_InsertWindow(thread_w, current_win);
 
+#ifndef RE_REMOTE
                 if( current_win.pname=="rustdesk" )
                 {
                     int r_id = re_cleanRemoteId(current_win.title);
                     thread_w->state->remote_id = r_id;
                 }
+#endif
 
                 if( current_win.pname=="Chess" ||
                     current_win.pname=="rustdesk" ||
@@ -298,6 +300,7 @@ void ReWindowW::updateActiveWindow()
     win_active.pname = mm_getPName(win_active.pid);
     state->updateApp(win_active);
 
+#ifndef RE_REMOTE
     if( win_active.pname=="rustdesk" &&
         win_active.title!="RustDesk" )
     {
@@ -306,8 +309,8 @@ void ReWindowW::updateActiveWindow()
         {
             qDebug() << "win_active.title"
                      << win_active.title;
-            int rid = 12; /// FIXME: DARAR
-            state->goToRemote(rid);
+            int r_id = re_cleanRemoteId(win_active.title);
+            state->goToRemote(r_id);
         }
     }
     else
@@ -319,6 +322,7 @@ void ReWindowW::updateActiveWindow()
             state->wakeUp();
         }
     }
+#endif
 }
 
 void ReWindowW::start()

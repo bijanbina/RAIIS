@@ -104,11 +104,13 @@ void ReRemote::readyRead(QString read_data)
             qDebug() << "wrong input size:" << data_split.size();
             return;
         }
+
         QString rx_id = data_split[0];
         if( rx_id.toInt()!=state->remote_id )
         {
             return;
         }
+
         QString word = data_split[1];
         runLua(word);
     }
@@ -181,17 +183,17 @@ void ReRemote::runLua(QString word)
 
     QDir::setCurrent(current_dir);
 #else
-    BtHistory tmp;
-    tmp.time = time(NULL);
-    tmp.word = word;
-    history.append(tmp);
-    writeResult();
     QString cmd = KAL_SI_DIR"/main_l.sh \"";
     cmd += word;
     cmd += "\"";
     system(cmd.toStdString().c_str());
 #endif
 
+    BtHistory tmp;
+    tmp.time = time(NULL);
+    tmp.word = word;
+    history.append(tmp);
+    writeResult();
 }
 
 void ReRemote::wakeRemote()
