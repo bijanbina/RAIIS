@@ -2,8 +2,6 @@
 
 ReState::ReState(QObject *parent) : QObject(parent)
 {
-    i_mode = RE_MODE_HIDDEN;
-    ui_visible = false;
     fl = new ReFirefox;
 
 #ifdef _WIN32
@@ -17,10 +15,6 @@ ReState::ReState(QObject *parent) : QObject(parent)
 ReState::~ReState()
 {
     delete fl;
-
-#ifdef _WIN32
-    delete hardware;
-#endif
 }
 
 void ReState::readStatusFile()
@@ -36,18 +30,6 @@ void ReState::readStatusFile()
         {
             re_rmStatus();
         }
-    }
-}
-
-void ReState::toggleUi(QObject *item)
-{
-    i_mode = RE_MODE_MAIN;
-
-    QMetaObject::invokeMethod(item, "uiToggle");
-    ui_visible = QQmlProperty::read(item, "visible").toInt();
-    if( !ui_visible )
-    {
-        i_mode = RE_MODE_HIDDEN;
     }
 }
 

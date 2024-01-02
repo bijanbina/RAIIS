@@ -2,8 +2,6 @@
 #include "backend.h"
 #include "mm_api.h"
 
-#define re_state_mode thread_data->state->i_mode
-
 int counter = 0;
 int child_num = 3;
 int win_thread_debug = 0;
@@ -26,7 +24,7 @@ BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam)
     GetClassNameA(hwnd, buffer, 128);
     QString class_name = buffer;
 
-    if ( class_name=="CabinetWClass" )
+    if( class_name=="CabinetWClass" )
     {
         *(HWND*)lParam = hwnd;
         return FALSE;

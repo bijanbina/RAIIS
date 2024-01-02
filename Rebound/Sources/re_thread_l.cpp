@@ -1,8 +1,6 @@
 #include "re_thread_l.h"
 #include <QThread>
 
-#define re_state_mode thread_data->state->i_mode
-
 int counter = 0;
 int child_num = 3;
 
@@ -223,20 +221,12 @@ void reRunThread(void *thread_struct_void)
     {
         if( cntr>200 )
         {
-            if( re_state_mode==RE_MODE_HIDDEN )
-            {
-                //Get Active Window Name
-                priv->updateActiveWindow();
+            priv->updateActiveWindow();
 
-                priv->clearWins();
-                priv->enumWindows();
-                priv->cleanWins();
-                priv->syncWinsTitle();
-            }
-            else if( re_state_mode==RE_MODE_MAIN )
-            {
-//                priv->syncElemsName();
-            }
+            priv->clearWins();
+            priv->enumWindows();
+            priv->cleanWins();
+            priv->syncWinsTitle();
             cntr = 0;
         }
         if( !thread_data->message.isEmpty() )

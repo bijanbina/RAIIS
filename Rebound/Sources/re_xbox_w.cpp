@@ -1,6 +1,6 @@
 #include "re_xbox_w.h"
 
-ReXboxW::ReXboxW(ReState *st, QObject *parent) : QObject(parent)
+ReXboxW::ReXboxW(ReStateOld *st, QObject *parent) : QObject(parent)
 {
     state = st;
     tcp = new ReServer(state);

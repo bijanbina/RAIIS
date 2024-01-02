@@ -21,7 +21,6 @@ public:
     void readStatusFile();
 
     void updateApp(ReWindow active_window);
-    void toggleUi(QObject *item);
 
     void goToSleep();
     void goToDictate();
@@ -39,20 +38,16 @@ public:
 #ifdef _WIN32
     HANDLE connectPipe(const char *pipe_name);
 
-    ReHardwareW *hardware;
     HANDLE pipe_chess;
     HANDLE pipe_mom;
 #endif
     int  remote_id = 0;
-    int  ui_visible;
-    int  i_mode;
     bool sleep_state = 0;
     bool dictate_state = 0;
     bool record_state = 0;
     bool remote_state = 0;
     bool drag_state = 0;
     int  ch_count  = 0; //Chess Count
-    int  utube_mode  = 0;
     QStringList wins_title;
     QStringList elems_name;
     ReWindow app; //Active Window
