@@ -1,7 +1,8 @@
 #include "re_bumpers.h"
 #include <QThread>
 
-ReBumpers::ReBumpers(QObject *item, QObject *switcher, ReState *st, QObject *parent) : QObject(parent)
+ReBumpers::ReBumpers(QObject *item, QObject *switcher,
+                     ReStateOld *st, QObject *parent) : QObject(parent)
 {
     ui = item;
     state = st;
@@ -32,7 +33,7 @@ void ReBumpers::buttonL1Pressed()
         }
         else
         {
-            if( state-> utube_mode )
+            if( state->utube_mode )
             {
                 qDebug() << "fuck";
                 executScript("l1", RE_SCR_YOUTUBE);

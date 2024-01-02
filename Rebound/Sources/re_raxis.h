@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include "backend.h"
-#include "re_state.h"
+#include "re_state_old.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -15,7 +15,7 @@ class ReRAxis: public QObject
     Q_OBJECT
 
 public:
-    ReRAxis(QObject *item, ReState *st, QObject *parent = 0);
+    ReRAxis(QObject *item, ReStateOld *st, QObject *parent = 0);
 
 public slots:
     void buttonRightPressed();
@@ -25,7 +25,7 @@ public slots:
 
 private:
     QObject *ui;
-    ReState *state;
+    ReStateOld *state;
 };
 
 #endif // RE_RAXIS_H

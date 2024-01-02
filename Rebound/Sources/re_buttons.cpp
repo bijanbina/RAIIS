@@ -1,7 +1,8 @@
 #include "re_buttons.h"
 #include <QThread>
 
-ReButtons::ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *parent) : QObject(parent)
+ReButtons::ReButtons(QObject *item, QObject *switcher, ReStateOld *st,
+                     QObject *parent) : QObject(parent)
 {
     ui = item;
     uiSwitcher = switcher;

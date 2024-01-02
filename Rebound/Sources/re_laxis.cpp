@@ -1,7 +1,7 @@
 #include "re_laxis.h"
 #include <QThread>
 
-ReLAxis::ReLAxis(QObject *item, ReState *st, QObject *parent) : QObject(parent)
+ReLAxis::ReLAxis(QObject *item, ReStateOld *st, QObject *parent) : QObject(parent)
 {
     ui = item;
     state = st;

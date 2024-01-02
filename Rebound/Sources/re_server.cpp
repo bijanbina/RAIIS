@@ -3,7 +3,7 @@
 
 #define JOYSTICK_DELAY 100
 
-ReServer::ReServer(ReState *st, QObject *parent) : QObject(parent)
+ReServer::ReServer(ReStateOld *st, QObject *parent) : QObject(parent)
 {
     //init
     state = st;

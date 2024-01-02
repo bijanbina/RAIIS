@@ -7,7 +7,7 @@
 #include <QTimer>
 #endif
 #include "backend.h"
-#include "re_state.h"
+#include "re_state_old.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -19,7 +19,8 @@ class ReButtons: public QObject
     Q_OBJECT
 
 public:
-    ReButtons(QObject *item, QObject *switcher, ReState *st, QObject *parent = 0);
+    ReButtons(QObject *item, QObject *switcher, ReStateOld *st,
+              QObject *parent = 0);
 
 public slots:
     void buttonAPressed();
@@ -39,7 +40,7 @@ public slots:
 private:
     QObject *ui;
     QObject *uiSwitcher;
-    ReState *state;
+    ReStateOld *state;
 
 #ifdef __linux__
     QTimer  *timer_tab;

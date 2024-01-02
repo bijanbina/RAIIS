@@ -9,11 +9,12 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     uiSwitcher = switcher;
 
     state = new ReState;
-    bumpers = new ReBumpers(ui, switcher, state);
-    buttons = new ReButtons(ui, switcher, state);
-    directions = new ReDirections(ui, state);
-    laxis = new ReLAxis(ui, state);
-    raxis = new ReRAxis(ui, state);
+    state_old = new ReStateOld;
+    bumpers = new ReBumpers(ui, switcher, state_old);
+    buttons = new ReButtons(ui, switcher, state_old);
+    directions = new ReDirections(ui, state_old);
+    laxis = new ReLAxis(ui, state_old);
+    raxis = new ReRAxis(ui, state_old);
     captain = new ReCaptain(state);
 
 #ifdef WIN32
@@ -28,7 +29,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     connect(this, SIGNAL(startChannel()),
             window, SLOT(start()));
 
-//    controller = new ReXboxW(state);
+//    controller = new ReXboxW(state_old);
 //    connect(controller, SIGNAL(requstSuspend()),
 //            this, SLOT(requstSuspend()));
 
@@ -60,7 +61,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
 void ReChapar::requstSuspend()
 {
 #ifdef _WIN32
-    state->hardware->disconnectXbox();
+    state_old->hardware->disconnectXbox();
 #endif
 }
 

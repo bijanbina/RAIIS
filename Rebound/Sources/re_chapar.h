@@ -77,6 +77,7 @@ private:
     QObject      *ui;
     QObject      *uiSwitcher;
     ReState      *state;
+    ReStateOld   *state_old;
     ReBumpers    *bumpers;
     ReButtons    *buttons;
     ReDirections *directions;

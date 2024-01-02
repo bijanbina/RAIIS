@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "backend.h"
-#include "re_state.h"
+#include "re_state_old.h"
 
 #ifdef _WIN32
     #include <windows.h>
@@ -14,7 +14,7 @@ class ReLAxis: public QObject
     Q_OBJECT
 
 public:
-    ReLAxis(QObject *item, ReState *st, QObject *parent = 0);
+    ReLAxis(QObject *item, ReStateOld *st, QObject *parent = 0);
 
 public slots:
     void buttonRightPressed();
@@ -24,7 +24,7 @@ public slots:
 
 private:
     QObject *ui;
-    ReState *state;
+    ReStateOld *state;
 };
 
 #endif // RE_LAXIS_H
