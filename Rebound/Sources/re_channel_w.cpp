@@ -105,9 +105,9 @@ void ReChannelW::createPipe()
 
 void ReChannelW::processCommand(QString k_type, QString k_code)
 {
-    if( captain->state->remote_state   &&
-        captain->state->sleep_state==0 &&
-        captain->state->ch_count==0 )
+    if( ReState::remote_state   &&
+        ReState::sleep_state==0 &&
+        ReState::ch_count==0 )
     {
         if( k_type=="debug" )
         {
@@ -152,6 +152,6 @@ void ReChannelW::processCommand(QString k_type, QString k_code)
     }
     else if( k_type=="wake" )
     {
-        captain->state->wakeUp();
+        ReState::wakeUp();
     }
 }

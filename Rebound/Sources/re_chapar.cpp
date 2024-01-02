@@ -8,23 +8,24 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     ui = item;
     uiSwitcher = switcher;
 
-    state = new ReState;
+    ReState::init();
+    RePipe::init();
     state_old = new ReStateOld;
     bumpers = new ReBumpers(ui, switcher, state_old);
     buttons = new ReButtons(ui, switcher, state_old);
     directions = new ReDirections(ui, state_old);
     laxis = new ReLAxis(ui, state_old);
     raxis = new ReRAxis(ui, state_old);
-    captain = new ReCaptain(state);
+    captain = new ReCaptain;
 
 #ifdef WIN32
 
-    window = new ReWindowW(state);
+    window = new ReWindowW();
     window_thread = new QThread();
     window->moveToThread(window_thread);
     window_thread->start();
-    window->wins_title = &(state->wins_title);
-    window->elems_name = &(state->elems_name);
+    window->wins_title = &(ReState::wins_title);
+    window->elems_name = &(ReState::elems_name);
 
     connect(this, SIGNAL(startChannel()),
             window, SLOT(start()));
@@ -48,7 +49,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     thread_data = new threadStruct;
     thread_data->wins_title = new QStringList;
     thread_data->elems_name = new QStringList;
-    thread_data->state = state;
 
     Display *disp = reX11_init();
     api_thread = new std::thread(reRunThread, (void *)thread_data);

@@ -52,7 +52,8 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_win32_virt.cpp \
                  Sources/re_xbox_win32.cpp \
                  Sources/re_xbox_w.cpp \
-                 Sources/re_window_w.cpp
+                 Sources/re_window_w.cpp \
+                 Sources/re_pipe.cpp
 
 linux:SOURCES += \
                  Sources/re_x11.cpp \
@@ -110,7 +111,8 @@ win32:HEADERS += \
                  Sources/re_win32_virt.h \
                  Sources/re_xbox_win32.h \
                  Sources/re_xbox_w.h \
-                 Sources/re_window_w.h
+                 Sources/re_window_w.h \
+                 Sources/re_pipe.h
 
 linux:HEADERS += Sources/re_api_l.h \
                  Sources/re_app_l.h \

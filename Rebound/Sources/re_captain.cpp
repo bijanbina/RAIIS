@@ -2,13 +2,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-ReCaptain::ReCaptain(ReState *st, QObject *parent): QObject(parent)
+ReCaptain::ReCaptain(QObject *parent): QObject(parent)
 {
-    state = st;
-    chess = new ReChess(state);
-    meta  = new ReMeta (state);
-    super = new ReSuper(state);
-    state->last_cmd.type = RE_COMMAND_NULL;
+    chess = new ReChess;
+    meta  = new ReMeta;
+    super = new ReSuper;
+    ReState::last_cmd.type = RE_COMMAND_NULL;
 }
 
 ReCaptain::~ReCaptain()
@@ -20,7 +19,7 @@ void ReCaptain::execute(QVector<CCommand> commands)
 {
     for( int i=0 ; i<commands.length() ; i++ )
     {
-        if( state->isSleep() )
+        if( ReState::isSleep() )
         {
             int ret = execSleep(commands[i]);
             if( ret )
@@ -38,14 +37,14 @@ void ReCaptain::execute(QVector<CCommand> commands)
 
 void ReCaptain::execCommand(CCommand command)
 {
-    state->last_cmd = command;
+    ReState::last_cmd = command;
     if( command.type==RE_COMMAND_NATO ||
         command.type==RE_COMMAND_DIRS ||
         command.type==RE_COMMAND_DIGIT )
     {
-        if( state->isEscape(command) )
+        if( ReState::isEscape(command) )
         {
-            if( state->stopFFScroll() )
+            if( ReState::stopFFScroll() )
             {
                 return;
             }
@@ -181,17 +180,17 @@ int ReCaptain::execSleep(CCommand command)
     {
         if( isWakeUp(command) )
         {
-            if( state->dictate_state )
+            if( ReState::dictate_state )
             {
                 wakeDictate();
             }
-            else if( state->record_state )
+            else if( ReState::record_state )
             {
                 wakeRecord();
             }
             else
             {
-                state->wakeUp();
+                ReState::wakeUp();
                 execCommand(command);
                 qDebug() << "Wake Up";
                 return 1;
@@ -209,19 +208,19 @@ int ReCaptain::execSleep(CCommand command)
 
 bool ReCaptain::isLastRepeatable()
 {
-    int cmd_type = state->last_cmd.type;
+    int cmd_type = ReState::last_cmd.type;
 
-    if( state->fl->sc_dir )
+    if( ReState::fl->sc_dir )
     {
         return false;
     }
 
     if( cmd_type!=RE_COMMAND_NULL )
     {
-        if( state->last_cmd.is_alt  || state->last_cmd.is_shift ||
-            state->last_cmd.is_ctrl || state->last_cmd.is_super )
+        if( ReState::last_cmd.is_alt  || ReState::last_cmd.is_shift ||
+            ReState::last_cmd.is_ctrl || ReState::last_cmd.is_super )
         {
-            if( state->last_cmd.val1 )
+            if( ReState::last_cmd.val1 )
             {
                 return true;
             }
@@ -242,7 +241,7 @@ bool ReCaptain::isLastRepeatable()
     }
     else if( cmd_type==RE_COMMAND_META )
     {
-        if( state->last_cmd.val2 )
+        if( ReState::last_cmd.val2 )
         {
             return true;
         }
@@ -308,7 +307,7 @@ bool ReCaptain::isSpeakerSw(CCommand command)
 void ReCaptain::wakeDictate()
 {
     re_mouseKey(1);
-    state->dictate_state = 0;
+    ReState::dictate_state = 0;
     QThread::msleep(500);
 
     // remove super+num
@@ -352,17 +351,17 @@ void ReCaptain::wakeDictate()
     ReKeyboard::sendKey(KEY_V);
     ReKeyboard::releaseKey(KEY_LEFTCTRL);
 
-    state->wakeUp();
+    ReState::wakeUp();
 }
 
 void ReCaptain::wakeRecord()
 {
-    state->record_state = 0;
+    ReState::record_state = 0;
     QThread::msleep(500);
 
     re_mouseMoveW(30, 30);
     QThread::msleep(100);
     re_mouseKey(1);
 
-    state->wakeUp();
+    ReState::wakeUp();
 }

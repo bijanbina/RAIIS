@@ -22,13 +22,12 @@ class ReCaptain : public QObject
     Q_OBJECT
 
 public:
-    ReCaptain(ReState *st, QObject *parent = NULL);
+    ReCaptain(QObject *parent = NULL);
     ~ReCaptain();
 
     void execute(QVector<CCommand> commands);
     bool isLastRepeatable();
 
-    ReState   *state;
     ReSuper   *super;
     ReChess   *chess;
 private:

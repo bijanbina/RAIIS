@@ -7,6 +7,7 @@
 #include "backend.h"
 #include "re_state.h"
 #include "re_modifier.h"
+#include "re_pipe.h"
 
 #define CH_DRAG_NORM   0
 #define CH_DRAG_STATE1 1
@@ -16,7 +17,7 @@ class ReChess : public QObject
 {
     Q_OBJECT
 public:
-    ReChess(ReState *st, QObject *parent = NULL);
+    ReChess(QObject *parent = NULL);
     ~ReChess();
 
     void dirs (const QString &arg);
@@ -37,7 +38,6 @@ private:
     void addCount(int val);
 
     QObject   *root;
-    ReState   *state;
     CCommand   mod_cmd;
 
 
