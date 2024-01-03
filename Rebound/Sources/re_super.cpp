@@ -1,9 +1,8 @@
 #include "re_super.h"
 #include <QThread>
 
-ReSuper::ReSuper(ReState *st)
+ReSuper::ReSuper()
 {
-    state = st;
 }
 
 void ReSuper::cast(int val, CCommand *cmd)
@@ -84,19 +83,19 @@ void ReSuper::castMetaCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type = RE_COMMAND_NULL;
 
-    qDebug() << "Meta" << state->app.pname;
+    qDebug() << "Meta" << ReState::app.pname;
 
-    if( state->app.pname==RE_PROC_QT )
+    if( ReState::app.pname==RE_PROC_QT )
     {
         cmd->val1 = KEY_F1;
         cmd->type = RE_COMMAND_DIRS;
     }
-    else if( state->app.pname==RE_PROC_VSCODE )
+    else if( ReState::app.pname==RE_PROC_VSCODE )
     {
         cmd->val1 = KEY_F5;
         cmd->type = RE_COMMAND_DIRS;
     }
-    else if( state->app.pname==RE_PROC_GIT )
+    else if( ReState::app.pname==RE_PROC_GIT )
     {
         re_mouseKey(3);
 //        cmd->val1 = KEY_UP;
@@ -108,8 +107,8 @@ void ReSuper::castMetaCmd(CCommand *cmd)
         qDebug() << "super";
 //        cmd = re_getGoGitKraken(val);
     }
-    else if( state->app.pname==RE_PROC_FIREFOX ||
-             state->app.pname==RE_PROC_GEKO )
+    else if( ReState::app.pname==RE_PROC_FIREFOX ||
+             ReState::app.pname==RE_PROC_GEKO )
     {
         cmd->is_ctrl = 1;
         cmd->val1    = KEY_W;
@@ -119,7 +118,7 @@ void ReSuper::castMetaCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
-    else if( state->app.pname==RE_PROC_EXPLORER )
+    else if( ReState::app.pname==RE_PROC_EXPLORER )
     {
         cmd->is_ctrl = 1;
         cmd->val1    = KEY_W;
@@ -129,7 +128,7 @@ void ReSuper::castMetaCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
-    else if( state->app.pname==RE_PROC_TELEGRAM )
+    else if( ReState::app.pname==RE_PROC_TELEGRAM )
     {
 #ifdef WIN32
         recordTelegram();
@@ -138,11 +137,11 @@ void ReSuper::castMetaCmd(CCommand *cmd)
 #endif
     }
 #ifdef WIN32
-    else if( state->app.pname==RE_PROC_SLACK )
+    else if( ReState::app.pname==RE_PROC_SLACK )
     {
         SetCursorPos(50, 500);
     }
-    else if( state->app.pname==RE_PROC_ALTIUM )
+    else if( ReState::app.pname==RE_PROC_ALTIUM )
     {
         cmd->is_ctrl = 1;
         cmd->val1    = KEY_F4;
@@ -204,7 +203,7 @@ void ReSuper::castCamelCmd(CCommand *cmd)
 
 void ReSuper::castSelectCmd(CCommand *cmd)
 {
-    if( state->app.pname==RE_PROC_FIREFOX )
+    if( ReState::app.pname==RE_PROC_FIREFOX )
     {
         cmd->val2 = 1;
         cmd->val3 = 1;
@@ -212,18 +211,18 @@ void ReSuper::castSelectCmd(CCommand *cmd)
         cmd->type = RE_COMMAND_DIRS;
     }
 #ifdef WIN32
-    else if( state->app.pname==RE_PROC_ALTIUM )
+    else if( ReState::app.pname==RE_PROC_ALTIUM )
     {
-        if( state->drag_state )
+        if( ReState::drag_state )
         {
             re_mouseRelease(1);
-            state->drag_state = 0;
+            ReState::drag_state = 0;
             re_rmStatus();
         }
         else
         {
             re_mousePress(1);
-            state->goToDrag();
+            ReState::goToDrag();
         }
         makeNull(cmd);
     }
@@ -319,7 +318,7 @@ void ReSuper::makeNull(CCommand *cmd)
 void ReSuper::recordTelegram()
 {
     qDebug() << "recordTelegram";
-    state->goToRecord();
+    ReState::goToRecord();
     re_mouseMoveW(30, 30);
     QThread::msleep(100);
     re_mousePress(1);

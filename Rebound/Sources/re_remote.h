@@ -12,6 +12,7 @@ extern "C"
 #include <lauxlib.h>
 #include <lualib.h>
 }
+#include "re_pipe.h"
 #endif
 
 #include "re_apache_cl.h"
@@ -68,7 +69,6 @@ private:
     QVector<BtHistory>  history;
     QTimer    *timer_history;
 
-    ReState    *state;
     ReChess    *chess;
     ReMetaMos  *mouse;
     QString     last_word;

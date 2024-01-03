@@ -76,7 +76,7 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
                 if( current_win.pname=="rustdesk" )
                 {
                     int r_id = re_cleanRemoteId(current_win.title);
-                    thread_w->state->remote_id = r_id;
+                    ReState::remote_id = r_id;
                 }
 #endif
 
@@ -113,9 +113,8 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
     }
 }
 
-ReWindowW::ReWindowW(ReState *st)
+ReWindowW::ReWindowW()
 {
-    state = st;
 }
 
 void re_InsertWindow(ReWindowW *thread_w, ReWindow win)
@@ -296,28 +295,28 @@ void ReWindowW::updateActiveWindow()
     win_active.title = buffer;
     win_active.pid = mm_getPid(win_active.hWnd);
     win_active.pname = mm_getPName(win_active.pid);
-    state->updateApp(win_active);
+    ReState::updateApp(win_active);
 
 #ifndef RE_REMOTE
     if( win_active.pname=="rustdesk" &&
         win_active.title!="RustDesk" )
     {
-        if( state->remote_state==0 &&
-            state->sleep_state==0 )
+        if( ReState::remote_state==0 &&
+            ReState::sleep_state==0 )
         {
             qDebug() << "win_active.title"
                      << win_active.title;
             int r_id = re_cleanRemoteId(win_active.title);
-            state->goToRemote(r_id);
+            ReState::goToRemote(r_id);
         }
     }
     else
     {
-        if( state->remote_state==1 &&
-            state->sleep_state==0 )
+        if( ReState::remote_state==1 &&
+            ReState::sleep_state==0 )
         {
-            state->remote_state = 0;
-            state->wakeUp();
+            ReState::remote_state = 0;
+            ReState::wakeUp();
         }
     }
 #endif

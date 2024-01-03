@@ -6,9 +6,8 @@
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
-    state = pre->captain->state;
     chess = pre->captain->chess;
-    mouse = new ReMetaMos(state);
+    mouse = new ReMetaMos;
     is_last_mouse = 0;
 
 #ifdef WIN32
@@ -49,7 +48,7 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
 #ifdef RE_REMOTE
     connect(apache, SIGNAL(readyRead(QString)),
             this, SLOT(readyRead(QString)));
-    state->remote_id = RE_REMOTE;
+    ReState::remote_id = RE_REMOTE;
     apache->start(RE_CIP, RE_CPORT1);
 #else
     apache->start(RE_CIP, RE_CPORT0);
@@ -84,7 +83,7 @@ void ReRemote::send(QString word)
         return;
     }
 
-    QString data = QString::number(state->remote_id) + "::";
+    QString data = QString::number(ReState::remote_id) + "::";
     data += word + "\n";
     apache->write(data);
 }
@@ -106,7 +105,7 @@ void ReRemote::readyRead(QString read_data)
         }
 
         QString rx_id = data_split[0];
-        if( rx_id.toInt()!=state->remote_id )
+        if( rx_id.toInt()!=ReState::remote_id )
         {
             return;
         }
@@ -198,8 +197,8 @@ void ReRemote::runLua(QString word)
 
 void ReRemote::wakeRemote()
 {
-    state->remote_state = 0;
-    state->wakeUp();
+    ReState::remote_state = 0;
+    ReState::wakeUp();
 }
 
 int ReRemote::procChess(QString word)
@@ -373,8 +372,8 @@ int ReRemote::procSpecialKey(QString word)
 {
     if( last_word=="go" && word=="sierra" )
     {
-        state->remote_state = 0;
-        state->goToSleep();
+        ReState::remote_state = 0;
+        ReState::goToSleep();
         last_word = word;
         return 1;
     }
@@ -399,7 +398,7 @@ int ReRemote::procSpecialKey(QString word)
     else if( last_word=="super" && word=="back" )
     {
         QString cmd_str = "Meta,sound";
-        state->sendPipeMom(cmd_str.toStdString().c_str());
+        RePipe::sendMom(cmd_str.toStdString().c_str());
         return 1;
     }
     else if( is_last_mouse )

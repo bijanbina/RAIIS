@@ -73,12 +73,12 @@ void ReThreadL::insertWindow(ReWindow win)
                 windows[0].verify = 1;
                 windows[0].title = win.title;
             }
-            thread_data->state->updateApp(win);
+            ReState::updateApp(win);
         }
         else
         {
             windows.push_front(win);
-            thread_data->state->updateApp(win);
+            ReState::updateApp(win);
             qDebug() << "First Time" << win.title;
             return;
         }

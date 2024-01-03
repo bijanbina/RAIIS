@@ -27,7 +27,7 @@ class ReWindowW : public QObject
 {
     Q_OBJECT
 public:
-    explicit ReWindowW(ReState *st);
+    explicit ReWindowW();
     void cleanWins();
     void clearWins();
     void selectButton(QString name);
@@ -35,7 +35,6 @@ public:
     void updateActiveWindow();
 
     QVector<ReWindow> windows;
-    ReState *state;
     QStringList *wins_title;
     QStringList *elems_name;
     ReKeyboard    *key;

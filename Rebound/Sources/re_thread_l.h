@@ -22,7 +22,6 @@ typedef struct ReElemSpec
 typedef struct threadStruct
 {
     QString  message;
-    ReState *state;
     QStringList *wins_title;
     QStringList *elems_name;
     QVector<ReWindow> windows;

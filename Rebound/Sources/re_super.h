@@ -19,7 +19,7 @@
 class ReSuper
 {
 public:
-    ReSuper(ReState *st);
+    ReSuper();
 
     void cast(int val, CCommand *cmd);
 
@@ -42,7 +42,6 @@ private:
     void castRunCmd(CCommand *cmd);
 
     int uinput_f;
-    ReState  *state;
 
 #ifdef WIN32
     void recordTelegram();

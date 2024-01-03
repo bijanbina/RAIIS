@@ -36,7 +36,7 @@ void RePreProcessor::execute()
 void RePreProcessor::nato(const QString &text)
 {
     int val = text.toInt();
-    if( captain->state->ch_count )
+    if( ReState::ch_count )
     {
         captain->chess->nato(text);
         return;
@@ -64,11 +64,11 @@ void RePreProcessor::nato(const QString &text)
 
         return;
     }
-    else if( captain->state->fl->sc_dir &&
+    else if( ReState::fl->sc_dir &&
              KEY_A<=val && val<=KEY_F )
     {
         CCommand cmd;
-        cmd.val1 = captain->state->fl->sc_dir;
+        cmd.val1 = ReState::fl->sc_dir;
         cmd.val2 = val;
         cmd.val3 = 1;
         cmd.type = RE_COMMAND_META;
@@ -82,7 +82,7 @@ void RePreProcessor::nato(const QString &text)
     {
         if( val==KEY_S )
         {
-            captain->state->goToSleep();
+            ReState::goToSleep();
             cmd_buf.clear();
             return;
         }
@@ -116,7 +116,7 @@ void RePreProcessor::nato(const QString &text)
 
 void RePreProcessor::digit(const QString &text)
 {
-    if( captain->state->ch_count )
+    if( ReState::ch_count )
     {
         captain->chess->digit(text);
         return;
@@ -137,10 +137,10 @@ void RePreProcessor::digit(const QString &text)
         re_rmSpex();
         execute();
     }
-    else if( captain->state->fl->sc_dir )
+    else if( ReState::fl->sc_dir )
     {
         CCommand cmd;
-        cmd.val1 = captain->state->fl->sc_dir;
+        cmd.val1 = ReState::fl->sc_dir;
         cmd.val2 = text.toInt();
         cmd.val3 = 1;
         cmd.type = RE_COMMAND_META;
@@ -165,7 +165,7 @@ void RePreProcessor::digit(const QString &text)
     }
     else if( re_isLastQt(cmd_buf) )
     {
-        if( captain->state->isSleep() )
+        if( ReState::isSleep() )
         {
             return;
         }
@@ -195,7 +195,7 @@ void RePreProcessor::digit(const QString &text)
 // direction keys
 void RePreProcessor::dirs(const QString &text)
 {
-    if( captain->state->ch_count )
+    if( ReState::ch_count )
     {
         captain->chess->dirs(text);
         return;
@@ -215,7 +215,7 @@ void RePreProcessor::dirs(const QString &text)
         execute();
         return;
     }
-    else if( captain->state->app.pname==RE_PROC_QT )
+    else if( ReState::app.pname==RE_PROC_QT )
     {
         if( re_qtDirProc(&cmd_buf, text) )
         {
@@ -237,7 +237,7 @@ void RePreProcessor::modifier(const QString &text)
     //"super four" in <control super four> should be "super four"
     // if sleep
     if( re_isLastMod(cmd_buf) &&
-        captain->state->isSleep()==false )
+        ReState::isSleep()==false )
     {
         int last_i = cmd_buf.count()-1; //last index
         if( cmd_buf[last_i].val1==0 )
@@ -250,7 +250,7 @@ void RePreProcessor::modifier(const QString &text)
 //    qDebug() << "modifier re_isLastMod";
     CCommand cmd = re_modCreate(text);
     cmd_buf.append(cmd);
-    captain->state->last_cmd.type = RE_COMMAND_NULL;
+    ReState::last_cmd.type = RE_COMMAND_NULL;
 }
 
 void RePreProcessor::meta(const QString &text)
@@ -277,11 +277,11 @@ void RePreProcessor::meta(const QString &text)
         execute();
         return;
     }
-    else if( captain->state->app.pname==RE_PROC_QT )
+    else if( ReState::app.pname==RE_PROC_QT )
     {
         int val = text.toInt();
 
-        if( captain->state->isSleep() ) // ignore sleep
+        if( ReState::isSleep() ) // ignore sleep
         {
             return;
         }
@@ -310,14 +310,14 @@ void RePreProcessor::meta(const QString &text)
     }
 
     cmd_buf.append(cmd);
-    captain->state->last_cmd.type = RE_COMMAND_NULL;
+    ReState::last_cmd.type = RE_COMMAND_NULL;
 }
 
 void RePreProcessor::spex(const QString &text)
 {
     (void)text; // to suppress unused warning
 
-    if( !captain->state->isSleep() )
+    if( !ReState::isSleep() )
     {
         special_c = 1;
         qDebug() << "special_c" << special_c;
@@ -339,7 +339,7 @@ void RePreProcessor::spex(const QString &text)
 
 void RePreProcessor::super(const QString &text)
 {
-    if( captain->state->isSleep() )
+    if( ReState::isSleep() )
     {
         return;
     }
@@ -353,7 +353,7 @@ void RePreProcessor::super(const QString &text)
     }
     captain->chess->super(text, cmd_buf);
 
-    if( captain->state->ch_count )
+    if( ReState::ch_count )
     {
         // no need to process super mode while in
         // chess mode
@@ -379,7 +379,7 @@ void RePreProcessor::super(const QString &text)
     captain->super->cast(text.toInt(), &cmd);
     if( cmd.val3==-1 )
     {
-        captain->state->goToSleep();
+        ReState::goToSleep();
         cmd.val3 = 3;
     }
     cmd_buf.append(cmd);
@@ -391,16 +391,16 @@ void RePreProcessor::type(const QString &text)
 {
     (void)text; // to suppress unused warning
 
-    captain->state->last_cmd.type     = RE_COMMAND_NATO;
-    captain->state->last_cmd.is_alt   = 0;
-    captain->state->last_cmd.is_ctrl  = 0;
-    captain->state->last_cmd.is_shift = 0;
-    captain->state->last_cmd.is_super = 0;
+    ReState::last_cmd.type     = RE_COMMAND_NATO;
+    ReState::last_cmd.is_alt   = 0;
+    ReState::last_cmd.is_ctrl  = 0;
+    ReState::last_cmd.is_shift = 0;
+    ReState::last_cmd.is_super = 0;
 }
 
 void RePreProcessor::debug(const QString &text)
 {
-    if( captain->state->ch_count )
+    if( ReState::ch_count )
     {
         return;
     }
@@ -416,20 +416,20 @@ void RePreProcessor::handleLastRepeatable(int input)
 {
 //    qDebug() << "captain->isLastRepeatable()";
     //////////FIXME: USE POINTER/////////////////
-    if( captain->state->last_cmd.type==RE_COMMAND_META )
+    if( ReState::last_cmd.type==RE_COMMAND_META )
     {
-        if( captain->state->last_cmd.state==RE_CSTATE_0 )
+        if( ReState::last_cmd.state==RE_CSTATE_0 )
         {
-            captain->state->last_cmd.state = RE_CSTATE_1;
-            captain->state->last_cmd.val3 = input-1;
+            ReState::last_cmd.state = RE_CSTATE_1;
+            ReState::last_cmd.val3 = input-1;
         }
-        else if( captain->state->last_cmd.state==RE_CSTATE_1 )
+        else if( ReState::last_cmd.state==RE_CSTATE_1 )
         {
-            captain->state->last_cmd.state = RE_CSTATE_2;
-            int l_count = captain->state->last_cmd.val3+1; //last count
-            captain->state->last_cmd.val3  = l_count*10;
-            captain->state->last_cmd.val3 += input;
-            captain->state->last_cmd.val3 -= l_count;
+            ReState::last_cmd.state = RE_CSTATE_2;
+            int l_count = ReState::last_cmd.val3+1; //last count
+            ReState::last_cmd.val3  = l_count*10;
+            ReState::last_cmd.val3 += input;
+            ReState::last_cmd.val3 -= l_count;
         }
         else
         {
@@ -438,24 +438,24 @@ void RePreProcessor::handleLastRepeatable(int input)
     }
     else // not meta command
     {
-        if( captain->state->last_cmd.state==RE_CSTATE_0 )
+        if( ReState::last_cmd.state==RE_CSTATE_0 )
         {
-            captain->state->last_cmd.state = RE_CSTATE_1;
-            captain->state->last_cmd.val2  = input-1;
+            ReState::last_cmd.state = RE_CSTATE_1;
+            ReState::last_cmd.val2  = input-1;
         }
-        else if( captain->state->last_cmd.state==RE_CSTATE_1 )
+        else if( ReState::last_cmd.state==RE_CSTATE_1 )
         {
-            captain->state->last_cmd.state = RE_CSTATE_2;
-            int l_count = captain->state->last_cmd.val2+1; //last count
-            captain->state->last_cmd.val2  = l_count*10;
-            captain->state->last_cmd.val2 += input;
-            captain->state->last_cmd.val2 -= l_count;
+            ReState::last_cmd.state = RE_CSTATE_2;
+            int l_count = ReState::last_cmd.val2+1; //last count
+            ReState::last_cmd.val2  = l_count*10;
+            ReState::last_cmd.val2 += input;
+            ReState::last_cmd.val2 -= l_count;
         }
         else
         {
             qDebug() << "digit unsupported handleLastRepeatable";
         }
     }
-    cmd_buf.append(captain->state->last_cmd);
+    cmd_buf.append(ReState::last_cmd);
     execute();
 }
