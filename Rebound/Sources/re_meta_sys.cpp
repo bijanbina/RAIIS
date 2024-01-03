@@ -7,7 +7,7 @@
 #include "re_keyboard_l.h"
 #endif
 
-void re_getSysEnd(ReState *st)
+void re_getSysEnd()
 {
 #ifdef WIN32
     int x = 0;
@@ -27,7 +27,7 @@ void re_getSysEnd(ReState *st)
     app.win_title = "Speechnotes";
     mm_focus(app);
     QThread::msleep(3000);
-    st->goToDictate();
+    ReState::goToDictate();
     SetCursorPos(1450, 280);
     re_mouseKey(1);
 #endif

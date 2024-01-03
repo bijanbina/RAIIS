@@ -10,11 +10,10 @@
 #include "re_inject.h"
 #endif
 
-class ReMetaFox : public QObject
+class ReMetaFox
 {
-    Q_OBJECT
 public:
-    explicit ReMetaFox(ReState *st, QObject *parent = nullptr);
+    ReMetaFox();
     void castCode(int val, CCommand *cmd);
     QString castXed(int val);
     void castFirefox(int val, CCommand *cmd);
@@ -23,7 +22,6 @@ public:
     void castAltium(int val, CCommand *cmd);
 
 private:
-    ReState  *state;
 #ifdef WIN32
     ReInject *injector;
 #endif

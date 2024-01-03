@@ -6,11 +6,10 @@
 #include "re_keyboard_l.h"
 #endif
 
-ReMeta::ReMeta(ReState *st, QObject *parent): QObject(parent)
+ReMeta::ReMeta()
 {
-    state = st;
-    fox   = new ReMetaFox(state);
-    mouse = new ReMetaMos(state);
+    fox   = new ReMetaFox;
+    mouse = new ReMetaMos;
 }
 
 ReMeta::~ReMeta()
@@ -58,12 +57,12 @@ CCommand ReMeta::castMeta(int meta, int arg)
     }
     else if( meta==RE_META_GO )
     {
-        state->last_cmd.type = RE_COMMAND_NULL;
+        ReState::last_cmd.type = RE_COMMAND_NULL;
     }
     else if( meta==RE_META_SKY ||
              meta==RE_META_DIVE )
     {
-        if( state->app.pname!=RE_PROC_FIREFOX )
+        if( ReState::app.pname!=RE_PROC_FIREFOX )
         {
             return cmd;
         }
@@ -160,7 +159,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         QString cmd_str = "Sys_";
         cmd_str += QString::number(val-KEY_0);
         cmd_str += CH_NP_SEPARATOR;
-        state->sendPipeMom(cmd_str.toStdString().c_str());
+        RePipe::sendMom(cmd_str.toStdString().c_str());
 #endif
     }
     else if( val==KEY_A )
@@ -184,11 +183,11 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     else if( val==KEY_S )
     {
         sendChessCmd("screenshot");
-        state->ch_count = 4;
+        ReState::ch_count = 4;
     }
     else if( val==KEY_R )
     {
-        state->goToRemote();
+        ReState::goToRemote();
     }
     else if( val==KEY_V )
     {
@@ -213,32 +212,32 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==KEY_END )
     {
-        re_getSysEnd(state);
+        re_getSysEnd();
     }
     else if( val==RE_SUPER_KICK )
     {
         sendChessCmd("system", "show");
-        state->ch_count = 2;
+        ReState::ch_count = 2;
     }
     else if( val==RE_SUPER_SIDE )
     {
         sendChessCmd("system", "side");
-        state->ch_count = 2;
+        ReState::ch_count = 2;
     }
     else if( val==RE_SUPER_COMMENT )
     {
         sendChessCmd("system", "comment");
-        state->ch_count = 2;
+        ReState::ch_count = 2;
     }
     else if( val==RE_SUPER_DOUBLE )
     {
         sendChessCmd("system", "double");
-        state->ch_count = 2;
+        ReState::ch_count = 2;
     }
     else if( val==RE_SUPER_DRAG )
     {
         sendChessCmd("system", "drag");
-        state->ch_count = 4;
+        ReState::ch_count = 4;
     }
     else
     {
@@ -249,37 +248,37 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
 void ReMeta::castFoxCmd(int val, CCommand *cmd)
 {
     //////SHOULD GET FIXED WITH THE NEW SYSTEM
-    qDebug() << "FOX" << state->app.pname;
+    qDebug() << "FOX" << ReState::app.pname;
 
-    if( state->app.pname==RE_PROC_EDITOR )
+    if( ReState::app.pname==RE_PROC_EDITOR )
     {
         fox->castXed(val);
     }
-    else if( state->app.pname==RE_PROC_QT ||
-             state->app.pname==RE_PROC_VSCODE )
+    else if( ReState::app.pname==RE_PROC_QT ||
+             ReState::app.pname==RE_PROC_VSCODE )
     {
         fox->castCode(val, cmd);
     }
-    else if( state->app.pname==RE_PROC_GIT )
+    else if( ReState::app.pname==RE_PROC_GIT )
     {
         fox->csatGitKraken(val, cmd);
     }
-    else if( state->app.pname==RE_PROC_FIREFOX ||
-             state->app.pname==RE_PROC_GEKO )
+    else if( ReState::app.pname==RE_PROC_FIREFOX ||
+             ReState::app.pname==RE_PROC_GEKO )
     {
         fox->castFirefox(val, cmd);
 
         if( val==KEY_L )
         {
-            state->last_cmd.type = RE_COMMAND_NULL;
+            ReState::last_cmd.type = RE_COMMAND_NULL;
         }
     }
-    else if( state->app.pname==RE_PROC_EXPLORER )
+    else if( ReState::app.pname==RE_PROC_EXPLORER )
     {
         fox->castNautilus(val, cmd);
     }
 #ifdef WIN32
-    else if( state->app.pname==RE_PROC_ALTIUM )
+    else if( ReState::app.pname==RE_PROC_ALTIUM )
     {
         fox->castAltium(val, cmd);
     }
@@ -362,19 +361,19 @@ void ReMeta::execScrollCmd(int meta, int val)
         direction = " down ";
     }
 
-    state->enScroll(meta, val);
+    ReState::enScroll(meta, val);
 }
 
 void ReMeta::castPageCmd(int val, CCommand *cmd)
 {
-    qDebug() << "Page" << state->app.pname;
+    qDebug() << "Page" << ReState::app.pname;
 
-    if( state->app.pname==RE_PROC_EDITOR )
+    if( ReState::app.pname==RE_PROC_EDITOR )
     {
 //        system(re_getGoXed(val);
     }
-    else if( state->app.pname==RE_PROC_QT ||
-             state->app.pname==RE_PROC_VSCODE )
+    else if( ReState::app.pname==RE_PROC_QT ||
+             ReState::app.pname==RE_PROC_VSCODE )
     {
         if( val==KEY_DOWN ||
             val==KEY_UP )
@@ -418,7 +417,7 @@ void ReMeta::castPageCmd(int val, CCommand *cmd)
 
 void ReMeta::castTouchCmd(int val, CCommand *cmd)
 {
-    qDebug() << "Touch" << state->app.pname
+    qDebug() << "Touch" << ReState::app.pname
              << val;
 
     if( val==KEY_DOWN )
@@ -475,7 +474,7 @@ void ReMeta::sendChessCmd(QString cmd, QString arg)
 {
 #ifdef WIN32
     QString pipe_data = cmd + CH_NP_SEPARATOR + arg;
-    state->sendPipeChess(pipe_data.toStdString().c_str());
+    RePipe::sendChess(pipe_data.toStdString().c_str());
 //    qDebug() << "pipe" << pipe_data;
 #else
     QString pipe_data = "dbus-send --dest=com.benjamin.chess";

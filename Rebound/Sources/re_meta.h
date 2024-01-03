@@ -12,6 +12,7 @@
 #ifdef WIN32
 #include <windows.h>
 #include "re_app_w.h"
+#include "re_pipe.h"
 #else
 #include "re_app_l.h"
 #endif
@@ -21,7 +22,7 @@ class ReMeta : public QObject
     Q_OBJECT
 
 public:
-    ReMeta(ReState *st, QObject *parent = NULL);
+    ReMeta(QObject *parent = NULL);
     ~ReMeta();
 
     CCommand castMeta(int meta, int arg);
@@ -36,7 +37,6 @@ private:
     void execScrollCmd(int meta, int val);
     void sendChessCmd(QString cmd, QString arg="");
 
-    ReState   *state;
     ReMetaFox *fox;
     ReMetaMos *mouse;
 };

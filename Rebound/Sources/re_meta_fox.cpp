@@ -5,9 +5,8 @@
 #include "re_keyboard_l.h"
 #endif
 
-ReMetaFox::ReMetaFox(ReState *st, QObject *parent) : QObject(parent)
+ReMetaFox::ReMetaFox()
 {
-    state = st;
 #ifdef WIN32
     injector = new ReInject();
 #endif
@@ -274,7 +273,7 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
     }
     else if( val==KEY_I ) //injection
     {
-        int pid = state->app.pid;
+        int pid = ReState::app.pid;
         qDebug() << ">>>>>>>>>>>>>>>INJA" << pid;
 #ifdef WIN32
         injector->inject(pid);
