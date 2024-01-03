@@ -28,8 +28,6 @@ public:
     void execute(QVector<CCommand> commands);
     bool isLastRepeatable();
 
-    ReSuper   *super;
-    ReChess   *chess;
 private:
     void handleScroll(CCommand command);
 

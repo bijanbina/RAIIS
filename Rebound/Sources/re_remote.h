@@ -69,7 +69,6 @@ private:
     QVector<BtHistory>  history;
     QTimer    *timer_history;
 
-    ReChess    *chess;
     ReMetaMos  *mouse;
     QString     last_word;
     int         is_last_mouse;

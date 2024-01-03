@@ -6,7 +6,6 @@
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
-    chess = pre->captain->chess;
     mouse = new ReMetaMos;
     is_last_mouse = 0;
 
@@ -206,18 +205,18 @@ int ReRemote::procChess(QString word)
     if( word=="kick"    || word=="comment" || word=="side" ||
         word=="double"  || word=="touch"   || word=="drag" )
     {
-        chess->sendChessCmd("system", word);
+        ReChess::sendCmd("system", word);
         if( word=="touch" )
         {
-            chess->setCount(999); //some large num
+            ReChess::setCount(999); //some large num
         }
         else if( word=="drag")
         {
-            chess->setCount(4);
+            ReChess::setCount(4);
         }
         else
         {
-            chess->setCount(2);
+            ReChess::setCount(2);
         }
         return 1;
     }
@@ -260,7 +259,7 @@ int ReRemote::procSuper(QString word)
     }
     else if( word=="sierra" )
     {
-        chess->showChess(RE_SUPER_SHOT);
+        ReChess::showChess(RE_SUPER_SHOT);
         return 1;
     }
 

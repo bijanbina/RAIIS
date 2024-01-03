@@ -4,9 +4,7 @@
 
 ReCaptain::ReCaptain(QObject *parent): QObject(parent)
 {
-    chess = new ReChess;
     meta  = new ReMeta;
-    super = new ReSuper;
     ReState::last_cmd.type = RE_COMMAND_NULL;
 }
 

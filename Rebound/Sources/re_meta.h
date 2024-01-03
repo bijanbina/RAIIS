@@ -17,12 +17,10 @@
 #include "re_app_l.h"
 #endif
 
-class ReMeta : public QObject
+class ReMeta
 {
-    Q_OBJECT
-
 public:
-    ReMeta(QObject *parent = NULL);
+    ReMeta();
     ~ReMeta();
 
     CCommand castMeta(int meta, int arg);

@@ -1,7 +1,6 @@
 #ifndef RE_CHESS_H
 #define RE_CHESS_H
 
-#include <QObject>
 #include <QThread>
 
 #include "backend.h"
@@ -13,38 +12,35 @@
 #define CH_DRAG_STATE1 1
 #define CH_DRAG_STATE2 2
 
-class ReChess : public QObject
+class ReChess
 {
-    Q_OBJECT
 public:
-    ReChess(QObject *parent = NULL);
+    ReChess();
     ~ReChess();
 
-    void dirs (const QString &arg);
-    void nato (const QString &arg);
-    void super(const QString &arg,
+    static void dirs (const QString &arg);
+    static void nato (const QString &arg);
+    static void super(const QString &arg,
                QVector<CCommand> cmd_buf); //single shot meta cmd
-    void digit(const QString &arg);
+    static void digit(const QString &arg);
 
-    void showChess(int val);
-    int  isChessCmd(QString text);
-    void sendChessCmd(QString cmd, QString arg="");
-    void setCount(int val);
+    static void showChess(int val);
+    static int  isChessCmd(QString text);
+    static void sendChessCmd(QString cmd, QString arg="");
+    static void setCount(int val);
 
 private:
-    void sendChessKey(QString text);
-    void resetChess();
-    void handleBackspace();
-    void addCount(int val);
+    static void sendChessKey(QString text);
+    static void resetChess();
+    static void handleBackspace();
+    static void addCount(int val);
 
-    QObject   *root;
-    CCommand   mod_cmd;
+    static QObject   *root;
+    static CCommand   mod_cmd;
 
-
-    int meta_mode;
-    int drag_mode;
-    int persist_mode;
-    QString commands_str; //just for debug purpose
+    static int meta_mode;
+    static int drag_mode;
+    static int persist_mode;
 };
 
 #endif // RE_CHESS_H

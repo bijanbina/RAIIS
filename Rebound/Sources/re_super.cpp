@@ -1,6 +1,8 @@
 #include "re_super.h"
 #include <QThread>
 
+ReKeyboard ReSuper::key;
+
 ReSuper::ReSuper()
 {
 }

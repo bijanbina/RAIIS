@@ -1,10 +1,14 @@
 #include "re_chess.h"
 #include <unistd.h>
 
-ReChess::ReChess(QObject *parent) : QObject(parent)
+int ReChess::meta_mode    = 0;
+int ReChess::drag_mode    = 0;
+int ReChess::persist_mode = 0;
+QObject *ReChess::root    = NULL;
+CCommand ReChess::mod_cmd;
+
+ReChess::ReChess()
 {
-    meta_mode    = 0;
-    persist_mode = 0;
 }
 
 ReChess::~ReChess()

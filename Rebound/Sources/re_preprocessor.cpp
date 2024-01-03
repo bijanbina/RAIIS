@@ -38,7 +38,7 @@ void RePreProcessor::nato(const QString &text)
     int val = text.toInt();
     if( ReState::ch_count )
     {
-        captain->chess->nato(text);
+        ReChess::nato(text);
         return;
     }
     else if( special_c ) //FUNC KEY
@@ -118,7 +118,7 @@ void RePreProcessor::digit(const QString &text)
 {
     if( ReState::ch_count )
     {
-        captain->chess->digit(text);
+        ReChess::digit(text);
         return;
     }
     else if( special_c ) //FUNC KEY
@@ -197,7 +197,7 @@ void RePreProcessor::dirs(const QString &text)
 {
     if( ReState::ch_count )
     {
-        captain->chess->dirs(text);
+        ReChess::dirs(text);
         return;
     }
     else if( re_isLastMeta(cmd_buf) )
@@ -351,7 +351,7 @@ void RePreProcessor::super(const QString &text)
         execute();
         return;
     }
-    captain->chess->super(text, cmd_buf);
+    ReChess::super(text, cmd_buf);
 
     if( ReState::ch_count )
     {
@@ -366,7 +366,7 @@ void RePreProcessor::super(const QString &text)
 
         cmd_buf[last_i].type = RE_COMMAND_SUPER;
         cmd_buf[last_i].val1 = text.toInt();
-        captain->super->cast(text.toInt(), &cmd_buf[last_i]);
+        ReSuper::cast(text.toInt(), &cmd_buf[last_i]);
         execute();
         return;
     }
@@ -376,7 +376,7 @@ void RePreProcessor::super(const QString &text)
     cmd.val2 = 1;
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_SUPER;
-    captain->super->cast(text.toInt(), &cmd);
+    ReSuper::cast(text.toInt(), &cmd);
     if( cmd.val3==-1 )
     {
         ReState::goToSleep();

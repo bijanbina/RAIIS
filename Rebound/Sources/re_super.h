@@ -21,32 +21,28 @@ class ReSuper
 public:
     ReSuper();
 
-    void cast(int val, CCommand *cmd);
+    static void cast(int val, CCommand *cmd);
+    static void castMetaCmd (CCommand *cmd);
+    static void castCopyCmd (CCommand *cmd);
+    static void castPasteCmd(CCommand *cmd);
+    static void castLoveCmd (CCommand *cmd);
+    static void castRogerCmd(CCommand *cmd);
+    static void castFrontCmd(CCommand *cmd);
+    static void castLastCmd (CCommand *cmd);
 
-private:
-    void castMetaCmd (CCommand *cmd);
-    void castCopyCmd (CCommand *cmd);
-    void castPasteCmd(CCommand *cmd);
-    void castLoveCmd (CCommand *cmd);
-    void castRogerCmd(CCommand *cmd);
-    void castFrontCmd(CCommand *cmd);
-    void castLastCmd (CCommand *cmd);
-
-    void castSwitchCmd(CCommand *cmd);
-    void castLSwitchCmd(CCommand *cmd);
-    void castCamelCmd(CCommand *cmd);
-    void castSelectCmd(CCommand *cmd);
-    void makeNull(CCommand *cmd);
+    static void castSwitchCmd(CCommand *cmd);
+    static void castLSwitchCmd(CCommand *cmd);
+    static void castCamelCmd(CCommand *cmd);
+    static void castSelectCmd(CCommand *cmd);
+    static void makeNull(CCommand *cmd);
 
     // super_app
-    void castRunCmd(CCommand *cmd);
-
-    int uinput_f;
+    static void castRunCmd(CCommand *cmd);
 
 #ifdef WIN32
-    void recordTelegram();
+    static void recordTelegram();
 #endif
-    ReKeyboard key;
+    static ReKeyboard key;
 };
 
 #endif //RE_SUPER_H
