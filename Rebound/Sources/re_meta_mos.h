@@ -8,19 +8,15 @@
 #include "re_state.h"
 #include "re_mouse.h"
 
-class ReMetaMos: public QObject
+class ReMetaMos
 {
-    Q_OBJECT
 public:
-    explicit ReMetaMos(QObject *parent = nullptr);
+    ReMetaMos();
 
     void castCode(int val, CCommand *cmd);
     void castMonitor(int val);
     void castScroll(int val);
     void castFirefox(int val, CCommand *cmd);
-
-private:
-    ChMonitor *mon;
 };
 
 #endif // RE_META_MOS_H

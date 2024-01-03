@@ -5,10 +5,8 @@
 #include "re_keyboard_l.h"
 #endif
 
-ReMetaMos::ReMetaMos(QObject *parent):
-    QObject(parent)
+ReMetaMos::ReMetaMos()
 {
-    mon        = new ChMonitor;
 }
 
 void ReMetaMos::castMonitor(int val)
@@ -18,31 +16,31 @@ void ReMetaMos::castMonitor(int val)
 
     if( val==KEY_P ) //Primary
     {
-        x  = mon->primary.x;
-        x += mon->primary.width/2;
-        y  = mon->primary.y;
-        y += mon->primary.height/2;
+        x  = ChMonitor::primary.x;
+        x += ChMonitor::primary.width/2;
+        y  = ChMonitor::primary.y;
+        y += ChMonitor::primary.height/2;
     }
     else if( val==KEY_S ) //Secondary
     {
-        x  = mon->secondary.x;
-        x += mon->secondary.width/2;
-        y  = mon->secondary.y;
-        y += mon->secondary.height/2;
+        x  = ChMonitor::secondary.x;
+        x += ChMonitor::secondary.width/2;
+        y  = ChMonitor::secondary.y;
+        y += ChMonitor::secondary.height/2;
     }
     else if( val==KEY_L ) //Primary Left Side
     {
-        x  = mon->primary.x;
-        x += mon->primary.width/4;
-        y  = mon->primary.y;
-        y += mon->primary.height/2;
+        x  = ChMonitor::primary.x;
+        x += ChMonitor::primary.width/4;
+        y  = ChMonitor::primary.y;
+        y += ChMonitor::primary.height/2;
     }
     else if( val==KEY_R ) //Primary Left Side
     {
-        x  = mon->primary.x;
-        x += mon->primary.width*3/4;
-        y  = mon->primary.y;
-        y += mon->primary.height/2;
+        x  = ChMonitor::primary.x;
+        x += ChMonitor::primary.width*3/4;
+        y  = ChMonitor::primary.y;
+        y += ChMonitor::primary.height/2;
     }
 #ifdef WIN32
     SetCursorPos(x, y);

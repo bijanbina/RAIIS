@@ -2,10 +2,16 @@
 #include <QWindow>
 #include <QDebug>
 
+ChScreen ChMonitor::primary;
+ChScreen ChMonitor::secondary;
+
 #ifdef WIN32
-static BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdc, LPRECT lprcMonitor, LPARAM pData)
+static BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdc,
+                                    LPRECT lprcMonitor, LPARAM pData)
 {
-    ChMonitor *mon = (ChMonitor *)pData;
+    (void)pData;        // to suppress unused warning
+    (void)lprcMonitor;  // to suppress unused warning
+    (void)hdc;          // to suppress unused warning
     MONITORINFOEXA mi;
     memset(&mi, 0, sizeof(mi));
     mi.cbSize = sizeof(mi);
@@ -21,30 +27,30 @@ static BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdc, LPRECT lprcMoni
 //             << mi.szDevice;
     if( isPrimary )
     {
-        mon->primary.x = mi.rcWork.left;
-        mon->primary.y = mi.rcWork.top;
-        mon->primary.width  = mi.rcWork.right  - mi.rcWork.left;
-        mon->primary.height = mi.rcWork.bottom - mi.rcWork.top;
+        ChMonitor::primary.x = mi.rcWork.left;
+        ChMonitor::primary.y = mi.rcWork.top;
+        ChMonitor::primary.width  = mi.rcWork.right  - mi.rcWork.left;
+        ChMonitor::primary.height = mi.rcWork.bottom - mi.rcWork.top;
     }
     else
     {
-        mon->secondary.x = mi.rcWork.left;
-        mon->secondary.y = mi.rcWork.top;
-        mon->secondary.width  = mi.rcWork.right  - mi.rcWork.left;
-        mon->secondary.height = mi.rcWork.bottom - mi.rcWork.top;
+        ChMonitor::secondary.x = mi.rcWork.left;
+        ChMonitor::secondary.y = mi.rcWork.top;
+        ChMonitor::secondary.width  = mi.rcWork.right  - mi.rcWork.left;
+        ChMonitor::secondary.height = mi.rcWork.bottom - mi.rcWork.top;
     }
 
     return TRUE;
 }
 #endif
 
-ChMonitor::ChMonitor(QObject *parent) : QObject(parent)
+ChMonitor::ChMonitor()
 {
-#ifdef WIN32
-    EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, (LPARAM)this);
-#endif
 }
 
-ChMonitor::~ChMonitor()
+void ChMonitor::init()
 {
+#ifdef WIN32
+    EnumDisplayMonitors(nullptr, nullptr, MonitorEnumProc, NULL);
+#endif
 }

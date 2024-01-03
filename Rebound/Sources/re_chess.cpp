@@ -53,7 +53,7 @@ void ReChess::super(const QString &text,
     {
         meta_mode = 1;
         addCount(1);
-        sendChessCmd("Meta");
+        sendCmd("Meta");
     }
     else if( isChessCmd(text) )
     {
@@ -104,7 +104,7 @@ void ReChess::sendChessKey(QString text)
     int val = text.toInt();
     QString cmd = "Key_";
     cmd += text;
-    sendChessCmd(cmd.toStdString().c_str());
+    sendCmd(cmd.toStdString().c_str());
 
     if( val==KEY_ESC )
     {
@@ -128,43 +128,43 @@ void ReChess::showChess(int val)
     setCount(2);
     if( val==RE_SUPER_KICK )
     {
-        sendChessCmd("show");
+        sendCmd("show");
     }
     else if( val==RE_SUPER_COMMENT )
     {
-        sendChessCmd("comment");
+        sendCmd("comment");
     }
     else if( val==RE_SUPER_SIDE )
     {
-        sendChessCmd("side");
+        sendCmd("side");
     }
     else if( val==RE_SUPER_DOUBLE )
     {
-        sendChessCmd("double");
+        sendCmd("double");
     }
     else if( val==RE_SUPER_RESIST )
     {
         setCount(999); //some large num
-        sendChessCmd("persist");
+        sendCmd("persist");
     }
     else if( val==RE_SUPER_DRAG )
     {
         setCount(4);
         drag_mode = CH_DRAG_STATE2;
-        sendChessCmd("drag");
+        sendCmd("drag");
     }
     else if( val==RE_SUPER_SHOT )
     {
         setCount(4);
-        sendChessCmd("screenshot");
+        sendCmd("screenshot");
     }
     else if( val==RE_SUPER_MAGIC )
     {
-        sendChessCmd("magic");
+        sendCmd("magic");
     }
 }
 
-void ReChess::sendChessCmd(QString cmd, QString arg)
+void ReChess::sendCmd(QString cmd, QString arg)
 {
 #ifdef WIN32
     QString pipe_data = cmd + CH_NP_SEPARATOR + arg;

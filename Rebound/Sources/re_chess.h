@@ -26,7 +26,7 @@ public:
 
     static void showChess(int val);
     static int  isChessCmd(QString text);
-    static void sendChessCmd(QString cmd, QString arg="");
+    static void sendCmd(QString cmd, QString arg="");
     static void setCount(int val);
 
 private:
