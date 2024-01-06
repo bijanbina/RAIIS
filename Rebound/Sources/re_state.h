@@ -40,8 +40,6 @@ public:
     static bool remote_state;
     static bool drag_state;
     static int  ch_count; //Chess Count
-    static QStringList wins_title;
-    static QStringList elems_name;
     static ReWindow app; //Active Window
     static CCommand last_cmd;
     static ReFirefox *fl;

@@ -264,28 +264,6 @@ void ReSuper::castRogerCmd(CCommand *cmd)
     cmd->state = RE_CSTATE_0;
 }
 
-void ReSuper::castFrontCmd(CCommand *cmd)
-{
-    cmd->is_ctrl = 1;
-    cmd->val1    = RE_MOUSE_UP;
-
-    cmd->val2 = 5;
-    cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_MOUSE;
-    cmd->state = RE_CSTATE_0;
-}
-
-void ReSuper::castLastCmd(CCommand *cmd)
-{
-    cmd->is_ctrl = 1;
-    cmd->val1    = RE_MOUSE_DOWN;
-
-    cmd->val2 = 5;
-    cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_MOUSE;
-    cmd->state = RE_CSTATE_0;
-}
-
 void ReSuper::castSwitchCmd(CCommand *cmd)
 {
 #ifdef WIN32
