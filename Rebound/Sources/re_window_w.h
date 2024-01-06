@@ -26,22 +26,18 @@ public:
     explicit ReWindowW();
     void cleanWins();
     void clearWins();
+    void addHwnd(HWND hwnd);
+    void applyOpacity(ReWindow win);
+    void updateRemoteID(ReWindow win);
     void updateActiveWindow();
 
     QVector<ReWindow> windows;
-    QStringList      *wins_title;
     ReWindow          win_active;
 
 public slots:
     void    start();
 
 private:
-    HWND    getHWND(QString title);
-    QString getWinTitle(int index);
 };
-
-void re_AddHwnd(HWND hwnd, ReWindowW *thread_w);
-void re_InsertWindow(ReWindowW *thread_w, ReWindow win);
-int  re_cleanRemoteId(QString title);
 
 #endif // RE_WINDOW_W_H

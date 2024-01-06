@@ -2,85 +2,6 @@
 #include "backend.h"
 #include "mm_api.h"
 
-//Add a new Hwnd to wins_title vector
-void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
-{
-    char buffer[128];
-    RECT rc;
-
-    if(IsWindowVisible(hwnd))
-    {
-        int cloaked;
-        DwmGetWindowAttribute(hwnd, DWMWA_CLOAKED, &cloaked, 4);
-        if(cloaked==0)
-//        if(1)
-        {
-            HWND shell_window = GetShellWindow();
-            GetWindowRect(hwnd, &rc);
-            int width = rc.right - rc.left;
-            int height = rc.bottom - rc.top;
-            int opacity = re_getWindowOpacity(hwnd);
-
-            if( (hwnd!=shell_window) && (width>MM_MINWIN_WIDTH) &&
-                (height>MM_MINWIN_HEIGHT) && (opacity>MM_MINWIN_OPACITY)  ) //&& (rc.bottom>0)
-            {
-                int success = GetWindowTextA(hwnd, buffer, 128); //get title
-
-                if ( success==0 )
-                {
-                    qDebug() << hwnd << "Failed to GetWindowTextA";
-                }
-
-                ReWindow current_win;
-                current_win.hWnd = hwnd;
-                current_win.title = buffer;
-                current_win.pname = mm_getPName(mm_getPid(hwnd));
-                current_win.verify = 1; //always new windows are verified
-
-                re_InsertWindow(thread_w, current_win);
-
-#ifndef RE_REMOTE
-                if( current_win.pname=="rustdesk" && // to exclude main
-                    current_win.title.contains("Remote") )// rustdesk window
-                {
-                    int r_id = re_cleanRemoteId(current_win.title);
-                    ReState::remote_id = r_id;
-                }
-#endif
-
-                if( current_win.pname=="Chess" ||
-                    current_win.pname=="rustdesk" ||
-                    current_win.title=="Qt Creator" ||
-                    current_win.pname=="AnyDesk" ||
-                    current_win.pname=="NLClientApp" )
-                {
-                    return;
-                }
-//                qDebug() << "process" << current_win.pname
-//                         << current_win.title;
-                if( thread_w->win_active.hWnd==hwnd )
-                {
-                    re_setWindowOpacity(hwnd, 255);
-                }
-                else
-                {
-                    re_setWindowOpacity(hwnd, 200);
-                }
-            }
-            else
-            {
-//                int success = GetWindowTextA(hwnd, buffer, 128); //get title
-//                qDebug() << "----------" << buffer << rc.bottom << width;
-            }
-        }
-    }
-    else
-    {
-//        int success = GetWindowTextA(hwnd, buffer, 128); //get title
-//        qDebug() << "not vis" << buffer << IsWindowVisible(hwnd);
-    }
-}
-
 ReWindowW::ReWindowW()
 {
 }
@@ -92,7 +13,6 @@ void ReWindowW::start()
 
     while( 1 )
     {
-        //Get Active Window Name
         updateActiveWindow();
 
         clearWins();
@@ -102,83 +22,68 @@ void ReWindowW::start()
     }
 }
 
-void re_InsertWindow(ReWindowW *thread_w, ReWindow win)
+//Add a new Hwnd
+void ReWindowW::addHwnd(HWND hwnd)
 {
-    //push active window to front
-    if( win.hWnd==thread_w->win_active.hWnd )
-    {
-        if( thread_w->windows.size()>0 )
-        {
-            if( thread_w->windows[0].hWnd!=win.hWnd )
-            {
-                thread_w->windows.push_front(win);
-                qDebug() << "Active Changed" << win.title;
-            }
-            else
-            {
-                thread_w->windows[0].verify = 1;
-                thread_w->windows[0].title = win.title;
-            }
-        }
-        else
-        {
-            thread_w->windows.push_front(win);
-            qDebug() << "First Time" << win.title;
-            return;
-        }
-    }
+    ReWindow win = re_readWindow(hwnd);
 
-    for( int i=1 ; i<thread_w->windows.size() ; i++ )
+    // add to list
+    int existed = 0;
+    for( int i=0 ; i<windows.size() ; i++ )
     {
-        if ( thread_w->windows[i].hWnd==thread_w->win_active.hWnd )
+        if ( windows[i].hWnd==win.hWnd )
         {
-            thread_w->windows.remove(i);
-            i--;
-        }
-        else if ( thread_w->windows[i].hWnd==win.hWnd )
-        {
-            thread_w->windows[i].verify = 1;
-            thread_w->windows[i].title = win.title;
+            windows[i].verify = 1;
+            windows[i].title = win.title;
 //            qDebug() << "Ver Window" << i << win.title;
-            return;
+            existed = 1;
+            break;
         }
     }
 
-    if ( win.hWnd != thread_w->win_active.hWnd )
+    if ( existed==0 )
     {
-        thread_w->windows.push_back(win);
+        windows.push_back(win);
 //        qDebug() << "New Window" << win.title;
     }
 
+    updateRemoteID(win);
+    applyOpacity(win);
 }
 
-int re_cleanRemoteId(QString title)
+void ReWindowW::applyOpacity(ReWindow win)
 {
-    QStringList split = title.split('-');
-    QStringList id_split = split[0].split(" ");
-
-    return id_split[0].toInt();
-}
-
-HWND ReWindowW::getHWND(QString appname)
-{
-    for(int i=0; i<windows.size(); i++)
+    if( win.pname=="Chess" ||
+        win.pname=="rustdesk" ||
+        win.title=="Qt Creator" ||
+        win.pname=="AnyDesk" ||
+        win.pname=="NLClientApp" )
     {
-        if(appname == windows[i].pname)
-        {
-            return windows[i].hWnd;
-        }
+        return;
     }
-    return NULL;
+//                qDebug() << "process" << current_win.pname
+//                         << current_win.title;
+    if( win_active.hWnd==win.hWnd )
+    {
+        re_setWindowOpacity(win.hWnd, 255);
+    }
+    else
+    {
+        re_setWindowOpacity(win.hWnd, 200);
+    }
+
 }
 
-QString ReWindowW::getWinTitle(int index)
+void ReWindowW::updateRemoteID(ReWindow win)
 {
-    if( index<windows.size() )
+#ifndef RE_REMOTE
+    if( win.pname=="rustdesk" && // to exclude main
+        win.title.contains("Remote") )// rustdesk window
     {
-        return windows[index].title;
+        int r_id = re_cleanRemoteId(win.title);
+        ReState::remote_id = r_id;
     }
-    return "";
+#endif
 }
 
 //clear verify flag
@@ -190,7 +95,7 @@ void ReWindowW::clearWins()
     }
 }
 
-//clean-up windows
+//clean-up non existed windows
 void ReWindowW::cleanWins()
 {
     for( int i=0 ; i<windows.size() ; i++ )
