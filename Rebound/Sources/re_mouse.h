@@ -9,9 +9,11 @@
 #endif
 
 void re_mouseKey(int btn);
-void re_mouseMoveR(int x, int y);
-void re_mouseMoveW(int x_offset, int y_offset);
 void re_mousePress(int btn);
 void re_mouseRelease(int btn);
+
+void re_mouseMoveR(int x, int y);
+void re_mouseMoveW(int x_offset, int y_offset);
+void re_mouseMoveC(int x_offset, int y_offset);
 
 #endif // RE_MOUSE_H

@@ -2,39 +2,6 @@
 #include "backend.h"
 #include "mm_api.h"
 
-int counter = 0;
-int child_num = 3;
-int win_thread_debug = 0;
-
-BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
-{
-    char buffer[128];
-    ReWindowW *thread_w = (ReWindowW *)lParam;
-    int written = GetWindowTextA(hwnd, buffer, 128);
-    if( written && strlen(buffer)!=0 )
-    {
-        re_AddHwnd(hwnd, thread_w);
-    }
-    return TRUE;
-}
-
-BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam)
-{
-    char buffer[128];
-    GetClassNameA(hwnd, buffer, 128);
-    QString class_name = buffer;
-
-    if( class_name=="CabinetWClass" )
-    {
-        *(HWND*)lParam = hwnd;
-        return FALSE;
-    }
-    else
-    {
-        return TRUE;
-    }
-}
-
 //Add a new Hwnd to wins_title vector
 void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
 {
@@ -73,7 +40,8 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
                 re_InsertWindow(thread_w, current_win);
 
 #ifndef RE_REMOTE
-                if( current_win.pname=="rustdesk" )
+                if( current_win.pname=="rustdesk" && // to exclude main
+                    current_win.title.contains("Remote") )// rustdesk window
                 {
                     int r_id = re_cleanRemoteId(current_win.title);
                     ReState::remote_id = r_id;
@@ -115,6 +83,23 @@ void re_AddHwnd(HWND hwnd, ReWindowW *thread_w)
 
 ReWindowW::ReWindowW()
 {
+}
+
+void ReWindowW::start()
+{
+    CoUninitialize();
+    CoInitializeEx(NULL, COINIT_MULTITHREADED);
+
+    while( 1 )
+    {
+        //Get Active Window Name
+        updateActiveWindow();
+
+        clearWins();
+        EnumWindows(EnumWindowsProc, (LPARAM) this);
+        cleanWins();
+        Sleep(200);
+    }
 }
 
 void re_InsertWindow(ReWindowW *thread_w, ReWindow win)
@@ -175,64 +160,6 @@ int re_cleanRemoteId(QString title)
     return id_split[0].toInt();
 }
 
-QString ReWindowW::renameAppName(QString app_name)
-{
-    if(app_name.contains("qt", Qt::CaseInsensitive))
-    {
-        return "Qt";
-    }
-    else if(app_name.contains("foxit", Qt::CaseInsensitive))
-    {
-        return "Foxit";
-    }
-    else if(app_name.contains("firefox", Qt::CaseInsensitive))
-    {
-        return "firefox";
-    }
-    else if(app_name.contains("spotify", Qt::CaseInsensitive))
-    {
-        return "Spotify";
-    }
-    else if(app_name.contains("excel", Qt::CaseInsensitive))
-    {//////
-        return "Excel";
-    }
-    else if(app_name.contains("snip", Qt::CaseInsensitive))
-    {
-        return "Snip";
-    }
-    return app_name;
-}
-
-void ReWindowW::sortApp()
-{
-    QVector<ReWindow> sorted_apps, unsorted_apps;
-    int clover_ind = 0, firefox_ind = 0, spotify_ind = 0;
-    for( int i=0 ; i<windows.size() ; i++)
-    {
-        if(windows[i].pname.contains("Clover", Qt::CaseInsensitive))
-        {
-            sorted_apps.insert(clover_ind, windows[i]);
-            clover_ind++; firefox_ind++; spotify_ind++;
-        }
-        else if(windows[i].pname.contains("firefox", Qt::CaseInsensitive))
-        {
-            sorted_apps.insert(firefox_ind, windows[i]);
-            firefox_ind++; spotify_ind++;
-        }
-        else if(windows[i].pname.contains("Spotify", Qt::CaseInsensitive))
-        {
-            sorted_apps.insert(spotify_ind, windows[i]);
-            spotify_ind++;
-        }
-        else
-        {
-            unsorted_apps.push_back(windows[i]);
-        }
-    }
-    windows = sorted_apps + unsorted_apps;
-}
-
 HWND ReWindowW::getHWND(QString appname)
 {
     for(int i=0; i<windows.size(); i++)
@@ -250,15 +177,6 @@ QString ReWindowW::getWinTitle(int index)
     if( index<windows.size() )
     {
         return windows[index].title;
-    }
-    return "";
-}
-
-QString ReWindowW::getElemName(int index)
-{
-    if(index < elems_spec.size())
-    {
-        return elems_spec[index]->name;
     }
     return "";
 }
@@ -304,9 +222,9 @@ void ReWindowW::updateActiveWindow()
         if( ReState::remote_state==0 &&
             ReState::sleep_state==0 )
         {
-            qDebug() << "win_active.title"
-                     << win_active.title;
             int r_id = re_cleanRemoteId(win_active.title);
+            qDebug() << "goToRemote"
+                     << win_active.title << r_id;
             ReState::goToRemote(r_id);
         }
     }
@@ -320,21 +238,4 @@ void ReWindowW::updateActiveWindow()
         }
     }
 #endif
-}
-
-void ReWindowW::start()
-{
-    CoUninitialize();
-    CoInitializeEx(NULL, COINIT_MULTITHREADED);
-
-    while( 1 )
-    {
-        //Get Active Window Name
-        updateActiveWindow();
-
-        clearWins();
-        EnumWindows(EnumWindowsProc, (LPARAM) this);
-        cleanWins();
-        Sleep(200);
-    }
 }

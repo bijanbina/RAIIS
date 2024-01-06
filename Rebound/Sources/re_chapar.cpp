@@ -24,8 +24,6 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     window_thread = new QThread();
     window->moveToThread(window_thread);
     window_thread->start();
-    window->wins_title = &(ReState::wins_title);
-    window->elems_name = &(ReState::elems_name);
 
     connect(this, SIGNAL(startChannel()),
             window, SLOT(start()));

@@ -1,17 +1,15 @@
 #include "re_state.h"
 
-int  ReState::remote_id = 0;
-bool ReState::sleep_state = 0;
+int  ReState::remote_id     = 0;
+bool ReState::sleep_state   = 0;
 bool ReState::dictate_state = 0;
-bool ReState::record_state = 0;
-bool ReState::remote_state = 0;
-bool ReState::drag_state = 0;
-int  ReState::ch_count  = 0; //Chess Count
-QStringList ReState::wins_title = QStringList();
-QStringList ReState::elems_name = QStringList();
-ReWindow ReState::app; //Active Window
-CCommand ReState::last_cmd;
-ReFirefox *ReState::fl = NULL;
+bool ReState::record_state  = 0;
+bool ReState::remote_state  = 0;
+bool ReState::drag_state    = 0;
+int  ReState::ch_count      = 0; //Chess Count
+ReFirefox  *ReState::fl         = NULL;
+ReWindow    ReState::app; //Active Window
+CCommand    ReState::last_cmd;
 
 ReState::ReState()
 {

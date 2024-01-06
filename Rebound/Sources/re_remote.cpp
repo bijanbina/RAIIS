@@ -315,6 +315,7 @@ int ReRemote::procMouse(QString word)
 
 void ReRemote::writeResult()
 {
+#ifdef RE_REMOTE
 #ifdef WIN32
     QString bar_path = BT_BAR_DIR_WS;
     bar_path += BT_BAR_RESULT_WS;
@@ -348,6 +349,7 @@ void ReRemote::writeResult()
     out << "\n";
 
     bar_file.close();
+#endif
 }
 
 void ReRemote::shiftHistory()

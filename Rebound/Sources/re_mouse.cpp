@@ -47,6 +47,7 @@ void re_mouseKey(int btn)
 #endif
 }
 
+// relative
 void re_mouseMoveR(int x, int y)
 {
 #ifdef WIN32
@@ -70,6 +71,7 @@ void re_mouseMoveR(int x, int y)
 #endif
 }
 
+// in relative to window top left corner
 void re_mouseMoveW(int x_offset, int y_offset)
 {
 #ifdef WIN32
@@ -78,6 +80,22 @@ void re_mouseMoveW(int x_offset, int y_offset)
     GetWindowRect(active_win, &active_rect);
     int x = active_rect.right - x_offset;
     int y = active_rect.bottom - y_offset;
+    SetCursorPos(x, y);
+#endif
+}
+
+// in relative to window center
+void re_mouseMoveC(int x_offset, int y_offset)
+{
+#ifdef WIN32
+    RECT active_rect;
+    HWND active_win = GetForegroundWindow();
+    GetWindowRect(active_win, &active_rect);
+
+    int center_x = (active_rect.right + active_rect.left  )/2;
+    int center_y = (active_rect.top   + active_rect.bottom)/2;
+    int x = center_x + x_offset;
+    int y = center_y + y_offset;
     SetCursorPos(x, y);
 #endif
 }
