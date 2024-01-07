@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QDebug>
 #include "backend.h"
-#include "re_state.h"
+#include "re_commands.h"
 
 CCommand re_modCreate(QString text);
 void     re_modApplyVal(CCommand *cmd, int val);

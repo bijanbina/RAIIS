@@ -7,8 +7,8 @@ pref_path = getPrefPath()
 pref_content = readFile(pref_path)
 
 CRM_PATTERN = 'devtools.chrome.enabled'
-REM_PATTERN = 'devtools.debugger.remote-enabled'
-WBS_PATTERN = 'devtools.debugger.remote-websocket'
+REM_PATTERN = 'devtools.debugger.remote%-enabled'
+WBS_PATTERN = 'devtools.debugger.remote%-websocket'
 THM_PATTERN = 'toolkit.legacyUserProfileCustomizations.stylesheets'
 UBI_PATTERN = 'app.update.background.interval'
 UPD_PATTERN = 'app.update.interval'

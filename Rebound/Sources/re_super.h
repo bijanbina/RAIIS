@@ -27,8 +27,6 @@ public:
     static void castPasteCmd(CCommand *cmd);
     static void castLoveCmd (CCommand *cmd);
     static void castRogerCmd(CCommand *cmd);
-    static void castFrontCmd(CCommand *cmd);
-    static void castLastCmd (CCommand *cmd);
 
     static void castSwitchCmd(CCommand *cmd);
     static void castLSwitchCmd(CCommand *cmd);
@@ -37,7 +35,10 @@ public:
     static void makeNull(CCommand *cmd);
 
     // super_app
-    static void castRunCmd(CCommand *cmd);
+    static void castFrontCmd(CCommand *cmd);
+    static void castLastCmd (CCommand *cmd);
+    static void castRunCmd  (CCommand *cmd);
+    static void castDukeCmd (CCommand *cmd);
 
 #ifdef WIN32
     static void recordTelegram();

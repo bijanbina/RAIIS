@@ -1,6 +1,7 @@
 #include "re_window_w.h"
 #include "backend.h"
 #include "re_mouse.h"
+#include "re_chess.h"
 #include "mm_api.h"
 
 ReWindowW::ReWindowW()
@@ -92,7 +93,16 @@ void ReWindowW::handleNewWin(ReWindow win)
 //        qDebug() << "New Window" << win.title;
     if( win.pname=="NLClientApp" )
     {
-        re_mouseMoveW(200, 300);
+        mm_focus(win.hWnd);
+        QThread::msleep(400);
+        re_mouseMoveW(250, 330);
+        QThread::msleep(100);
+        re_mouseKey(1);
+
+        ReChess::showChess(RE_SUPER_KICK);
+        QThread::msleep(200);
+        ReChess::nato(QString::number(KEY_END));
+        ReChess::dirs(QString::number(KEY_RIGHT));
     }
 }
 

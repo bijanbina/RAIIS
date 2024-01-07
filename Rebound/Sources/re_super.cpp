@@ -299,11 +299,11 @@ void ReSuper::recordTelegram()
 {
     qDebug() << "recordTelegram";
     ReState::goToRecord();
-    re_mouseMoveW(30, 30);
+    re_mouseMoveW_br(30, 30);
     QThread::msleep(100);
     re_mousePress(1);
     QThread::msleep(1000);
-    re_mouseMoveW(30, 400);
+    re_mouseMoveW_br(30, 400);
     QThread::msleep(1000);
     re_mouseRelease(1);
 }

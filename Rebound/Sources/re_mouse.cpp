@@ -3,6 +3,7 @@
 #include "re_keyboard_w.h"
 #include <Windows.h>
 #endif
+#include <QDebug>
 
 void re_mouseKey(int btn)
 {
@@ -73,6 +74,22 @@ void re_mouseMoveR(int x, int y)
 
 // in relative to window top left corner
 void re_mouseMoveW(int x_offset, int y_offset)
+{
+#ifdef WIN32
+    RECT active_rect;
+    HWND active_win = GetForegroundWindow();
+    GetWindowRect(active_win, &active_rect);
+    int x = active_rect.left + x_offset;
+    int y = active_rect.top  + y_offset;
+    qDebug() << "New Window" << active_win
+             << active_rect.top    << active_rect.left
+             << active_rect.bottom << active_rect.right;
+    SetCursorPos(x, y);
+#endif
+}
+
+// in relative to window bottom right corner
+void re_mouseMoveW_br(int x_offset, int y_offset)
 {
 #ifdef WIN32
     RECT active_rect;

@@ -357,7 +357,7 @@ void ReCaptain::wakeRecord()
     ReState::record_state = 0;
     QThread::msleep(500);
 
-    re_mouseMoveW(30, 30);
+    re_mouseMoveW_br(30, 30);
     QThread::msleep(100);
     re_mouseKey(1);
 

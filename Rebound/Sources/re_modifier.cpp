@@ -1,5 +1,6 @@
 #include "re_modifier.h"
 #include <QThread>
+#include "re_state.h"
 
 CCommand re_modCreate(QString text)
 {
