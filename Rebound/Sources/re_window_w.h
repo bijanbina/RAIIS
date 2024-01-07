@@ -30,6 +30,7 @@ public:
     void applyOpacity(ReWindow win);
     void updateRemoteID(ReWindow win);
     void updateActiveWindow();
+    void handleNewWin(ReWindow win);
 
     QVector<ReWindow> windows;
     ReWindow          win_active;

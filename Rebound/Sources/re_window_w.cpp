@@ -1,5 +1,6 @@
 #include "re_window_w.h"
 #include "backend.h"
+#include "re_mouse.h"
 #include "mm_api.h"
 
 ReWindowW::ReWindowW()
@@ -43,8 +44,7 @@ void ReWindowW::addHwnd(HWND hwnd)
 
     if ( existed==0 )
     {
-        windows.push_back(win);
-//        qDebug() << "New Window" << win.title;
+        handleNewWin(win);
     }
 
     updateRemoteID(win);
@@ -84,6 +84,16 @@ void ReWindowW::updateRemoteID(ReWindow win)
         ReState::remote_id = r_id;
     }
 #endif
+}
+
+void ReWindowW::handleNewWin(ReWindow win)
+{
+    windows.push_back(win);
+//        qDebug() << "New Window" << win.title;
+    if( win.pname=="NLClientApp" )
+    {
+        re_mouseMoveW(200, 300);
+    }
 }
 
 //clear verify flag
