@@ -260,19 +260,19 @@ void mm_focus(HWND hwnd)
     AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
 }
 
-void mm_focus(MmApplication app)
+void mm_focus(MmApplication *app)
 {
 //    qDebug() << "app tit" << app.win_title;
-    app.hwnd = mm_getHWND(&app);
-    while( app.hwnd==NULL )
+    app->hwnd = mm_getHWND(app);
+    while( app->hwnd==NULL )
     {
 //        qDebug() << "hwnd" << app.hwnd
 //                 << "exe_name" << app.exe_name
 //                 << "exe_path" << app.exe_path;
         QThread::msleep(200);
-        app.hwnd = mm_getHWND(&app);
+        app->hwnd = mm_getHWND(app);
     }
-    mm_focus(app.hwnd);
+    mm_focus(app->hwnd);
 }
 
 HWND mm_getHWND(MmApplication *app)

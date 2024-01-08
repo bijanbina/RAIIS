@@ -306,43 +306,22 @@ void ReCaptain::wakeDictate()
 {
     re_mouseKey(1);
     ReState::dictate_state = 0;
-    QThread::msleep(500);
+    QThread::msleep(50);
 
-    // remove super+num
-    ReKeyboard::pressKey(KEY_LEFTCTRL);
-    ReKeyboard::pressKey(KEY_LEFTSHIFT);
-    ReKeyboard::sendKey(KEY_LEFT);
-    QThread::msleep(10);
-    ReKeyboard::sendKey(KEY_LEFT);
-    ReKeyboard::releaseKey(KEY_LEFTSHIFT);
-    ReKeyboard::releaseKey(KEY_LEFTCTRL);
-    QThread::msleep(100);
-
-    ReKeyboard::sendKey(KEY_BACKSPACE);
-    QThread::msleep(5); //little tweak
-    ReKeyboard::sendKey(KEY_BACKSPACE);
-    QThread::msleep(5); //little tweak
-
-    // select all
-    ReKeyboard::pressKey(KEY_LEFTCTRL);
-    QThread::msleep(5); //little tweak
-    ReKeyboard::sendKey(KEY_A);
-    QThread::msleep(5); //little tweak
-    ReKeyboard::releaseKey(KEY_LEFTCTRL);
-    QThread::msleep(2000);
-
-    // copy
-    ReKeyboard::pressKey(KEY_LEFTCTRL);
-    QThread::msleep(5); //little tweak
-    ReKeyboard::sendKey(KEY_C);
-    ReKeyboard::releaseKey(KEY_LEFTCTRL);
+    // copy to clipboard
+    SetCursorPos(1450, 880);
+    re_mouseKey(1);
     QThread::msleep(1000);
 
+//    // remove super+num from clipboard
+
     // quit
-    ReKeyboard::pressKey(KEY_LEFTMETA);
-    ReKeyboard::sendKey(KEY_Q);
-    ReKeyboard::releaseKey(KEY_LEFTMETA);
-    QThread::msleep(400);
+    re_hideSpeechNote();
+    QThread::msleep(20);
+    ReKeyboard::pressKey(KEY_LEFTALT);
+    ReKeyboard::sendKey(VK_TAB);
+    ReKeyboard::releaseKey(KEY_LEFTALT);
+    QThread::msleep(200);
 
     // paste
     ReKeyboard::pressKey(KEY_LEFTCTRL);

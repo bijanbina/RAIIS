@@ -36,6 +36,7 @@
 #define KEY_V         'V'
 #define KEY_W         'W'
 #define KEY_U         'U'
+#define KEY_X         'X'
 #define KEY_ESC       VK_ESCAPE
 #define KEY_UP        VK_UP
 #define KEY_END       VK_END

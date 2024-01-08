@@ -110,7 +110,8 @@ void ReSuper::castMetaCmd(CCommand *cmd)
 //        cmd = re_getGoGitKraken(val);
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX ||
-             ReState::app.pname==RE_PROC_GEKO )
+             ReState::app.pname==RE_PROC_GEKO    ||
+             ReState::app.pname==RE_PROC_CHROME )
     {
         cmd->is_ctrl = 1;
         cmd->val1    = KEY_W;

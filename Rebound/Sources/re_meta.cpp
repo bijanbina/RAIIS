@@ -264,7 +264,8 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
         fox->csatGitKraken(val, cmd);
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX ||
-             ReState::app.pname==RE_PROC_GEKO )
+             ReState::app.pname==RE_PROC_GEKO    ||
+             ReState::app.pname==RE_PROC_CHROME )
     {
         fox->castFirefox(val, cmd);
 

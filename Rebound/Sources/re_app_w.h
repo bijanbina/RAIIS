@@ -6,6 +6,7 @@
 #define RE_PROC_GIT      "gitkraken"
 #define RE_PROC_FIREFOX  "firefox"
 #define RE_PROC_GEKO     "GeckoMain" //same as firefox
+#define RE_PROC_CHROME   "chrome"
 #define RE_PROC_EXPLORER "explorer"
 #define RE_PROC_EDITOR   ""
 #define RE_PROC_CHESS    "Chess"
