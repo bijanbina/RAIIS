@@ -28,7 +28,6 @@ public:
     static void goToRemote(int rid=0);
     static void goToDrag();
     static void wakeUp();
-    static bool isSleep();
     static void enScroll(int dir, int speed);
     static bool isEscape(CCommand cmd);
     static int  stopFFScroll();

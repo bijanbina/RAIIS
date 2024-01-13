@@ -99,10 +99,13 @@ void ReWindowW::handleNewWin(ReWindow win)
         QThread::msleep(100);
         re_mouseKey(1);
 
-        ReChess::showChess(RE_SUPER_KICK);
-        QThread::msleep(200);
-        ReChess::nato(QString::number(KEY_END));
-        ReChess::dirs(QString::number(KEY_RIGHT));
+        if( ReState::sleep_state==0 )
+        {
+            ReChess::showChess(RE_SUPER_KICK);
+            QThread::msleep(200);
+            ReChess::nato(QString::number(KEY_END));
+            ReChess::dirs(QString::number(KEY_RIGHT));
+        }
     }
 }
 

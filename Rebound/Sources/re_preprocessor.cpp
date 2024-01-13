@@ -165,7 +165,7 @@ void RePreProcessor::digit(const QString &text)
     }
     else if( re_isLastQt(cmd_buf) )
     {
-        if( ReState::isSleep() )
+        if( ReState::sleep_state )
         {
             return;
         }
@@ -237,7 +237,7 @@ void RePreProcessor::modifier(const QString &text)
     //"super four" in <control super four> should be "super four"
     // if sleep
     if( re_isLastMod(cmd_buf) &&
-        ReState::isSleep()==false )
+        ReState::sleep_state==false )
     {
         int last_i = cmd_buf.count()-1; //last index
         if( cmd_buf[last_i].val1==0 )
@@ -281,7 +281,7 @@ void RePreProcessor::meta(const QString &text)
     {
         int val = text.toInt();
 
-        if( ReState::isSleep() ) // ignore sleep
+        if( ReState::sleep_state ) // ignore sleep
         {
             return;
         }
@@ -317,7 +317,7 @@ void RePreProcessor::spex(const QString &text)
 {
     (void)text; // to suppress unused warning
 
-    if( !ReState::isSleep() )
+    if( !ReState::sleep_state )
     {
         special_c = 1;
         qDebug() << "special_c" << special_c;
@@ -339,7 +339,7 @@ void RePreProcessor::spex(const QString &text)
 
 void RePreProcessor::super(const QString &text)
 {
-    if( ReState::isSleep() )
+    if( ReState::sleep_state )
     {
         return;
     }

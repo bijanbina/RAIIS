@@ -15,22 +15,26 @@ void re_getSysEnd()
     if( speech_app.hwnd==0 )
     {
         re_openSpeechNote();
-        QThread::msleep(3000);
+        QThread::msleep(2000);
+        mm_focus(&speech_app);
+        QThread::msleep(2000);
     }
     else
     {
         ShowWindow(speech_app.hwnd, SW_NORMAL);
-        QThread::msleep(200);
+        mm_focus(&speech_app);
+        QThread::msleep(100);
 
         // start new session
         SetCursorPos(50, 430);
         re_mouseKey(1);
         QThread::msleep(100);
     }
-    mm_focus(&speech_app);
 
     ReState::goToDictate();
+    QThread::msleep(50);
     SetCursorPos(1450, 280);
+    QThread::msleep(50);
     re_mouseKey(1);
 #endif
 }

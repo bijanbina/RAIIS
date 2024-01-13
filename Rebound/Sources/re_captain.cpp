@@ -17,7 +17,7 @@ void ReCaptain::execute(QVector<CCommand> commands)
 {
     for( int i=0 ; i<commands.length() ; i++ )
     {
-        if( ReState::isSleep() )
+        if( ReState::sleep_state )
         {
             int ret = execSleep(commands[i]);
             if( ret )

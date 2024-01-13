@@ -211,8 +211,3 @@ int ReState::stopFFScroll()
     }
     return 0;
 }
-
-bool ReState::isSleep()
-{
-    return sleep_state;
-}
