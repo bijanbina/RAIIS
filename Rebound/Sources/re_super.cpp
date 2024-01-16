@@ -142,7 +142,7 @@ void ReSuper::castMetaCmd(CCommand *cmd)
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_SLACK )
     {
-        SetCursorPos(50, 500);
+        re_mouseMoveW(200, 500);
     }
     else if( ReState::app.pname==RE_PROC_ALTIUM )
     {

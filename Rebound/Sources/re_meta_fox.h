@@ -20,6 +20,7 @@ public:
     void castNautilus(int val, CCommand *cmd);
     void csatGitKraken(int val, CCommand *cmd);
     void castAltium(int val, CCommand *cmd);
+    void castSlack(int val, CCommand *cmd);
 
 private:
 #ifdef WIN32

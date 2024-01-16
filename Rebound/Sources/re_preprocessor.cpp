@@ -376,14 +376,8 @@ void RePreProcessor::super(const QString &text)
     cmd.val2 = 1;
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_SUPER;
-    ReSuper::cast(text.toInt(), &cmd);
-    if( cmd.val3==-1 )
-    {
-        ReState::goToSleep();
-        cmd.val3 = 3;
-    }
-    cmd_buf.append(cmd);
 
+    cmd_buf.append(cmd);
     execute();
 }
 

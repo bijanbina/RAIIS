@@ -283,6 +283,10 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     {
         fox->castAltium(val, cmd);
     }
+    else if( ReState::app.pname==RE_PROC_SLACK )
+    {
+        fox->castSlack(val, cmd);
+    }
 #endif
 }
 

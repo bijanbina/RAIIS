@@ -28,6 +28,7 @@ void ReCaptain::execute(QVector<CCommand> commands)
         }
         else
         {
+            ReState::last_cmd = commands[i];
             execCommand(commands[i]);
         }
     }
@@ -35,7 +36,6 @@ void ReCaptain::execute(QVector<CCommand> commands)
 
 void ReCaptain::execCommand(CCommand command)
 {
-    ReState::last_cmd = command;
     if( command.type==RE_COMMAND_NATO ||
         command.type==RE_COMMAND_DIRS ||
         command.type==RE_COMMAND_DIGIT )
@@ -53,6 +53,15 @@ void ReCaptain::execCommand(CCommand command)
     else if( command.type==RE_COMMAND_META )
     {
         execMeta(command);
+    }
+    else if( command.type==RE_COMMAND_SUPER )
+    {
+        int count = command.val2;
+        ReSuper::cast(command.val1, &command);
+        for( int i=0 ; i<count ; i++ )
+        {
+            execCommand(command);
+        }
     }
     else if( command.type==RE_COMMAND_CHESS )
     {
@@ -110,13 +119,7 @@ void ReCaptain::execMeta(CCommand command)
     {
         translated = meta->castMeta(command.val1,
                                     command.val2);
-
-        if( translated.type==RE_COMMAND_NATO ||
-            translated.type==RE_COMMAND_DIRS ||
-            translated.type==RE_COMMAND_DIGIT )
-        {
-            execKeyboard(translated);
-        }
+        execCommand(translated);
     }
 }
 

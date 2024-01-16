@@ -4,6 +4,7 @@
 #else
 #include "re_keyboard_l.h"
 #endif
+#include "re_mouse.h"
 
 ReMetaFox::ReMetaFox()
 {
@@ -270,6 +271,72 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
         cmd->val3 = 1;
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_I ) //injection
+    {
+        int pid = ReState::app.pid;
+        qDebug() << ">>>>>>>>>>>>>>>INJA" << pid;
+#ifdef WIN32
+        injector->inject(pid);
+#endif
+    }
+    else if( val>=KEY_1 &&
+             val<=KEY_9 ) //tab
+    {
+#ifdef WIN32
+        cmd->is_ctrl  = 1;
+#else
+        cmd->is_alt = 1;
+#endif
+        cmd->val1 = val;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_L )
+    {
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_F;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+}
+
+void ReMetaFox::castSlack(int val, CCommand *cmd)
+{
+    if( val==KEY_HOME ) //next layer
+    {
+        re_mouseMoveW(200, 400);
+
+        cmd->is_ctrl = 1;
+        cmd->val1    = RE_MOUSE_UP;
+
+        cmd->val2 = 20;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_END )
+    {
+        re_mouseMoveW(200, 400);
+
+        cmd->is_ctrl = 1;
+        cmd->val1    = RE_MOUSE_DOWN;
+
+        cmd->val2 = 20;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_M ) //message
+    {
+
     }
     else if( val==KEY_I ) //injection
     {

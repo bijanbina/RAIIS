@@ -185,7 +185,7 @@ void mm_launchApp(MmApplication *app, QString arg)
     StartupInfo.cb = sizeof(StartupInfo);
     ZeroMemory( &ProcessInfo, sizeof(ProcessInfo) );
 
-    char app_cmd[200];
+    char app_cmd[800];
     strcpy(app_cmd, app->exe_path.toStdString().c_str());
 
     int ret = CreateProcessA(NULL, app_cmd, NULL,
