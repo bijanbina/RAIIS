@@ -11,24 +11,9 @@
 
 ReWin32Virt::ReWin32Virt(QObject *parent): QObject(parent)
 {
-    manager_int = NULL;
-    CoInitializeEx(NULL, COINIT_MULTITHREADED);
-
-    IServiceProvider* services = NULL;
-    HRESULT hr = CoCreateInstance(
-                        CLSID_ImmersiveShell, NULL, CLSCTX_LOCAL_SERVER,
-                        __uuidof(IServiceProvider), (PVOID*)&services);
-
+    services = NULL;
     win_ver = mm_getWinVer();
-    if( win_ver==MM_WIN10 )
-    {
-        initInternal_Win10(services);
-    }
-    else if( win_ver==MM_WIN11_21H2 )
-    {
-        initInternal_Win11_21H2(services);
-    }
-    services->Release();
+    initInternal();
 }
 
 ReWin32Virt::~ReWin32Virt()
@@ -43,13 +28,41 @@ ReWin32Virt::~ReWin32Virt()
     }
 }
 
-void ReWin32Virt::initInternal_Win10(IServiceProvider *service)
+void ReWin32Virt::initInternal()
+{
+    manager_int = NULL;
+    manager_int_win11_21H2 = NULL;
+
+    if( services==NULL )
+    {
+        CoInitializeEx(NULL, COINIT_MULTITHREADED);
+        HRESULT hr = CoCreateInstance(CLSID_ImmersiveShell, NULL,
+                     CLSCTX_LOCAL_SERVER, __uuidof(IServiceProvider),
+                                      (PVOID*)&services);
+        if( hr )
+        {
+            qDebug() << "Services Failed" << hr;
+            return;
+        }
+    }
+
+    if( win_ver==MM_WIN10 )
+    {
+        initInternal_Win10();
+    }
+    else if( win_ver==MM_WIN11_21H2 )
+    {
+        initInternal_Win11_21H2();
+    }
+}
+
+void ReWin32Virt::initInternal_Win10()
 {
     IObjectArray *desktops = NULL;
     IVirtualDesktop *c_desktop;
     HRESULT hr;
 
-    hr = service->QueryService(CLSID_VirtualDesktopAPI_Unknown,
+    hr = services->QueryService(CLSID_VirtualDesktopAPI_Unknown,
                                IID_IVirtualDesktopManagerInternal_Win10,
                                (void **)&manager_int);
     if( hr )
@@ -74,13 +87,13 @@ void ReWin32Virt::initInternal_Win10(IServiceProvider *service)
     desktops->Release();
 }
 
-void ReWin32Virt::initInternal_Win11_21H2(IServiceProvider* service)
+void ReWin32Virt::initInternal_Win11_21H2()
 {
     IObjectArray *desktops = NULL;
     IVirtualDesktop_Win11_21H2 *c_desktop_win11_21H2;
     HRESULT hr;
 
-    hr = service->QueryService(CLSID_VirtualDesktopAPI_Unknown,
+    hr = services->QueryService(CLSID_VirtualDesktopAPI_Unknown,
                         IID_IVirtualDesktopManagerInternal_Win11_21H2,
                         (void **)&manager_int_win11_21H2);
     if( hr )
@@ -114,6 +127,13 @@ void ReWin32Virt::setDesktop(int id)
     {
         IVirtualDesktop *next_desktop;
         manager_int->GetDesktops(&desktops);
+        if( desktops==NULL )
+        {
+            services = NULL;
+            initInternal();
+            manager_int->GetDesktops(&desktops);
+        }
+
         desktops->GetAt(id, UUID_IVirtualDesktop_Win10,
                         (void**)&next_desktop);
         manager_int->SwitchDesktop(next_desktop);
@@ -122,6 +142,13 @@ void ReWin32Virt::setDesktop(int id)
     {
         IVirtualDesktop_Win11_21H2 *next_desktop;
         manager_int_win11_21H2->GetDesktops(NULL, &desktops);
+        if( desktops==NULL )
+        {
+            services = NULL;
+            initInternal();
+            manager_int_win11_21H2->GetDesktops(NULL, &desktops);
+        }
+
         desktops->GetAt(id, UUID_IVirtualDesktop_Win11_21H2,
                         (void**)&next_desktop);
         manager_int_win11_21H2->SwitchDesktop(NULL, next_desktop);

@@ -132,7 +132,7 @@ void ReChess::showChess(int val)
     }
     else if( val==RE_SUPER_COMMENT )
     {
-        sendCmd("comment");
+        sendCmd("no_click");
     }
     else if( val==RE_SUPER_SIDE )
     {

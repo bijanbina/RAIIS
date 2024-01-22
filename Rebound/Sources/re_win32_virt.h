@@ -195,17 +195,16 @@ public:
 
     void setDesktop(int id);
     void setFocus();
-    int  current_workspace;
-
-private slots:
+    void initInternal();
 
 private:
-    void initInternal_Win10(IServiceProvider *service);
-    void initInternal_Win11_21H2(IServiceProvider *service);
+    void initInternal_Win10();
+    void initInternal_Win11_21H2();
 
     QVector<GUID> vd_guids;
     IVirtualDesktopManagerInternal* manager_int;
     IVirtualDesktopManagerInternal_WIN11_21H2* manager_int_win11_21H2;
+    IServiceProvider* services;
     int win_ver;
 };
 
