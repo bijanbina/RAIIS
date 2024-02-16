@@ -1,7 +1,7 @@
 #include "re_meta_sys.h"
+#include "mm_api.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
-#include "mm_api.h"
 #include "re_mouse.h"
 #else
 #include "re_keyboard_l.h"
@@ -55,12 +55,16 @@ void re_openSpeechNote()
     arg += url + "';</script></body></html>\"";
     arg += " --enable-extensions";
 
+#ifdef WIN32
     speech_app = mm_launchLnk("Google Chrome", arg);
     speech_app.win_title = "Speechnotes";
+#endif
 }
 
 void re_hideSpeechNote()
 {
+#ifdef WIN32
     qDebug() << "re_hideSpeechNote" << speech_app.hwnd;
     ShowWindow(speech_app.hwnd, SW_HIDE);
+#endif
 }

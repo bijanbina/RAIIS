@@ -10,7 +10,6 @@ SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
            Sources/ch_monitor.cpp \
            Sources/re_apache_cl.cpp \
-           Sources/re_callback_w.cpp \
            Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
            Sources/re_chess.cpp \
@@ -45,6 +44,7 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/mm_win32_guid.cpp \
                  Sources/re_admin_win.cpp \
                  Sources/re_channel_w.cpp \
+                 Sources/re_callback_w.cpp \
                  Sources/re_hardware_w.cpp \
                  Sources/re_inject.cpp \
                  Sources/re_keyboard_w.cpp \

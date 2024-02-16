@@ -6,7 +6,9 @@
 #include "backend.h"
 #include "re_state.h"
 #include "re_modifier.h"
+#ifdef WIN32
 #include "re_pipe.h"
+#endif
 
 #define CH_DRAG_NORM   0
 #define CH_DRAG_STATE1 1

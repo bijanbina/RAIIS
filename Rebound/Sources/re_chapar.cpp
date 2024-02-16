@@ -9,7 +9,9 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     uiSwitcher = switcher;
 
     ReState::init();
+#ifdef WIN32
     RePipe::init();
+#endif
     state_old = new ReStateOld;
     bumpers = new ReBumpers(ui, switcher, state_old);
     buttons = new ReButtons(ui, switcher, state_old);
@@ -52,8 +54,13 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     api_thread = new std::thread(reRunThread, (void *)thread_data);
 #endif
     remote = new ReRemote(channel->pre);
+
+#ifdef WIN32
     connect(channel, SIGNAL(sendRemote(QString)),
             remote, SLOT(send(QString)));
+#else
+    // implement linux remote controller
+#endif
 }
 
 void ReChapar::requstSuspend()

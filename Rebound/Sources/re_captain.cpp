@@ -312,7 +312,9 @@ void ReCaptain::wakeDictate()
     QThread::msleep(50);
 
     // copy to clipboard
+#ifdef WIN32
     SetCursorPos(1450, 880);
+#endif
     re_mouseKey(1);
     QThread::msleep(1000);
 
@@ -322,7 +324,7 @@ void ReCaptain::wakeDictate()
     re_hideSpeechNote();
     QThread::msleep(20);
     ReKeyboard::pressKey(KEY_LEFTALT);
-    ReKeyboard::sendKey(VK_TAB);
+    ReKeyboard::sendKey(KEY_TAB);
     ReKeyboard::releaseKey(KEY_LEFTALT);
     QThread::msleep(200);
 
