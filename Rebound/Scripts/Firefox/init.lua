@@ -109,9 +109,12 @@ else
 	replaceLine(pref_path, SGN_T, SGN_F)
 end
 
-print(osName())
+-- print(osName())
+chrome_path = getChromePath()
 if osName() == "Windows" then
-	chrome_path = getChromePath()
 	os.execute("mkdir " .. chrome_path)
 	os.execute("copy userChrome.css " .. chrome_path)
+else -- Linux
+	os.execute("mkdir -p " .. chrome_path)
+	os.execute("cp userChrome.css " .. chrome_path)
 end

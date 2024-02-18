@@ -1,6 +1,6 @@
 function readFile(path)
     local file = io.open(path, "r")
-    if not file then 
+    if not file then
 		return nil 
 	end
     local content = file:read "*a"
