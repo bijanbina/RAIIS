@@ -9,7 +9,7 @@
 #define RE_PIPE_FIREFOX "\\\\.\\pipe\\com_binaee_firefox"
 #define CH_NP_SEPARATOR ","
 
-#define RE_FIREFOX_DIR   "Scripts\\Firefox"
+#define RE_FIREFOX_DIR   "Scripts/Firefox"
 #define MOM_LABEL_DIR    "..\\..\\Benjamin\\Mom\\Labels"
 #define KAL_SI_DIR       "../../Benjamin/Tools/Scripts/interpreter"
 #define KAL_SI_DIR_WIN   "..\\..\\Benjamin\\Tools\\Scripts\\interpreter"

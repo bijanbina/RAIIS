@@ -19,10 +19,14 @@ public:
     QStringList getWSList();
 
 private:
+    void registerBenjFox();
+    QString exec(const char *path);
+
 #ifdef WIN32
     void addRegisteryKeys();
-    QString exec(const char *path);
     int regExist(QString path);
+#else
+    void patchJson();
 #endif
 
     lua_State *lst;
