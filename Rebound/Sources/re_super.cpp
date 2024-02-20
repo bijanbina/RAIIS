@@ -94,8 +94,13 @@ void ReSuper::castMetaCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        cmd->val1 = KEY_F5;
-        cmd->type = RE_COMMAND_DIRS;
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_W;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_GIT )
     {

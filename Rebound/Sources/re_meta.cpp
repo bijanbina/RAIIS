@@ -153,7 +153,7 @@ void ReMeta::castMouseCmd(int val, CCommand *cmd)
 void ReMeta::castSystemCmd(int val, CCommand *cmd)
 {
     if( val>=KEY_1 &&
-             val<=KEY_9 )
+        val<=KEY_9 )
     {
 #ifdef WIN32
         QString cmd_str = "Sys_";
