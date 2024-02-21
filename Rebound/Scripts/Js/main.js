@@ -7,6 +7,10 @@ else if( location.hostname.includes("meet.google.com") )
 {
     main_gmeet();
 }
+else if( location.hostname.includes("accounts.google.com") )
+{
+    main_gaccount();
+}
 else
 {
     //alert(location.hostname);
