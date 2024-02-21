@@ -43,6 +43,7 @@ QString ReLua::exec(const char *path)
     return output;
 }
 
+#ifdef __linux__
 void ReLua::patchJson()
 {
     QString in_path = QDir::currentPath();
@@ -84,6 +85,7 @@ void ReLua::patchJson()
     output_file.write(json_data.toStdString().c_str());
     output_file.close();
 }
+#endif
 
 QStringList ReLua::getWSList()
 {
@@ -100,9 +102,9 @@ void ReLua::registerBenjFox()
 {
     QString json_path = QDir::currentPath();
     json_path += "/../..";
-    json_path += "/Benjamin/Link/Resources/link.json";
     json_path.replace("/", QDir::separator());
 #ifdef WIN32
+    json_path += "\\Benjamin\\Link\\Resources\\manifest.json";
     QString reg = "HKEY_LOCAL_MACHINE\\SOFTWARE\\"
                   "Mozilla\\NativeMessagingHosts\\link";
     if( regExist(reg)==0 )
@@ -111,6 +113,7 @@ void ReLua::registerBenjFox()
         settings.setValue("Default", json_path);
     }
 #else
+    json_path += "/Benjamin/Link/Resources/link.json";
     patchJson();
     QStringList paths = {"native-messaging-hosts/", "managed-storage/",
                          "pkcs11-modules/"};

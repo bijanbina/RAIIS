@@ -47,7 +47,7 @@ void ReSuper::cast(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_GAS )
     {
-        castRogerCmd(cmd);
+        castGasCmd(cmd);
     }
     else if( val==RE_SUPER_CARROT )
     {
@@ -55,7 +55,7 @@ void ReSuper::cast(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_DUKE )
     {
-        castRogerCmd(cmd);
+        castDukeCmd(cmd);
     }
     else if( val==RE_SUPER_MEDIA )
     {

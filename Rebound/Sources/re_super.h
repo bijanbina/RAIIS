@@ -39,6 +39,7 @@ public:
     static void castLastCmd (CCommand *cmd);
     static void castRunCmd  (CCommand *cmd);
     static void castDukeCmd (CCommand *cmd);
+    static void castGasCmd  (CCommand *cmd);
 
 #ifdef WIN32
     static void recordTelegram();
