@@ -1,3 +1,4 @@
+//alert(location.hostname);
 if( location.hostname.includes("atlassian.net") )
 {
     //alert("hi8");
@@ -10,6 +11,10 @@ else if( location.hostname.includes("meet.google.com") )
 else if( location.hostname.includes("accounts.google.com") )
 {
     main_gaccount();
+}
+else if( location.hostname.includes("recruitee.com") )
+{
+    main_recruit();
 }
 else
 {

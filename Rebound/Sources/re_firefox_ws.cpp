@@ -69,7 +69,8 @@ void ReFirefoxWs::onDisconnected()
 
 void ReFirefoxWs::send_js(QString cmd)
 {
-    QString en_runtime = "{\"id\": 1, \"method\": \"Runtime.enable\"}\n\n";
+    QString en_runtime = "{\"id\": 1, \"method\""
+                         ": \"Runtime.enable\"}\n\n";
 
     socket->sendTextMessage(en_runtime);
     cmd_buf = cmd;
