@@ -27,18 +27,6 @@
 #define RE_CSTATE_1  1
 #define RE_CSTATE_2  2
 
-#define RE_META_OPEN    1
-#define RE_META_SYS     2
-#define RE_META_START   3
-#define RE_META_FOX     4
-#define RE_META_PAGE    5
-#define RE_META_GO      6
-#define RE_META_SKY     7
-#define RE_META_DIVE    8
-#define RE_META_MUSIC   9
-#define RE_META_CLOSE   10
-#define RE_META_MOUSE   11
-#define RE_META_TOUCH   12
 
 #define RE_SUPER_META    101
 #define RE_SUPER_CAMEL   102 //currently colon
@@ -83,6 +71,18 @@
 #define RE_MOUSE_UP      304
 #define RE_MOUSE_DOWN    305
 
+#define RE_META_OPEN     401
+#define RE_META_SYS      402
+#define RE_META_START    403
+#define RE_META_FOX      404
+#define RE_META_PAGE     405
+#define RE_META_GO       406
+#define RE_META_SKY      407
+#define RE_META_DIVE     408
+#define RE_META_MUSIC    409
+#define RE_META_CLOSE    410
+#define RE_META_MOUSE    411
+#define RE_META_TOUCH    412
 
 typedef struct ReWindow
 {

@@ -199,7 +199,8 @@ int ReCaptain::execSleep(CCommand command)
         }
         else if( isSpeakerSw(command) )
         {
-            execCommand(command);
+//            execCommand(command);
+            RePipe::sendMom("super sound");
             return 0;
         }
     }

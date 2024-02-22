@@ -262,6 +262,11 @@ int ReRemote::procSuper(QString word)
         ReChess::showChess(RE_SUPER_SHOT);
         return 1;
     }
+    else if( word=="back" )
+    {
+        RePipe::sendMom("super sound");
+        return 1;
+    }
 
     if( val )
     {

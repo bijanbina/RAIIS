@@ -20,8 +20,9 @@ public:
     ReChess();
     ~ReChess();
 
-    static void dirs (const QString &arg);
     static void nato (const QString &arg);
+    static void dirs (const QString &arg);
+    static void meta (const QString &arg);
     static void super(const QString &arg,
                QVector<CCommand> cmd_buf); //single shot meta cmd
     static void digit(const QString &arg);

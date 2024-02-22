@@ -255,7 +255,12 @@ void RePreProcessor::modifier(const QString &text)
 
 void RePreProcessor::meta(const QString &text)
 {
-    if( re_isLastQt(cmd_buf) )
+    if( ReState::ch_count )
+    {
+        ReChess::nato(text);
+        return;
+    }
+    else if( re_isLastQt(cmd_buf) )
     {
         int last_i  = cmd_buf.count()-1; //last index
         int cmd_val = text.toInt();

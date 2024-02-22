@@ -45,6 +45,11 @@ void ReChess::dirs(const QString &text) // direction keys
     }
 }
 
+void ReChess::meta(const QString &text)
+{
+    sendChessKey(text);
+}
+
 void ReChess::super(const QString &text,
                     QVector<CCommand> cmd_buf)
 {
@@ -161,6 +166,7 @@ void ReChess::showChess(int val)
     else if( val==RE_SUPER_MAGIC )
     {
         sendCmd("magic");
+        setCount(1);
     }
 }
 
