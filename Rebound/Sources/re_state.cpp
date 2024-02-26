@@ -7,7 +7,8 @@ bool ReState::record_state  = 0;
 bool ReState::remote_state  = 0;
 bool ReState::drag_state    = 0;
 int  ReState::ch_count      = 0; //Chess Count
-ReFirefox  *ReState::fl         = NULL;
+//ReFirefox  *ReState::fl         = NULL;
+ReLink     *ReState::link       = NULL;
 ReWindow    ReState::app; //Active Window
 CCommand    ReState::last_cmd;
 
@@ -21,7 +22,7 @@ ReState::~ReState()
 
 void ReState::init()
 {
-    fl = new ReFirefox;
+//    fl = new ReFirefox;
     readStatusFile();
 }
 
@@ -135,9 +136,9 @@ void ReState::goToDrag()
 void ReState::wakeUp()
 {
     sleep_state = 0;
-    if( fl->sc_dir )
+    if( link->sc_dir )
     {
-        enScroll(fl->sc_dir, fl->sc_speed);
+        enScroll(link->sc_dir, link->sc_speed);
     }
     else if( ch_count )
     {
@@ -163,7 +164,8 @@ void ReState::enScroll(int dir, int speed)
         cmd += "  %{B- F1-}";
 #endif
         re_writeStatus(cmd);
-        fl->scrollUp(speed, cmd);
+//        fl->scrollUp(speed, cmd);
+        link->scrollUp(speed);
     }
     else if( dir==RE_META_DIVE )
     {
@@ -174,7 +176,8 @@ void ReState::enScroll(int dir, int speed)
         cmd += "  %{B- F1-}";
 #endif
         re_writeStatus(cmd);
-        fl->scrollDown(speed, cmd);
+//        fl->scrollDown(speed, cmd);
+        link->scrollDown(speed);
     }
 }
 
@@ -202,10 +205,12 @@ bool ReState::isEscape(CCommand cmd)
 
 int ReState::stopFFScroll()
 {
-    if( fl->sc_dir )
+    if( link->sc_dir )
     {
-        fl->sc_dir = 0;
-        fl->scrollEscape();
+//        fl->sc_dir = 0;
+//        fl->scrollEscape();
+        link->scrollEscape();
+
         re_rmStatus();
         return 1;
     }

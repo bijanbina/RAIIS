@@ -64,11 +64,11 @@ void RePreProcessor::nato(const QString &text)
 
         return;
     }
-    else if( ReState::fl->sc_dir &&
+    else if( ReState::link->sc_dir &&
              KEY_A<=val && val<=KEY_F )
     {
         CCommand cmd;
-        cmd.val1 = ReState::fl->sc_dir;
+        cmd.val1 = ReState::link->sc_dir;
         cmd.val2 = val;
         cmd.val3 = 1;
         cmd.type = RE_COMMAND_META;
@@ -137,10 +137,10 @@ void RePreProcessor::digit(const QString &text)
         re_rmSpex();
         execute();
     }
-    else if( ReState::fl->sc_dir )
+    else if( ReState::link->sc_dir )
     {
         CCommand cmd;
-        cmd.val1 = ReState::fl->sc_dir;
+        cmd.val1 = ReState::link->sc_dir;
         cmd.val2 = text.toInt();
         cmd.val3 = 1;
         cmd.type = RE_COMMAND_META;

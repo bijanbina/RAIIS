@@ -13,7 +13,6 @@ ReKeyboard::~ReKeyboard()
 
 }
 
-
 void ReKeyboard::init()
 {
     extended_keys << VK_INSERT;

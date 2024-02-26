@@ -68,11 +68,11 @@ CCommand ReMeta::castMeta(int meta, int arg)
         }
         if( (KEY_1<=arg && arg<=KEY_9) )
         {
-            execScrollCmd(meta, arg-KEY_1+1);
+            ReState::enScroll(meta, arg-KEY_1+1);
         }
         else if( KEY_A<=arg && arg<=KEY_F )
         {
-            execScrollCmd(meta, arg-KEY_A+10);
+            ReState::enScroll(meta, arg-KEY_A+10);
         }
         else
         {
@@ -352,21 +352,6 @@ void ReMeta::castMusicCmd(int val, CCommand *cmd)
     cmd_str += " >/dev/null";
     system(cmd_str.toStdString().c_str());
 #endif
-}
-
-void ReMeta::execScrollCmd(int meta, int val)
-{
-    QString direction;
-    if( meta==RE_META_SKY )
-    {
-        direction = " up ";
-    }
-    else if( meta==RE_META_DIVE )
-    {
-        direction = " down ";
-    }
-
-    ReState::enScroll(meta, val);
 }
 
 void ReMeta::castPageCmd(int val, CCommand *cmd)

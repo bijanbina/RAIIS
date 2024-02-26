@@ -15,8 +15,6 @@ SOURCES += Sources/main.cpp \
            Sources/re_chess.cpp \
            Sources/re_client.cpp \
            Sources/re_commands.cpp \
-           Sources/re_firefox.cpp \
-           Sources/re_firefox_ws.cpp \
            Sources/re_link.cpp \
            Sources/re_lua.cpp \
            Sources/re_meta.cpp \
@@ -74,8 +72,6 @@ HEADERS += Sources/backend.h \
            Sources/re_chess.h \
            Sources/re_commands.h \
            Sources/re_config.h \
-           Sources/re_firefox.h \
-           Sources/re_firefox_ws.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
            Sources/re_link.h \
