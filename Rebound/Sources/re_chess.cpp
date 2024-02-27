@@ -1,9 +1,8 @@
 #include "re_chess.h"
 #include <unistd.h>
 
-int ReChess::meta_mode    = 0;
 int ReChess::drag_mode    = 0;
-int ReChess::persist_mode = 0;
+int ReChess::magic_mode   = 0;
 QObject *ReChess::root    = NULL;
 CCommand ReChess::mod_cmd;
 
@@ -18,8 +17,6 @@ ReChess::~ReChess()
 
 void ReChess::resetChess()
 {
-    meta_mode = 0;
-    persist_mode = 0;
 }
 
 void ReChess::nato(const QString &text)
@@ -53,14 +50,7 @@ void ReChess::meta(const QString &text)
 void ReChess::super(const QString &text,
                     QVector<CCommand> cmd_buf)
 {
-    int val = text.toInt();
-    if( val==RE_SUPER_META && ReState::ch_count )
-    {
-        meta_mode = 1;
-        addCount(1);
-        sendCmd("Meta");
-    }
-    else if( isChessCmd(text) )
+    if( isChessCmd(text) )
     {
         if( re_isLastMod(cmd_buf) )
         {
@@ -68,6 +58,7 @@ void ReChess::super(const QString &text,
             mod_cmd = cmd_buf[last_i];
             re_modPress(mod_cmd);
         }
+        int val = text.toInt();
         showChess(val);
  ;   }
 }
@@ -77,27 +68,8 @@ void ReChess::handleBackspace()
     int max = 2;
     if( drag_mode==CH_DRAG_STATE2 )
     {
-        if( meta_mode )
-        {
-            max = 5;
-        }
-        else
-        {
-            max = 4;
-        }
+        max = 4;
     }
-    else if( persist_mode==0 )
-    {
-        if( meta_mode )
-        {
-            max = 3;
-        }
-        else
-        {
-            max = 2;
-        }
-    }
-
     if( ReState::ch_count<max )
     {
         addCount(1);
@@ -113,7 +85,6 @@ void ReChess::sendChessKey(QString text)
 
     if( val==KEY_ESC )
     {
-        meta_mode = 0;
         setCount(0);
     }
     else if( val==KEY_BACKSPACE )
@@ -131,6 +102,7 @@ void ReChess::showChess(int val)
 {
     // This function only on valid val values
     setCount(2);
+    magic_mode = 0;
     if( val==RE_SUPER_KICK )
     {
         sendCmd("show");
@@ -167,6 +139,7 @@ void ReChess::showChess(int val)
     {
         sendCmd("magic");
         setCount(1);
+        magic_mode = 1;
     }
 }
 

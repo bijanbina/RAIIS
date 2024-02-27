@@ -257,7 +257,7 @@ void RePreProcessor::meta(const QString &text)
 {
     if( ReState::ch_count )
     {
-        ReChess::nato(text);
+        ReChess::meta(text);
         return;
     }
     else if( re_isLastQt(cmd_buf) )
@@ -349,7 +349,12 @@ void RePreProcessor::super(const QString &text)
         return;
     }
 
-    if( re_isLastMeta(cmd_buf) )
+    if( ReState::ch_count )
+    {
+        ReChess::sendChessKey(text);
+        return;
+    }
+    else if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
         cmd_buf[last_i].val2 = text.toInt();

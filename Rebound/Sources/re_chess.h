@@ -31,9 +31,9 @@ public:
     static int  isChessCmd(QString text);
     static void sendCmd(QString cmd, QString arg="");
     static void setCount(int val);
+    static void sendChessKey(QString text);
 
 private:
-    static void sendChessKey(QString text);
     static void resetChess();
     static void handleBackspace();
     static void addCount(int val);
@@ -41,9 +41,8 @@ private:
     static QObject   *root;
     static CCommand   mod_cmd;
 
-    static int meta_mode;
     static int drag_mode;
-    static int persist_mode;
+    static int magic_mode;
 };
 
 #endif // RE_CHESS_H

@@ -12,17 +12,18 @@ MmApplication speech_app;
 void re_getSysEnd()
 {
 #ifdef WIN32
+    int win_found = 0;
     if( speech_app.hwnd==0 )
     {
         re_openSpeechNote();
         QThread::msleep(2000);
-        mm_focus(&speech_app);
+        win_found = mm_focus(&speech_app);
         QThread::msleep(2000);
     }
     else
     {
         ShowWindow(speech_app.hwnd, SW_NORMAL);
-        mm_focus(&speech_app);
+        win_found = mm_focus(&speech_app);
         QThread::msleep(100);
 
         // start new session
@@ -31,11 +32,14 @@ void re_getSysEnd()
         QThread::msleep(100);
     }
 
-    ReState::goToDictate();
-    QThread::msleep(50);
-    SetCursorPos(1450, 280);
-    QThread::msleep(50);
-    re_mouseKey(1);
+    if( win_found )
+    {
+        ReState::goToDictate();
+        QThread::msleep(50);
+        SetCursorPos(1450, 280);
+        QThread::msleep(50);
+        re_mouseKey(1);
+    }
 #endif
 }
 
