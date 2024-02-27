@@ -27,6 +27,7 @@ public:
     void cleanWins();
     void clearWins();
     void addHwnd(HWND hwnd);
+    void checkSize(ReWindow win);
     void applyOpacity(ReWindow win);
     void updateRemoteID(ReWindow win);
     void updateActiveWindow();

@@ -14,7 +14,7 @@ function main_gaccount()
 
 function gacc_timeoutMain()
 {
-    var page1_txt   = "To help keep your account secure, Google needs to verify it’s you. Please sign in again to continue to Gmail.";
+    var page1_txt   = "To help keep your account secure, Google needs to verify it’s you. Please sign in";
     var page1_query = "div:contains('" + page1_txt + "')";
 
     var page2_txt   = "Enter your password";

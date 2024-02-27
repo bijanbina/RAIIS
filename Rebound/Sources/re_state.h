@@ -6,7 +6,6 @@
 #include <QFileInfo>
 #include <QDir>
 #include "backend.h"
-//#include "re_firefox.h"
 #include "re_commands.h"
 #include "re_status_file.h"
 #include "ch_monitor.h"
@@ -43,7 +42,6 @@ public:
     static int  ch_count; //Chess Count
     static ReWindow app; //Active Window
     static CCommand last_cmd;
-//    static ReFirefox *fl;
     static ReLink    *link;
 };
 

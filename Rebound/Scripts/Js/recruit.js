@@ -4,19 +4,23 @@ function main_recruit()
 {
     if( window.location.href.includes(".recruitee.com/o/") )
     {
-        // alert(location.hostname);
+        //alert(location.hostname);
         recr_timer = setInterval(recr_timeoutMain, 1000);
     }
 }
 
 function recr_timeoutMain()
 {
+    if( document.hidden )
+    {
+        return;
+    }
     var fullname_objs  = $('*[placeholder="Full name"]');
     // include email address
     var email_objs     = $('*[placeholder*="email address"]');
     var phone_objs     = $('*[placeholder*="phone number"]');
 
-    // alert(phone_objs.val().length);
+    //alert(phone_objs.val().length);
     if( fullname_objs.length )
     {
         if( fullname_objs.val()=="" )

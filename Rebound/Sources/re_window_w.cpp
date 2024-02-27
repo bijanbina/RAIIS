@@ -50,6 +50,7 @@ void ReWindowW::addHwnd(HWND hwnd)
 
     updateRemoteID(win);
     applyOpacity(win);
+    checkSize(win);
 }
 
 void ReWindowW::applyOpacity(ReWindow win)
@@ -72,7 +73,24 @@ void ReWindowW::applyOpacity(ReWindow win)
     {
         re_setWindowOpacity(win.hWnd, 200);
     }
+}
 
+void ReWindowW::checkSize(ReWindow win)
+{
+    if( win.pname=="Chess" ||
+        win.pname=="rustdesk" ||
+        win.title=="Qt Creator" ||
+        win.pname=="AnyDesk" ||
+        win.pname=="NLClientApp" )
+    {
+        return;
+    }
+//                qDebug() << "process" << current_win.pname
+//                         << current_win.title;
+//    if( win_active.hWnd==win.hWnd )
+//    {
+//        re_setWindowOpacity(win.hWnd, 255);
+//    }
 }
 
 void ReWindowW::updateRemoteID(ReWindow win)

@@ -260,10 +260,11 @@ void mm_focus(HWND hwnd)
     AttachThreadInput(dwCurrentThread, dwFGThread, FALSE);
 }
 
-void mm_focus(MmApplication *app)
+int mm_focus(MmApplication *app)
 {
-//    qDebug() << "app tit" << app.win_title;
     app->hwnd = mm_getHWND(app);
+    int timeout_i   = 0;
+    int timeout_max = 20;
     while( app->hwnd==NULL )
     {
 //        qDebug() << "hwnd" << app.hwnd
@@ -271,8 +272,15 @@ void mm_focus(MmApplication *app)
 //                 << "exe_path" << app.exe_path;
         QThread::msleep(200);
         app->hwnd = mm_getHWND(app);
+        timeout_i++;
+
+        if( timeout_i>timeout_max )
+        {
+            return 0;
+        }
     }
     mm_focus(app->hwnd);
+    return 1;
 }
 
 HWND mm_getHWND(MmApplication *app)

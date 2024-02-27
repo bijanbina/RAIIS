@@ -40,6 +40,7 @@ public:
     static void castRunCmd  (CCommand *cmd);
     static void castDukeCmd (CCommand *cmd);
     static void castGasCmd  (CCommand *cmd);
+    static int  getScrollVal();
 
 #ifdef WIN32
     static void recordTelegram();
