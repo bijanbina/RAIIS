@@ -62,6 +62,7 @@ private:
     int  procSuper(QString word);
     int  procDigit(QString word);
     int  procMouse(QString word);
+    void procScroll(QString word);
     void writeResult();
     void runLua(QString word);
     void wakeRemote();

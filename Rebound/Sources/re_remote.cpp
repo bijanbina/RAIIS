@@ -377,6 +377,13 @@ void ReRemote::shiftHistory()
 
 int ReRemote::procSpecialKey(QString word)
 {
+    if( word=="last" || word=="front" )
+    {
+        last_word = word;
+        re_mouseMoveC(0, 0);
+        procScroll(word);
+        return 1;
+    }
     if( last_word=="go" && word=="sierra" )
     {
         ReState::remote_state = 0;
@@ -416,6 +423,18 @@ int ReRemote::procSpecialKey(QString word)
             for( int i=0 ; i<val-1 ; i++ )
             {
                 procMouse(last_word);
+            }
+            return 1;
+        }
+    }
+    else if( last_word=="last" || last_word=="front" )
+    {
+        int val = procDigit(word);
+        if( val )
+        {
+            for( int i=0 ; i<val-1 ; i++ )
+            {
+                procScroll(last_word);
             }
             return 1;
         }
@@ -465,4 +484,24 @@ int ReRemote::procDigit(QString word)
     }
 
     return 0;
+}
+
+void ReRemote::procScroll(QString word)
+{
+    int count = 6;
+    if( word=="last" )
+    {
+        for( int j=0 ; j<count ; j++ )
+        {
+            re_mouseKey(5);
+        }
+    }
+    else if( word=="front" )
+    {
+        for( int j=0 ; j<count ; j++ )
+        {
+            re_mouseKey(4);
+        }
+    }
+
 }
