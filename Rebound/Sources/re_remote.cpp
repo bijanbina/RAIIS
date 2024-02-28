@@ -65,9 +65,10 @@ void ReRemote::send(QString word)
 {
     qDebug() << "sendRemote" << word;
 
-    if( word=="two" )
+    if( word=="go" || word=="system" )
     {
-
+        last_word = word;
+        return;
     }
     if( procSpecialKey(word) )
     {

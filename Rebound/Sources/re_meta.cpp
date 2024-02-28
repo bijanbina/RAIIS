@@ -87,10 +87,6 @@ CCommand ReMeta::castMeta(int meta, int arg)
     {
         castMouseCmd(arg, &cmd);
     }
-    else if( meta==RE_META_TOUCH )
-    {
-        castTouchCmd(arg, &cmd);
-    }
 
     return cmd;
 }
@@ -238,6 +234,11 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         sendChessCmd("system", "drag");
         ReState::ch_count = 4;
+    }
+    else if( val==RE_SUPER_RESIST )
+    {
+        sendChessCmd("system", "touch");
+        ReState::ch_count = 999;
     }
     else
     {
@@ -405,61 +406,6 @@ void ReMeta::castPageCmd(int val, CCommand *cmd)
     }
 }
 
-void ReMeta::castTouchCmd(int val, CCommand *cmd)
-{
-    qDebug() << "Touch" << ReState::app.pname
-             << val;
-
-    if( val==KEY_DOWN )
-    {
-        re_mouseMoveR(0, 100);
-    }
-    else if( val==KEY_UP )
-    {
-        re_mouseMoveR(0, -100);
-    }
-    else if( val==KEY_RIGHT )
-    {
-        re_mouseMoveR(100, 0);
-    }
-    else if( val==KEY_LEFT )
-    {
-        re_mouseMoveR(-100, 0);
-    }
-    else if( val==KEY_1 )
-    {
-        re_mouseMoveR(-27, -22);
-    }
-    else if( val==KEY_2 )
-    {
-        re_mouseMoveR(0, -22);
-    }
-    else if( val==KEY_3 )
-    {
-        re_mouseMoveR(27, -22);
-    }
-    else if( val==KEY_4 )
-    {
-        re_mouseMoveR(-27, 0);
-    }
-    else if( val==KEY_6 )
-    {
-        re_mouseMoveR(22, 0);
-    }
-    else if( val==KEY_7 )
-    {
-        re_mouseMoveR(-27, 22);
-    }
-    else if( val==KEY_8 )
-    {
-        re_mouseMoveR(0, 22);
-    }
-    else if( val==KEY_9 )
-    {
-        re_mouseMoveR(27, 22);
-    }
-}
-
 void ReMeta::sendChessCmd(QString cmd, QString arg)
 {
 #ifdef WIN32
@@ -474,3 +420,4 @@ void ReMeta::sendChessCmd(QString cmd, QString arg)
     system(pipe_data.toStdString().c_str());
 #endif
 }
+

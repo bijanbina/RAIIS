@@ -31,15 +31,7 @@ void ReChess::digit(const QString &text)
 
 void ReChess::dirs(const QString &text) // direction keys
 {
-    int val = text.toInt();
-    if( val==KEY_ESC || val==KEY_BACKSPACE )
-    {
-        sendChessKey(text);
-    }
-    else if( val==KEY_RIGHT || val==KEY_LEFT )
-    {
-        sendChessKey(text);
-    }
+    sendChessKey(text);
 }
 
 void ReChess::meta(const QString &text)
@@ -87,6 +79,10 @@ void ReChess::sendChessKey(QString text)
     {
         setCount(0);
     }
+    else if( magic_mode )
+    {
+        addCount(-1);
+    }
     else if( val==KEY_BACKSPACE )
     {
         handleBackspace();
@@ -122,7 +118,7 @@ void ReChess::showChess(int val)
     else if( val==RE_SUPER_RESIST )
     {
         setCount(999); //some large num
-        sendCmd("persist");
+        sendCmd("touch");
     }
     else if( val==RE_SUPER_DRAG )
     {

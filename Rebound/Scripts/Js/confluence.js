@@ -50,5 +50,5 @@ function main_conf()
     // Options for the observer (which mutations to observe)
     const obs_config = { attributes: true, characterData: false, childList: true, subtree: true };
 
-    observer.observe(document.body, obs_config);
+    //observer.observe(document.body, obs_config);
 }

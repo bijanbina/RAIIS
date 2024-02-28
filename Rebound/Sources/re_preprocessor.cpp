@@ -236,7 +236,12 @@ void RePreProcessor::modifier(const QString &text)
 {
     //"super four" in <control super four> should be "super four"
     // if sleep
-    if( re_isLastMod(cmd_buf) &&
+    if( ReState::ch_count )
+    {
+        ReChess::dirs(text);
+        return;
+    }
+    else if( re_isLastMod(cmd_buf) &&
         ReState::sleep_state==false )
     {
         int last_i = cmd_buf.count()-1; //last index

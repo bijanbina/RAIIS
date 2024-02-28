@@ -82,7 +82,6 @@
 #define RE_META_MUSIC    409
 #define RE_META_CLOSE    410
 #define RE_META_MOUSE    411
-#define RE_META_TOUCH    412
 
 typedef struct ReWindow
 {
