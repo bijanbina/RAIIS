@@ -4,7 +4,7 @@
 #define RE_PROC_QT       "qtcreator"
 #define RE_PROC_VSCODE   "code-oss"
 #define RE_PROC_GIT      "gitkraken"
-#define RE_PROC_FIREFOX  "firefox"
+#define RE_PROC_FIREFOX  "firefox-bin"
 #define RE_PROC_CHROME   "chrome"
 #define RE_PROC_GEKO     "GeckoMain" //same as firefox
 #define RE_PROC_EXPLORER "nautilus"

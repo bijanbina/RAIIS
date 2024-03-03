@@ -51,6 +51,11 @@ void ReState::updateApp(ReWindow active_window)
     cmd += app.pname;
     cmd += "  %{B- F1-}";
 #else
+    QString line = re_readStatus();
+    if( line.contains("Dive") || line.contains("Sky") )
+    {
+        return;
+    }
     cmd = app.pname;
 #endif
     re_writePStatus(cmd);

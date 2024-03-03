@@ -200,7 +200,11 @@ int ReCaptain::execSleep(CCommand command)
         else if( isSpeakerSw(command) )
         {
 //            execCommand(command);
+#ifdef WIN32
             RePipe::sendMom("super sound");
+#else
+
+#endif
             return 0;
         }
     }

@@ -2,9 +2,12 @@
 
 ReLink::ReLink()
 {
+#ifdef WIN32
     connectPipe();
+#endif
 }
 
+#ifdef WIN32
 void ReLink::connectPipe()
 {
     // 0: Default Wait Time
@@ -28,9 +31,11 @@ void ReLink::connectPipe()
                     " not found";
     }
 }
+#endif
 
 void ReLink::sendPipe(const char *data)
 {
+#ifdef WIN32
     DWORD len = strlen(data);
     if( hPipe==INVALID_HANDLE_VALUE )
     {
@@ -58,6 +63,13 @@ void ReLink::sendPipe(const char *data)
         hPipe = INVALID_HANDLE_VALUE;
         sendPipe(data);
     }
+#else
+    QString cmd = "dbus-send --session ";
+    cmd += "--dest=" RE_PIPE_LINK " / " RE_PIPE_LINK ".exec string:\"";
+    cmd += data;
+    cmd += "\"";
+    system(cmd.toStdString().c_str());
+#endif
 }
 
 void ReLink::scrollUp(int speed)

@@ -3,11 +3,16 @@
 
 #include <QDebug>
 #include "re_commands.h"
-#ifdef _WIN32
+#ifdef WIN32
 #include <windows.h>
 #endif
 
+#ifdef WIN32
 #define RE_PIPE_LINK      "\\\\.\\pipe\\com_binaee_link"
+#else
+#define RE_PIPE_LINK      "com.binaee.link"
+#endif
+
 #define RE_FFGEAR_COUNT 16
 #define RE_FFGEAR_DELAY { 100, 50, 25, 10, 10, 5, 5, 5, 5,  5,  \
                           5  ,  5,  5,  5,  5}
@@ -28,9 +33,12 @@ public:
     int sc_speed = 5;
 
 private:
-    HANDLE hPipe;
     int speed_table[RE_FFGEAR_COUNT] = RE_FFGEAR_DELAY;
     int step_table [RE_FFGEAR_COUNT] = RE_FFGEAR_STEP;
+
+#ifdef WIN32
+    HANDLE hPipe;
+#endif
 };
 
 #endif // RE_LINK_H

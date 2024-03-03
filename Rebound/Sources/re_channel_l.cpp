@@ -16,7 +16,7 @@ void ReChannelL::ConnectDBus()
 {
     QDBusConnection session = QDBusConnection::sessionBus();
 
-    if (!session.isConnected())
+    if( !session.isConnected() )
     {
         qFatal("Cannot connect to the D-Bus session bus.");
         return;
@@ -34,7 +34,7 @@ void ReChannelL::ConnectDBus()
     session.connect("", "/", COM_NAME, "modifier", pre, SLOT(modifier(const QString &)));
     session.connect("", "/", COM_NAME, "exec" , pre, SLOT(execTimeOut()));
 
-    if(!session.registerService(COM_NAME))
+    if( !session.registerService(COM_NAME) )
     {
         qFatal("Another session is on DBus.");
         // This cannot be automatic because killing assistant also kill
