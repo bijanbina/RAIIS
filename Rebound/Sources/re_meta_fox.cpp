@@ -8,9 +8,6 @@
 
 ReMetaFox::ReMetaFox()
 {
-#ifdef WIN32
-    injector = new ReInject();
-#endif
 }
 
 QString ReMetaFox::castXed(int val)
@@ -277,7 +274,7 @@ void ReMetaFox::castAltium(int val, CCommand *cmd)
         int pid = ReState::app.pid;
         qDebug() << ">>>>>>>>>>>>>>>INJA" << pid;
 #ifdef WIN32
-        injector->inject(pid);
+        ReInject::inject(pid);
 #endif
     }
     else if( val>=KEY_1 &&
@@ -337,14 +334,6 @@ void ReMetaFox::castSlack(int val, CCommand *cmd)
     else if( val==KEY_M ) //message
     {
 
-    }
-    else if( val==KEY_I ) //injection
-    {
-        int pid = ReState::app.pid;
-        qDebug() << ">>>>>>>>>>>>>>>INJA" << pid;
-#ifdef WIN32
-        injector->inject(pid);
-#endif
     }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab

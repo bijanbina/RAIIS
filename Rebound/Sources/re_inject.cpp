@@ -4,7 +4,9 @@
 #include <tlhelp32.h>
 #include <tchar.h>
 
-ReInject::ReInject(QObject *parent) : QObject(parent)
+QVector<int> ReInject::apps_pid = QVector<int>();
+
+ReInject::ReInject()
 {
 
 }

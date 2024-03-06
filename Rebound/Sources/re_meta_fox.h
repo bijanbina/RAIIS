@@ -14,18 +14,14 @@ class ReMetaFox
 {
 public:
     ReMetaFox();
-    void castCode(int val, CCommand *cmd);
-    QString castXed(int val);
-    void castFirefox(int val, CCommand *cmd);
-    void castNautilus(int val, CCommand *cmd);
-    void csatGitKraken(int val, CCommand *cmd);
-    void castAltium(int val, CCommand *cmd);
-    void castSlack(int val, CCommand *cmd);
 
-private:
-#ifdef WIN32
-    ReInject *injector;
-#endif
+    static void castCode(int val, CCommand *cmd);
+    static QString castXed(int val);
+    static void castFirefox(int val, CCommand *cmd);
+    static void castNautilus(int val, CCommand *cmd);
+    static void csatGitKraken(int val, CCommand *cmd);
+    static void castAltium(int val, CCommand *cmd);
+    static void castSlack(int val, CCommand *cmd);
 };
 
 #endif // RE_META_FOX_H

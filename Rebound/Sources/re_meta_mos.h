@@ -13,10 +13,10 @@ class ReMetaMos
 public:
     ReMetaMos();
 
-    void castCode(int val, CCommand *cmd);
-    void castMonitor(int val);
-    void castScroll(int val);
-    void castFirefox(int val, CCommand *cmd);
+    static void castCode(int val, CCommand *cmd);
+    static void castMonitor(int val);
+    static void castScroll(int val);
+    static void castFirefox(int val, CCommand *cmd);
 };
 
 #endif // RE_META_MOS_H
