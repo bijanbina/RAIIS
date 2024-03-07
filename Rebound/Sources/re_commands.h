@@ -54,6 +54,8 @@
 #define RE_SUPER_LAST    124
 #define RE_SUPER_POWER   125
 #define RE_SUPER_RUN     126
+#define RE_SUPER_DIVE    127
+#define RE_SUPER_SKY     128
 
 #define RE_CHESS_KICK    201
 #define RE_CHESS_COMMENT 202
@@ -77,11 +79,9 @@
 #define RE_META_FOX      404
 #define RE_META_PAGE     405
 #define RE_META_GO       406
-#define RE_META_SKY      407
-#define RE_META_DIVE     408
-#define RE_META_MUSIC    409
-#define RE_META_CLOSE    410
-#define RE_META_MOUSE    411
+#define RE_META_MUSIC    407
+#define RE_META_CLOSE    408
+#define RE_META_MOUSE    409
 
 typedef struct ReWindow
 {

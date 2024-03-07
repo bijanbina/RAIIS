@@ -75,7 +75,7 @@ void ReLink::sendPipe(const char *data)
 void ReLink::scrollUp(int speed)
 {
     sc_speed = speed-1;
-    sc_dir = RE_META_SKY;
+    sc_dir = RE_SUPER_SKY;
     QString cmd = "scroll: ";
     cmd += QString::number(-step_table[sc_speed]);
     cmd += " ";
@@ -86,7 +86,7 @@ void ReLink::scrollUp(int speed)
 void ReLink::scrollDown(int speed)
 {
     sc_speed = speed-1;
-    sc_dir = RE_META_DIVE;
+    sc_dir = RE_SUPER_DIVE;
     QString cmd = "scroll: ";
     cmd += QString::number(step_table[sc_speed]);
     cmd += " ";

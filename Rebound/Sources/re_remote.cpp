@@ -65,7 +65,7 @@ void ReRemote::send(QString word)
 {
     qDebug() << "sendRemote" << word;
 
-    if( word=="go" || word=="system" )
+    if( word=="go" || word=="system" || word=="mouse" )
     {
         last_word = word;
         return;

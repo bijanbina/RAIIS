@@ -8,8 +8,6 @@
 
 ReMeta::ReMeta()
 {
-    fox   = new ReMetaFox;
-    mouse = new ReMetaMos;
 }
 
 ReMeta::~ReMeta()
@@ -59,25 +57,10 @@ CCommand ReMeta::castMeta(int meta, int arg)
     {
         ReState::last_cmd.type = RE_COMMAND_NULL;
     }
-    else if( meta==RE_META_SKY ||
-             meta==RE_META_DIVE )
+    else if( meta==RE_SUPER_SKY ||
+             meta==RE_SUPER_DIVE )
     {
-        if( ReState::app.pname!=RE_PROC_FIREFOX )
-        {
-            return cmd;
-        }
-        if( (KEY_1<=arg && arg<=KEY_9) )
-        {
-            ReState::enScroll(meta, arg-KEY_1+1);
-        }
-        else if( KEY_A<=arg && arg<=KEY_F )
-        {
-            ReState::enScroll(meta, arg-KEY_A+10);
-        }
-        else
-        {
-            return cmd;
-        }
+        ReMetaMos::castDiveSky(meta, arg);
     }
     else if( meta==RE_META_MUSIC )
     {
@@ -118,18 +101,18 @@ void ReMeta::castMouseCmd(int val, CCommand *cmd)
              val==KEY_L ||
              val==KEY_R )
     {
-        mouse->castMonitor(val);
+        ReMetaMos::castMonitor(val);
     }
     else if( val==KEY_U ||
              val==KEY_D ||
              val==KEY_G ||
              val==KEY_H )
     {
-        mouse->castScroll(val);
+        ReMetaMos::castScroll(val);
     }
     else if( val==KEY_1 )
     {
-        mouse->castMonitor(val);
+        ReMetaMos::castMonitor(val);
     }
 #ifndef WIN32
     else if( val==KEY_F ) //focus
@@ -253,22 +236,22 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
 
     if( ReState::app.pname==RE_PROC_EDITOR )
     {
-        fox->castXed(val);
+        ReMetaFox::castXed(val);
     }
     else if( ReState::app.pname==RE_PROC_QT ||
              ReState::app.pname==RE_PROC_VSCODE )
     {
-        fox->castCode(val, cmd);
+        ReMetaFox::castCode(val, cmd);
     }
     else if( ReState::app.pname==RE_PROC_GIT )
     {
-        fox->csatGitKraken(val, cmd);
+        ReMetaFox::csatGitKraken(val, cmd);
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX ||
              ReState::app.pname==RE_PROC_GEKO    ||
              ReState::app.pname==RE_PROC_CHROME )
     {
-        fox->castFirefox(val, cmd);
+        ReMetaFox::castFirefox(val, cmd);
 
         if( val==KEY_L )
         {
@@ -277,16 +260,16 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_EXPLORER )
     {
-        fox->castNautilus(val, cmd);
+        ReMetaFox::castNautilus(val, cmd);
     }
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_ALTIUM )
     {
-        fox->castAltium(val, cmd);
+        ReMetaFox::castAltium(val, cmd);
     }
     else if( ReState::app.pname==RE_PROC_SLACK )
     {
-        fox->castSlack(val, cmd);
+        ReMetaFox::castSlack(val, cmd);
     }
 #endif
 }

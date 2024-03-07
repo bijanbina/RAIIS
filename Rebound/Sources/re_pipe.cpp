@@ -101,6 +101,6 @@ void RePipe::sendMom(const char *data)
                     "Try to revive channel";
         CloseHandle(pipe_mom);
         pipe_mom = INVALID_HANDLE_VALUE;
-        sendChess(data);
+        sendMom(data);
     }
 }

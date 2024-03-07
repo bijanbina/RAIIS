@@ -33,9 +33,6 @@ private:
     void castSystemCmd(int val, CCommand *cmd);
     void castFoxCmd(int val, CCommand *cmd);
     void sendChessCmd(QString cmd, QString arg="");
-
-    ReMetaFox *fox;
-    ReMetaMos *mouse;
 };
 
 

@@ -159,7 +159,7 @@ void ReState::enScroll(int dir, int speed)
 {
     QString cmd;
 
-    if( dir==RE_META_SKY )
+    if( dir==RE_SUPER_SKY )
     {
         cmd = "Sky ";
         cmd += QString::number(speed);
@@ -170,7 +170,7 @@ void ReState::enScroll(int dir, int speed)
         re_writeStatus(cmd);
         link->scrollUp(speed);
     }
-    else if( dir==RE_META_DIVE )
+    else if( dir==RE_SUPER_DIVE )
     {
         cmd = "Dive ";
         cmd += QString::number(speed);

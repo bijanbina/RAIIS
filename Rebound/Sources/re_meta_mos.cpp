@@ -1,6 +1,7 @@
 #include "re_meta_mos.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
+#include "re_app_w.h"
 #else
 #include "re_keyboard_l.h"
 #endif
@@ -82,7 +83,7 @@ void ReMetaMos::castScroll(int val)
 #endif
 }
 
-// Or VsCode
+// VsCode
 void ReMetaMos::castCode(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT )
@@ -130,6 +131,40 @@ void ReMetaMos::castCode(int val, CCommand *cmd)
         cmd->val3  = 1;
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
+    }
+}
+
+void ReMetaMos::castDiveSky(int cmd, int arg)
+{
+    if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+        if( (KEY_1<=arg && arg<=KEY_9) )
+        {
+            ReState::enScroll(cmd, arg-KEY_1+1);
+        }
+        else if( KEY_A<=arg && arg<=KEY_F )
+        {
+            ReState::enScroll(cmd, arg-KEY_A+10);
+        }
+    }
+    else if( ReState::app.pname==RE_PROC_SLACK )
+    {
+        re_mouseMoveW(300, 400);
+        int count = 5*(arg-KEY_1+1);
+        if( cmd==RE_SUPER_DIVE )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(5);
+            }
+        }
+        else if( cmd==RE_SUPER_SKY )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(4);
+            }
+        }
     }
 }
 
