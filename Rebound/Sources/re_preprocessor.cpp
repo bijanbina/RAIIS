@@ -67,15 +67,8 @@ void RePreProcessor::nato(const QString &text)
     else if( ReState::link->sc_dir &&
              KEY_A<=val && val<=KEY_F )
     {
-        CCommand cmd;
-        cmd.val1 = ReState::link->sc_dir;
-        cmd.val2 = val;
-        cmd.val3 = 1;
-        cmd.type = RE_COMMAND_META;
-
-        cmd_buf.append(cmd);
-        execute();
-
+        int cmd = ReState::link->sc_dir;
+        ReSuper::castDiveSky(cmd, val);
         return;
     }
     else if( re_isLastGo(cmd_buf) )
@@ -139,14 +132,9 @@ void RePreProcessor::digit(const QString &text)
     }
     else if( ReState::link->sc_dir )
     {
-        CCommand cmd;
-        cmd.val1 = ReState::link->sc_dir;
-        cmd.val2 = text.toInt();
-        cmd.val3 = 1;
-        cmd.type = RE_COMMAND_META;
-
-        cmd_buf.append(cmd);
-        execute();
+        int cmd = ReState::link->sc_dir;
+        int val = text.toInt();
+        ReSuper::castDiveSky(cmd, val);
     }
     else if( re_isLastMeta(cmd_buf) )
     {

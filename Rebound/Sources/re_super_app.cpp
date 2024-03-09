@@ -89,11 +89,56 @@ int  ReSuper::getScrollVal()
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_SLACK )
     {
-        return 10;
+        return 5;
     }
 #endif
     else
     {
         return 5;
+    }
+}
+
+void ReSuper::castDiveSky(int cmd, int arg)
+{
+    if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+        if( arg==-1 ) // default
+        {
+            ReState::enScroll(cmd, 2);
+        }
+        else if( (KEY_1<=arg && arg<=KEY_9) )
+        {
+            ReState::enScroll(cmd, arg-KEY_1+1);
+        }
+        else if( KEY_A<=arg && arg<=KEY_F )
+        {
+            ReState::enScroll(cmd, arg-KEY_A+10);
+        }
+    }
+    else if( ReState::app.pname==RE_PROC_SLACK )
+    {
+        re_mouseMoveW(300, 400);
+        int count = 5*(arg-KEY_1+1);
+        if( arg==-1 ) // default
+        {
+            count = 5;
+        }
+
+        if( cmd==RE_SUPER_DIVE )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(5);
+                QThread::msleep(50);
+            }
+        }
+        else if( cmd==RE_SUPER_SKY )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(4);
+                QThread::msleep(50);
+            }
+        }
     }
 }

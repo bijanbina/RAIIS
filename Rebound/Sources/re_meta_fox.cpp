@@ -361,4 +361,40 @@ void ReMetaFox::castSlack(int val, CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( val==KEY_U ) //unread
+    {
+        re_mouseMoveW(300, 400);
+        int count = 10;
+        for( int j=0 ; j<count ; j++ )
+        {
+            re_mouseKey(4);
+            QThread::msleep(50);
+        }
+
+        re_mouseMoveW(300, 150);
+        QThread::msleep(50);
+        re_mouseKey(1);
+
+        re_mouseMoveC(0, 0);
+        QThread::msleep(50);
+        re_mouseKey(1);
+    }
+    else if( val==KEY_T ) //thread
+    {
+        re_mouseMoveW(300, 400);
+        int count = 10;
+        for( int j=0 ; j<count ; j++ )
+        {
+            re_mouseKey(4);
+            QThread::msleep(50);
+        }
+
+        re_mouseMoveW(300, 180);
+        QThread::msleep(50);
+        re_mouseKey(1);
+
+        re_mouseMoveC(0, 0);
+        QThread::msleep(50);
+        re_mouseKey(1);
+    }
 }
