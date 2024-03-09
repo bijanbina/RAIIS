@@ -6,7 +6,6 @@
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
-    mouse = new ReMetaMos;
     is_last_mouse = 0;
 
 #ifdef WIN32
@@ -313,7 +312,7 @@ int ReRemote::procMouse(QString word)
 
     if( val )
     {
-        mouse->castScroll(val);
+        ReMetaMos::castScroll(val);
         return 1;
     }
     return 0;

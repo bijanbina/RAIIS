@@ -4,13 +4,11 @@
 
 ReCaptain::ReCaptain(QObject *parent): QObject(parent)
 {
-    meta  = new ReMeta;
     ReState::last_cmd.type = RE_COMMAND_NULL;
 }
 
 ReCaptain::~ReCaptain()
 {
-    delete meta;
 }
 
 void ReCaptain::execute(QVector<CCommand> commands)
@@ -117,7 +115,7 @@ void ReCaptain::execMeta(CCommand command)
     CCommand translated;
     for( int j=0 ; j<command.val3 ; j++ )
     {
-        translated = meta->castMeta(command.val1,
+        translated = ReMeta::castMeta(command.val1,
                                     command.val2);
         execCommand(translated);
     }

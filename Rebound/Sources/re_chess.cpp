@@ -73,6 +73,7 @@ void ReChess::sendChessKey(QString text)
     int val = text.toInt();
     QString cmd = "Key_";
     cmd += text;
+    qDebug() << "val" << val;
     sendCmd(cmd.toStdString().c_str());
 
     if( val==KEY_ESC )
@@ -88,7 +89,8 @@ void ReChess::sendChessKey(QString text)
         handleBackspace();
     }
     else if( val!=KEY_HOME  && val!=KEY_END &&
-             val!=KEY_RIGHT && val!=KEY_LEFT )
+             val!=KEY_RIGHT && val!=KEY_LEFT &&
+             30<val && val<240 )
     {
         addCount(-1);
     }

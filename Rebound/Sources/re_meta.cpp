@@ -10,11 +10,6 @@ ReMeta::ReMeta()
 {
 }
 
-ReMeta::~ReMeta()
-{
-    ;
-}
-
 CCommand ReMeta::castMeta(int meta, int arg)
 {
     CCommand cmd; //dummy var

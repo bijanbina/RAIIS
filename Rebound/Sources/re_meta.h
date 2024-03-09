@@ -21,20 +21,17 @@ class ReMeta
 {
 public:
     ReMeta();
-    ~ReMeta();
 
-    CCommand castMeta(int meta, int arg);
+    static CCommand castMeta(int meta, int arg);
 
 private:
-    void castPageCmd(int val, CCommand *cmd);
-    void castMusicCmd(int val, CCommand *cmd);
-    void castMouseCmd(int val, CCommand *cmd);
-    void castTouchCmd(int val, CCommand *cmd);
-    void castSystemCmd(int val, CCommand *cmd);
-    void castFoxCmd(int val, CCommand *cmd);
-    void sendChessCmd(QString cmd, QString arg="");
+    static void castPageCmd(int val, CCommand *cmd);
+    static void castMusicCmd(int val, CCommand *cmd);
+    static void castMouseCmd(int val, CCommand *cmd);
+    static void castTouchCmd(int val, CCommand *cmd);
+    static void castSystemCmd(int val, CCommand *cmd);
+    static void castFoxCmd(int val, CCommand *cmd);
+    static void sendChessCmd(QString cmd, QString arg="");
 };
-
-
 
 #endif // RE_META_H

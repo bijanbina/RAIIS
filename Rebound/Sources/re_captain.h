@@ -46,7 +46,6 @@ private:
 
     int uinput_f;
 
-    ReMeta  *meta;
     QVector<CCommand> modifiers;
 };
 

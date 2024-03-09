@@ -1,8 +1,6 @@
 #include "re_super.h"
 #include <QThread>
 
-ReKeyboard ReSuper::key;
-
 ReSuper::ReSuper()
 {
 }
@@ -237,7 +235,7 @@ void ReSuper::castSelectCmd(CCommand *cmd)
 #endif
     else
     {
-        key.sendKey(KEY_END);
+        ReKeyboard::sendKey(KEY_END);
         cmd->is_shift = 1;
         cmd->val1     = KEY_HOME;
 

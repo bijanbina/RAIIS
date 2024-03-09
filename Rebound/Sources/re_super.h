@@ -45,7 +45,6 @@ public:
 #ifdef WIN32
     static void recordTelegram();
 #endif
-    static ReKeyboard key;
 };
 
 #endif //RE_SUPER_H
