@@ -52,11 +52,6 @@ CCommand ReMeta::castMeta(int meta, int arg)
     {
         ReState::last_cmd.type = RE_COMMAND_NULL;
     }
-    else if( meta==RE_SUPER_SKY ||
-             meta==RE_SUPER_DIVE )
-    {
-        ReMetaMos::castDiveSky(meta, arg);
-    }
     else if( meta==RE_META_MUSIC )
     {
         castMusicCmd(arg, &cmd);

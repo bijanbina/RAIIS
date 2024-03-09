@@ -75,6 +75,12 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castRogerCmd(cmd);
     }
+    else if( val==RE_SUPER_SKY ||
+             val==RE_SUPER_DIVE )
+    {
+        castDiveSky(val, -1);
+        makeNull(cmd);
+    }
 }
 
 void ReSuper::castMetaCmd(CCommand *cmd)

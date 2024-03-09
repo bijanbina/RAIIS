@@ -54,8 +54,8 @@
 #define RE_SUPER_LAST    124
 #define RE_SUPER_POWER   125
 #define RE_SUPER_RUN     126
-#define RE_SUPER_DIVE    127
-#define RE_SUPER_SKY     128
+#define RE_SUPER_SKY     127
+#define RE_SUPER_DIVE    128
 
 #define RE_CHESS_KICK    201
 #define RE_CHESS_COMMENT 202

@@ -160,10 +160,12 @@ void ReCaptain::execMouse(CCommand command)
         else if( command.val1==RE_MOUSE_UP )
         {
             re_mouseKey(4);
+            QThread::msleep(50);
         }
         else if( command.val1==RE_MOUSE_DOWN )
         {
             re_mouseKey(5);
+            QThread::msleep(50);
         }
     }
 }

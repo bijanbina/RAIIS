@@ -17,7 +17,6 @@ public:
     static void castMonitor(int val);
     static void castScroll(int val);
     static void castFirefox(int val, CCommand *cmd);
-    static void castDiveSky(int cmd, int arg);
 };
 
 #endif // RE_META_MOS_H
