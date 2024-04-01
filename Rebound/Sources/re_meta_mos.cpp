@@ -45,6 +45,7 @@ void ReMetaMos::castMonitor(int val)
     }
 #ifdef WIN32
     SetCursorPos(x, y);
+    re_mouseKey(1);
 #else
 #endif
 }

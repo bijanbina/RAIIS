@@ -39,20 +39,18 @@ void ReChess::meta(const QString &text)
     sendChessKey(text);
 }
 
+// only call on isChessCmd(text)==true
 void ReChess::super(const QString &text,
                     QVector<CCommand> cmd_buf)
 {
-    if( isChessCmd(text) )
+    if( re_isLastMod(cmd_buf) )
     {
-        if( re_isLastMod(cmd_buf) )
-        {
-            int last_i = cmd_buf.count()-1; //last index
-            mod_cmd = cmd_buf[last_i];
-            re_modPress(mod_cmd);
-        }
-        int val = text.toInt();
-        showChess(val);
- ;   }
+        int last_i = cmd_buf.count()-1; //last index
+        mod_cmd = cmd_buf[last_i];
+        re_modPress(mod_cmd);
+    }
+    int val = text.toInt();
+    showChess(val);
 }
 
 void ReChess::handleBackspace()

@@ -9,6 +9,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     uiSwitcher = switcher;
 
     ReState::init();
+    ChMonitor::init();
 #ifdef WIN32
     RePipe::init();
 #endif

@@ -29,34 +29,90 @@ void ReSuper::castLastCmd(CCommand *cmd)
 
 void ReSuper::castRunCmd(CCommand *cmd)
 {
-#ifdef WIN32
-    cmd->is_alt = 1;
-    cmd->val1   = KEY_TAB;
-#else
-    cmd->is_super = 1;
-    cmd->val1 = KEY_B;
-#endif
-
     cmd->val2 = 1;
     cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_DIRS;
-    cmd->state = RE_CSTATE_0;
+    cmd->type = RE_COMMAND_NULL;
+
+//    qDebug() << "Run" << ReState::app.pname;
+    if( ReState::app.pname==RE_PROC_QT )
+    {
+        cmd->val1 = KEY_F1;
+        cmd->type = RE_COMMAND_DIRS;
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_W;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
 }
 
 void ReSuper::castDukeCmd(CCommand *cmd)
 {
-#ifdef WIN32
-    cmd->is_alt = 1;
-    cmd->val1   = KEY_TAB;
-#else
-    cmd->is_super = 1;
-    cmd->val1 = KEY_B;
-#endif
-
     cmd->val2 = 1;
     cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_DIRS;
-    cmd->state = RE_CSTATE_0;
+    cmd->type = RE_COMMAND_NULL;
+
+    qDebug() << "Duke" << ReState::app.pname;
+
+    if( ReState::app.pname==RE_PROC_QT )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_W;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_W;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_L);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(200);
+
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_A);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(200);
+
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_C);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(200);
+
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_T);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(200);
+
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_V);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(200);
+
+        cmd->val1    = KEY_ENTER;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
 }
 
 void ReSuper::castGasCmd(CCommand *cmd)

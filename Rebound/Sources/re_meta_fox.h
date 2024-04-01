@@ -16,12 +16,13 @@ public:
     ReMetaFox();
 
     static void castCode(int val, CCommand *cmd);
-    static QString castXed(int val);
+    static void castQt(int val, CCommand *cmd);
     static void castFirefox(int val, CCommand *cmd);
     static void castNautilus(int val, CCommand *cmd);
     static void csatGitKraken(int val, CCommand *cmd);
     static void castAltium(int val, CCommand *cmd);
     static void castSlack(int val, CCommand *cmd);
+    static QString castXed(int val);
 };
 
 #endif // RE_META_FOX_H

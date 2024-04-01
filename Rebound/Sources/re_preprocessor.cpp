@@ -275,24 +275,6 @@ void RePreProcessor::meta(const QString &text)
         execute();
         return;
     }
-    else if( ReState::app.pname==RE_PROC_QT )
-    {
-        int val = text.toInt();
-
-        if( ReState::sleep_state ) // ignore sleep
-        {
-            return;
-        }
-
-        if( val==RE_META_FOX )
-        {
-            CCommand cmd = re_getGoQt(&cmd_buf);
-            execute();
-
-            cmd_buf.append(cmd);
-            return;
-        }
-    }
 
     CCommand cmd;
     cmd.val1 = text.toInt();
@@ -354,16 +336,13 @@ void RePreProcessor::super(const QString &text)
         execute();
         return;
     }
-    ReChess::super(text, cmd_buf);
-
-    if( ReState::ch_count )
+    else if( ReChess::isChessCmd(text) )
     {
-        // no need to process super mode while in
-        // chess mode
+        ReChess::super(text, cmd_buf);
+        // no need to process super mode while in chess
         return;
     }
-
-    if( re_isLastMod(cmd_buf) )
+    else if( re_isLastMod(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
 

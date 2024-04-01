@@ -83,6 +83,32 @@ void ReMetaFox::castCode(int val, CCommand *cmd)
     }
 }
 
+void ReMetaFox::castQt(int val, CCommand *cmd)
+{
+    if( val==KEY_LEFT || val==KEY_RIGHT )
+    {
+        cmd->is_alt   = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_RIGHT;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val>=KEY_1 &&
+             val<=KEY_9 ) //tab
+    {
+        cmd->is_alt = 1;
+        cmd->val1 = val;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+}
+
 void ReMetaFox::csatGitKraken(int val, CCommand *cmd)
 {
     if( val==KEY_B )
