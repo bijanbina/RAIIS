@@ -17,7 +17,7 @@ function conf_timeoutMain()
     var ss = $("span:contains('Space settings')");
     var ss_pr = ss.parent().parent();
     var at = $("span:contains('Automation')");
-    var at_pr = at.parent().parent();
+    var at_pr = at[0].parentElement.parentElement;
     var ac = $("span:contains('All content')");
     var ac_pr = ac.parent().parent();
     var ad = $("span:contains('You‘re on the Free plan')");
@@ -27,13 +27,13 @@ function conf_timeoutMain()
 
     pr.remove();
     ss_pr.remove();
-    at_pr.remove();
+    //at_pr.remove();
     ac_pr.remove();
     ad_pr.remove();
     ip_pr.remove();
     apps.remove();
 
-    if( ad.length )
+    if( ss.length==0 )
     {
         clearInterval(gacc_timer);
     }

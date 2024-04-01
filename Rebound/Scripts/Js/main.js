@@ -16,6 +16,14 @@ else if( location.hostname.includes("recruitee.com") )
 {
     main_recruit();
 }
+else if( location.hostname.includes("ijburgeats.nl") )
+{
+    main_ijburg();
+}
+else if( location.hostname.includes("vattenfall.nl") )
+{
+    main_vattenfall();
+}
 else
 {
     //alert(location.hostname);

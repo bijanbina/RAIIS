@@ -8,7 +8,7 @@ function main_gaccount()
 {
     if( window.location.href.includes("v3/signin/confirmidentifier") )
     {
-        gacc_timer = setInterval(gacc_timeoutMain, 500);
+        gacc_timer = setInterval(gacc_timeoutMain, 2000);
     }
 }
 
