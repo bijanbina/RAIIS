@@ -24,6 +24,10 @@ else if( location.hostname.includes("vattenfall.nl") )
 {
     main_vattenfall();
 }
+else if( location.hostname.includes("gitlab.com") )
+{
+    main_gitlab();
+}
 else
 {
     //alert(location.hostname);

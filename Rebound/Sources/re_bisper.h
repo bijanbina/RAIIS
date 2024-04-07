@@ -1,5 +1,5 @@
-#ifndef RE_META_SYS_H
-#define RE_META_SYS_H
+#ifndef RE_BISPER_H
+#define RE_BISPER_H
 
 #include <QVector>
 #include <QThread>
@@ -7,8 +7,8 @@
 #include "backend.h"
 #include "re_state.h"
 
-void re_getSysEnd();
+void re_execSpeech();
 void re_openSpeechNote();
 void re_hideSpeechNote();
 
-#endif // RE_META_SYS_H
+#endif // RE_BISPER_H

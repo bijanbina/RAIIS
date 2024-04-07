@@ -1,4 +1,4 @@
-#include "re_meta_sys.h"
+#include "re_bisper.h"
 #include "mm_api.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
@@ -9,7 +9,7 @@
 
 MmApplication speech_app;
 
-void re_getSysEnd()
+void re_execSpeech()
 {
 #ifdef WIN32
     int win_found = 0;
