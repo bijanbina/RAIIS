@@ -312,32 +312,8 @@ bool ReCaptain::isSpeakerSw(CCommand command)
 
 void ReCaptain::wakeDictate()
 {
-    re_mouseKey(1);
     ReState::dictate_state = 0;
-    QThread::msleep(50);
-
-    // copy to clipboard
-#ifdef WIN32
-    SetCursorPos(1450, 880);
-#endif
-    re_mouseKey(1);
-    QThread::msleep(1000);
-
-//    // remove super+num from clipboard
-
-    // quit
     re_hideSpeechNote();
-    QThread::msleep(20);
-    ReKeyboard::pressKey(KEY_LEFTALT);
-    ReKeyboard::sendKey(KEY_TAB);
-    ReKeyboard::releaseKey(KEY_LEFTALT);
-    QThread::msleep(200);
-
-    // paste
-    ReKeyboard::pressKey(KEY_LEFTCTRL);
-    ReKeyboard::sendKey(KEY_V);
-    ReKeyboard::releaseKey(KEY_LEFTCTRL);
-
     ReState::wakeUp();
 }
 

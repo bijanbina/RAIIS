@@ -1,45 +1,27 @@
 #include "re_bisper.h"
 #include "mm_api.h"
 #ifdef WIN32
+#include "re_console.h"
 #include "re_keyboard_w.h"
 #include "re_mouse.h"
 #else
 #include "re_keyboard_l.h"
 #endif
 
-MmApplication speech_app;
+MmApplication  speech_app;
+#ifdef WIN32
+ReConsole     *console = NULL;
+#endif
 
 void re_execSpeech()
 {
 #ifdef WIN32
-    int win_found = 0;
-    if( speech_app.hwnd==0 )
+    if( console==NULL )
     {
-        re_openSpeechNote();
-        QThread::msleep(2000);
-        win_found = mm_focus(&speech_app);
-        QThread::msleep(2000);
+        console = new ReConsole;
     }
-    else
-    {
-        ShowWindow(speech_app.hwnd, SW_NORMAL);
-        win_found = mm_focus(&speech_app);
-        QThread::msleep(100);
-
-        // start new session
-        SetCursorPos(50, 430);
-        re_mouseKey(1);
-        QThread::msleep(100);
-    }
-
-    if( win_found )
-    {
-        ReState::goToDictate();
-        QThread::msleep(50);
-        SetCursorPos(1450, 280);
-        QThread::msleep(50);
-        re_mouseKey(1);
-    }
+    console->startConsole("..\\..\\Bisper\\");
+    qDebug() << "We are here in bisper";
 #endif
 }
 
@@ -69,6 +51,6 @@ void re_hideSpeechNote()
 {
 #ifdef WIN32
     qDebug() << "re_hideSpeechNote" << speech_app.hwnd;
-    ShowWindow(speech_app.hwnd, SW_HIDE);
+    console->stopApp();
 #endif
 }
