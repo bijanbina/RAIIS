@@ -37,6 +37,7 @@
 #define KEY_W         'W'
 #define KEY_U         'U'
 #define KEY_X         'X'
+#define KEY_Z         'Z'
 #define KEY_ESC       VK_ESCAPE
 #define KEY_UP        VK_UP
 #define KEY_END       VK_END
@@ -79,6 +80,7 @@ public:
     static void sendKey(int key_val);
     static void pressKey(int key_val);
     static void releaseKey(int key_val);
+    static void type(QString text);
 
 private:
     static bool isExtended(int key_val);
