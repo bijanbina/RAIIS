@@ -10,18 +10,20 @@ SOURCES += Sources/main.cpp \
            Sources/backend.cpp \
            Sources/ch_monitor.cpp \
            Sources/re_apache_cl.cpp \
+           Sources/re_bisper.cpp \
            Sources/re_captain.cpp \
            Sources/re_chapar.cpp \
            Sources/re_chess.cpp \
            Sources/re_client.cpp \
            Sources/re_commands.cpp \
+           Sources/re_console.cpp \
+           Sources/re_console_handle.cpp \
            Sources/re_link.cpp \
            Sources/re_lua.cpp \
            Sources/re_meta.cpp \
            Sources/re_meta_fox.cpp \
            Sources/re_meta_mos.cpp \
            Sources/re_meta_oc.cpp \
-           Sources/re_meta_sys.cpp \
            Sources/re_modifier.cpp \
            Sources/re_mouse.cpp \
            Sources/re_preprocessor.cpp \
@@ -66,12 +68,15 @@ linux:SOURCES += \
 HEADERS += Sources/backend.h \
            Sources/ch_monitor.h \
            Sources/re_apache_cl.h \
+           Sources/re_bisper.h \
            Sources/re_callback_w.h \
            Sources/re_captain.h \
            Sources/re_chapar.h \
            Sources/re_chess.h \
            Sources/re_commands.h \
            Sources/re_config.h \
+           Sources/re_console.h \
+           Sources/re_console_handle.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
            Sources/re_link.h \
@@ -79,7 +84,6 @@ HEADERS += Sources/backend.h \
            Sources/re_meta.h \
            Sources/re_meta_fox.h \
            Sources/re_meta_mos.h \
-           Sources/re_meta_sys.h \
            Sources/re_modifier.h \
            Sources/re_mouse.h \
            Sources/re_preprocessor.h \

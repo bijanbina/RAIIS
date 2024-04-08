@@ -113,7 +113,11 @@ void ReMetaFox::csatGitKraken(int val, CCommand *cmd)
 {
     if( val==KEY_B )
     {
-        system("xdotool type 'BaTool: '");
+        ReKeyboard::type("BaTool: ");
+    }
+    if( val==KEY_C )
+    {
+        ReKeyboard::type("Chess: ");
     }
     else if( val==KEY_M )
     {
@@ -127,11 +131,15 @@ void ReMetaFox::csatGitKraken(int val, CCommand *cmd)
     }
     else if( val==KEY_N )
     {
-        system("xdotool type 'NATO: '"); ///FIXME windows
+        ReKeyboard::type("NATO: "); ///FIXME windows
     }
     else if( val==KEY_R )
     {
-        system("xdotool type 'Rebound-Linux: '");
+#ifdef WIN32
+        ReKeyboard::type("Rebound-Windows: ");
+#else
+        ReKeyboard::type("Rebound-Linux: ");
+#endif
     }
     else if( val==KEY_LEFT ) //tab
     {

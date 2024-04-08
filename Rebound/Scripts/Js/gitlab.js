@@ -61,7 +61,7 @@ function gitlab_timeoutMain()
             var login_btn = $("button:contains('Verify code')");
             if( $(login_btn).length )
             {
-              login_btn[0].click();
+                login_btn[0].click();
             }
         }
     }

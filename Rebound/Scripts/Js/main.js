@@ -12,6 +12,10 @@ else if( location.hostname.includes("accounts.google.com") )
 {
     main_gaccount();
 }
+else if( location.hostname.includes("calendar.google.com") )
+{
+    main_gcal();
+}
 else if( location.hostname.includes("recruitee.com") )
 {
     main_recruit();

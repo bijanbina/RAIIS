@@ -179,9 +179,9 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"\"");
     }
-    else if( val==KEY_END )
+    else if( val==KEY_Z )
     {
-        re_getSysEnd();
+        re_execSpeech();
     }
     else if( val==RE_SUPER_KICK )
     {
@@ -228,10 +228,13 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     {
         ReMetaFox::castXed(val);
     }
-    else if( ReState::app.pname==RE_PROC_QT ||
-             ReState::app.pname==RE_PROC_VSCODE )
+    else if( ReState::app.pname==RE_PROC_VSCODE )
     {
         ReMetaFox::castCode(val, cmd);
+    }
+    else if( ReState::app.pname==RE_PROC_QT )
+    {
+        ReMetaFox::castQt(val, cmd);
     }
     else if( ReState::app.pname==RE_PROC_GIT )
     {
