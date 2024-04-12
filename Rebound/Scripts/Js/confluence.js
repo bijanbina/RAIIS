@@ -35,6 +35,6 @@ function conf_timeoutMain()
 
     if( ss.length==0 )
     {
-        clearInterval(gacc_timer);
+        clearInterval(join_timer);
     }
 }

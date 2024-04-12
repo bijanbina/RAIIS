@@ -52,5 +52,7 @@ void re_hideSpeechNote()
 #ifdef WIN32
     qDebug() << "re_hideSpeechNote" << speech_app.hwnd;
     console->stopApp();
+    delete console;
+    console = NULL;
 #endif
 }

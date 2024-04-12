@@ -383,16 +383,16 @@ int ReRemote::procSpecialKey(QString word)
         procScroll(word);
         return 1;
     }
-    if( last_word=="go" && word=="sierra" )
-    {
-        ReState::remote_state = 0;
-        ReState::goToSleep();
-        last_word = word;
-        return 1;
-    }
     else if( last_word=="system" )
     {
-        if( procSuper(word) )
+        if( word=="down" )
+        {
+            ReState::remote_state = 0;
+            ReState::goToSleep();
+            last_word = word;
+            return 1;
+        }
+        else if( procSuper(word) )
         {
             last_word = word;
             return 1;

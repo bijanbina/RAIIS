@@ -170,6 +170,10 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         system("xdotool key Menu");
     }
+    else if( val==KEY_DOWN )
+    {
+        ReState::goToSleep();
+    }
     else if( val==RE_META_CLOSE )
     {
         system("xdotool key Alt+F4");
