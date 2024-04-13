@@ -49,7 +49,7 @@ void ReSuper::cast(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_CARROT )
     {
-        castRogerCmd(cmd);
+        castCarrotCmd(cmd);
     }
     else if( val==RE_SUPER_DUKE )
     {
@@ -73,7 +73,7 @@ void ReSuper::cast(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_RUN )
     {
-        castRogerCmd(cmd);
+        castRunCmd(cmd);
     }
     else if( val==RE_SUPER_SKY ||
              val==RE_SUPER_DIVE )

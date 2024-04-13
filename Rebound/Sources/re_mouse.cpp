@@ -101,6 +101,19 @@ void re_mouseMoveW_br(int x_offset, int y_offset)
 #endif
 }
 
+// in relative to window bottom right corner
+void re_mouseMoveW_tr(int x_offset, int y_offset)
+{
+#ifdef WIN32
+    RECT active_rect;
+    HWND active_win = GetForegroundWindow();
+    GetWindowRect(active_win, &active_rect);
+    int x = active_rect.right - x_offset;
+    int y = active_rect.top + y_offset;
+    SetCursorPos(x, y);
+#endif
+}
+
 // in relative to window center
 void re_mouseMoveC(int x_offset, int y_offset)
 {

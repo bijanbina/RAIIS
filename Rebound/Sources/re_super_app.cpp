@@ -33,10 +33,10 @@ void ReSuper::castRunCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type = RE_COMMAND_NULL;
 
-//    qDebug() << "Run" << ReState::app.pname;
+    qDebug() << "Run" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
-        cmd->val1 = KEY_F1;
+        cmd->val1 = KEY_F5;
         cmd->type = RE_COMMAND_DIRS;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
@@ -129,6 +129,31 @@ void ReSuper::castGasCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type  = RE_COMMAND_DIRS;
     cmd->state = RE_CSTATE_0;
+}
+
+void ReSuper::castCarrotCmd(CCommand *cmd)
+{
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_NULL;
+
+    qDebug() << "Run" << ReState::app.pname;
+    if( ReState::app.pname==RE_PROC_QT )
+    {
+        cmd->val1 = KEY_F5;
+        cmd->type = RE_COMMAND_DIRS;
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+
+        re_mouseMoveW_br(30, 30);
+        QThread::msleep(100);
+        re_mousePress(1);
+        QThread::msleep(1000);
+        re_mouseMoveW_br(30, 400);
+        QThread::msleep(1000);
+        re_mouseRelease(1);
+    }
 }
 
 int  ReSuper::getScrollVal()

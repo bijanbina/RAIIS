@@ -25,7 +25,6 @@ public:
     static CCommand castMeta(int meta, int arg);
 
 private:
-    static void castPageCmd(int val, CCommand *cmd);
     static void castMusicCmd(int val, CCommand *cmd);
     static void castMouseCmd(int val, CCommand *cmd);
     static void castTouchCmd(int val, CCommand *cmd);

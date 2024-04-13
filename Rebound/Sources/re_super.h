@@ -35,11 +35,12 @@ public:
     static void makeNull(CCommand *cmd);
 
     // super_app
-    static void castFrontCmd(CCommand *cmd);
-    static void castLastCmd (CCommand *cmd);
-    static void castRunCmd  (CCommand *cmd);
-    static void castDukeCmd (CCommand *cmd);
-    static void castGasCmd  (CCommand *cmd);
+    static void castFrontCmd (CCommand *cmd);
+    static void castLastCmd  (CCommand *cmd);
+    static void castRunCmd   (CCommand *cmd);
+    static void castDukeCmd  (CCommand *cmd);
+    static void castGasCmd   (CCommand *cmd);
+    static void castCarrotCmd(CCommand *cmd);
     static void castDiveSky(int cmd, int arg);
     static int  getScrollVal();
 

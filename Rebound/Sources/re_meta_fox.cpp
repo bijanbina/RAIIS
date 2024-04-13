@@ -56,20 +56,13 @@ void ReMetaFox::castCode(int val, CCommand *cmd)
         cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
-//    else if( val==KEY_M )
-//    {
-//        cmd = "xdotool click 2";
-//    }
-//    else if( val==KEY_RIGHT )
-//    {
-//        cmd = "xdotool click 3";
-//    }
-//    else if( val==KEY_F ) //focus
-//    {
-//        system("xdotool key --delay 200 super+ctrl+k");
-//        QThread::msleep(100); //little tweak
-//        cmd = "xdotool key --delay 200 super+ctrl+k";
-//    }
+    else if( val==KEY_DOWN || val==KEY_UP )
+    {
+        cmd->val1  = val;
+        cmd->val2  = 30; //press count
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {
@@ -93,6 +86,13 @@ void ReMetaFox::castQt(int val, CCommand *cmd)
 
         cmd->val2  = 1;
         cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    if( val==KEY_DOWN || val==KEY_UP )
+    {
+        cmd->val1  = val;
+        cmd->val2  = 30; //press count
         cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
@@ -205,6 +205,20 @@ void ReMetaFox::castFirefox(int val, CCommand *cmd)
 
         cmd->val2  = 1;
         cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_DOWN )
+    {
+        cmd->val1  = KEY_NEXT;
+        cmd->val2  = 1; //press count
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_UP )
+    {
+        cmd->val1  = KEY_PAGEUP;
+        cmd->val2  = 1; //press count
         cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
