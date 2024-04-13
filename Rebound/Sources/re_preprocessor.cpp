@@ -71,15 +71,6 @@ void RePreProcessor::nato(const QString &text)
         ReSuper::castDiveSky(cmd, val);
         return;
     }
-    else if( re_isLastGo(cmd_buf) )
-    {
-        if( val==KEY_S )
-        {
-            ReState::goToSleep();
-            cmd_buf.clear();
-            return;
-        }
-    }
     else if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index

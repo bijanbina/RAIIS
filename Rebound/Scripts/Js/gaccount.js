@@ -38,7 +38,8 @@ function gacc_timeoutMain()
         if( $("#totpPin").val()=="" )
         {
             var otp = getOTP("uw6idor4b77nyl5hfblfdrdw5cjosbix");
-            $("#totpPin").val(otp);
+            $("#totpPin").focus();
+            typeNative(otp);
         }
         else
         {

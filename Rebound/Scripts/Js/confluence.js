@@ -17,7 +17,7 @@ function conf_timeoutMain()
     var ss = $("span:contains('Space settings')");
     var ss_pr = ss.parent().parent();
     var at = $("span:contains('Automation')");
-    var at_pr = at[0].parentElement.parentElement;
+    //var at_pr = at[0].parentElement.parentElement;
     var ac = $("span:contains('All content')");
     var ac_pr = ac.parent().parent();
     var ad = $("span:contains('You‘re on the Free plan')");

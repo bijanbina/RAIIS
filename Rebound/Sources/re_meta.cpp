@@ -44,10 +44,6 @@ CCommand ReMeta::castMeta(int meta, int arg)
     {
         castFoxCmd(arg, &cmd);
     }
-    else if( meta==RE_META_PAGE )
-    {
-        castPageCmd(arg, &cmd);
-    }
     else if( meta==RE_META_GO )
     {
         ReState::last_cmd.type = RE_COMMAND_NULL;
@@ -164,11 +160,33 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==KEY_LEFT )
     {
+#ifdef WIN32
+        cmd->is_super = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = val;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+#else
         system("xdotool key --delay 200 Super+b");
+#endif
     }
     else if( val==KEY_RIGHT )
     {
+#ifdef WIN32
+        cmd->is_super = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = val;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+#else
         system("xdotool key Menu");
+#endif
     }
     else if( val==KEY_DOWN )
     {
@@ -209,7 +227,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_DRAG )
     {
-        sendChessCmd("system", "drag");
+           sendChessCmd("system", "drag");
         ReState::ch_count = 4;
     }
     else if( val==RE_SUPER_RESIST )
@@ -333,57 +351,6 @@ void ReMeta::castMusicCmd(int val, CCommand *cmd)
     cmd_str += " >/dev/null";
     system(cmd_str.toStdString().c_str());
 #endif
-}
-
-void ReMeta::castPageCmd(int val, CCommand *cmd)
-{
-    qDebug() << "Page" << ReState::app.pname;
-
-    if( ReState::app.pname==RE_PROC_EDITOR )
-    {
-//        system(re_getGoXed(val);
-    }
-    else if( ReState::app.pname==RE_PROC_QT ||
-             ReState::app.pname==RE_PROC_VSCODE )
-    {
-        if( val==KEY_DOWN ||
-            val==KEY_UP )
-        {
-            cmd->val1  = val;
-            cmd->val2  = 30; //press count
-            cmd->type  = RE_COMMAND_DIRS;
-            cmd->state = RE_CSTATE_0;
-        }
-        if( val==KEY_RIGHT ||
-            val==KEY_LEFT )
-        {
-            cmd->is_alt   = 1;
-            cmd->is_shift = 1;
-            cmd->val1 = KEY_RIGHT;
-
-            cmd->val2  = 1;
-            cmd->val3  = 1;
-            cmd->type  = RE_COMMAND_DIRS;
-            cmd->state = RE_CSTATE_0;
-        }
-    }
-    else
-    {
-        if( val==KEY_DOWN )
-        {
-            cmd->val1  = KEY_NEXT;
-            cmd->val2  = 1; //press count
-            cmd->type  = RE_COMMAND_DIRS;
-            cmd->state = RE_CSTATE_0;
-        }
-        if( val==KEY_UP )
-        {
-            cmd->val1  = KEY_PAGEUP;
-            cmd->val2  = 1; //press count
-            cmd->type  = RE_COMMAND_DIRS;
-            cmd->state = RE_CSTATE_0;
-        }
-    }
 }
 
 void ReMeta::sendChessCmd(QString cmd, QString arg)
