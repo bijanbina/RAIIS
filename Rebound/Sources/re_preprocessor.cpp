@@ -315,7 +315,7 @@ void RePreProcessor::super(const QString &text)
         return;
     }
 
-    if( ReState::ch_count )
+    if( ReState::ch_count && ReChess::isValidChess(text) )
     {
         ReChess::sendChessKey(text);
         return;

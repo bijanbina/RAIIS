@@ -51,6 +51,10 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castCarrotCmd(cmd);
     }
+    else if( val==RE_SUPER_LAUNCH )
+    {
+        castLaunchCmd(cmd);
+    }
     else if( val==RE_SUPER_DUKE )
     {
         castDukeCmd(cmd);

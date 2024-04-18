@@ -41,6 +41,7 @@ public:
     static void castDukeCmd  (CCommand *cmd);
     static void castGasCmd   (CCommand *cmd);
     static void castCarrotCmd(CCommand *cmd);
+    static void castLaunchCmd(CCommand *cmd);
     static void castDiveSky(int cmd, int arg);
     static int  getScrollVal();
 

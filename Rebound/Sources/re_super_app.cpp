@@ -1,4 +1,5 @@
 #include "re_super.h"
+#include "re_chess.h"
 #include <QThread>
 
 void ReSuper::castFrontCmd(CCommand *cmd)
@@ -117,18 +118,66 @@ void ReSuper::castDukeCmd(CCommand *cmd)
 
 void ReSuper::castGasCmd(CCommand *cmd)
 {
-#ifdef WIN32
-    cmd->is_alt = 1;
-    cmd->val1   = KEY_TAB;
-#else
-    cmd->is_super = 1;
-    cmd->val1 = KEY_B;
-#endif
-
     cmd->val2 = 1;
     cmd->val3 = 1;
-    cmd->type  = RE_COMMAND_DIRS;
-    cmd->state = RE_CSTATE_0;
+    cmd->type = RE_COMMAND_NULL;
+
+//    qDebug() << "Duke" << ReState::app.pname;
+
+    if( ReState::app.pname==RE_PROC_QT )
+    {
+        ReChess::sendCmd("select");
+        ReChess::setCount(2);
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        re_mouseMoveW_tr(400, 120);
+        re_mouseKey(1);
+        QThread::msleep(10);
+        re_mouseMoveW_tr(400, 400);
+        cmd->val1    = KEY_END;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+
+    }
+}
+
+void ReSuper::castLaunchCmd(CCommand *cmd)
+{
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_NULL;
+
+//    qDebug() << "Duke" << ReState::app.pname;
+
+    if( ReState::app.pname==RE_PROC_QT )
+    {
+        ReChess::sendCmd("open");
+        ReChess::setCount(1);
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        re_mouseMoveW_tr(400, 120);
+        re_mouseKey(1);
+        QThread::msleep(10);
+        re_mouseMoveW_tr(400, 400);
+        cmd->val1    = KEY_END;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+
+    }
 }
 
 void ReSuper::castCarrotCmd(CCommand *cmd)
@@ -137,10 +186,10 @@ void ReSuper::castCarrotCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type = RE_COMMAND_NULL;
 
-    qDebug() << "Run" << ReState::app.pname;
+    qDebug() << "Carrot" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
-        cmd->val1 = KEY_F5;
+        cmd->val1 = KEY_F4;
         cmd->type = RE_COMMAND_DIRS;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
