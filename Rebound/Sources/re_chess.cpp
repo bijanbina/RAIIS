@@ -208,3 +208,14 @@ int ReChess::isChessCmd(QString text)
 
     return 0;
 }
+
+int ReChess::isValidChess(QString text)
+{
+    int val = text.toInt();
+    if( val==RE_SUPER_LAST || val==RE_SUPER_FRONT )
+    {
+        return 0;
+    }
+
+    return 1;
+}

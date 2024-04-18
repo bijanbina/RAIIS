@@ -28,60 +28,63 @@
 #define RE_CSTATE_2  2
 
 
-#define RE_SUPER_META    101
-#define RE_SUPER_CAMEL   102 //currently colon
-#define RE_SUPER_SWITCH  103
-#define RE_SUPER_KICK    104
-#define RE_SUPER_COMMENT 105
-#define RE_SUPER_COPY    106
-#define RE_SUPER_PASTE   107
-#define RE_SUPER_SIDE    108
-#define RE_SUPER_LOVE    109
-#define RE_SUPER_ROGER   110
-#define RE_SUPER_RESIST  111
-#define RE_SUPER_SPOTIFY 112
-#define RE_SUPER_DOUBLE  113
-#define RE_SUPER_SELECT  114
-#define RE_SUPER_DRAG    115
-#define RE_SUPER_SHOT    116
-#define RE_SUPER_MAGIC   117
-#define RE_SUPER_WINDOW  118
-#define RE_SUPER_GAS     119
-#define RE_SUPER_CARROT  120
-#define RE_SUPER_DUKE    121
-#define RE_SUPER_MEDIA   122
-#define RE_SUPER_FRONT   123
-#define RE_SUPER_LAST    124
-#define RE_SUPER_POWER   125
-#define RE_SUPER_RUN     126
-#define RE_SUPER_SKY     127
-#define RE_SUPER_DIVE    128
+// First 100 used for ASCII characters
+#define RE_SUPER_META    201
+#define RE_SUPER_CAMEL   202 //currently colon
+#define RE_SUPER_SWITCH  203
+#define RE_SUPER_KICK    204
+#define RE_SUPER_COMMENT 205
+#define RE_SUPER_COPY    206
+#define RE_SUPER_PASTE   207
+#define RE_SUPER_SIDE    208
+#define RE_SUPER_LOVE    209
+#define RE_SUPER_ROGER   210
+#define RE_SUPER_RESIST  211
+#define RE_SUPER_SPOTIFY 212
+#define RE_SUPER_DOUBLE  213
+#define RE_SUPER_SELECT  214
+#define RE_SUPER_DRAG    215
+#define RE_SUPER_SHOT    216
+#define RE_SUPER_MAGIC   217
+#define RE_SUPER_WINDOW  218
+#define RE_SUPER_GAS     219
+#define RE_SUPER_CARROT  220
+#define RE_SUPER_DUKE    221
+#define RE_SUPER_MEDIA   222
+#define RE_SUPER_FRONT   223
+#define RE_SUPER_LAST    224
+#define RE_SUPER_POWER   225
+#define RE_SUPER_RUN     226
+#define RE_SUPER_SKY     227
+#define RE_SUPER_DIVE    228
+#define RE_SUPER_LAUNCH  229
 
-#define RE_CHESS_KICK    201
-#define RE_CHESS_COMMENT 202
-#define RE_CHESS_SIDE    203
-#define RE_CHESS_DOUBLE  204
-#define RE_CHESS_RESIST  205
-#define RE_CHESS_DRAG    206
-#define RE_CHESS_SHOT    207
-#define RE_CHESS_MAGIC   208
-#define RE_CHESS_RUN     209
+#define RE_CHESS_KICK    301
+#define RE_CHESS_COMMENT 302
+#define RE_CHESS_SIDE    303
+#define RE_CHESS_DOUBLE  304
+#define RE_CHESS_RESIST  305
+#define RE_CHESS_DRAG    306
+#define RE_CHESS_SHOT    307
+#define RE_CHESS_MAGIC   308
+#define RE_CHESS_RUN     309
 
-#define RE_MOUSE_LEFT    301
-#define RE_MOUSE_MIDDLE  302
-#define RE_MOUSE_RIGHT   303
-#define RE_MOUSE_UP      304
-#define RE_MOUSE_DOWN    305
+#define RE_MOUSE_LEFT    401
+#define RE_MOUSE_MIDDLE  402
+#define RE_MOUSE_RIGHT   403
+#define RE_MOUSE_UP      404
+#define RE_MOUSE_DOWN    405
 
-#define RE_META_OPEN     401
-#define RE_META_SYS      402
-#define RE_META_START    403
-#define RE_META_FOX      404
-#define RE_META_PAGE     405
-#define RE_META_GO       406
-#define RE_META_MUSIC    407
-#define RE_META_CLOSE    408
-#define RE_META_MOUSE    409
+#define RE_META_OPEN     501
+#define RE_META_SYS      502
+#define RE_META_START    503
+#define RE_META_FOX      504
+#define RE_META_PAGE     505
+#define RE_META_GO       506
+#define RE_META_MUSIC    507
+#define RE_META_CLOSE    508
+#define RE_META_MOUSE    509
+
 
 typedef struct ReWindow
 {

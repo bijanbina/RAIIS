@@ -1,4 +1,5 @@
 #include "re_meta.h"
+#include "re_chess.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
 #include "mm_api.h"
@@ -147,7 +148,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==KEY_S )
     {
-        sendChessCmd("screenshot");
+        ReChess::sendCmd("screenshot");
         ReState::ch_count = 4;
     }
     else if( val==KEY_R )
@@ -207,33 +208,38 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_KICK )
     {
-        sendChessCmd("system", "show");
-        ReState::ch_count = 2;
+       ReChess::sendCmd("system", "show");
+       ReChess::setCount(2);
     }
     else if( val==RE_SUPER_SIDE )
     {
-        sendChessCmd("system", "side");
-        ReState::ch_count = 2;
+       ReChess::sendCmd("system", "side");
+       ReChess::setCount(2);
     }
     else if( val==RE_SUPER_COMMENT )
     {
-        sendChessCmd("system", "comment");
-        ReState::ch_count = 2;
+       ReChess::sendCmd("system", "comment");
+       ReChess::setCount(2);
     }
     else if( val==RE_SUPER_DOUBLE )
     {
-        sendChessCmd("system", "double");
-        ReState::ch_count = 2;
+       ReChess::sendCmd("system", "double");
+       ReChess::setCount(2);
     }
     else if( val==RE_SUPER_DRAG )
     {
-           sendChessCmd("system", "drag");
+           ReChess::sendCmd("system", "drag");
         ReState::ch_count = 4;
     }
     else if( val==RE_SUPER_RESIST )
     {
-        sendChessCmd("system", "touch");
+        ReChess::sendCmd("system", "touch");
         ReState::ch_count = 999;
+    }
+    else if( val==RE_SUPER_SELECT )
+    {
+        ReChess::sendCmd("select");
+        ReChess::setCount(2);
     }
     else
     {
@@ -352,19 +358,3 @@ void ReMeta::castMusicCmd(int val, CCommand *cmd)
     system(cmd_str.toStdString().c_str());
 #endif
 }
-
-void ReMeta::sendChessCmd(QString cmd, QString arg)
-{
-#ifdef WIN32
-    QString pipe_data = cmd + CH_NP_SEPARATOR + arg;
-    RePipe::sendChess(pipe_data.toStdString().c_str());
-//    qDebug() << "pipe" << pipe_data;
-#else
-    QString pipe_data = "dbus-send --dest=com.benjamin.chess";
-    pipe_data += "dbus-send --dest=com.benjamin.chess";
-    pipe_data += " / com.benjamin.chess.show string:\"";
-    pipe_data += cmd + "\"";
-    system(pipe_data.toStdString().c_str());
-#endif
-}
-

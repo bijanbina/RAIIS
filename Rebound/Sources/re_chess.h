@@ -24,11 +24,12 @@ public:
     static void dirs (const QString &arg);
     static void meta (const QString &arg);
     static void super(const QString &arg,
-               QVector<CCommand> cmd_buf); //single shot meta cmd
+                      QVector<CCommand> cmd_buf); //single shot meta cmd
     static void digit(const QString &arg);
 
     static void showChess(int val);
     static int  isChessCmd(QString text);
+    static int  isValidChess(QString text);
     static void sendCmd(QString cmd, QString arg="");
     static void setCount(int val);
     static void sendChessKey(QString text);
