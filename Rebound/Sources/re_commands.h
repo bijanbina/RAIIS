@@ -28,62 +28,65 @@
 #define RE_CSTATE_2  2
 
 
-// First 100 used for ASCII characters
-#define RE_SUPER_META    201
-#define RE_SUPER_CAMEL   202 //currently colon
-#define RE_SUPER_SWITCH  203
-#define RE_SUPER_KICK    204
-#define RE_SUPER_COMMENT 205
-#define RE_SUPER_COPY    206
-#define RE_SUPER_PASTE   207
-#define RE_SUPER_SIDE    208
-#define RE_SUPER_LOVE    209
-#define RE_SUPER_ROGER   210
-#define RE_SUPER_RESIST  211
-#define RE_SUPER_SPOTIFY 212
-#define RE_SUPER_DOUBLE  213
-#define RE_SUPER_SELECT  214
-#define RE_SUPER_DRAG    215
-#define RE_SUPER_SHOT    216
-#define RE_SUPER_MAGIC   217
-#define RE_SUPER_WINDOW  218
-#define RE_SUPER_GAS     219
-#define RE_SUPER_CARROT  220
-#define RE_SUPER_DUKE    221
-#define RE_SUPER_MEDIA   222
-#define RE_SUPER_FRONT   223
-#define RE_SUPER_LAST    224
-#define RE_SUPER_POWER   225
-#define RE_SUPER_RUN     226
-#define RE_SUPER_SKY     227
-#define RE_SUPER_DIVE    228
-#define RE_SUPER_LAUNCH  229
+// First 256 used for ASCII characters
+#define RE_SUPER_META    301
+#define RE_SUPER_CAMEL   302 //currently colon
+#define RE_SUPER_SWITCH  303
+#define RE_SUPER_KICK    304
+#define RE_SUPER_COMMENT 305
+#define RE_SUPER_COPY    306
+#define RE_SUPER_PASTE   307
+#define RE_SUPER_SIDE    308
+#define RE_SUPER_LOVE    309
+#define RE_SUPER_ROGER   310
+#define RE_SUPER_RESIST  311
+#define RE_SUPER_SPOTIFY 312
+#define RE_SUPER_DOUBLE  313
+#define RE_SUPER_SELECT  314
+#define RE_SUPER_DRAG    315
+#define RE_SUPER_SHOT    316
+#define RE_SUPER_MAGIC   317
+#define RE_SUPER_WINDOW  318
+#define RE_SUPER_GAS     319
+#define RE_SUPER_CARROT  320
+#define RE_SUPER_DUKE    321
+#define RE_SUPER_MEDIA   322
+#define RE_SUPER_FRONT   323
+#define RE_SUPER_LAST    324
+#define RE_SUPER_POWER   325
+#define RE_SUPER_RUN     326
+#define RE_SUPER_SKY     327
+#define RE_SUPER_DIVE    328
+#define RE_SUPER_LAUNCH  329
+#define RE_SUPER_JAMES   330
+#define RE_SUPER_NEXT    331
+#define RE_SUPER_WEST    332
 
-#define RE_CHESS_KICK    301
-#define RE_CHESS_COMMENT 302
-#define RE_CHESS_SIDE    303
-#define RE_CHESS_DOUBLE  304
-#define RE_CHESS_RESIST  305
-#define RE_CHESS_DRAG    306
-#define RE_CHESS_SHOT    307
-#define RE_CHESS_MAGIC   308
-#define RE_CHESS_RUN     309
+#define RE_CHESS_KICK    401
+#define RE_CHESS_COMMENT 402
+#define RE_CHESS_SIDE    403
+#define RE_CHESS_DOUBLE  404
+#define RE_CHESS_RESIST  405
+#define RE_CHESS_DRAG    406
+#define RE_CHESS_SHOT    407
+#define RE_CHESS_MAGIC   408
+#define RE_CHESS_RUN     409
 
-#define RE_MOUSE_LEFT    401
-#define RE_MOUSE_MIDDLE  402
-#define RE_MOUSE_RIGHT   403
-#define RE_MOUSE_UP      404
-#define RE_MOUSE_DOWN    405
+#define RE_MOUSE_LEFT    501
+#define RE_MOUSE_MIDDLE  502
+#define RE_MOUSE_RIGHT   503
+#define RE_MOUSE_UP      504
+#define RE_MOUSE_DOWN    505
 
-#define RE_META_OPEN     501
-#define RE_META_SYS      502
-#define RE_META_START    503
-#define RE_META_FOX      504
-#define RE_META_PAGE     505
-#define RE_META_GO       506
-#define RE_META_MUSIC    507
-#define RE_META_CLOSE    508
-#define RE_META_MOUSE    509
+#define RE_META_OPEN     601
+#define RE_META_SYS      602
+#define RE_META_START    603
+#define RE_META_FOX      604
+#define RE_META_PAGE     605
+#define RE_META_POWER    606
+#define RE_META_MUSIC    607
+#define RE_META_CLOSE    608
+#define RE_META_MOUSE    609
 
 
 typedef struct ReWindow
