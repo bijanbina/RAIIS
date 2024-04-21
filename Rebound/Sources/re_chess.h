@@ -34,6 +34,7 @@ public:
     static void setCount(int val);
     static void sendChessKey(QString text);
 
+    static int magic_mode;
 private:
     static void resetChess();
     static void handleBackspace();
@@ -43,7 +44,6 @@ private:
     static CCommand   mod_cmd;
 
     static int drag_mode;
-    static int magic_mode;
 };
 
 #endif // RE_CHESS_H

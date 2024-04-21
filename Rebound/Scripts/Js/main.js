@@ -32,6 +32,10 @@ else if( location.hostname.includes("gitlab.com") )
 {
     main_gitlab();
 }
+else if( location.hostname.includes("qblox.personio.de") )
+{
+    main_personio();
+}
 else
 {
     //alert(location.hostname);

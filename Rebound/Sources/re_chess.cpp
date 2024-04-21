@@ -216,6 +216,10 @@ int ReChess::isValidChess(QString text)
     {
         return 0;
     }
+    if( isChessCmd(text) && magic_mode==0 )
+    {
+        return 0;
+    }
 
     return 1;
 }
