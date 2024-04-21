@@ -45,7 +45,7 @@ CCommand ReMeta::castMeta(int meta, int arg)
     {
         castFoxCmd(arg, &cmd);
     }
-    else if( meta==RE_META_GO )
+    else if( meta==RE_META_POWER )
     {
         ReState::last_cmd.type = RE_COMMAND_NULL;
     }
@@ -134,7 +134,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==KEY_K )
     {
-        // Multimedia CPanel Recording Tab
+        // Windows Calculator
         system("calc");
     }
     else if( val==KEY_M )
@@ -150,10 +150,6 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         ReChess::sendCmd("screenshot");
         ReState::ch_count = 4;
-    }
-    else if( val==KEY_R )
-    {
-        ReState::goToRemote();
     }
     else if( val==KEY_V )
     {
@@ -270,7 +266,8 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX ||
              ReState::app.pname==RE_PROC_GEKO    ||
-             ReState::app.pname==RE_PROC_CHROME )
+             ReState::app.pname==RE_PROC_CHROME  ||
+             ReState::app.pname==RE_PROC_VIVALDI )
     {
         ReMetaFox::castFirefox(val, cmd);
 

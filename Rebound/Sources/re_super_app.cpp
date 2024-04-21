@@ -160,14 +160,24 @@ void ReSuper::castLaunchCmd(CCommand *cmd)
     {
         ReChess::sendCmd("open");
         ReChess::setCount(1);
+        ReChess::magic_mode = 1;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        re_mouseMoveW_tr(400, 120);
+        re_mouseMoveW_tr(400, 100);
         re_mouseKey(1);
         QThread::msleep(10);
         re_mouseMoveW_tr(400, 400);
-        cmd->val1    = KEY_END;
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_HOME);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_RIGHT);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_RIGHT);
+        QThread::msleep(10);
+
+        cmd->is_shift = 1;
+        cmd->val1     = KEY_END;
 
         cmd->val2  = 1;
         cmd->val3  = 1;
@@ -176,7 +186,14 @@ void ReSuper::castLaunchCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
+        cmd->val1     = KEY_T;
 
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
 }
 
@@ -202,6 +219,30 @@ void ReSuper::castCarrotCmd(CCommand *cmd)
         re_mouseMoveW_br(30, 400);
         QThread::msleep(1000);
         re_mouseRelease(1);
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+        re_mouseMoveW_tr(400, 100);
+        re_mouseKey(1);
+        QThread::msleep(10);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_L);
+        QThread::msleep(10);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(10);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_C);
+        QThread::msleep(10);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+
+        cmd->val1     = KEY_ESC;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
 }
 
@@ -246,6 +287,32 @@ void ReSuper::castDiveSky(int cmd, int arg)
         }
     }
     else if( ReState::app.pname==RE_PROC_SLACK )
+    {
+        re_mouseMoveW(300, 400);
+        int count = 5*(arg-KEY_1+1);
+        if( arg==-1 ) // default
+        {
+            count = 5;
+        }
+
+        if( cmd==RE_SUPER_DIVE )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(5);
+                QThread::msleep(50);
+            }
+        }
+        else if( cmd==RE_SUPER_SKY )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(4);
+                QThread::msleep(50);
+            }
+        }
+    }
+    else if( ReState::app.pname==RE_PROC_EXPLORER )
     {
         re_mouseMoveW(300, 400);
         int count = 5*(arg-KEY_1+1);

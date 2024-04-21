@@ -55,6 +55,10 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castLaunchCmd(cmd);
     }
+    else if( val==RE_SUPER_JAMES )
+    {
+        castJamesCmd(cmd);
+    }
     else if( val==RE_SUPER_DUKE )
     {
         castDukeCmd(cmd);
@@ -74,6 +78,14 @@ void ReSuper::cast(int val, CCommand *cmd)
     else if( val==RE_SUPER_POWER )
     {
         castRogerCmd(cmd);
+    }
+    else if( val==RE_SUPER_NEXT )
+    {
+        castNextCmd(cmd);
+    }
+    else if( val==RE_SUPER_WEST )
+    {
+        castWestCmd(cmd);
     }
     else if( val==RE_SUPER_RUN )
     {
@@ -119,7 +131,8 @@ void ReSuper::castMetaCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX ||
              ReState::app.pname==RE_PROC_GEKO    ||
-             ReState::app.pname==RE_PROC_CHROME )
+             ReState::app.pname==RE_PROC_CHROME  ||
+             ReState::app.pname==RE_PROC_VIVALDI )
     {
         cmd->is_ctrl = 1;
         cmd->val1    = KEY_W;

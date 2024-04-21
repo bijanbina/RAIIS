@@ -40,6 +40,9 @@ public:
     static void castRunCmd   (CCommand *cmd);
     static void castDukeCmd  (CCommand *cmd);
     static void castGasCmd   (CCommand *cmd);
+    static void castJamesCmd (CCommand *cmd);
+    static void castNextCmd  (CCommand *cmd);
+    static void castWestCmd  (CCommand *cmd);
     static void castCarrotCmd(CCommand *cmd);
     static void castLaunchCmd(CCommand *cmd);
     static void castDiveSky(int cmd, int arg);
