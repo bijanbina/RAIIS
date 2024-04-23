@@ -8,7 +8,6 @@
 #include "re_state.h"
 
 void re_execSpeech();
-void re_openSpeechNote();
 void re_hideSpeechNote();
 
 #endif // RE_BISPER_H

@@ -24,6 +24,8 @@ ReConsole::ReConsole(QObject *parent) : QObject(parent)
             std_out, SLOT(readData()));
     connect(std_out, SIGNAL(readyData(QString,int)),
             this, SLOT(readyData(QString,int)));
+
+    checkModel();
 }
 
 ReConsole::~ReConsole()
@@ -150,6 +152,7 @@ void ReConsole::readyData(QString line, int flag)
 
     for( int i=0; i<count ; i++)
     {
+        qDebug() << i << "line_fmt" << lines[i];
         if( lines[i].contains("[Start speaking]") )
         {
             is_ready = 1;
@@ -167,18 +170,6 @@ void ReConsole::readyData(QString line, int flag)
         {
             continue;
         }
-        qDebug() << i << "line_fmt" << lines[i];
-
-//        if( i<count-1 || new_line )
-//        {
-//            AbUI::setConsoleLineBuf(lines[i]+"\n");
-//            AbUI::addConsoleLine();
-//        }
-//        else
-//        {
-//            AbUI::setConsoleLineBuf(lines[i]);
-//            AbUI::addConsoleText();
-//        }
 
         if ( lines[i].contains("\n") )
         {
@@ -193,4 +184,24 @@ void ReConsole::readyData(QString line, int flag)
             last_line = lines[i];
         }
     }
+}
+
+void ReConsole::checkModel()
+{
+   QString mdl_path = "models\\ggml-base.en.bin";
+   QString bisper_path = "..\\..\\Bisper\\";
+   QString current_dir = QDir::currentPath();
+   QDir::setCurrent(bisper_path);
+
+   if( QFileInfo::exists(mdl_path)==0 )
+   {
+#ifdef WIN32
+       // /w: wait till exit
+       QString cmd = "start /w powershell .\\dl.ps1";
+#endif
+
+       qDebug() << "cmd" << cmd.toStdString().c_str();
+       system(cmd.toStdString().c_str());
+   }
+   QDir::setCurrent(current_dir);
 }

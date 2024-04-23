@@ -36,6 +36,10 @@ else if( location.hostname.includes("qblox.personio.de") )
 {
     main_personio();
 }
+else if( location.hostname.includes("jobs") )
+{
+    main_jobs();
+}
 else
 {
     //alert(location.hostname);

@@ -28,6 +28,7 @@ signals:
 
 private:
     void processLine(QString line);
+    void checkModel();
     void CreateCmdProcess();
 
     HANDLE proc_in_h  = NULL;
