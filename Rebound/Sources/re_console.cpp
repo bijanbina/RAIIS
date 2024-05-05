@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QThread>
+#include "re_app_w.h"
 #include "re_keyboard_w.h"
 #include "re_state.h"
 
@@ -26,6 +27,22 @@ ReConsole::ReConsole(QObject *parent) : QObject(parent)
             this, SLOT(readyData(QString,int)));
 
     checkModel();
+
+    c_exception << "a";
+    c_exception << "an";
+    c_exception << "the";
+    c_exception << "be";
+    c_exception << "is";
+    c_exception << "are";
+    c_exception << "was";
+    c_exception << "were";
+    c_exception << "for";
+    c_exception << "to";
+    c_exception << "in";
+    c_exception << "this";
+    c_exception << "that";
+    c_exception << "if";
+    c_exception << "or";
 }
 
 ReConsole::~ReConsole()
@@ -136,6 +153,11 @@ void ReConsole::processLine(QString line)
 //    qDebug() << "line_fmt" << line;
     if ( !line.contains("\n") )
     {
+        if( ReState::app.pname==RE_PROC_GIT )
+        {
+            line = ReConsole::capitalize(line);
+        }
+        line.remove("...");
         ReKeyboard::type(line);
     }
 }
@@ -204,4 +226,26 @@ void ReConsole::checkModel()
        system(cmd.toStdString().c_str());
    }
    QDir::setCurrent(current_dir);
+}
+
+QString ReConsole::capitalize(QString str)
+{
+    str.remove('.');
+    str.remove(',');
+    str.remove(';');
+    str.remove('!');
+
+    QStringList words = str.split(" ", QString::SkipEmptyParts);
+
+    // Capitalize the first letter of each word
+    for ( int i=0 ; i<words.size() ; i++ )
+    {
+        if( c_exception.contains(words[i])==0 )
+        {
+            words[i][0] = words[i][0].toUpper();
+        }
+    }
+
+    // Join the modified words back into a single string
+    return words.join(" ");
 }

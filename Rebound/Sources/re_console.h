@@ -30,6 +30,7 @@ private:
     void processLine(QString line);
     void checkModel();
     void CreateCmdProcess();
+    QString capitalize(QString str);
 
     HANDLE proc_in_h  = NULL;
     HANDLE proc_out_h = NULL;
@@ -44,6 +45,7 @@ private:
 
     int is_ready;
     QString last_line;
+    QStringList c_exception; // capitalization exceptions
 };
 
 #endif // RE_CONSOLE_H

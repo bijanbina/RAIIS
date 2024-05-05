@@ -16,6 +16,10 @@ else if( location.hostname.includes("calendar.google.com") )
 {
     main_gcal();
 }
+else if( location.hostname.includes("www.youtube.com") )
+{
+    yt_main();
+}
 else if( location.hostname.includes("recruitee.com") )
 {
     main_recruit();

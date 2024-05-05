@@ -180,6 +180,7 @@ void ReChess::setCount(int val)
         mod_cmd.type = RE_COMMAND_NULL;
         re_rmSpex();
         resetChess();
+        magic_mode = 0;
 
         if( ReState::remote_state )
         {

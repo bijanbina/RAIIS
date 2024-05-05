@@ -265,13 +265,8 @@ void ReSuper::castJamesCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        re_mouseMoveW_br(30, 30);
-        QThread::msleep(100);
-        re_mousePress(1);
-        QThread::msleep(1000);
-        re_mouseMoveW_br(30, 400);
-        QThread::msleep(1000);
-        re_mouseRelease(1);
+        cmd->val1 = KEY_F5;
+        cmd->type = RE_COMMAND_DIRS;
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
