@@ -19,8 +19,12 @@ void re_execSpeech()
     if( console==NULL )
     {
         console = new ReConsole;
+        console->startConsole("..\\..\\Bisper\\");
     }
-    console->startConsole("..\\..\\Bisper\\");
+    else
+    {
+
+    }
     qDebug() << "We are here in bisper";
 #endif
 }
@@ -30,7 +34,7 @@ void re_hideSpeechNote()
 #ifdef WIN32
     qDebug() << "re_hideSpeechNote" << speech_app.hwnd;
     console->stopApp();
-    delete console;
+//    delete console;
     console = NULL;
 #endif
 }

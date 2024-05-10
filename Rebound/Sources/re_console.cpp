@@ -43,6 +43,9 @@ ReConsole::ReConsole(QObject *parent) : QObject(parent)
     c_exception << "that";
     c_exception << "if";
     c_exception << "or";
+
+    NtSuspendProcess = (_NtSuspendProcess) GetProcAddress(
+          GetModuleHandleA( "ntdll" ), "NtSuspendProcess" );
 }
 
 ReConsole::~ReConsole()
@@ -248,4 +251,9 @@ QString ReConsole::capitalize(QString str)
 
     // Join the modified words back into a single string
     return words.join(" ");
+}
+
+void ReConsole::unfroze()
+{
+    NtSuspendProcess(piProcInfo.hProcess);
 }

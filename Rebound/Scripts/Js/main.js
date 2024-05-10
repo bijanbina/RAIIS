@@ -32,6 +32,10 @@ else if( location.hostname.includes("vattenfall.nl") )
 {
     main_vattenfall();
 }
+else if( location.hostname.includes("www.huisartsendezomerlinde.nl") )
+{
+    main_huisart();
+}
 else if( location.hostname.includes("gitlab.com") )
 {
     main_gitlab();
@@ -40,7 +44,9 @@ else if( location.hostname.includes("qblox.personio.de") )
 {
     main_personio();
 }
-else if( location.hostname.includes("jobs") )
+else if( location.hostname.includes("jobs")   || 
+         location.hostname.includes("career") ||
+         location.hostname.includes("www.microtech-global.com") )
 {
     main_jobs();
 }

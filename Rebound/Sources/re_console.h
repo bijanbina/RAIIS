@@ -14,6 +14,7 @@ public:
     ~ReConsole();
 
     void stopApp();
+    void unfroze();
 
     QVector<QString> commands;
 
@@ -37,6 +38,12 @@ private:
     HANDLE proc_err_h = NULL;
     HANDLE handle_in  = NULL;
     PROCESS_INFORMATION piProcInfo;
+
+    typedef LONG ( NTAPI *_NtSuspendProcess )( IN HANDLE ProcessHandle );
+    typedef LONG ( NTAPI *_NtResumeProcess )( IN HANDLE ProcessHandle );
+
+    _NtSuspendProcess NtSuspendProcess = 0;
+    _NtResumeProcess  NtResumeProcess  = 0;
 
     ReConsoleHandle *std_err;
     QThread *err_thread;
