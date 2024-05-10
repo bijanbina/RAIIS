@@ -28,6 +28,7 @@
 #define KEY_L         'L'
 #define KEY_M         'M'
 #define KEY_N         'N'
+#define KEY_O         'O'
 #define KEY_P         'P'
 #define KEY_Q         'Q'
 #define KEY_R         'R'

@@ -30,6 +30,7 @@ private:
     static void castTouchCmd(int val, CCommand *cmd);
     static void castSystemCmd(int val, CCommand *cmd);
     static void castFoxCmd(int val, CCommand *cmd);
+    static void castPowerCmd(int val, CCommand *cmd);
     static void sendChessCmd(QString cmd, QString arg="");
 };
 

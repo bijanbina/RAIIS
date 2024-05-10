@@ -32,7 +32,7 @@ QString ReMetaFox::castXed(int val)
     return cmd;
 }
 
-// Or VsCode
+// VsCode
 void ReMetaFox::castCode(int val, CCommand *cmd)
 {
     if( val==KEY_LEFT )
@@ -54,6 +54,26 @@ void ReMetaFox::castCode(int val, CCommand *cmd)
         cmd->val2 = 1;
         cmd->val3 = 1;
         cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    if( val==KEY_A )
+    {
+        cmd->is_ctrl  = 1;
+        cmd->val1 = KEY_1;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_B )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1 = KEY_2;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
     else if( val==KEY_DOWN || val==KEY_UP )
@@ -258,6 +278,18 @@ void ReMetaFox::castFirefox(int val, CCommand *cmd)
         cmd->val3 = 1;
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_O )
+    {
+        ReState::goToSleep();
+//        ReKeyboard::sendKey(VK_SCROLL);
+        re_mouseMoveW_br(1180, 60);
+        QThread::msleep(50);
+        re_mouseKey(1);
+        QThread::msleep(50);
+        re_mouseMoveW_br(1100, 60);
+        QThread::msleep(50);
+        re_mouseKey(1);
     }
 }
 

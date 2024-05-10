@@ -47,7 +47,7 @@ CCommand ReMeta::castMeta(int meta, int arg)
     }
     else if( meta==RE_META_POWER )
     {
-        ReState::last_cmd.type = RE_COMMAND_NULL;
+        castPowerCmd(arg, &cmd);
     }
     else if( meta==RE_META_MUSIC )
     {
@@ -290,6 +290,29 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
         ReMetaFox::castSlack(val, cmd);
     }
 #endif
+}
+
+void ReMeta::castPowerCmd(int val, CCommand *cmd)
+{
+    //////SHOULD GET FIXED WITH THE NEW SYSTEM
+    qDebug() << "FOX" << ReState::app.pname;
+
+    if( ReState::app.pname==RE_PROC_EDITOR )
+    {
+        ReMetaFox::castXed(val);
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        ReMetaFox::castCode(val, cmd);
+    }
+    else if( ReState::app.pname==RE_PROC_QT )
+    {
+        ReMetaFox::castQt(val, cmd);
+    }
+    else if( ReState::app.pname==RE_PROC_GIT )
+    {
+        ReMetaFox::csatGitKraken(val, cmd);
+    }
 }
 
 void ReMeta::castMusicCmd(int val, CCommand *cmd)
