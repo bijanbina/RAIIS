@@ -40,20 +40,29 @@ function huisart_timeoutMain()
         //    //alert($(login_btn).length);
         //    login_btn.click();
         //}
-        var input_user = $("label:contains('E-mailadres')");
-        console.log(input_user);
-        input_user = input_user.find("input[type='email']");
-        input_user.attr('autocomplete', 'on');
+        //var input_user = $("iframe");
+        //console.log(input_user);
+        //console.log(input_user.html());
+        var inputElement = document.getElementById("no_table_name");
+
+        // Check if the element was found
+        if (inputElement) {
+            console.log("Input element found:", inputElement);
+        } else {
+            console.log("Input element with id 'no_table_name' not found.");
+        }
+        //input_user = input_user.find("input[type='email']");
+        //input_user.attr('autocomplete', 'on');
         
-        // Trigger the browser's autocomplete suggestion
-        input_user.focus();
+        //// Trigger the browser's autocomplete suggestion
+        //input_user.focus();
     }
     else
     {
         var login_btn = $("li:contains('Login')");
         if( $(login_btn).length )
         {
-            login_btn[0].children[0].click();
+            //window.location.href = 'https://huisartsendezomerlinde.mijngezondheidsapp.nl/login';
         }
         
         var cat_div = $(".restaurant-categories");
