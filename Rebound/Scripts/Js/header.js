@@ -21,9 +21,7 @@ function fill_form(label_text)
         }
         if( objs.length==0 )
         {
-            console.log("inputinputinputinputinputinputinputinput");
             objs = $(query).parent();
-            console.log(label_text + objs.length);
             objs = objs.find("input");
         }
     }
@@ -31,6 +29,7 @@ function fill_form(label_text)
     {
         if( objs.first().val()==="" )
         {
+            console.log(label_text + objs.length);
             return objs;
         }
     }

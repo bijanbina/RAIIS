@@ -1,13 +1,13 @@
 var jobs_timer;
 
 //These variables change to 1 in case of success 
-jobs_firstname_st = 0;
-jobs_lastname_st  = 0;
-jobs_fullname_st  = 0;
-jobs_phone_st     = 0;
-jobs_email_st     = 0;
-jobs_address_st   = 0;
-jobs_username_st  = 0;
+var jobs_firstname_st = 0;
+var jobs_lastname_st  = 0;
+var jobs_fullname_st  = 0;
+var jobs_phone_st     = 0;
+var jobs_email_st     = 0;
+var jobs_address_st   = 0;
+var jobs_username_st  = 0;
 
 function main_jobs()
 {
@@ -139,7 +139,7 @@ function jobs_name()
     firstname_objs = firstname_objs.next("td");
     firstname_objs = firstname_objs.find("input[type='text']");
 //        console.log(firstname_objs);
-        if( firstname_objs.length )
+    if( firstname_objs.length )
         {
             if( firstname_objs.val()==="" )
             {
@@ -166,7 +166,7 @@ function jobs_name()
         lastname_objs = lastname_objs.next("td");
         lastname_objs = lastname_objs.find("input[type='text']");
 //        console.log(firstname_objs);
-        if( lastname_objs.length )
+    if( lastname_objs.length )
     {
         if( lastname_objs.val()==="" )
         {
@@ -180,14 +180,36 @@ function jobs_name()
 
 function jobs_phone()
 {
-    var phone_objs     = $('*[placeholder*="phone number"]');
-
+    var phone_objs = fill_form("Mobile Telephone Number");
+    if( phone_objs )
+    {
+        fill_phone(phone_objs);
+        return 1;
+    }
+    phone_objs = fill_form("Primary Phone Number");
+    if( phone_objs )
+    {
+        fill_phone(phone_objs);
+        return 1;
+    }
+    phone_objs = fill_form("Phone Number");
+    if( phone_objs )
+    {
+        fill_phone(phone_objs);
+        return 1;
+    }
+    phone_objs = fill_form("Mobile");
+    if( phone_objs )
+    {
+        fill_phone(phone_objs);
+        return 1;
+    }
+    phone_objs     = $('*[placeholder*="phone number"]');
     if( phone_objs.length )
     {
         if( phone_objs.val().length<6 )
         {
-            phone_objs.focus();
-            typeNative("633009005");
+            fill_phone(phone_objs);
             return 1;
         }
     }
@@ -201,8 +223,7 @@ function jobs_phone()
         {
             if( phone_objs.val()==="" )
             {
-                phone_objs.focus();
-                typeNative("633009005");
+                fill_phone(phone_objs);
                 return 1;
             }
         }
@@ -236,48 +257,100 @@ function jobs_phone()
 
 function jobs_email()
 {
-    var email_objs = $('*[placeholder*="email address"]');
+    var email_objs = fill_form("E-Mail");
+    if( email_objs )
+    {
+        fill_email(email_objs.first());
+        return 1;
+    }
+    email_objs = fill_form("Confirm E-Mail");
+    if( email_objs )
+    {
+        fill_email(email_objs.first());
+        return 1;
+    }
+    email_objs = fill_form("Email");
+    if( email_objs )
+    {
+        fill_email(email_objs.first());
+        return 1;
+    }
+    email_objs = fill_form("Email Address");
+    if( email_objs )
+    {
+        fill_email(email_objs.first());
+        return 1;
+    }
 
+    email_objs = $('*[placeholder*="email address"]:visible');
     if( email_objs.length )
     {
         if( email_objs.val()==="" )
         {
-            email_objs.focus();
-            typeNative("bijan@binaee.com");
+            fill_email(email_objs);
             return 1;
         }
     }
-    else
-    {
-        email_objs = $("td:contains('Email Address')");
-        email_objs = email_objs.next("td");
-        email_objs = email_objs.find("input[type='text']");
-//        console.log(email_objs);
-        if( email_objs.length )
-        {
-            if( email_objs[0].value==="" )
-            {
-                email_objs.off('paste');
-                email_objs[0].focus();
-                typeNative("bijan@binaee.com");
-                return 1;
-            }
-        }
-        else
-        {
-            email_objs = $("label:contains('Your Email')");
-            email_objs = email_objs.next("input");
-            if( email_objs.length )
-            {
-                if( email_objs.val()==="" )
-                {
-                    email_objs.focus();
-                    typeNative("bijan@binaee.com");
-                    return 1;
-                }
-            }
-        }
-    }
+//    email_objs = $('*[placeholder*="Email"]');
+//    if( email_objs.length )
+//    {
+//        if( email_objs.val()==="" )
+//        {
+//            fill_email(email_objs);
+//            return 1;
+//        }
+//    }
+
+//    email_objs = $("td:contains('Email Address')");
+//    email_objs = email_objs.next("td");
+//    email_objs = email_objs.find("input[type='text']");
+////        console.log(email_objs);
+//    if( email_objs.length )
+//    {
+//        if( email_objs[0].value==="" )
+//        {
+//            email_objs.off('paste');
+//            fill_email(email_objs.first());
+//            return 1;
+//        }
+//    }
+//    else
+//    {
+//        email_objs = $("label:contains('Your Email')");
+//        email_objs = email_objs.next("input");
+//        if( email_objs.length )
+//        {
+//            if( email_objs.val()==="" )
+//            {
+//                email_objs.focus();
+//                typeNative("bijan@binaee.com");
+//                return 1;
+//            }
+//        }
+//        else
+//        {
+//            email_objs = $("label:contains('Email Address')");
+//            email_objs = email_objs.next("input");
+//            if( email_objs.length )
+//            {
+//                if( email_objs.val()==="" )
+//                {
+//                    email_objs.focus();
+//                    typeNative("bijan@binaee.com");
+//                    return 1;
+//                }
+//            }
+//        }
+//    }
+//    email_objs  = $('input[name="from_email"]');
+//    if( email_objs.length )
+//    {
+//        if( email_objs.val()==="" )
+//        {
+//            fill_email(email_objs);
+//            return 1;
+//        }
+//    }
 
     // retype
     email_objs = $("td:contains('Retype Email Address')");
@@ -287,9 +360,8 @@ function jobs_email()
     {
         if( email_objs[0].value==="" )
         {
-            email_objs[0].focus();
             email_objs[0].onpaste = null;
-            typeNative("bijan@binaee.com");
+            fill_email(email_objs.first());
             return 1;
         }
     }
@@ -318,6 +390,17 @@ function jobs_address()
     {
         nl_options.prop('selected', true);
 //        return 1;
+    }
+    return 0;
+}
+
+function jobs_account()
+{
+    var username_objs = fill_form("User Name");
+    if( username_objs )
+    {
+        fill_username(username_objs);
+        return 1;
     }
     return 0;
 }
