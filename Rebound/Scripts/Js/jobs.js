@@ -140,31 +140,57 @@ function jobs_name()
     firstname_objs = firstname_objs.find("input[type='text']");
 //        console.log(firstname_objs);
     if( firstname_objs.length )
+    {
+        if( firstname_objs.val()==="" )
         {
-            if( firstname_objs.val()==="" )
-            {
-                firstname_objs.focus();
-                typeNative("Bijan");
-                return 1;
-            }
+            fill_firstname(firstname_objs);
+            return 1;
         }
     }
 
-    
+    ///////////////// Last Name /////////////////////
+    var lastname_objs = fill_form("Last Name");
+    if( lastname_objs )
+    {
+        fill_lastname(lastname_objs);
+        return 1;
+    }
+    lastname_objs = fill_form("Surname");
+    if( lastname_objs )
+    {
+        fill_lastname(lastname_objs);
+        return 1;
+    }
+    lastname_objs  = $('*[placeholder="Last name"]');
     if( lastname_objs.length )
     {
         if( lastname_objs.val()==="" )
         {
-            lastname_objs.focus();
-            typeNative("Binaee");
+            fill_lastname(lastname_objs);
             return 1;
         }
     }
-    else
+    lastname_objs  = $('*[placeholder="Last Name"]');
+    if( lastname_objs.length )
     {
-        lastname_objs = $("td:contains('Last Name')");
-        lastname_objs = lastname_objs.next("td");
-        lastname_objs = lastname_objs.find("input[type='text']");
+        if( lastname_objs.val()==="" )
+        {
+            fill_lastname(lastname_objs);
+            return 1;
+        }
+    }
+    lastname_objs  = $('*[placeholder="Last name*"]');
+    if( lastname_objs.length )
+    {
+        if( lastname_objs.val()==="" )
+        {
+            fill_lastname(lastname_objs);
+            return 1;
+        }
+    }
+    lastname_objs = $("td:contains('Last Name')");
+    lastname_objs = lastname_objs.next("td");
+    lastname_objs = lastname_objs.find("input[type='text']");
 //        console.log(firstname_objs);
     if( lastname_objs.length )
     {
@@ -235,11 +261,19 @@ function jobs_phone()
             {
                 if( phone_objs.val()==="" )
                 {
-                    phone_objs.focus();
-                    typeNative("+31633009005");
+                    fill_phone(phone_objs);
                     return 1;
                 }
             }
+        }
+    }
+    phone_objs  = $('input[name="phone"]:visible');
+    if( phone_objs.length )
+    {
+        if( phone_objs.val()==="" )
+        {
+            fill_phone(phone_objs);
+            return 1;
         }
     }
 
@@ -370,17 +404,62 @@ function jobs_email()
     var notif_objs = $("td:contains('Notification')");
     notif_objs = notif_objs.next("td");
     notif_objs = notif_objs.find("input[type='checkbox']");
-    console.log(notif_objs);
+    //console.log(notif_objs);
     if( notif_objs.length )
     {
         notif_objs.prop('checked', false);
     }
+    notif_objs = $("label:contains('email notification')");
+    notif_objs = notif_objs.parent();
+    notif_objs = notif_objs.find("input[type='checkbox']");
+    if( notif_objs.length )
+    {
+        notif_objs.prop('checked', false);
+    }
+
 
     return 0;
 }
 
 function jobs_address()
 {
+    var address_objs = fill_form("Address Line 1");
+    if( address_objs )
+    {
+        fill_address(address_objs);
+        return 1;
+    }
+    address_objs = fill_form("Street Name");
+    if( address_objs )
+    {
+        fill_street(address_objs);
+        return 1;
+    }
+    address_objs = fill_form("City or Town");
+    if( address_objs )
+    {
+        fill_city(address_objs);
+        return 1;
+    }
+    address_objs = fill_form("City");
+    if( address_objs )
+    {
+        fill_city(address_objs);
+        return 1;
+    }
+    address_objs = fill_form("Postal Code");
+    if( address_objs )
+    {
+        fill_postalcode(address_objs);
+        return 1;
+    }
+    address_objs = fill_form("Post Code");
+    if( address_objs )
+    {
+        fill_postalcode(address_objs);
+        return 1;
+    }
+
     var country_objs = $("td:contains('Country/Region of Residence')");
     country_objs = country_objs.next("td");
     country_objs = country_objs.find("select");

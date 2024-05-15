@@ -114,8 +114,23 @@ void ReSuper::castMetaCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        cmd->val1 = KEY_F1;
-        cmd->type = RE_COMMAND_DIRS;
+        ReKeyboard::sendKey(KEY_F1);
+        QThread::msleep(10);
+        ReKeyboard::pressKey(KEY_LEFTSHIFT);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_QUOTE);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_QUOTE);
+        QThread::msleep(10);
+        ReKeyboard::releaseKey(KEY_LEFTSHIFT);
+        QThread::msleep(10);
+
+        cmd->val1     = KEY_LEFT;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_GIT )
     {

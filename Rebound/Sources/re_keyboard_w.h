@@ -55,6 +55,7 @@
 #define KEY_TAB       VK_TAB
 #define KEY_PAGEUP    VK_PRIOR //Page Up
 #define KEY_NEXT      VK_NEXT  //Page Down
+#define KEY_QUOTE     VK_OEM_7 //'
 #define KEY_MINUS     VK_SUBTRACT
 #define KEY_KPPLUS    VK_ADD
 
@@ -67,6 +68,9 @@
 #define KEY_F7        VK_F7
 #define KEY_F8        VK_F8
 #define KEY_F9        VK_F9
+#define KEY_F10       VK_F10
+#define KEY_F11       VK_F11
+#define KEY_F12       VK_F12
 
 #define RE_KEY_FMIN    VK_F1    //0x6f
 #define RE_KEY_FMAX    VK_F12+1 //0x7C
