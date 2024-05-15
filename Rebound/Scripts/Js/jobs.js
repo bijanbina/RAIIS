@@ -1,5 +1,14 @@
 var jobs_timer;
 
+//These variables change to 1 in case of success 
+jobs_firstname_st = 0;
+jobs_lastname_st  = 0;
+jobs_fullname_st  = 0;
+jobs_phone_st     = 0;
+jobs_email_st     = 0;
+jobs_address_st   = 0;
+jobs_username_st  = 0;
+
 function main_jobs()
 {
     jobs_timer = setInterval(jobs_timeoutMain, 1000);
@@ -16,68 +25,119 @@ function jobs_timeoutMain()
     {
         return;
     }
-    else if( jobs_phone() )
+    if( jobs_phone_st==0 )
+    {
+        if( jobs_phone() )
+        {
+            return;
+        }
+    }
+    if( jobs_address() )
     {
         return;
     }
-    else if( jobs_address() )
+    if( jobs_username_st==0 )
     {
-        return;
+        if( jobs_account() )
+        {
+            return;
+        }
     }
-    else if( jobs_email() )
+    if( jobs_email_st==0 )
     {
-        return;
+        if( jobs_email() )
+        {
+            return;
+        }
     }
-    clearInterval(jobs_timer);
+    //clearInterval(jobs_timer);
 }
 
 function jobs_name()
 {
-    var fullname_objs  = $('*[placeholder="Full name"]');
-    // include email address
-    var firstname_objs  = $('*[placeholder="First name"]');
-    var lastname_objs  = $('*[placeholder="Last name"]');
+    if( (jobs_firstname_st==1 && jobs_lastname_st==1) ||
+         jobs_fullname_st==1 )
+    {
+        return 0;
+    }
 
+    ///////////////// Full Name /////////////////////
+    var fullname_objs  = $('*[placeholder="Full name"]');
     if( fullname_objs.length )
     {
         if( fullname_objs.val()==="" )
         {
-            fullname_objs.focus();
-            typeNative("Bijan Binaee");
+            fill_fullname(fullname_objs);
             return 1;
         }
     }
-    else
+    fullname_objs = fill_form("Your Name");
+    if( fullname_objs )
     {
-        fullname_objs = $("label:contains('Your Name')");
-        fullname_objs = fullname_objs.next("input");
-        console.log(fullname_objs);
-        if( fullname_objs.length )
+        fill_fullname(fullname_objs);
+        return 1;
+    }
+    fullname_objs = fill_form("Your name");
+    if( fullname_objs )
+    {
+        fill_fullname(fullname_objs);
+        return 1;
+    }
+    fullname_objs  = $('input[name="applicant_name"]');
+    if( fullname_objs.length )
+    {
+        if( fullname_objs.val()==="" )
         {
-            if( fullname_objs.val()==="" )
-            {
-                fullname_objs.focus();
-                typeNative("Bijan Binaee");
-                return 1;
-            }
+            fill_fullname(fullname_objs);
+            return 1;
         }
     }
     
+    ///////////////// First Name /////////////////////
     //alert(firstname_objs.val().length);
+    ///////////////// First Name /////////////////////
+    var firstname_objs = fill_form("First Name");
+    if( firstname_objs )
+    {
+        fill_firstname(firstname_objs);
+        return 1;
+    }
+    firstname_objs = fill_form("Preferred Name");
+    if( firstname_objs )
+    {
+        fill_firstname(firstname_objs);
+        return 1;
+    }
+    firstname_objs  = $('*[placeholder="First name"]');
     if( firstname_objs.length )
     {
         if( firstname_objs.val()==="" )
         {
-            firstname_objs.focus();
-            typeNative("Bijan");
+            fill_firstname(firstname_objs);
             return 1;
         }
     }
-    else
+    firstname_objs  = $('*[placeholder="First Name"]');
+    if( firstname_objs.length )
     {
-        firstname_objs = $("td:contains('First Name')");
-        firstname_objs = firstname_objs.next("td");
-        firstname_objs = firstname_objs.find("input[type='text']");
+        if( firstname_objs.val()==="" )
+        {
+            fill_firstname(firstname_objs);
+            return 1;
+        }
+    }
+    firstname_objs  = $('*[placeholder="First name*"]');
+    if( firstname_objs.length )
+    {
+        if( firstname_objs.val()==="" )
+        {
+            fill_firstname(firstname_objs);
+            return 1;
+        }
+    }
+    firstname_objs = find_elem("td", "First Name");
+    firstname_objs = firstname_objs.next("td");
+    firstname_objs = firstname_objs.find("input[type='text']");
 //        console.log(firstname_objs);
         if( firstname_objs.length )
         {
@@ -107,13 +167,11 @@ function jobs_name()
         lastname_objs = lastname_objs.find("input[type='text']");
 //        console.log(firstname_objs);
         if( lastname_objs.length )
+    {
+        if( lastname_objs.val()==="" )
         {
-            if( lastname_objs.val()==="" )
-            {
-                lastname_objs.focus();
-                typeNative("Binaee");
-                return 1;
-            }
+            fill_lastname(lastname_objs);
+            return 1;
         }
     }
 

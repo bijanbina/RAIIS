@@ -32,7 +32,8 @@ else if( location.hostname.includes("vattenfall.nl") )
 {
     main_vattenfall();
 }
-else if( location.hostname.includes("www.huisartsendezomerlinde.nl") )
+else if( location.hostname.includes("www.huisartsendezomerlinde.nl") ||
+         location.hostname.includes("mijngezondheidsapp.nl") )
 {
     main_huisart();
 }
@@ -44,9 +45,15 @@ else if( location.hostname.includes("qblox.personio.de") )
 {
     main_personio();
 }
-else if( location.hostname.includes("jobs")   || 
-         location.hostname.includes("career") ||
-         location.hostname.includes("www.microtech-global.com") )
+else if( location.hostname.includes("www.linkedin.com") )
+{
+    main_linkedin();
+}
+else if( location.href.includes("job")    || 
+         location.href.includes("career")  ||
+         location.href.includes("recruit") ||
+         location.hostname.includes("www.microtech-global.com") ||
+         location.hostname.includes("www.aplitrak.com") )
 {
     main_jobs();
 }
