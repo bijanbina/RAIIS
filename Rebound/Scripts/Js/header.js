@@ -15,11 +15,20 @@ function fill_form(label_text)
     else
     {
         objs = objs.next("input");
-        if( label_text=="Your text" )
+        if( label_text==="Your text" )
         {
             console.log(objs);
         }
-        if( objs.length==0 )
+        if( objs.length===0 )
+        {
+            objs = $(query).next();
+            var tagname = objs.prop("tagName");
+            if( tagname!=="input" )
+            {
+                objs = objs.find("input");
+            }
+        }
+        if( objs.length===0 )
         {
             objs = $(query).parent();
             objs = objs.find("input");

@@ -80,7 +80,8 @@ function jobs_name()
     fullname_objs = fill_form("Your name");
     if( fullname_objs )
     {
-        fill_fullname(fullname_objs);
+        console.log(fullname_objs.first());
+        fill_fullname(fullname_objs.first());
         return 1;
     }
     fullname_objs  = $('input[name="applicant_name"]');
@@ -93,9 +94,8 @@ function jobs_name()
         }
     }
     
-    ///////////////// First Name /////////////////////
+    /////////////// First Name /////////////////////
     //alert(firstname_objs.val().length);
-    ///////////////// First Name /////////////////////
     var firstname_objs = fill_form("First Name");
     if( firstname_objs )
     {
@@ -212,6 +212,12 @@ function jobs_phone()
         fill_phone(phone_objs);
         return 1;
     }
+    phone_objs = fill_form("mobile number");
+    if( phone_objs )
+    {
+        fill_phone(phone_objs);
+        return 1;
+    }
     phone_objs = fill_form("Primary Phone Number");
     if( phone_objs )
     {
@@ -310,8 +316,10 @@ function jobs_email()
         return 1;
     }
     email_objs = fill_form("Email Address");
+    console.log(email_objs);
     if( email_objs )
     {
+        console.log(email_objs.first());
         fill_email(email_objs.first());
         return 1;
     }

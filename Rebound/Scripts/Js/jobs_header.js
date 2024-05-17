@@ -2,28 +2,28 @@ function fill_firstname(obj)
 {
     obj.focus();
     typeNative("Bijan");
-    jobs_firstname_st = 1;
+    //jobs_firstname_st = 1;
 }
 
 function fill_lastname(obj)
 {
     obj.focus();
     typeNative("Binaee");
-    jobs_lastname_st = 1;
+    //jobs_lastname_st = 1;
 }
 
 function fill_fullname(obj)
 {
     obj.focus();
     typeNative("Bijan Binaee");
-    jobs_fullname_st = 1;
+    //jobs_fullname_st = 1;
 }
 
 function fill_phone(obj)
 {
     obj.focus();
     typeNative("633009005");
-    jobs_phone_st = 1;
+    //jobs_phone_st = 1;
 }
 
 function fill_email(obj)

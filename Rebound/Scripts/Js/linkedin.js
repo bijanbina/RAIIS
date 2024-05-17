@@ -1,5 +1,6 @@
 var linkedin_timer;
 var linkedin_page1_done = 0;
+var linkedin_resume_done= 0;
 
 function main_linkedin()
 {
@@ -46,6 +47,25 @@ function linkedin_timeoutMain()
                 return 1;
             }
         }
+        phone_num = $("label:contains('Phone')");
+        phone_num = phone_num.next("input");
+        if( phone_num.length )
+        {
+            //console.log(phone_num);
+            if( phone_num.val().length<6 )
+            {
+                phone_num.focus();
+                typeNative("633009005");
+                return 1;
+            }
+        }
+        var upload_res = $("span:contains('Upload resume')");
+        if( upload_res.length && linkedin_resume_done===0 )
+            {
+                //console.log(phone_num);
+                upload_res.click();
+                linkedin_resume_done = 1;
+            }
         var notif_objs = $("label:contains('to stay up to date with their page.')");
         notif_objs = notif_objs.parent();
         notif_objs = notif_objs.find("input[type='checkbox']");
