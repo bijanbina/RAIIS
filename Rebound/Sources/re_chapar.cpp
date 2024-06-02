@@ -1,6 +1,7 @@
 #include "re_chapar.h"
 #include <QDebug>
 #include <QQmlProperty>
+#include "re_lua.h"
 
 ReChapar::ReChapar(QObject *item, QObject *switcher,
                    int isNative, QObject *parent) : QObject(parent)
@@ -10,6 +11,7 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
 
     ReState::init();
     ChMonitor::init();
+    ReLua::init();
 #ifdef WIN32
     RePipe::init();
 #endif

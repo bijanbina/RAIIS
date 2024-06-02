@@ -39,10 +39,12 @@ ReConsole::ReConsole(QObject *parent) : QObject(parent)
     c_exception << "for";
     c_exception << "to";
     c_exception << "in";
+    c_exception << "on";
     c_exception << "this";
     c_exception << "that";
     c_exception << "if";
     c_exception << "or";
+    c_exception << "with";
 
     NtSuspendProcess = (_NtSuspendProcess) GetProcAddress(
           GetModuleHandleA( "ntdll" ), "NtSuspendProcess" );
@@ -161,6 +163,9 @@ void ReConsole::processLine(QString line)
             line = ReConsole::capitalize(line);
         }
         line.remove("...");
+        line.remove(".");
+        line.remove("?");
+        line.remove("!");
         ReKeyboard::type(line);
     }
 }
@@ -222,7 +227,7 @@ void ReConsole::checkModel()
    {
 #ifdef WIN32
        // /w: wait till exit
-       QString cmd = "start /w powershell .\\dl.ps1";
+       QString cmd = "start /w powershell -ExecutionPolicy Bypass .\\dl.ps1";
 #endif
 
        qDebug() << "cmd" << cmd.toStdString().c_str();

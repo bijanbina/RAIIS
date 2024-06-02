@@ -109,10 +109,22 @@ void ReMetaFox::castQt(int val, CCommand *cmd)
         cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
-    if( val==KEY_DOWN || val==KEY_UP )
+    else if( val==KEY_DOWN || val==KEY_UP )
     {
         cmd->val1  = val;
         cmd->val2  = 30; //press count
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_C )
+    {
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_E);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        cmd->val1 = KEY_0;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
         cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }

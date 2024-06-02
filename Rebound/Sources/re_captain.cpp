@@ -101,7 +101,14 @@ void ReCaptain::execKeyboard(CCommand command)
         }
         else
         {
-            QThread::msleep(10); //little tweak
+            if( ReState::app.pname==RE_PROC_GIT )
+            {
+                QThread::msleep(100); // GitKraken is slow
+            }
+            else
+            {
+                QThread::msleep(10); //little tweak
+            }
             ReKeyboard::sendKey(command.val1);
         }
     }

@@ -9,17 +9,21 @@
 
 ReLua::ReLua()
 {
+}
+
+void ReLua::init()
+{
 #ifdef WIN32
-    lst = luaL_newstate();
-    luaL_openlibs(lst);
     addRegisteryKeys();
 #endif
     exec("init.lua");
     registerBenjFox();
 }
-
 QString ReLua::exec(const char *path)
 {
+    lua_State *lst = luaL_newstate();
+    luaL_openlibs(lst);
+
     QString output;
     QString current_dir = QDir::currentPath();
 #ifdef WIN32
@@ -87,17 +91,6 @@ void ReLua::patchJson()
 }
 #endif
 
-QStringList ReLua::getWSList()
-{
-#ifdef WIN32
-    QString ws = exec("getWS.lua");
-#else
-    QString ws = getStrCommand(WS_SC_PATH);
-#endif
-    QStringList ws_list = ws.split("\n", QString::SkipEmptyParts);
-    return ws_list;
-}
-
 void ReLua::registerBenjFox()
 {
     QString json_path = QDir::currentPath();
@@ -125,13 +118,6 @@ void ReLua::registerBenjFox()
         cmd = "cp " + json_path + " ~/.mozilla/" + paths[i];
         system(cmd.toStdString().c_str());
     }
-#endif
-}
-
-ReLua::~ReLua()
-{
-#ifdef WIN32
-    lua_close(lst);
 #endif
 }
 

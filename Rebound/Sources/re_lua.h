@@ -14,22 +14,18 @@ class ReLua
 {
 public:
     ReLua();
-    ~ReLua();
-
-    QStringList getWSList();
+    static void init();
 
 private:
-    void registerBenjFox();
-    QString exec(const char *path);
+    static void registerBenjFox();
+    static QString exec(const char *path);
 
 #ifdef WIN32
-    void addRegisteryKeys();
-    int regExist(QString path);
+    static void addRegisteryKeys();
+    static int regExist(QString path);
 #else
-    void patchJson();
+    static void patchJson();
 #endif
-
-    lua_State *lst;
 };
 
 #endif // RE_LUA_H

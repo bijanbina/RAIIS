@@ -137,6 +137,10 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         // Windows Calculator
         system("calc");
     }
+    else if( val==KEY_H )
+    {
+        ReChess::sendCmd("toggle");
+    }
     else if( val==KEY_M )
     {
         // Multimedia CPanel Recording Tab
