@@ -45,6 +45,12 @@ function fill_street(obj)
     typeNative("Krijn Taconiscade");
 }
 
+function fill_housenumber(obj)
+{
+    obj.focus();
+    typeNative("537");
+}
+
 function fill_city(obj)
 {
     obj.focus();

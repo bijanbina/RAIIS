@@ -53,8 +53,10 @@ else if( location.href.includes("job")    ||
          location.href.includes("career")  ||
          location.href.includes("recruit") ||
          location.hostname.includes("www.microtech-global.com") ||
-         location.hostname.includes("www.aplitrak.com") )
+         location.hostname.includes("www.aplitrak.com") || 
+         location.hostname.includes("pinpointhq.com") )
 {
+    //alert(location.hostname);
     main_jobs();
 }
 else

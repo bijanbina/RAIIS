@@ -56,10 +56,10 @@ async function gmeet_timeoutMain()
         j_node = $("span:contains('Ask to join')");
     }
 
-    if( $('[data-tooltip="Turn off camera (ctrl + e)"]').length==1 )
+    if( $('[data-tooltip="Turn off camera"]').length==1 )
     {
         await sleep(500);
-        $('[data-tooltip="Turn off camera (ctrl + e)"]').click();
+        $('[data-tooltip="Turn off camera"]').click();
         await sleep(800);
         j_node.click();
         clearInterval(join_timer);

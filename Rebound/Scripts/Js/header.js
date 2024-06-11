@@ -36,6 +36,12 @@ function fill_form(label_text)
     }
     if( objs.length )
     {
+        objs = objs.filter(elem_min_size);
+        var objs_strict = objs.filter(elem_text_filter);
+        if( objs_strict.length )
+        {
+            objs = objs_strict;
+        }
         if( objs.first().val()==="" )
         {
             console.log(label_text + objs.length);
@@ -43,6 +49,16 @@ function fill_form(label_text)
         }
     }
     return 0;
+}
+
+function elem_text_filter()
+{
+    return $(this).is('[type="text"]');
+}
+
+function elem_min_size()
+{
+    return $(this).height() > 2;
 }
 
 function find_elem(type, value)

@@ -108,6 +108,12 @@ function jobs_name()
         fill_firstname(firstname_objs);
         return 1;
     }
+    firstname_objs = fill_form("Given Name");
+    if( firstname_objs )
+    {
+        fill_firstname(firstname_objs);
+        return 1;
+    }
     firstname_objs  = $('*[placeholder="First name"]');
     if( firstname_objs.length )
     {
@@ -156,6 +162,12 @@ function jobs_name()
         return 1;
     }
     lastname_objs = fill_form("Surname");
+    if( lastname_objs )
+    {
+        fill_lastname(lastname_objs);
+        return 1;
+    }
+    lastname_objs = fill_form("Family Name");
     if( lastname_objs )
     {
         fill_lastname(lastname_objs);
@@ -234,6 +246,7 @@ function jobs_phone()
     if( phone_objs )
     {
         fill_phone(phone_objs);
+        console.log("5", phone_objs);
         return 1;
     }
     phone_objs     = $('*[placeholder*="phone number"]');
@@ -279,6 +292,7 @@ function jobs_phone()
         if( phone_objs.val()==="" )
         {
             fill_phone(phone_objs);
+            console.log("9");
             return 1;
         }
     }
@@ -441,6 +455,12 @@ function jobs_address()
     if( address_objs )
     {
         fill_street(address_objs);
+        return 1;
+    }
+    address_objs = fill_form("House Number");
+    if( address_objs )
+    {
+        fill_housenumber(address_objs);
         return 1;
     }
     address_objs = fill_form("City or Town");
