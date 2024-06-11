@@ -22,7 +22,6 @@ PLY_PATTERN = '%"media.block%-autoplay%-until%-in%-foreground' -- youtube autopl
 RST_PATTERN = '%"extensions.webextensions.restrictedDomains' -- remove addon restriction
 FNG_PATTERN = '%"privacy.resistFingerprinting.block_mozAddonManager' -- remove addon restriction
 SGN_PATTERN = '%"xpinstall.signatures.required' -- remove addon restriction
-DEV_PATTERN = '%"devtools.policy.disabled' -- remove extra shortcuts
 TRN_PATTERN = '%"browser.translations.automaticallyPopup' -- remove translator popup
 
 CRM_LINE = 'user_pref("devtools.chrome.enabled", true);'
@@ -50,9 +49,6 @@ FNG_F = 'user_pref("privacy.resistFingerprinting.block_mozAddonManager", false);
 
 SGN_T = 'user_pref%(%"xpinstall.signatures.required%", true%);' -- before
 SGN_F = 'user_pref("xpinstall.signatures.required", false);' -- after
-
-DEV_F = 'user_pref%(%"devtools.policy.disabled%", false%);' -- before
-DEV_T = 'user_pref("devtools.policy.disabled", true);' -- after
 
 TRN_T = 'user_pref%(%"browser.translations.automaticallyPopup%", true%);' -- before
 TRN_F = 'user_pref("browser.translations.automaticallyPopup", false);' -- after
@@ -115,12 +111,6 @@ if getEasyMatch(pref_content, SGN_PATTERN) == nil then
 	appendLine(pref_path, SGN_F)
 else
 	replaceLine(pref_path, SGN_T, SGN_F)
-end
-
-if getEasyMatch(pref_content, DEV_PATTERN) == nil then
-	appendLine(pref_path, DEV_T)
-else
-	replaceLine(pref_path, DEV_F, DEV_T)
 end
 
 if getEasyMatch(pref_content, TRN_PATTERN) == nil then
