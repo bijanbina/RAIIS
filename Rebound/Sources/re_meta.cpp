@@ -256,7 +256,8 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     {
         ReMetaFox::castXed(val);
     }
-    else if( ReState::app.pname==RE_PROC_VSCODE )
+    else if( ReState::app.pname==RE_PROC_VSCODE ||
+             ReState::app.pname==RE_PROC_VIVADO )
     {
         ReMetaFox::castCode(val, cmd);
     }
@@ -299,23 +300,23 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
 void ReMeta::castPowerCmd(int val, CCommand *cmd)
 {
     //////SHOULD GET FIXED WITH THE NEW SYSTEM
-    qDebug() << "FOX" << ReState::app.pname;
+    qDebug() << "Power" << ReState::app.pname;
 
     if( ReState::app.pname==RE_PROC_EDITOR )
     {
-        ReMetaFox::castXed(val);
+        ReMetaPower::castXed(val);
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        ReMetaFox::castCode(val, cmd);
+        ReMetaPower::castCode(val, cmd);
     }
     else if( ReState::app.pname==RE_PROC_QT )
     {
-        ReMetaFox::castQt(val, cmd);
+        ReMetaPower::castQt(val, cmd);
     }
     else if( ReState::app.pname==RE_PROC_GIT )
     {
-        ReMetaFox::csatGitKraken(val, cmd);
+        ReMetaPower::csatGitKraken(val, cmd);
     }
 }
 

@@ -6,6 +6,7 @@
 #include "backend.h"
 #include "re_state.h"
 #include "re_meta_fox.h"
+#include "re_meta_power.h"
 #include "re_meta_oc.h"
 #include "re_bisper.h"
 #include "re_meta_mos.h"

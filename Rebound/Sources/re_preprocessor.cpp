@@ -39,6 +39,16 @@ void RePreProcessor::nato(const QString &text)
     if( ReState::ch_count )
     {
         ReChess::nato(text);
+        if( ReState::ch_count==0 )
+        {
+            if( re_isLastMod(cmd_buf) )
+            {
+                int last_i = cmd_buf.count()-1; //last index
+
+                cmd_buf[last_i].type = RE_COMMAND_NULL;
+                return;
+            }
+        }
         return;
     }
     else if( special_c ) //FUNC KEY
@@ -103,6 +113,16 @@ void RePreProcessor::digit(const QString &text)
     if( ReState::ch_count )
     {
         ReChess::digit(text);
+        if( ReState::ch_count==0 )
+        {
+            if( re_isLastMod(cmd_buf) )
+            {
+                int last_i = cmd_buf.count()-1; //last index
+
+                cmd_buf[last_i].type = RE_COMMAND_NULL;
+                return;
+            }
+        }
         return;
     }
     else if( special_c ) //FUNC KEY

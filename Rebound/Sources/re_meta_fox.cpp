@@ -128,7 +128,25 @@ void ReMetaFox::castQt(int val, CCommand *cmd)
         cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
-    else if( val>=KEY_1 &&
+    else if( val==KEY_F )
+    {
+        cmd->val1 = KEY_F6;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val==KEY_R )
+    {
+        cmd->val1 = KEY_F7;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( val>=KEY_0 &&
              val<=KEY_9 ) //tab
     {
         cmd->is_alt = 1;

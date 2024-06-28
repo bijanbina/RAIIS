@@ -3,6 +3,7 @@
 
 #define RE_PROC_QT       "qtcreator"
 #define RE_PROC_VSCODE   "Code"
+#define RE_PROC_VIVADO   "vivado"
 #define RE_PROC_GIT      "gitkraken"
 #define RE_PROC_FIREFOX  "firefox"
 #define RE_PROC_GEKO     "GeckoMain" //same as firefox
