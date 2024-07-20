@@ -1,3 +1,5 @@
+var global_exact = "";
+
 function sleep(ms)
 {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -5,7 +7,7 @@ function sleep(ms)
 
 function fill_form(label_text)
 {
-    var query = "label:contains('" + label_text + "')";
+    var query = "label:contains('" + label_text + "'):visible";
     var objs = $(query);
     if( objs.children().length>1 )
     {
@@ -22,6 +24,10 @@ function fill_form(label_text)
         if( objs.length===0 )
         {
             objs = $(query).next();
+            
+            global_exact = label_text;
+            objs = $(query).filter(elem_exact_text);
+            objs = objs.next();
             var tagname = objs.prop("tagName");
             if( tagname!=="input" )
             {
@@ -59,6 +65,13 @@ function elem_text_filter()
 function elem_min_size()
 {
     return $(this).height() > 2;
+}
+
+function elem_exact_text()
+{
+	var text = $(this).text()
+	text = text.replace(/[^\w\s]/gi, '')
+  	return text === global_exact;
 }
 
 function find_elem(type, value)

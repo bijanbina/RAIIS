@@ -6,7 +6,7 @@ function main_gmeet()
 {
     if( window.location.href.includes("authuser=1")==0 )
     {
-        join_timer = setInterval(gmeet_timeoutMain, 500);
+        join_timer = setInterval(gmeet_timeoutMain, 1500);
     }
 }
 
@@ -55,13 +55,14 @@ async function gmeet_timeoutMain()
     {
         j_node = $("span:contains('Ask to join')");
     }
-
-    if( $('[data-tooltip="Turn off camera"]').length==1 )
+    
+    if( $('[data-tooltip="Turn off camera (ctrl + e)"]').length==1 )
     {
         await sleep(500);
-        $('[data-tooltip="Turn off camera"]').click();
+        $('[data-tooltip="Turn off camera (ctrl + e)"]').click();
         await sleep(800);
         j_node.click();
+        //alert("g");
         clearInterval(join_timer);
     }
 }

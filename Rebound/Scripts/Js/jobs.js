@@ -13,7 +13,7 @@ function main_jobs()
 {
     jobs_timer = setInterval(jobs_timeoutMain, 1000);
 }
-// 
+
 function jobs_timeoutMain()
 {
     if( document.hidden )
@@ -114,7 +114,7 @@ function jobs_name()
         fill_firstname(firstname_objs);
         return 1;
     }
-    firstname_objs  = $('*[placeholder="First name"]');
+    firstname_objs  = $('*[placeholder="First name"]:visible');
     if( firstname_objs.length )
     {
         if( firstname_objs.val()==="" )
@@ -123,7 +123,7 @@ function jobs_name()
             return 1;
         }
     }
-    firstname_objs  = $('*[placeholder="First Name"]');
+    firstname_objs  = $('*[placeholder="First Name"]:visible');
     if( firstname_objs.length )
     {
         if( firstname_objs.val()==="" )
@@ -132,7 +132,7 @@ function jobs_name()
             return 1;
         }
     }
-    firstname_objs  = $('*[placeholder="First name*"]');
+    firstname_objs  = $('*[placeholder="First name*"]:visible');
     if( firstname_objs.length )
     {
         if( firstname_objs.val()==="" )

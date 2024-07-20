@@ -58,3 +58,7 @@ Rebound/usersbijanappdata*
 *.lbl
 
 Rebound/Scripts/Js/back/
+
+Rebound/Scripts/Windows/rpi.bat
+
+*.stackdump
