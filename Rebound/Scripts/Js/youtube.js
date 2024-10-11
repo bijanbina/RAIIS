@@ -19,5 +19,6 @@ function yt_timeoutMain()
     {
         console.log(pr);
         pr.click();
+        pr.trigger('click');;
     }
 }

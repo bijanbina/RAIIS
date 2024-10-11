@@ -20,8 +20,8 @@ void ReKeyboard::init()
     extended_keys << VK_DELETE;
     extended_keys << VK_HOME;
     extended_keys << VK_END;
-    extended_keys << VK_PRIOR;
-    extended_keys << VK_NEXT;
+    extended_keys << VK_PRIOR;//PG_UP
+    extended_keys << VK_NEXT; //PG_DOWN
     extended_keys << VK_LEFT;
     extended_keys << VK_UP;
     extended_keys << VK_DOWN;
@@ -43,10 +43,16 @@ void ReKeyboard::pressKey(int key_val)
     input.ki.wVk = key_val;
     if( isExtended(key_val) )
     {
-        input.ki.dwFlags = KEYEVENTF_EXTENDEDKEY;
+        // because of cmd.exe switch to scan code
+        // for extended key
+        input.ki.wScan = MapVirtualKey(key_val, MAPVK_VK_TO_VSC);
+        input.ki.dwFlags = KEYEVENTF_SCANCODE |
+                           KEYEVENTF_EXTENDEDKEY;
     }
 
     SendInput(1, &input, sizeof(INPUT));
+
+//    qDebug() << "ret" << ret;
 }
 
 void ReKeyboard::releaseKey(int key_val)
@@ -59,7 +65,11 @@ void ReKeyboard::releaseKey(int key_val)
     input.ki.dwFlags = KEYEVENTF_KEYUP;
     if( isExtended(key_val) )
     {
-        input.ki.dwFlags |= KEYEVENTF_EXTENDEDKEY;
+        // because of cmd.exe switch to scan code
+        // for extended key
+        input.ki.wScan = MapVirtualKey(key_val, MAPVK_VK_TO_VSC);
+        input.ki.dwFlags |= KEYEVENTF_SCANCODE |
+                            KEYEVENTF_EXTENDEDKEY;
     }
 
     SendInput(1, &input, sizeof(INPUT));

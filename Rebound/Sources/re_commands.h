@@ -53,7 +53,7 @@
 #define RE_SUPER_MEDIA   322
 #define RE_SUPER_FRONT   323
 #define RE_SUPER_LAST    324
-#define RE_SUPER_POWER   325
+#define RE_SUPER_POWER   325 // Non Valid
 #define RE_SUPER_RUN     326
 #define RE_SUPER_SKY     327
 #define RE_SUPER_DIVE    328

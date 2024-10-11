@@ -4,7 +4,6 @@
 #include <QSettings>
 #include "backend.h"
 
-
 #define WS_SC_PATH "Scripts/Firefox/getWS.sh"
 
 ReLua::ReLua()
@@ -19,6 +18,7 @@ void ReLua::init()
     exec("init.lua");
     registerBenjFox();
 }
+
 QString ReLua::exec(const char *path)
 {
     lua_State *lst = luaL_newstate();
@@ -98,13 +98,11 @@ void ReLua::registerBenjFox()
     json_path.replace("/", QDir::separator());
 #ifdef WIN32
     json_path += "\\Benjamin\\Link\\Resources\\manifest.json";
-    QString reg = "HKEY_LOCAL_MACHINE\\SOFTWARE\\"
+    QString reg = "HKLM\\SOFTWARE\\"
                   "Mozilla\\NativeMessagingHosts\\link";
-    if( regExist(reg)==0 )
-    {
-        QSettings settings(reg, QSettings::NativeFormat);
-        settings.setValue("Default", json_path);
-    }
+    QString key = "Default";
+    QSettings settings(reg, QSettings::NativeFormat);
+    settings.setValue(key, json_path);
 #else
     json_path += "/Benjamin/Link/Resources/link.json";
     patchJson();
@@ -124,31 +122,53 @@ void ReLua::registerBenjFox()
 #ifdef WIN32
 void ReLua::addRegisteryKeys()
 {
+    //disable firefox autoupdate
     QString reg = "HKLM\\SOFTWARE\\Policies\\Mozilla\\Firefox";
-    if( regExist(reg)==0 )
-    {
-        QSettings settings(reg, QSettings::NativeFormat);
-        settings.setValue("DisableAppUpdate", 1);
-    }
+    QString key = "DisableAppUpdate";
+    QSettings ff_setting(reg, QSettings::NativeFormat);
+    ff_setting.setValue(key, 1);
 
+    // End Tasks on Shutdow
     reg = "HKCU\\Control Panel\\Desktop";
-    if( regExist(reg)==0 )
-    {
-        QSettings settings(reg, QSettings::NativeFormat);
-        settings.setValue("AutoEndTasks ", "1");
-    }
+    key = "AutoEndTasks";
+    QSettings sh_setting(reg, QSettings::NativeFormat);
+    sh_setting.setValue(key, 1);
+
+    // allow running ps1 (powershell) instead of oppening in
+    // notepad
+    reg = "HKCR\\Microsoft.PowerShellScript.1\\Shell";
+    key = "Default";
+    QSettings ps_setting(reg, QSettings::NativeFormat);
+    ps_setting.setValue(key, 0); // execute
 }
 
-int ReLua::regExist(QString path)
+int ReLua::regExist(QString path, QString key)
 {
-    HKEY hKey;
     QStringList path_split = path.split(QDir::separator(),
                                         Qt::SkipEmptyParts);
+    QString root_str = path_split[0];
+    HKEY    root;
+    if( root_str=="HKLM" )
+    {
+        root = HKEY_LOCAL_MACHINE;
+    }
+    else if( root_str=="HKCR" )
+    {
+        root = HKEY_CLASSES_ROOT;
+    }
+    if( root_str=="HKCU" )
+    {
+        root = HKEY_CURRENT_USER;
+    }
+
+    // remove root from path
     path_split.removeFirst();
-    QString path_noHKLM = path_split.join(QDir::separator());
-    long reg_exist = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
-            (LPCTSTR)(path_noHKLM.toStdString().c_str()),
-            0, KEY_READ, &hKey);
+    path = path_split.join(QDir::separator());
+
+    HKEY h_key;
+    long reg_exist = RegOpenKeyEx(root,
+            (LPCTSTR)(path.toStdString().c_str()),
+            0, KEY_READ, &h_key);
     if( reg_exist!=ERROR_SUCCESS )
     {
         return false;
