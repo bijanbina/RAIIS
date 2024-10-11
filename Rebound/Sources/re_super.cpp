@@ -75,10 +75,6 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castLastCmd(cmd);
     }
-    else if( val==RE_SUPER_POWER )
-    {
-        castRogerCmd(cmd);
-    }
     else if( val==RE_SUPER_NEXT )
     {
         castNextCmd(cmd);

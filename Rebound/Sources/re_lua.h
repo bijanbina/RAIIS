@@ -22,7 +22,7 @@ private:
 
 #ifdef WIN32
     static void addRegisteryKeys();
-    static int regExist(QString path);
+    static int regExist(QString path, QString key);
 #else
     static void patchJson();
 #endif

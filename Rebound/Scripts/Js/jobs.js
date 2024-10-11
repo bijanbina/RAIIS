@@ -173,7 +173,7 @@ function jobs_name()
         fill_lastname(lastname_objs);
         return 1;
     }
-    lastname_objs  = $('*[placeholder="Last name"]');
+    lastname_objs  = $('*[placeholder="Last name"]:visible');
     if( lastname_objs.length )
     {
         if( lastname_objs.val()==="" )
@@ -182,7 +182,7 @@ function jobs_name()
             return 1;
         }
     }
-    lastname_objs  = $('*[placeholder="Last Name"]');
+    lastname_objs  = $('*[placeholder="Last Name"]:visible');
     if( lastname_objs.length )
     {
         if( lastname_objs.val()==="" )
@@ -191,7 +191,7 @@ function jobs_name()
             return 1;
         }
     }
-    lastname_objs  = $('*[placeholder="Last name*"]');
+    lastname_objs  = $('*[placeholder="Last name*"]:visible');
     if( lastname_objs.length )
     {
         if( lastname_objs.val()==="" )
@@ -200,7 +200,7 @@ function jobs_name()
             return 1;
         }
     }
-    lastname_objs = $("td:contains('Last Name')");
+    lastname_objs = $("td:contains('Last Name'):visible");
     lastname_objs = lastname_objs.next("td");
     lastname_objs = lastname_objs.find("input[type='text']");
 //        console.log(firstname_objs);

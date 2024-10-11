@@ -24,6 +24,9 @@ function conf_timeoutMain()
     var ad_pr = ad.parent().parent();
     var ip = $("span:contains('Invite people')");
     var ip_pr = ip.parent().parent();
+    var ca = $("span:contains('Calendars')");
+    var ca_pr = ca.parent().parent();
+    var id_pr = $("button[id='Content']").parent();
 
     pr.remove();
     ss_pr.remove();
@@ -31,6 +34,8 @@ function conf_timeoutMain()
     ac_pr.remove();
     ad_pr.remove();
     ip_pr.remove();
+    ca_pr.remove();
+    id_pr.remove();
     apps.remove();
 
     if( ss.length==0 )

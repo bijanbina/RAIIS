@@ -283,6 +283,10 @@ void ReMetaFox::castFirefox(int val, CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( val==KEY_H ) //hotmail
+    {
+        ReKeyboard::type("bijanbina@hotmail.com");
+    }
     else if( val>=KEY_1 &&
              val<=KEY_9 ) //tab
     {

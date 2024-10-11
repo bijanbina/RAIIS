@@ -224,17 +224,11 @@ void ReSuper::castJamesCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type = RE_COMMAND_NULL;
 
-    qDebug() << "Carrot" << ReState::app.pname;
+//    qDebug() << "James" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
-        cmd->is_alt   = 1;
-        cmd->is_shift = 1;
-        cmd->val1 = KEY_RIGHT;
-
-        cmd->val2  = 1;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_DIRS;
-        cmd->state = RE_CSTATE_0;
+        cmd->val1 = KEY_F;
+        cmd->type = RE_COMMAND_DIRS;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
@@ -459,6 +453,16 @@ void ReSuper::castDiveSky(int cmd, int arg)
                 re_mouseKey(4);
                 QThread::msleep(50);
             }
+        }
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        if( cmd==RE_SUPER_DIVE )
+        {
+            ReKeyboard::sendKey(KEY_F5);
+        }
+        else if( cmd==RE_SUPER_SKY )
+        {
         }
     }
 }
