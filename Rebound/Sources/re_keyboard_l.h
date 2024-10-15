@@ -19,6 +19,7 @@ public:
     static void pressKey(int key_val);
     static void releaseKey(int key_val);
     static void setKey(int type, int code, int val);
+    static void type(QString text);
 
 private:
     static int uinput_f;

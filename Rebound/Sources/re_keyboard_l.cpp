@@ -86,3 +86,10 @@ void ReKeyboard::releaseKey(int key_val)
     setKey(EV_KEY, key_val, 0);
     setKey(EV_SYN, SYN_REPORT, 0);
 }
+
+void ReKeyboard::type(QString text)
+{
+    QString cmd = "xdotool type '";
+    cmd += text + "'";
+    system(cmd.toStdString().c_str());
+}

@@ -11,5 +11,7 @@
 #define RE_PROC_EDITOR   "xed"
 #define RE_PROC_CHESS    "Chess"
 #define RE_PROC_TELEGRAM "Telegram"
+#define RE_PROC_VIVALDI  "chrome"
+#define RE_PROC_VIVADO   "chrome"
 
 #endif // RE_APP_L_H

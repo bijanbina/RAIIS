@@ -403,6 +403,7 @@ void ReSuper::castDiveSky(int cmd, int arg)
             ReState::enScroll(cmd, arg-KEY_A+10);
         }
     }
+#ifdef WIN32
     else if( ReState::app.pname==RE_PROC_SLACK )
     {
         re_mouseMoveW(300, 400);
@@ -455,6 +456,7 @@ void ReSuper::castDiveSky(int cmd, int arg)
             }
         }
     }
+#endif
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
         if( cmd==RE_SUPER_DIVE )

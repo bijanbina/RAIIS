@@ -16,8 +16,6 @@ SOURCES += Sources/main.cpp \
            Sources/re_chess.cpp \
            Sources/re_client.cpp \
            Sources/re_commands.cpp \
-           Sources/re_console.cpp \
-           Sources/re_console_handle.cpp \
            Sources/re_link.cpp \
            Sources/re_lua.cpp \
            Sources/re_meta.cpp \
@@ -47,6 +45,8 @@ win32:SOURCES += Sources/re_server.cpp \
                  Sources/re_admin_win.cpp \
                  Sources/re_channel_w.cpp \
                  Sources/re_callback_w.cpp \
+                 Sources/re_console.cpp \
+                 Sources/re_console_handle.cpp \
                  Sources/re_hardware_w.cpp \
                  Sources/re_inject.cpp \
                  Sources/re_keyboard_w.cpp \
@@ -76,8 +76,6 @@ HEADERS += Sources/backend.h \
            Sources/re_chess.h \
            Sources/re_commands.h \
            Sources/re_config.h \
-           Sources/re_console.h \
-           Sources/re_console_handle.h \
            Sources/re_keycode.h \
            Sources/re_client.h \
            Sources/re_link.h \
@@ -108,6 +106,8 @@ win32:HEADERS += \
                  Sources/mm_win32_guid.h \
                  Sources/re_admin_win.h \
                  Sources/re_channel_w.h \
+                 Sources/re_console.h \
+                 Sources/re_console_handle.h \
                  Sources/re_hardware_w.h \
                  Sources/re_inject.h \
                  Sources/re_keyboard_w.cpp \

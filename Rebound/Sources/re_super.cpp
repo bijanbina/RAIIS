@@ -114,9 +114,9 @@ void ReSuper::castMetaCmd(CCommand *cmd)
         QThread::msleep(10);
         ReKeyboard::pressKey(KEY_LEFTSHIFT);
         QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_QUOTE);
+        ReKeyboard::sendKey(KEY_APOSTROPHE);
         QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_QUOTE);
+        ReKeyboard::sendKey(KEY_APOSTROPHE);
         QThread::msleep(10);
         ReKeyboard::releaseKey(KEY_LEFTSHIFT);
         QThread::msleep(10);

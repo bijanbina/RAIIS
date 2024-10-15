@@ -21,12 +21,12 @@ void ReLua::init()
 
 QString ReLua::exec(const char *path)
 {
-    lua_State *lst = luaL_newstate();
-    luaL_openlibs(lst);
-
     QString output;
     QString current_dir = QDir::currentPath();
+
 #ifdef WIN32
+    lua_State *lst = luaL_newstate();
+    luaL_openlibs(lst);
     QString ff_path = RE_FIREFOX_DIR;
     ff_path.replace("/", QDir::separator());
     QDir::setCurrent(ff_path);
