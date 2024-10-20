@@ -15,10 +15,10 @@ function recr_timeoutMain()
     {
         return;
     }
-    var fullname_objs  = $('*[placeholder="Full name"]');
+    var fullname_objs  = $('*[placeholder="Full name"]:visible');
     // include email address
-    var email_objs     = $('*[placeholder*="email address"]');
-    var phone_objs     = $('*[placeholder*="phone number"]');
+    var email_objs     = $('*[placeholder*="email address"]:visible');
+    var phone_objs     = $('*[placeholder*="phone number"]:visible');
 
     //alert(phone_objs.val().length);
     if( fullname_objs.length )
