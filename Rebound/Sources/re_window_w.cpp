@@ -162,7 +162,6 @@ void ReWindowW::updateActiveWindow()
     win_active.pname = mm_getPName(win_active.pid);
     ReState::updateApp(win_active);
 
-#ifndef RE_REMOTE
     if( win_active.pname=="rustdesk" &&
         win_active.title!="RustDesk" )
     {
@@ -184,5 +183,4 @@ void ReWindowW::updateActiveWindow()
             ReState::wakeUp();
         }
     }
-#endif
 }
