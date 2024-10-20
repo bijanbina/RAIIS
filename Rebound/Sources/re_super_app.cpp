@@ -70,7 +70,8 @@ void ReSuper::castDukeCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
-    else if( ReState::app.pname==RE_PROC_VSCODE )
+    else if( ReState::app.pname==RE_PROC_VSCODE ||
+             ReState::app.pname==RE_PROC_GIT )
     {
         cmd->is_ctrl = 1;
         cmd->val1    = KEY_W;

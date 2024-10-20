@@ -70,8 +70,11 @@ private:
     QVector<BtHistory>  history;
     QTimer    *timer_history;
 
-    QString     last_word;
-    int         is_last_mouse;
+    QString last_word;
+    int     last_history_count; // keep track of last write count
+                                // to prevent unnessary write that
+                                // clash with BaTool
+    int     is_last_mouse;
 
     ReApacheCl *apache;
 

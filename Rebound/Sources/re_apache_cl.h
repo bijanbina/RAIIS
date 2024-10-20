@@ -25,7 +25,8 @@ public:
 
     void write(QString data);
     void start(QString ip, int port);
-    QByteArray processBuffer();
+    QByteArray  processBuffer();
+    QTcpSocket *con;
 
 signals:
     void connected();
@@ -40,7 +41,6 @@ public slots:
     void liveTimeout();
 
 private:
-    QTcpSocket *con;
     QTimer *live;
     QTimer *watchdog;
 

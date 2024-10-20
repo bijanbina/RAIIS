@@ -1,7 +1,8 @@
 #include "re_preprocessor.h"
 #include <unistd.h>
 
-RePreProcessor::RePreProcessor(ReCaptain *cpt, QObject *parent) : QObject(parent)
+RePreProcessor::RePreProcessor(ReCaptain *cpt, QObject *parent):
+    QObject(parent)
 {
     captain = cpt;
     special_c = 0;

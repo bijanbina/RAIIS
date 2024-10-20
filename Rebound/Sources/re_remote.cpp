@@ -6,7 +6,8 @@
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
-    is_last_mouse = 0;
+    is_last_mouse      = 0;
+    last_history_count = 0;
 
 #ifdef WIN32
     virt = new ReWin32Virt;
@@ -320,6 +321,10 @@ int ReRemote::procMouse(QString word)
 
 void ReRemote::writeResult()
 {
+    if( history.length()==0 && last_history_count==0 )
+    {
+        return;
+    }
 #ifdef RE_REMOTE
 #ifdef WIN32
     QString bar_path = BT_BAR_DIR_WS;
@@ -329,8 +334,8 @@ void ReRemote::writeResult()
     bar_path += "/.config/polybar/awesomewm/";
     bar_path += BT_BAR_RESULT;
 #endif
-    QFile bar_file(bar_path);
 
+    QFile bar_file(bar_path);
     if( !bar_file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         qDebug() << "Error creating" << bar_path;
@@ -340,8 +345,9 @@ void ReRemote::writeResult()
 #endif
         return;
     }
-    QTextStream out(&bar_file);
 
+    QTextStream out(&bar_file);
+    last_history_count = history.length();
     for( int i=0 ; i<history.length() ; i++ )
     {
         out << "%{F#ddd}%{u";

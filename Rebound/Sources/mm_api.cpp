@@ -198,6 +198,7 @@ void mm_launchApp(MmApplication *app, QString arg)
         qDebug() << "Error 26: CreateProcess failed" << last_error
                  << "path" << app->exe_path
                  << "dir" << app->working_dir;
+        exit(0);
     }
 }
 

@@ -40,8 +40,8 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
     channel = new ReChannelW(captain);
     channel_thread = new QThread();
     channel->moveToThread(channel_thread);
-    connect(this, SIGNAL(startChannel()), channel,
-            SLOT(ListenPipe()));
+    connect(this, SIGNAL(startChannel()),
+            channel, SLOT(ListenPipe()));
     channel_thread->start();
 
     emit startChannel();
