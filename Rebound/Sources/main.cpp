@@ -4,7 +4,8 @@
 #include <QQuickItem>
 #include "re_chapar.h"
 
-#ifdef _WIN32
+#ifdef WIN32
+#include "aj_dllgen.h"
 void setNoActivable(QObject *item)
 {
     //Set NoActivable Flag on UI
@@ -24,7 +25,9 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:main.qml")));
     QObject *item = engine.rootObjects().first();
 
-#ifdef _WIN32
+#ifdef WIN32
+    aj_dllGen();
+    aj_setWorkingDir();
     setNoActivable(item);
     //Use for lnk resolve
     CoInitialize(NULL);   //<< add

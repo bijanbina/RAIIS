@@ -128,6 +128,8 @@ linux:HEADERS += Sources/re_api_l.h \
                  Sources/re_x11.h \
                  Sources/re_xbox_l.h
 
+win32:SOURCES += Sources/aj_dllgen.cpp
+
 RESOURCES += Qml/ui.qrc \
              Resources/fonts.qrc
 
@@ -162,6 +164,7 @@ MOC_DIR = Build/.moc
 RCC_DIR = Build/.rcc
 OBJECTS_DIR = Build/.obj
 UI_DIR = Build/.ui
+QMLCACHE_DIR = ./Build
 
 HEADERS += \
     Sources/re_meta_oc.h
