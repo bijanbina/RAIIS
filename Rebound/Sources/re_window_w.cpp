@@ -48,7 +48,6 @@ void ReWindowW::addHwnd(HWND hwnd)
         handleNewWin(win);
     }
 
-    updateRemoteID(win);
     applyOpacity(win);
     checkSize(win);
 }
@@ -96,14 +95,12 @@ void ReWindowW::checkSize(ReWindow win)
 
 void ReWindowW::updateRemoteID(ReWindow win)
 {
-#ifndef RE_REMOTE
     if( win.pname=="rustdesk" && // to exclude main
         win.title.contains("Remote") )// rustdesk window
     {
-        int r_id = re_cleanRemoteId(win.title);
+        int r_id = re_getRemoteId(win.title);
         ReState::remote_id = r_id;
     }
-#endif
 }
 
 void ReWindowW::handleNewWin(ReWindow win)
@@ -168,7 +165,7 @@ void ReWindowW::updateActiveWindow()
         if( ReState::remote_state==0 &&
             ReState::sleep_state==0 )
         {
-            int r_id = re_cleanRemoteId(win_active.title);
+            int r_id = re_getRemoteId(win_active.title);
             qDebug() << "goToRemote"
                      << win_active.title << r_id;
             ReState::goToRemote(r_id);

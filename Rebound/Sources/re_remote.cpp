@@ -6,6 +6,7 @@
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
+    ReState::remote_id = RE_REMOTE;
     is_last_mouse      = 0;
     last_history_count = 0;
 
@@ -42,16 +43,13 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
             this, SLOT(shiftHistory()));
     timer_history->start(BT_HISTORY_UPDATE);
 
-    apache = new ReApacheCl;
+    apache_rx = new ReApacheCl;
+    apache_tx = new ReApacheCl;
 
-#ifdef RE_REMOTE
-    connect(apache, SIGNAL(readyRead(QString)),
+    connect(apache_rx, SIGNAL(readyRead(QString)),
             this, SLOT(readyRead(QString)));
-    ReState::remote_id = RE_REMOTE;
-    apache->start(RE_CIP, RE_CPORT1);
-#else
-    apache->start(RE_CIP, RE_CPORT0);
-#endif
+    apache_rx->start(RE_CIP, RE_CPORT1);
+    apache_tx->start(RE_CIP, RE_CPORT0);
 }
 
 ReRemote::~ReRemote()
@@ -63,7 +61,8 @@ ReRemote::~ReRemote()
 
 void ReRemote::send(QString word)
 {
-    qDebug() << "sendRemote" << word;
+    qDebug() << "sendRemote"
+             << ReState::remote_id << word;
 
     if( word=="go" || word=="system" || word=="mouse" )
     {
@@ -85,7 +84,7 @@ void ReRemote::send(QString word)
 
     QString data = QString::number(ReState::remote_id) + "::";
     data += word + "\n";
-    apache->write(data);
+    apache_tx->write(data);
 }
 
 void ReRemote::readyRead(QString read_data)
@@ -325,7 +324,6 @@ void ReRemote::writeResult()
     {
         return;
     }
-#ifdef RE_REMOTE
 #ifdef WIN32
     QString bar_path = BT_BAR_DIR_WS;
     bar_path += BT_BAR_RESULT_WS;
@@ -360,7 +358,6 @@ void ReRemote::writeResult()
     out << "\n";
 
     bar_file.close();
-#endif
 }
 
 void ReRemote::shiftHistory()

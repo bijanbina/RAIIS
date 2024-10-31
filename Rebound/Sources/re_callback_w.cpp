@@ -30,7 +30,8 @@ BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lParam)
     }
 }
 
-int re_cleanRemoteId(QString title)
+// Clean up title and get the remote_id
+int re_getRemoteId(QString title)
 {
     QStringList split = title.split('-');
     QStringList id_split = split[0].split(" ");

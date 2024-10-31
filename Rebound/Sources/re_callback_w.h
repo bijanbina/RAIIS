@@ -13,7 +13,7 @@
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam);
 BOOL CALLBACK EnumChildProc  (HWND hwnd, LPARAM lParam);
 ReWindow re_readWindow(HWND hwnd);
-int      re_cleanRemoteId(QString title);
+int      re_getRemoteId(QString title);
 int      re_isNormalHwnd(HWND hwnd);
 
 #endif // RE_CALLBACK_W_H

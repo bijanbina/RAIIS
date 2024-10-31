@@ -76,7 +76,8 @@ private:
                                 // clash with BaTool
     int     is_last_mouse;
 
-    ReApacheCl *apache;
+    ReApacheCl *apache_rx;
+    ReApacheCl *apache_tx;
 
 #ifdef WIN32
     lua_State   *lst;
