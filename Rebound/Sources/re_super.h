@@ -41,6 +41,7 @@ public:
     static void castDukeCmd  (CCommand *cmd);
     static void castGasCmd   (CCommand *cmd);
     static void castJamesCmd (CCommand *cmd);
+    static void castJamesFF  (CCommand *cmd);
     static void castNextCmd  (CCommand *cmd);
     static void castWestCmd  (CCommand *cmd);
     static void castCarrotCmd(CCommand *cmd);

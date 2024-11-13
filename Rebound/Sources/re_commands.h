@@ -13,7 +13,7 @@
 #endif
 
 #define RE_COMMAND_NULL   0
-#define RE_COMMAND_DIRS   1
+#define RE_COMMAND_DIRS   1 //This command is repeatable
 #define RE_COMMAND_NATO   2
 #define RE_COMMAND_DIGIT  3
 #define RE_COMMAND_MOUSE  4

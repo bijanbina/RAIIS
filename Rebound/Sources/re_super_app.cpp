@@ -228,7 +228,7 @@ void ReSuper::castJamesCmd(CCommand *cmd)
 //    qDebug() << "James" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
-        cmd->val1 = KEY_F;
+        cmd->val1 = KEY_F8;
         cmd->type = RE_COMMAND_DIRS;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
@@ -243,27 +243,36 @@ void ReSuper::castJamesCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
-        re_mouseMoveW_tr(400, 100);
-        re_mouseKey(1);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_L);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_C);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        castJamesFF(cmd);
+    }
+}
 
-        cmd->val1     = KEY_ESC;
+void ReSuper::castJamesFF(CCommand *cmd)
+{
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_NULL;
 
-        cmd->val2  = 1;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_NATO;
-        cmd->state = RE_CSTATE_0;
+//    qDebug() << "James" << ReState::app.pname;
+    if( ReState::app.title.contains("Confluence") )
+    {
+        if( ReState::app.title.contains("Edit") )
+        {
+            ReKeyboard::pressKey(KEY_LEFTCTRL);
+            QThread::msleep(10);
+            ReKeyboard::sendKey(KEY_ENTER);
+            QThread::msleep(10);
+            ReKeyboard::releaseKey(KEY_LEFTCTRL);
+            QThread::msleep(100);
+
+            cmd->val1     = KEY_ENTER;
+            cmd->is_ctrl  = 1;
+
+            cmd->val2  = 1;
+            cmd->val3  = 1;
+            cmd->type  = RE_COMMAND_NATO;
+            cmd->state = RE_CSTATE_0;
+        }
     }
 }
 
@@ -273,7 +282,7 @@ void ReSuper::castNextCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type = RE_COMMAND_NULL;
 
-    qDebug() << "Carrot" << ReState::app.pname;
+    qDebug() << "Next" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
         cmd->is_alt   = 1;
@@ -287,31 +296,23 @@ void ReSuper::castNextCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        cmd->val1 = KEY_F11;
-        cmd->type = RE_COMMAND_DIRS;
+        cmd->is_alt   = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_RIGHT;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
-        re_mouseMoveW_tr(400, 100);
-        re_mouseKey(1);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_L);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_C);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
-
-        cmd->val1     = KEY_ESC;
-        cmd->val2  = 1;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_NATO;
-        cmd->state = RE_CSTATE_0;
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_TAB;
+        cmd->val2    = 1;
+        cmd->val3    = 1;
+        cmd->type    = RE_COMMAND_DIRS;
+        cmd->state   = RE_CSTATE_0;
     }
 }
 
@@ -321,7 +322,7 @@ void ReSuper::castWestCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type = RE_COMMAND_NULL;
 
-    qDebug() << "Carrot" << ReState::app.pname;
+    qDebug() << "West" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
         cmd->is_alt   = 1;
@@ -335,32 +336,24 @@ void ReSuper::castWestCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        cmd->val1 = KEY_F11;
-        cmd->type = RE_COMMAND_DIRS;
-    }
-    else if( ReState::app.pname==RE_PROC_FIREFOX )
-    {
-        re_mouseMoveW_tr(400, 100);
-        re_mouseKey(1);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_L);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_C);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
-
-        cmd->val1     = KEY_ESC;
+        cmd->is_alt   = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_RIGHT;
 
         cmd->val2  = 1;
         cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_NATO;
+        cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
+        cmd->val1     = KEY_TAB;
+        cmd->val2     = 1;
+        cmd->val3     = 1;
+        cmd->type     = RE_COMMAND_DIRS;
+        cmd->state    = RE_CSTATE_0;
     }
 }
 

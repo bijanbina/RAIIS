@@ -58,12 +58,13 @@ void ReWindowW::applyOpacity(ReWindow win)
         win.pname=="rustdesk" ||
         win.title=="Qt Creator" ||
         win.pname=="AnyDesk" ||
+        win.pname=="VirtualBoxVM" ||
         win.pname=="NLClientApp" )
     {
         return;
     }
-//                qDebug() << "process" << current_win.pname
-//                         << current_win.title;
+//    qDebug() << "process" << win.pname
+//             << win.title;
     if( win_active.hWnd==win.hWnd )
     {
         re_setWindowOpacity(win.hWnd, 255);
