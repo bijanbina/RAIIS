@@ -36,7 +36,7 @@ void ReMetaMos::castMonitor(int val)
         y  = ChMonitor::primary.y;
         y += ChMonitor::primary.height/2;
     }
-    else if( val==KEY_R ) //Primary Left Side
+    else if( val==KEY_R ) //Primary Right Side
     {
         x  = ChMonitor::primary.x;
         x += ChMonitor::primary.width*3/4;

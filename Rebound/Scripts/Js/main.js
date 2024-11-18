@@ -49,6 +49,10 @@ else if( location.hostname.includes("www.linkedin.com") )
 {
     main_linkedin();
 }
+else if( location.hostname.includes("finder.techleap.nl") )
+{
+    main_techleap();
+}
 else if( location.href.includes("job")    || 
          location.href.includes("career")  ||
          location.href.includes("recruit") ||
