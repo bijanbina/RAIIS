@@ -2,10 +2,56 @@
 #include "re_chess.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
+#include "re_virtual_w.h"
 #include "mm_api.h"
 #else
 #include "re_keyboard_l.h"
 #endif
+
+HWND focus_hwnd;
+HWND open_hwnd;
+BOOL CALLBACK EnumOpen(HWND hwnd, LPARAM lParam)
+{
+    MmApplication *app = (MmApplication *)lParam; // requested pname
+    QString win_title = mm_getWinTitle(hwnd);
+
+    // skip hidden window
+    if( IsWindowVisible(hwnd)==0 )
+    {
+        return TRUE;
+    }
+
+    // skip windows bs windows
+    if( win_title.isEmpty() )
+    {
+        return TRUE;
+    }
+
+    // skip windows not on current desktop
+    if( ReVirtualW::isCurrentDesktop(hwnd)==0 &&
+        app->workspace==0 )
+    {
+        return TRUE;
+    }
+
+    // skip active window
+    if( hwnd==focus_hwnd )
+    {
+        return TRUE;
+    }
+
+    long pid = mm_getPid(hwnd);
+    QString pname = mm_getPName(pid);
+    pname = QFileInfo(pname).completeBaseName();
+    qDebug() << pname << app->exe_name;
+    if( pname==app->exe_name )
+    {
+        open_hwnd = hwnd;
+        return FALSE;
+    }
+
+    return TRUE;
+}
 
 ReMeta::ReMeta()
 {
@@ -25,8 +71,7 @@ CCommand ReMeta::castMeta(int meta, int arg)
 
     if( meta==RE_META_OPEN )
     {
-//        QString system(re_getOpenCmd(state, arg);
-//        system(cmd.toStdString().c_str());
+        castOpenCmd(arg, &cmd);
     }
     else if( meta==RE_META_CLOSE )
     {
@@ -59,6 +104,42 @@ CCommand ReMeta::castMeta(int meta, int arg)
     }
 
     return cmd;
+}
+
+void ReMeta::castOpenCmd(int val, CCommand *cmd)
+{
+    MmApplication app;
+    if( val==KEY_E )
+    {
+        app.exe_name = "explorer";
+    }
+    else if( val==KEY_Q )
+    {
+        app.exe_name = "qtcreator";
+    }
+    execOpen(&app);
+}
+
+void ReMeta::execOpen(MmApplication *app)
+{
+    if( app->exe_name.isEmpty() )
+    {
+        return;
+    }
+
+    app->workspace = 0;
+    focus_hwnd = GetForegroundWindow();
+    open_hwnd  = 0;
+    EnumWindows(EnumOpen, (LPARAM) app);
+
+    if( open_hwnd==0 )
+    {
+        // search without workspace criteria
+        app->workspace = -1;
+        EnumWindows(EnumOpen, (LPARAM) app);
+    }
+
+    mm_focus(open_hwnd);
 }
 
 void ReMeta::castMouseCmd(int val, CCommand *cmd)

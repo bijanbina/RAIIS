@@ -88,10 +88,6 @@ void re_getQtCmd(CCommand val)
     {
         cmd = re_getCloseQt(val.val2);
     }
-    else if( val.val1==RE_META_OPEN )
-    {
-        cmd = re_getOpenQt(val.val2);
-    }
     else
     {
         return;

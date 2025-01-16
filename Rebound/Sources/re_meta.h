@@ -14,6 +14,7 @@
 #include <windows.h>
 #include "re_app_w.h"
 #include "re_pipe.h"
+#include "mm_api.h"
 #else
 #include "re_app_l.h"
 #endif
@@ -26,6 +27,8 @@ public:
     static CCommand castMeta(int meta, int arg);
 
 private:
+    static void execOpen(MmApplication *app);
+    static void castOpenCmd(int val, CCommand *cmd);
     static void castMusicCmd(int val, CCommand *cmd);
     static void castMouseCmd(int val, CCommand *cmd);
     static void castTouchCmd(int val, CCommand *cmd);

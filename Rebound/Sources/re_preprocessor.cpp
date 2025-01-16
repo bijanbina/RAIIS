@@ -270,8 +270,7 @@ void RePreProcessor::meta(const QString &text)
         int last_i  = cmd_buf.count()-1; //last index
         int cmd_val = text.toInt();
 
-        if( cmd_val==RE_META_OPEN ||
-            cmd_val==RE_META_CLOSE )
+        if( cmd_val==RE_META_CLOSE )
         {
             cmd_buf[last_i].val1 = cmd_val;
             cmd_buf[last_i].val3 = 1;
@@ -294,8 +293,7 @@ void RePreProcessor::meta(const QString &text)
     cmd.val3 = 1;
     cmd.type = RE_COMMAND_META;
 
-    if( cmd.val1==RE_META_OPEN ||
-        cmd.val1==RE_META_CLOSE )
+    if( cmd.val1==RE_META_CLOSE )
     {
         return; // we don't accept empty open/close
         system("rm ~/.config/polybar/awesomewm/ben_status");

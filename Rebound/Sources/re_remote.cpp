@@ -11,7 +11,7 @@ ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     last_history_count = 0;
 
 #ifdef WIN32
-    virt = new ReWin32Virt;
+    ReVirtualW::init();
 #endif
 
     connect(this, SIGNAL(dirs(const QString &)),
@@ -270,8 +270,8 @@ int ReRemote::procSuper(QString word)
 
     if( val )
     {
-        virt->setDesktop(val-1);
-        virt->setFocus();
+        ReVirtualW::setDesktop(val-1);
+        ReVirtualW::setFocus();
         wakeRemote();
         return 1;
     }
