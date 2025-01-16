@@ -7,6 +7,7 @@
 #include <dwmapi.h>
 #include <psapi.h> //pname
 #include <QThread> //sleep
+#include "re_virtual_w.h"
 
 HWND hwnd_g = NULL;
 
@@ -32,12 +33,18 @@ BOOL CALLBACK EnumWindowsApp(HWND hwnd, LPARAM lParam)
     pname = QFileInfo(pname).completeBaseName();
     if( pname==app->exe_name )
     {
-        qDebug() << "EnumWindowsProc find HWND"
-                 << pname << app->exe_name << hwnd
-                 << win_title;
-
         if( win_title.contains(app->win_title) )
         {
+            if( app->workspace==0 )
+            {
+                if( ReVirtualW::isCurrentDesktop(hwnd)==0 )
+                {
+                    return TRUE;
+                }
+            }
+            qDebug() << "EnumWindowsProc find HWND"
+                     << pname << app->exe_name << hwnd
+                     << win_title;
             hwnd_g = hwnd;
             return FALSE;
         }

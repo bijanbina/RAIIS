@@ -36,7 +36,7 @@ void ReKeyboard::sendKey(int key_val)
     // Press the key
     cmds[0].type = INPUT_KEYBOARD;
     cmds[0].ki.wVk = key_val;
-    if(isExtended(key_val))
+    if( isExtended(key_val) )
     {
         cmds[0].ki.wScan = MapVirtualKey(key_val,
                                          MAPVK_VK_TO_VSC);
@@ -46,9 +46,8 @@ void ReKeyboard::sendKey(int key_val)
 
     // Release the key
     cmds[1] = cmds[0];  // Copy the press input
-    cmds[1].ki.dwFlags |= KEYEVENTF_KEYUP; // Set KEYEVENTF_KEYUP for release
-
-    // Send both events in one SendInput call
+    cmds[1].ki.dwFlags |= KEYEVENTF_KEYUP; 
+    
     SendInput(2, cmds, sizeof(INPUT));
 }
 

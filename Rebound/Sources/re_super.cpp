@@ -75,6 +75,10 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castLastCmd(cmd);
     }
+    else if( val==RE_SUPER_LOOP )
+    {
+        castLoopCmd(cmd);
+    }
     else if( val==RE_SUPER_NEXT )
     {
         castNextCmd(cmd);
@@ -273,6 +277,17 @@ void ReSuper::castSelectCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_DIRS;
         cmd->state = RE_CSTATE_0;
     }
+}
+
+void ReSuper::castLoopCmd(CCommand *cmd)
+{
+    cmd->is_super = 1;
+    cmd->val1     = KEY_APOSTROPHE;
+
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type  = RE_COMMAND_NATO;
+    cmd->state = RE_CSTATE_0;
 }
 
 void ReSuper::castLoveCmd(CCommand *cmd)

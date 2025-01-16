@@ -15,7 +15,7 @@ typedef struct MmApplication
     QString working_dir;
     QString win_title;
     QString pname;
-    int workspace;
+    int workspace = -1;
 #ifdef WIN32
     DWORD pid = 0;
     HWND hwnd = 0;

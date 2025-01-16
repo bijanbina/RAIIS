@@ -81,7 +81,6 @@ private:
 
 #ifdef WIN32
     lua_State   *lst;
-    ReWin32Virt *virt;
 #endif
 };
 
