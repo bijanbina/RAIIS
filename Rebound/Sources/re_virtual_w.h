@@ -18,6 +18,9 @@ const CLSID CLSID_ImmersiveShell = {
 const CLSID CLSID_VirtualDesktopAPI_Unknown = {
     0xC5E0CDCA, 0x7B6E, 0x41B2, {0x9F, 0xC4, 0xD9, 0x39, 0x75, 0xCC, 0x46, 0x7B} };
 
+const IID IID_IVirtualDesktopManager = {
+    0xA5CD92FF, 0x29BE, 0x454C, {0x8D, 0x04, 0xD8, 0x28, 0x79, 0xFB, 0x3F, 0x1B} };
+
 const IID IID_IVirtualDesktopManagerInternal = {
     0xf31574d6,0xb682,0x4cdc,{0xbd,0x56,0x18,0x27,0x86,0x0a,0xbe,0xc6}};
 
@@ -53,7 +56,7 @@ public:
         HSTRING* pName) = 0;
 };
 
-struct IVirtualDesktopManagerInternal : public IUnknown
+struct IVirtDManagerInt : public IUnknown
 {
 public:
     virtual HRESULT STDMETHODCALLTYPE GetCount(
@@ -97,7 +100,7 @@ public:
         IVirtualDesktop **ppDesktop) = 0;
 };
 
-struct IVirtualDesktopManagerInternal_WIN11_21H2 : public IUnknown
+struct IVirtDManagerInt_WIN11_21H2 : public IUnknown
 {
 public:
     virtual HRESULT STDMETHODCALLTYPE GetCount(HMONITOR hMonitor,
@@ -186,26 +189,28 @@ public:
         /* [in] */ __RPC__in REFGUID desktopId) = 0;
 };
 
-class ReWin32Virt: public QObject
+class ReVirtualW
 {
-    Q_OBJECT
 public:
-    explicit ReWin32Virt(QObject *parent = nullptr);
-    ~ReWin32Virt();
+    ReVirtualW();
 
-    void setDesktop(int id);
-    void setFocus();
-    void initInternal();
+    static void init();
+    static void release();
+    static void setDesktop(int id);
+    static void setFocus();
+    static void initInternal();
+    static int  isCurrentDesktop(HWND hWnd);
 
 private:
-    void initInternal_Win10();
-    void initInternal_Win11_21H2();
+    static void initInternal_Win10();
+    static void initInternal_Win11_21H2();
 
-    QVector<GUID> vd_guids;
-    IVirtualDesktopManagerInternal* manager_int;
-    IVirtualDesktopManagerInternal_WIN11_21H2* manager_int_win11_21H2;
-    IServiceProvider* services;
-    int win_ver;
+    static QVector<GUID> vd_guids;
+    static IVirtDManagerInt* manager_int;
+    static IVirtDManagerInt_WIN11_21H2* manager_int_win11_21H2;
+    static IServiceProvider* services;
+    static IVirtualDesktopManager* manager;
+    static int win_ver;
 };
 
 #endif // RE_WIN32_VIRT_H

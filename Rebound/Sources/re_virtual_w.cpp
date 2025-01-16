@@ -1,22 +1,39 @@
-#include "re_win32_virt.h"
+#include "re_virtual_w.h"
 #include <initguid.h>
 #include <windows.h>
 #include <inspectable.h> // IInspectable, HSTRING, TrustLevel
-#include <shobjidl.h> // IObjectArray, ObjectArray, IVirtualDesktopManager, VirtualDesktopManager
-#include <strsafe.h> // StringCbPrintf
+#include <shobjidl.h>    // IObjectArray, ObjectArray, IVirtualDesktopManager, VirtualDesktopManager
+#include <strsafe.h>     // StringCbPrintf
 #include <QDebug>
 #include <QThread>
 #include "mm_api.h"
 #include "mm_win32_guid.h"
 
-ReWin32Virt::ReWin32Virt(QObject *parent): QObject(parent)
+QVector<GUID>                ReVirtualW::vd_guids;
+IVirtualDesktopManager*      ReVirtualW::manager;
+IVirtDManagerInt*            ReVirtualW::manager_int;
+IVirtDManagerInt_WIN11_21H2* ReVirtualW::manager_int_win11_21H2;
+IServiceProvider*            ReVirtualW::services;
+int                          ReVirtualW::win_ver;
+
+ReVirtualW::ReVirtualW()
+{
+    ;
+}
+
+void ReVirtualW::init()
 {
     services = NULL;
     win_ver = mm_getWinVer();
     initInternal();
+
+    HRESULT hr;
+    hr = services->QueryService(IID_IVirtualDesktopManager,
+                                IID_IVirtualDesktopManager,
+                                (void **)&manager);
 }
 
-ReWin32Virt::~ReWin32Virt()
+void ReVirtualW::release()
 {
     if( win_ver==MM_WIN10 )
     {
@@ -28,7 +45,7 @@ ReWin32Virt::~ReWin32Virt()
     }
 }
 
-void ReWin32Virt::initInternal()
+void ReVirtualW::initInternal()
 {
     manager_int = NULL;
     manager_int_win11_21H2 = NULL;
@@ -37,7 +54,8 @@ void ReWin32Virt::initInternal()
     {
         CoInitializeEx(NULL, COINIT_MULTITHREADED);
         HRESULT hr = CoCreateInstance(CLSID_ImmersiveShell, NULL,
-                     CLSCTX_LOCAL_SERVER, __uuidof(IServiceProvider),
+                                      CLSCTX_LOCAL_SERVER,
+                                      __uuidof(IServiceProvider),
                                       (PVOID*)&services);
         if( hr )
         {
@@ -56,7 +74,7 @@ void ReWin32Virt::initInternal()
     }
 }
 
-void ReWin32Virt::initInternal_Win10()
+void ReVirtualW::initInternal_Win10()
 {
     IObjectArray *desktops = NULL;
     IVirtualDesktop *c_desktop;
@@ -87,7 +105,7 @@ void ReWin32Virt::initInternal_Win10()
     desktops->Release();
 }
 
-void ReWin32Virt::initInternal_Win11_21H2()
+void ReVirtualW::initInternal_Win11_21H2()
 {
     IObjectArray *desktops = NULL;
     IVirtualDesktop_Win11_21H2 *c_desktop_win11_21H2;
@@ -120,7 +138,7 @@ void ReWin32Virt::initInternal_Win11_21H2()
     desktops->Release();
 }
 
-void ReWin32Virt::setDesktop(int id)
+void ReVirtualW::setDesktop(int id)
 {
     IObjectArray *desktops = NULL;
     if( win_ver==MM_WIN10 )
@@ -155,7 +173,7 @@ void ReWin32Virt::setDesktop(int id)
     }
 }
 
-void ReWin32Virt::setFocus()
+void ReVirtualW::setFocus()
 {
     QThread::msleep(100);
 
@@ -164,4 +182,15 @@ void ReWin32Virt::setFocus()
 
     HWND hwnd = WindowFromPoint(P);
     mm_focus(hwnd);
+}
+
+int ReVirtualW::isCurrentDesktop(HWND hWnd)
+{
+    BOOL onCurrent = FALSE;
+
+    // Check if the window is on the current virtual desktop
+    manager->IsWindowOnCurrentVirtualDesktop(hWnd,
+                                             &onCurrent);
+
+    return onCurrent;
 }

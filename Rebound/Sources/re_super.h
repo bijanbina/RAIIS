@@ -10,7 +10,7 @@
 #ifdef WIN32
 #include "re_app_w.h"
 #include "re_keyboard_w.h"
-#include "re_win32_virt.h"
+#include "re_virtual_w.h"
 #else
 #include "re_keyboard_l.h"
 #include "re_app_l.h"
@@ -27,6 +27,7 @@ public:
     static void castPasteCmd(CCommand *cmd);
     static void castLoveCmd (CCommand *cmd);
     static void castRogerCmd(CCommand *cmd);
+    static void castLoopCmd (CCommand *cmd);
 
     static void castSwitchCmd(CCommand *cmd);
     static void castLSwitchCmd(CCommand *cmd);
