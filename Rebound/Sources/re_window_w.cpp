@@ -59,7 +59,8 @@ void ReWindowW::applyOpacity(ReWindow win)
         win.title=="Qt Creator" ||
         win.pname=="AnyDesk" ||
         win.pname=="VirtualBoxVM" ||
-        win.pname=="NLClientApp" )
+        win.pname=="NLClientApp" ||
+        win.pname.contains("gimp") )
     {
         return;
     }

@@ -98,6 +98,8 @@ void ReMetaPower::castCode(int val, CCommand *cmd)
 
 void ReMetaPower::castQt(int val, CCommand *cmd)
 {
+    POINT mos_pos;
+    GetCursorPos(&mos_pos);
     ReKeyboard::pressKey(KEY_LEFTCTRL);
     ReKeyboard::sendKey(KEY_T);
     ReKeyboard::releaseKey(KEY_LEFTCTRL);
@@ -107,6 +109,7 @@ void ReMetaPower::castQt(int val, CCommand *cmd)
 //    QThread::msleep(100); //little tweak
 //    ReKeyboard::sendKey(KEY_LEFT);
     QThread::msleep(100); //little tweak
+    re_mouseMoveW_bl(100, 200);
     ReKeyboard::sendKey(val);
     QThread::msleep(100); //little tweak
     cmd->val1 = KEY_ESC;
@@ -115,6 +118,8 @@ void ReMetaPower::castQt(int val, CCommand *cmd)
     cmd->val3  = 1;
     cmd->type  = RE_COMMAND_DIRS;
     cmd->state = RE_CSTATE_0;
+
+    SetCursorPos(mos_pos.x, mos_pos.y);
 }
 
 void ReMetaPower::csatGitKraken(int val, CCommand *cmd)
