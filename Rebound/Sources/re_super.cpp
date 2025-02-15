@@ -87,6 +87,14 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castWestCmd(cmd);
     }
+    else if( val==RE_SUPER_NORTH )
+    {
+        castNorthCmd(cmd);
+    }
+    else if( val==RE_SUPER_SOUTH )
+    {
+        castSouthCmd(cmd);
+    }
     else if( val==RE_SUPER_RUN )
     {
         castRunCmd(cmd);

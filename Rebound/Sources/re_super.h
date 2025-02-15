@@ -45,10 +45,12 @@ public:
     static void castJamesFF  (CCommand *cmd);
     static void castNextCmd  (CCommand *cmd);
     static void castWestCmd  (CCommand *cmd);
+    static void castNorthCmd (CCommand *cmd);
+    static void castSouthCmd (CCommand *cmd);
     static void castCarrotCmd(CCommand *cmd);
     static void castLaunchCmd(CCommand *cmd);
-    static void castDiveSky(int cmd, int arg);
-    static int  getScrollVal();
+    static void castDiveSky  (int cmd, int arg);
+    static int  getScrollVal (int secondary=0);
 
 #ifdef WIN32
     static void recordTelegram();

@@ -14,7 +14,7 @@ function html_filter(text)
 
 function gemini_timeoutMain()
 {
-    var mt = $('model-thought');
+    var mt = $('model-thoughts');
     console.log("h", mt.length);
     mt.remove();
     //alert("hey");

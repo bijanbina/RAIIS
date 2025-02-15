@@ -6,11 +6,9 @@ void ReSuper::castFrontCmd(CCommand *cmd)
 {
     re_mouseMoveC(0, 0);
 
-    cmd->is_ctrl = 1;
-    cmd->val1    = RE_MOUSE_UP;
-
-    cmd->val2 = getScrollVal();
-    cmd->val3 = 1;
+    cmd->val1  = RE_MOUSE_UP;
+    cmd->val2  = getScrollVal();
+    cmd->val3  = 1;
     cmd->type  = RE_COMMAND_MOUSE;
     cmd->state = RE_CSTATE_0;
 }
@@ -381,7 +379,90 @@ void ReSuper::castWestCmd(CCommand *cmd)
     }
 }
 
-int  ReSuper::getScrollVal()
+void ReSuper::castNorthCmd(CCommand *cmd)
+{
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_NULL;
+
+    qDebug() << "North" << ReState::app.pname;
+    if( ReState::app.pname==RE_PROC_QT )
+    {
+        cmd->is_alt   = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_RIGHT;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        cmd->is_alt   = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_RIGHT;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+        re_mouseMoveW(100, 600);
+
+        cmd->val1  = RE_MOUSE_UP;
+        cmd->val2  = getScrollVal(1);
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+    }
+}
+
+void ReSuper::castSouthCmd(CCommand *cmd)
+{
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_NULL;
+
+    qDebug() << "South" << ReState::app.pname;
+    if( ReState::app.pname==RE_PROC_QT )
+    {
+        cmd->is_alt   = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_RIGHT;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_VSCODE )
+    {
+        cmd->is_alt   = 1;
+        cmd->is_shift = 1;
+        cmd->val1 = KEY_RIGHT;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
+    {
+        re_mouseMoveW(100, 500);
+
+        cmd->val1  = RE_MOUSE_DOWN;
+        cmd->val2  = getScrollVal(1);
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+    }
+}
+
+// secondary is 1 for north and south
+int  ReSuper::getScrollVal(int secondary)
 {
     if( ReState::app.pname==RE_PROC_EDITOR )
     {
@@ -391,6 +472,11 @@ int  ReSuper::getScrollVal()
              ReState::app.pname==RE_PROC_VSCODE )
     {
         return 10;
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX &&
+             secondary==1 )
+    {
+        return 3;
     }
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_SLACK )
