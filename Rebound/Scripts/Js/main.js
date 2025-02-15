@@ -57,6 +57,10 @@ else if( location.hostname.includes("finder.techleap.nl") )
 {
     main_techleap();
 }
+else if( location.hostname.includes("gemini.google.com") )
+{
+    main_gemini();
+}
 else if( location.href.includes("job")    || 
          location.href.includes("career")  ||
          location.href.includes("recruit") ||

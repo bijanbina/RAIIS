@@ -327,11 +327,32 @@ void ReCaptain::wakeDictate()
 void ReCaptain::wakeRecord()
 {
     ReState::record_state = 0;
-    QThread::msleep(500);
 
-    re_mouseMoveW_br(30, 30);
-    QThread::msleep(100);
-    re_mouseKey(1);
+    if( ReState::app.pname==RE_PROC_TELEGRAM )
+    {
+        QThread::msleep(500);
+        re_mouseMoveW_br(30, 30);
+        QThread::msleep(100);
+        re_mouseKey(1);
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX ||
+             ReState::app.pname==RE_PROC_GEKO )
+    {
+        re_mouseMoveW_br(485, 100);
+        re_mouseKey(1);
+        QThread::msleep(1000);
 
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::pressKey(KEY_LEFTSHIFT);
+        QThread::msleep(20);
+        ReKeyboard::sendKey(KEY_LEFT);
+        QThread::msleep(20);
+        ReKeyboard::releaseKey(KEY_LEFTSHIFT);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(200);
+        ReKeyboard::sendKey(KEY_BACKSPACE);
+        QThread::msleep(200);
+        ReKeyboard::sendKey(KEY_ENTER);
+    }
     ReState::wakeUp();
 }

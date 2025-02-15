@@ -241,6 +241,16 @@ void ReSuper::castJamesCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.pname==RE_PROC_SPOTIFY )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_R;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
         castJamesFF(cmd);
@@ -273,6 +283,20 @@ void ReSuper::castJamesFF(CCommand *cmd)
             cmd->type  = RE_COMMAND_NATO;
             cmd->state = RE_CSTATE_0;
         }
+    }
+    else if( ReState::app.title.contains("Gemini") )
+    {
+        ReState::goToRecord();
+        re_mouseMoveW_br(485, 100);
+        QThread::msleep(20);
+        re_mouseKey(1);
+
+        cmd->val1     = KEY_ESC;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
 }
 

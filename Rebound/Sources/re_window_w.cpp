@@ -72,7 +72,7 @@ void ReWindowW::applyOpacity(ReWindow win)
     }
     else
     {
-        re_setWindowOpacity(win.hWnd, 200);
+        re_setWindowOpacity(win.hWnd, 230);
 //        re_setWindowOpacity(win.hWnd, 255);
     }
 }

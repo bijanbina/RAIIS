@@ -113,6 +113,10 @@ void ReMeta::castOpenCmd(int val, CCommand *cmd)
     {
         app.exe_name = "explorer";
     }
+    if( val==KEY_F )
+    {
+        app.exe_name = "firefox";
+    }
     else if( val==KEY_Q )
     {
         app.exe_name = "qtcreator";
