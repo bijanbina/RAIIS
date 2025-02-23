@@ -38,6 +38,11 @@ void ReSuper::castRunCmd(CCommand *cmd)
         cmd->val1 = KEY_F5;
         cmd->type = RE_COMMAND_DIRS;
     }
+    if( ReState::app.pname==RE_PROC_INNOSETUP )
+    {
+        cmd->val1 = KEY_F9;
+        cmd->type = RE_COMMAND_DIRS;
+    }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
         cmd->is_ctrl = 1;
@@ -113,6 +118,45 @@ void ReSuper::castDukeCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+}
+
+void ReSuper::castMediaCmd(CCommand *cmd)
+{
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_NULL;
+
+    qDebug() << "Media" << ReState::app.pname;
+
+    QString url = "https://gemini.google.com/u/3/";
+
+    ReKeyboard::pressKey(KEY_LEFTCTRL);
+    ReKeyboard::sendKey(KEY_T);
+    ReKeyboard::releaseKey(KEY_LEFTCTRL);
+    QThread::msleep(1000);
+
+    ReKeyboard::type(url);
+    QThread::msleep(200);
+    ReKeyboard::sendKey(KEY_ENTER);
+
+    QThread::msleep(2000);
+
+    ReKeyboard::pressKey(KEY_LEFTCTRL);
+    ReKeyboard::pressKey(KEY_LEFTSHIFT);
+    ReKeyboard::sendKey(KEY_R);
+    ReKeyboard::releaseKey(KEY_LEFTSHIFT);
+    ReKeyboard::releaseKey(KEY_LEFTCTRL);
+    QThread::msleep(200);
+
+    ReState::goToDictate();
+    cmd->is_ctrl  = 1;
+    cmd->is_shift = 1;
+    cmd->val1     = KEY_R;
+
+    cmd->val2  = 1;
+    cmd->val3  = 1;
+    cmd->type  = RE_COMMAND_NATO;
+    cmd->state = RE_CSTATE_0;
 }
 
 void ReSuper::castGasCmd(CCommand *cmd)
@@ -285,11 +329,9 @@ void ReSuper::castJamesFF(CCommand *cmd)
     else if( ReState::app.title.contains("Gemini") )
     {
         ReState::goToRecord();
-        re_mouseMoveW_br(485, 100);
-        QThread::msleep(20);
-        re_mouseKey(1);
-
-        cmd->val1     = KEY_ESC;
+        cmd->is_ctrl  = 1;
+        cmd->is_shift = 1;
+        cmd->val1     = KEY_R;
 
         cmd->val2  = 1;
         cmd->val3  = 1;

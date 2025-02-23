@@ -65,7 +65,7 @@ void ReSuper::cast(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_MEDIA )
     {
-        castRogerCmd(cmd);
+        castMediaCmd(cmd);
     }
     else if( val==RE_SUPER_FRONT )
     {

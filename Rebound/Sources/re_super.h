@@ -40,6 +40,7 @@ public:
     static void castLastCmd  (CCommand *cmd);
     static void castRunCmd   (CCommand *cmd);
     static void castDukeCmd  (CCommand *cmd);
+    static void castMediaCmd (CCommand *cmd);
     static void castGasCmd   (CCommand *cmd);
     static void castJamesCmd (CCommand *cmd);
     static void castJamesFF  (CCommand *cmd);

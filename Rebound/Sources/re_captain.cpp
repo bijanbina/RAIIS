@@ -338,21 +338,29 @@ void ReCaptain::wakeRecord()
     else if( ReState::app.pname==RE_PROC_FIREFOX ||
              ReState::app.pname==RE_PROC_GEKO )
     {
-        re_mouseMoveW_br(485, 100);
-        re_mouseKey(1);
         QThread::msleep(1000);
 
         ReKeyboard::pressKey(KEY_LEFTCTRL);
         ReKeyboard::pressKey(KEY_LEFTSHIFT);
         QThread::msleep(20);
-        ReKeyboard::sendKey(KEY_LEFT);
+        ReKeyboard::sendKey(KEY_R);
         QThread::msleep(20);
         ReKeyboard::releaseKey(KEY_LEFTSHIFT);
         ReKeyboard::releaseKey(KEY_LEFTCTRL);
-        QThread::msleep(200);
-        ReKeyboard::sendKey(KEY_BACKSPACE);
-        QThread::msleep(200);
-        ReKeyboard::sendKey(KEY_ENTER);
+
+        QThread::msleep(1000);
+
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::pressKey(KEY_LEFTSHIFT);
+        QThread::msleep(20);
+        ReKeyboard::sendKey(KEY_U);
+        QThread::msleep(20);
+        ReKeyboard::releaseKey(KEY_LEFTSHIFT);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+//        QThread::msleep(200);
+//        ReKeyboard::sendKey(KEY_BACKSPACE);
+//        QThread::msleep(200);
+//        ReKeyboard::sendKey(KEY_ENTER);
     }
     ReState::wakeUp();
 }

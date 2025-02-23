@@ -61,6 +61,14 @@ else if( location.hostname.includes("gemini.google.com") )
 {
     main_gemini();
 }
+else if( location.hostname.includes("messages.google.com") )
+{
+    main_sms();
+}
+else if( location.hostname.includes("digid.nl") )
+{
+    main_digid();
+}
 else if( location.href.includes("job")    || 
          location.href.includes("career")  ||
          location.href.includes("recruit") ||

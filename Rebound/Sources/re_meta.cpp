@@ -379,6 +379,10 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     {
         ReMetaFox::castSlack(val, cmd);
     }
+    else
+    {
+        ReMetaFox::castFirefox(val, cmd);
+    }
 #endif
 }
 
