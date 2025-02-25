@@ -37,12 +37,19 @@ ReChapar::ReChapar(QObject *item, QObject *switcher,
 //    connect(controller, SIGNAL(requstSuspend()),
 //            this, SLOT(requstSuspend()));
 
-    channel = new ReChannelW(captain);
+    channel        = new ReChannelW(captain);
     channel_thread = new QThread();
     channel->moveToThread(channel_thread);
-    connect(this, SIGNAL(startChannel()),
-            channel, SLOT(ListenPipe()));
+    connect(this   , SIGNAL(startChannel()),
+            channel, SLOT(listenPipe()));
     channel_thread->start();
+
+    link_rx     = new ReLinkRx;
+    link_thread = new QThread;
+    link_rx->moveToThread(link_thread);
+    connect(this   , SIGNAL(startChannel()),
+            link_rx, SLOT(listenPipe()));
+    link_thread->start();
 
     emit startChannel();
 #else

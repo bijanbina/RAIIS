@@ -24,9 +24,9 @@ ReChannelW::~ReChannelW()
 {
 }
 
-void ReChannelW::ListenPipe()
+void ReChannelW::listenPipe()
 {
-    char buffer[BUFFER_SIZE];
+    char buffer[PIPE_BUFFER_SIZE];
     DWORD dwRead;
     while( hPipe!=INVALID_HANDLE_VALUE )
     {
@@ -34,13 +34,16 @@ void ReChannelW::ListenPipe()
         if( ConnectNamedPipe(hPipe, nullptr)!=FALSE )
         {
             qDebug() << "ReChannelW::Connect client";
-            while( ReadFile(hPipe, buffer, sizeof(buffer)-1, &dwRead, nullptr)!=FALSE )
+            while( ReadFile(hPipe, buffer, sizeof(buffer)-1,
+                            &dwRead, nullptr)!=FALSE )
             {
                 // add terminating zero
                 buffer[dwRead] = 0;
                 QString input(buffer);
 
-                QStringList lines = input.split("\n", QString::SkipEmptyParts);
+                QStringList lines = input.split
+                                    ("\n", QString::
+                                     SkipEmptyParts);
 
                 for(int i=0 ; i<lines.length() ; i++)
                 {
@@ -91,8 +94,8 @@ void ReChannelW::createPipe()
                             PIPE_ACCESS_INBOUND,            // dwOpenMode. The flow of data in the pipe goes from client to server only
                             PIPE_TYPE_BYTE | PIPE_WAIT,     // dwPipeMode
                             1,                              // nMaxInstances
-                            BUFFER_SIZE,                    // nOutBufferSize
-                            BUFFER_SIZE,                    // nInBufferSize
+                            PIPE_BUFFER_SIZE,                    // nOutBufferSize
+                            PIPE_BUFFER_SIZE,                    // nInBufferSize
                             NMPWAIT_WAIT_FOREVER,           // nDefaultTimeOut
                             nullptr);                       // lpSecurityAttributes
 
@@ -103,7 +106,8 @@ void ReChannelW::createPipe()
 //    qDebug() << PIPE_PATH << "pipe Created";
 }
 
-void ReChannelW::processCommand(QString k_type, QString k_code)
+void ReChannelW::processCommand(QString k_type,
+                                QString k_code)
 {
     if( ReState::remote_state   &&
         ReState::sleep_state==0 &&

@@ -8,10 +8,6 @@
 #include "backend.h"
 #include "re_captain.h"
 
-// The buffer size specified should be small enough that your process will not run out of nonpaged pool,
-// but large enough to accommodate typical requests.
-#define BUFFER_SIZE (1024 * 8)
-
 class ReChannelW : public QObject
 {
     Q_OBJECT
@@ -22,7 +18,7 @@ public:
     RePreProcessor *pre;
 
 public slots:
-    void ListenPipe();
+    void listenPipe();
     void processCommand(QString k_type, QString k_code);
 
 signals:

@@ -223,7 +223,7 @@ bool ReCaptain::isLastRepeatable()
 {
     int cmd_type = ReState::last_cmd.type;
 
-    if( ReState::link->sc_dir )
+    if( ReState::link_tx->sc_dir )
     {
         return false;
     }
