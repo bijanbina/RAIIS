@@ -75,10 +75,10 @@ void RePreProcessor::nato(const QString &text)
 
         return;
     }
-    else if( ReState::link->sc_dir &&
+    else if( ReState::link_tx->sc_dir &&
              KEY_A<=val && val<=KEY_F )
     {
-        int cmd = ReState::link->sc_dir;
+        int cmd = ReState::link_tx->sc_dir;
         ReSuper::castDiveSky(cmd, val);
         return;
     }
@@ -142,9 +142,9 @@ void RePreProcessor::digit(const QString &text)
         re_rmSpex();
         execute();
     }
-    else if( ReState::link->sc_dir )
+    else if( ReState::link_tx->sc_dir )
     {
-        int cmd = ReState::link->sc_dir;
+        int cmd = ReState::link_tx->sc_dir;
         int val = text.toInt();
         ReSuper::castDiveSky(cmd, val);
     }

@@ -1,46 +1,46 @@
-#include "re_link.h"
+#include "re_link_tx.h"
 
-ReLink::ReLink()
+ReLinkTx::ReLinkTx()
 {
-#ifdef WIN32
     connectPipe();
-#endif
 }
 
 #ifdef WIN32
-void ReLink::connectPipe()
+void ReLinkTx::connectPipe()
 {
     // 0: Default Wait Time
-    int np_is_available = WaitNamedPipeA(RE_PIPE_LINK, 0);
+    int np_is_available = WaitNamedPipeA(RE_PIPE_LINKRX, 0);
     if( np_is_available )
     {
-        hPipe = CreateFileA(RE_PIPE_LINK, GENERIC_WRITE, // dwDesiredAccess
-                            0, nullptr,    // lpSecurityAttributes
+        hPipe = CreateFileA(RE_PIPE_LINKRX,
+                            GENERIC_WRITE,  // dwDesiredAccess
+                            0, nullptr,     // lpSecurityAttributes
                             OPEN_EXISTING,  // dwCreationDisposition
                             0, nullptr);    // hTemplateFile
 
         if( hPipe==INVALID_HANDLE_VALUE )
         {
-            qDebug() << "Error 120: Cannot connect " RE_PIPE_LINK;
+            qDebug() << "Error 120: Cannot connect "
+                     << RE_PIPE_LINKRX;
         }
     }
     else
     {
         hPipe = INVALID_HANDLE_VALUE;
-        qDebug() << "Error 121: Pipe " RE_PIPE_LINK
+        qDebug() << "Error 121: Pipe " RE_PIPE_LINKRX
                     " not found";
     }
 }
 #endif
 
-void ReLink::sendPipe(const char *data)
+void ReLinkTx::sendPipe(const char *data)
 {
 #ifdef WIN32
     DWORD len = strlen(data);
     if( hPipe==INVALID_HANDLE_VALUE )
     {
         qDebug() << "Try to reconnect to"
-                 << RE_PIPE_LINK;
+                 << RE_PIPE_LINKRX;
         connectPipe();
         if( hPipe==INVALID_HANDLE_VALUE )
         {
@@ -49,10 +49,12 @@ void ReLink::sendPipe(const char *data)
     }
 
     DWORD dwWritten;
-    int success = WriteFile(hPipe, data, len, &dwWritten, NULL);
+    int success = WriteFile(hPipe, data, len, &dwWritten,
+                            NULL);
     if( !success )
     {
-        qDebug() << "Error: NamedPipe writing failed," << GetLastError();
+        qDebug() << "Error: NamedPipe writing failed,"
+                 << GetLastError();
     }
 
     if( dwWritten!=len )
@@ -72,7 +74,7 @@ void ReLink::sendPipe(const char *data)
 #endif
 }
 
-void ReLink::scrollUp(int speed)
+void ReLinkTx::scrollUp(int speed)
 {
     sc_speed = speed-1;
     sc_dir = RE_SUPER_SKY;
@@ -83,7 +85,7 @@ void ReLink::scrollUp(int speed)
     sendPipe(cmd.toStdString().c_str());
 }
 
-void ReLink::scrollDown(int speed)
+void ReLinkTx::scrollDown(int speed)
 {
     sc_speed = speed-1;
     sc_dir = RE_SUPER_DIVE;
@@ -94,7 +96,7 @@ void ReLink::scrollDown(int speed)
     sendPipe(cmd.toStdString().c_str());
 }
 
-void ReLink::scrollEscape()
+void ReLinkTx::scrollEscape()
 {
     sc_dir = 0;
     QString cmd = "scroll: 0 0";

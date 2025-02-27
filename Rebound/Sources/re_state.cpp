@@ -1,13 +1,13 @@
 #include "re_state.h"
 
-int  ReState::remote_id     = 0;
-bool ReState::sleep_state   = 0;
-bool ReState::dictate_state = 0;
-bool ReState::record_state  = 0;
-bool ReState::remote_state  = 0;
-bool ReState::drag_state    = 0;
-int  ReState::ch_count      = 0; //Chess Count
-ReLink     *ReState::link       = NULL;
+int  ReState::remote_id      = 0;
+bool ReState::sleep_state    = 0;
+bool ReState::dictate_state  = 0;
+bool ReState::record_state   = 0;
+bool ReState::remote_state   = 0;
+bool ReState::drag_state     = 0;
+int  ReState::ch_count       = 0; //Chess Count
+ReLinkTx   *ReState::link_tx = NULL;
 ReWindow    ReState::app; //Active Window
 CCommand    ReState::last_cmd;
 
@@ -21,7 +21,7 @@ ReState::~ReState()
 
 void ReState::init()
 {
-    link = new ReLink;
+    link_tx = new ReLinkTx;
     readStatusFile();
 }
 
@@ -140,9 +140,9 @@ void ReState::goToDrag()
 void ReState::wakeUp()
 {
     sleep_state = 0;
-    if( link->sc_dir )
+    if( link_tx->sc_dir )
     {
-        enScroll(link->sc_dir, link->sc_speed);
+        enScroll(link_tx->sc_dir, link_tx->sc_speed);
     }
     else if( ch_count )
     {
@@ -168,7 +168,7 @@ void ReState::enScroll(int dir, int speed)
         cmd += "  %{B- F1-}";
 #endif
         re_writeStatus(cmd);
-        link->scrollUp(speed);
+        link_tx->scrollUp(speed);
     }
     else if( dir==RE_SUPER_DIVE )
     {
@@ -179,7 +179,7 @@ void ReState::enScroll(int dir, int speed)
         cmd += "  %{B- F1-}";
 #endif
         re_writeStatus(cmd);
-        link->scrollDown(speed);
+        link_tx->scrollDown(speed);
     }
 }
 
@@ -207,9 +207,9 @@ bool ReState::isEscape(CCommand cmd)
 
 int ReState::stopFFScroll()
 {
-    if( link->sc_dir )
+    if( link_tx->sc_dir )
     {
-        link->scrollEscape();
+        link_tx->scrollEscape();
 
         re_rmStatus();
         return 1;
