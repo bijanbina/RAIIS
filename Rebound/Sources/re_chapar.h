@@ -8,6 +8,7 @@
     #include "re_xbox_w.h"
     #include "re_window_w.h"
     #include "re_channel_w.h"
+    #include "re_link_rx.h"
     #ifdef RE_TEST_EN
         #include "re_client.h"
     #endif
@@ -86,12 +87,15 @@ private:
     ReCaptain *captain;
     ReRemote  *remote;
 #ifdef _WIN32
-    ReXboxW *controller;
-    ReWindowW *window;
-    QThread   *window_thread;
+    ReXboxW    *controller;
+    ReWindowW  *window;
+    QThread    *window_thread;
 
     ReChannelW *channel;
-    QThread *channel_thread;
+    QThread    *channel_thread;
+
+    ReLinkRx   *link_rx;
+    QThread    *link_thread;
 #else
     ReXboxL *controller;
     ReChannelL *channel;

@@ -6,7 +6,6 @@
 #define RE_PIPE_PATH    "\\\\.\\pipe\\com_binaee_rebound"
 #define RE_PIPE_CHESS   "\\\\.\\pipe\\com_binaee_chess"
 #define RE_PIPE_MOM     "\\\\.\\pipe\\com_binaee_mom"
-#define RE_PIPE_FIREFOX "\\\\.\\pipe\\com_binaee_firefox"
 #define CH_NP_SEPARATOR ","
 
 #define RE_FIREFOX_DIR   "Scripts/Firefox"
@@ -48,5 +47,10 @@
 
 #define RE_SCR_UINPUT  "Scripts/uDev/init.sh"
 #define RE_NP_SEPARATOR ","
+
+// The buffer size specified should be small enough that your process will not run out of nonpaged pool,
+// but large enough to accommodate typical requests.
+#define PIPE_BUFFER_SIZE (1024 * 8)
+
 
 #endif // BACKEND_H
