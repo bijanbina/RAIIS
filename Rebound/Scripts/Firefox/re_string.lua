@@ -42,3 +42,11 @@ function getEasyMatch(text, pattern)
 		end
     end
 end
+
+function addPrefLine(pattern, value)
+	local line = string.format('user_pref("%s", %s);', pattern, tostring(value))
+	print(line)
+	if getFirstMatch(pref_content, pattern) == nil then
+		appendLine(pref_path, line)
+	end
+end

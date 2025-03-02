@@ -22,8 +22,7 @@ function sms_timeoutMain()
     if( sms_digit )
     {
         console.log("h", sms_digit);
-        navigator.clipboard.writeText(sms_digit)
-                .then(() => alert("Copied!", sms_digit))
+        setReClipboard(sms_digit);
     }
     //alert("hey");
 }

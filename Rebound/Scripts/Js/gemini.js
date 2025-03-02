@@ -26,9 +26,12 @@ document.addEventListener("keydown", function(event)
     { 
         var mic_query = 'button[class*="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger speech_dictation_mic_button"]'; 
         var mic_button = document.querySelector(mic_query); // Selects the button with class "rop" 
+        const timeString = new Date().toLocaleTimeString();
+        console.log(timeString, mic_button);
         if( mic_button ) 
         { 
             mic_button.click(); 
+            console.log("Mic button click."); 
         } 
         else 
         { 
