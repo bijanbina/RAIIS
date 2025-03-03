@@ -4,7 +4,7 @@
 
 void ReSuper::castFrontCmd(CCommand *cmd)
 {
-    re_mouseMoveC(0, 0);
+    re_mouseMoveC(-50, 0);
 
     cmd->val1  = RE_MOUSE_UP;
     cmd->val2  = getScrollVal();
@@ -15,7 +15,7 @@ void ReSuper::castFrontCmd(CCommand *cmd)
 
 void ReSuper::castLastCmd(CCommand *cmd)
 {
-    re_mouseMoveC(0, 0);
+    re_mouseMoveC(-50, 0);
 
     cmd->is_ctrl = 1;
     cmd->val1    = RE_MOUSE_DOWN;
@@ -430,24 +430,22 @@ void ReSuper::castNorthCmd(CCommand *cmd)
     qDebug() << "North" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
-        cmd->is_alt   = 1;
-        cmd->is_shift = 1;
-        cmd->val1 = KEY_RIGHT;
+        re_mouseMoveC(200, 0);
 
-        cmd->val2  = 1;
+        cmd->val1  = RE_MOUSE_UP;
+        cmd->val2  = getScrollVal();
         cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_DIRS;
+        cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        cmd->is_alt   = 1;
-        cmd->is_shift = 1;
-        cmd->val1 = KEY_RIGHT;
+        re_mouseMoveC(200, 0);
 
-        cmd->val2  = 1;
+        cmd->val1  = RE_MOUSE_UP;
+        cmd->val2  = getScrollVal();
         cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_DIRS;
+        cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
@@ -471,24 +469,26 @@ void ReSuper::castSouthCmd(CCommand *cmd)
     qDebug() << "South" << ReState::app.pname;
     if( ReState::app.pname==RE_PROC_QT )
     {
-        cmd->is_alt   = 1;
-        cmd->is_shift = 1;
-        cmd->val1 = KEY_RIGHT;
+        re_mouseMoveC(200, 0);
 
-        cmd->val2  = 1;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_DIRS;
+        cmd->is_ctrl = 1;
+        cmd->val1    = RE_MOUSE_DOWN;
+
+        cmd->val2 = getScrollVal();
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        cmd->is_alt   = 1;
-        cmd->is_shift = 1;
-        cmd->val1 = KEY_RIGHT;
+        re_mouseMoveC(200, 0);
 
-        cmd->val2  = 1;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_DIRS;
+        cmd->is_ctrl = 1;
+        cmd->val1    = RE_MOUSE_DOWN;
+
+        cmd->val2 = getScrollVal();
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
