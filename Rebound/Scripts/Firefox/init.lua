@@ -7,6 +7,8 @@ require("getPrefPath")
 pref_path = getPrefPath()
 pref_content = readFile(pref_path)
 
+enableAutoFill()
+addPrefLine('signon.autofillForms.http', "true")
 addPrefLine('devtools.chrome.enabled', "true")
 addPrefLine('toolkit.legacyUserProfileCustomizations.stylesheets', "true")
 addPrefLine('app.update.background.interval', "-1")
