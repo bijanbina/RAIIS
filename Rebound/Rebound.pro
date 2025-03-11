@@ -39,7 +39,8 @@ SOURCES += Sources/main.cpp \
            Sources/re_super.cpp \
            Sources/re_super_app.cpp \
            Sources/re_state_old.cpp \
-           Sources/re_virtual_w.cpp
+           Sources/re_virtual_w.cpp \
+           Sources/ta_ini.cpp
 
 win32:SOURCES += Sources/re_server.cpp \
                  Sources/mm_api.cpp \
@@ -101,7 +102,8 @@ HEADERS += Sources/backend.h \
            Sources/re_status_file.h \
            Sources/re_super.h \
            Sources/re_state_old.h \
-           Sources/re_virtual_w.h
+           Sources/re_virtual_w.h \
+           Sources/ta_ini.h
 
 win32:HEADERS += \
                  Sources/mm_api.h \
