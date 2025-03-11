@@ -6,7 +6,7 @@
 ReRemote::ReRemote(RePreProcessor *pre, QObject *parent)
     :QObject(parent)
 {
-    ReState::remote_id = RE_REMOTE;
+    ReState::remote_id = ini_getRemoteId();
     is_last_mouse      = 0;
     last_history_count = 0;
 
@@ -507,3 +507,4 @@ void ReRemote::procScroll(QString word)
     }
 
 }
+

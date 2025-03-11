@@ -17,6 +17,7 @@ extern "C"
 
 #include "re_apache_cl.h"
 #include "re_preprocessor.h"
+#include "ta_ini.h"
 
 #define BT_BAR_RESULT     "bar_result"
 #define BT_BAR_DIR_WS     "..\\..\\Benjamin\\Mom\\Labels\\"
