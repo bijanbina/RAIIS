@@ -69,6 +69,11 @@ else if( location.hostname.includes("digid.nl") )
 {
     main_digid();
 }
+else if( location.hostname.includes("registration.cadence.com") ||
+		 location.hostname.includes("cadence.okta.com") )
+{
+	main_cadence();
+}
 else if( location.href.includes("job")    || 
          location.href.includes("career")  ||
          location.href.includes("recruit") ||

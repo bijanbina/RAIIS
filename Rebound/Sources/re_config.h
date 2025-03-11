@@ -12,6 +12,7 @@
 #define MOM_LABEL_DIR    "..\\..\\Benjamin\\Mom\\Labels"
 #define KAL_SI_DIR       "../../Benjamin/Tools/Scripts/interpreter"
 #define KAL_SI_DIR_WIN   "..\\..\\Benjamin\\Tools\\Scripts\\interpreter"
+#define BT_CONF_PATH     "../../Benjamin/Tools/BaTool.conf"
 #define MOM_LABEL_PNAME  "\\r1_pname.lbl"
 #define MOM_LABEL_STATUS "\\r2_status.lbl"
 

@@ -105,9 +105,8 @@ void ReLinkRx::processCmd(QString cmd_type, QString cmd_data)
     if( cmd_type=="url" )
     {
         curr_url = cmd_data;
-        qDebug() << "ReLinkRx::processCmd"
-                 << "cmd_type" << cmd_type
-                 << "cmd_data" << cmd_data;
+        qDebug() << "ReLinkRx::processUrl"
+                 << "url_data" << cmd_data;
     }
     else if( cmd_type=="paste" )
     {
@@ -120,5 +119,23 @@ void ReLinkRx::processCmd(QString cmd_type, QString cmd_data)
         EmptyClipboard();
         SetClipboardData(CF_TEXT, hMem);
         CloseClipboard();
+    }
+    else if( cmd_type=="click" )
+    {
+        QStringList data_s = cmd_data.split(",");
+        int x = data_s[0].trimmed().toInt();
+        int y = data_s[1].trimmed().toInt();
+        int w = data_s[2].trimmed().toInt();
+        int h = data_s[3].trimmed().toInt();
+        SetCursorPos((x + w/2)*1.25, (y + h/2)*1.25 + 175);
+
+        qDebug() << "ReLinkRx::click" << cmd_data
+                 << x << w << data_s;
+    }
+    else
+    {
+        qDebug() << "ReLinkRx::processCmd"
+                 << "cmd_type" << cmd_type
+                 << "cmd_data" << cmd_data;
     }
 }

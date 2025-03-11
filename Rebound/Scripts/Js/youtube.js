@@ -12,13 +12,22 @@ function yt_skip_filter()
 
 function yt_timeoutMain()
 {
-    var sk = $("div").filter(yt_skip_filter);
-    var pr = sk.parent();
+    //var sk = $("div").filter(yt_skip_filter);
+	var sk = document.querySelector('button.ytp-skip-ad-button');
 
-    if( pr.length )
-    {
-        console.log(pr);
-        pr.click();
-        pr.trigger('click');;
-    }
+	if( sk )
+	{
+		var rect = sk.getBoundingClientRect();
+		var msg  = Math.round(rect.x) + "," + Math.round(rect.y) + ",";
+		msg     += Math.round(rect.width) + "," + Math.round(rect.height);  
+		sendPipe("click", msg);
+	}
+	//var pr = sk.parent();
+
+    //if( pr.length )
+    //{
+    //    console.log(pr);
+    //    pr.click();
+    //    pr.trigger('click');;
+    //}
 }
