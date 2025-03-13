@@ -185,4 +185,14 @@ void executScript(QString name, int id)
     }
 }
 
+int  isWinExplorer(QString title)
+{
+    if( title=="Open File"   ||
+        title=="File Upload" ||
+        title=="Save As" )
+    {
+        return 1;
+    }
+    return 0;
+}
 #endif

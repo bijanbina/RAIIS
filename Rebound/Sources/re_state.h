@@ -34,6 +34,7 @@ public:
     static int  stopFFScroll();
 
     static int  remote_id;
+    static int  dim_opacity;
     static bool sleep_state;
     static bool dictate_state;
     static bool record_state;

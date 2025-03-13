@@ -33,6 +33,7 @@ QString getDiffTime(clock_t start);
 #ifdef _WIN32
 void executeAhk(QString name);
 void executScript(QString name, int id);
+int  isWinExplorer(QString title);
 #endif
 
 #endif // BACKEND_H

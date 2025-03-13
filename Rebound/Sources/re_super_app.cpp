@@ -534,7 +534,33 @@ int  ReSuper::getScrollVal(int secondary)
 
 void ReSuper::castDiveSky(int cmd, int arg)
 {
-    if( ReState::app.pname==RE_PROC_FIREFOX )
+    if( isWinExplorer(ReState::app.title) )
+    {
+        re_mouseMoveW(100, 400);
+        int count = 4;
+        if( arg==-1 ) // default
+        {
+            count = 20;
+        }
+
+        if( cmd==RE_SUPER_DIVE )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(5);
+                QThread::msleep(50);
+            }
+        }
+        else if( cmd==RE_SUPER_SKY )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(4);
+                QThread::msleep(50);
+            }
+        }
+    }
+    else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
         if( arg==-1 ) // default
         {
