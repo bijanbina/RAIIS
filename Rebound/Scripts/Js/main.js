@@ -69,6 +69,10 @@ else if( location.hostname.includes("digid.nl") )
 {
     main_digid();
 }
+else if( location.hostname.includes("zilverenkruis.nl") )
+{
+    main_zilver();
+}
 else if( location.hostname.includes("registration.cadence.com") ||
 		 location.hostname.includes("cadence.okta.com") )
 {

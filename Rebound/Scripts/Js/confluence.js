@@ -29,7 +29,7 @@ function conf_timeoutMain()
         var re_pr = re.parent().parent().parent().parent().parent();
         var st = nav.find("span:contains('Starred')");
         var st_pr = st.parent().parent().parent().parent().parent();
-        var sp = nav.find("span:contains('Spaces')");
+        var sp = nav.find("span:contains('For you')");
         var sp_pr = sp.parent().parent().parent().parent().parent();
         var id_pr = $("button[id='Content']").parent();
 
@@ -37,9 +37,9 @@ function conf_timeoutMain()
         ch_pr.remove();
         //re_pr.remove();
         //st_pr.remove();
-        //sp_pr.remove();
+        sp_pr.remove();
         //id_pr.remove();
-        ap_pr.remove();
+        //ap_pr.remove();
 
         // Page
         var sh    = $("span:contains('Shortcuts')");
@@ -48,8 +48,8 @@ function conf_timeoutMain()
         var se_pr = se.parent().parent();
         var co    = $("span:contains('Content')");
         var co_pr = co.parent().parent().parent().parent();
-        var fb    = $("span:contains('Give feedback on the new navigation')");
-        var fb_pr = fb.parent().parent().parent().parent().parent().parent();
+        //var fb    = $("span:contains('Give feedback on the new navigation')");
+        //var fb_pr = fb.parent().parent().parent().parent().parent().parent();
         var ip = nav.find("span:contains('Invite people')");
         var ip_pr = ip.parent().parent().parent();
         var ca = nav.find("span:contains('Calendars')");
@@ -59,7 +59,7 @@ function conf_timeoutMain()
         sh_pr.remove();
         se_pr.remove();
         co_pr.remove();
-        fb_pr.remove();
+        //fb_pr.remove();
         ip_pr.remove();
         ca_pr.remove();
         cr_pr.remove();

@@ -1,7 +1,7 @@
-var digid_rm_count = 0;
-function main_digid()
+var zilver_rm_count = 0;
+function main_zilver()
 {
-    join_timer = setInterval(digid_timeoutMain, 500);
+    join_timer = setInterval(zilver_timeoutMain, 2500);
 } 
 
 function html_filter(text)
@@ -12,48 +12,17 @@ function html_filter(text)
            }
 }
 
-function digid_timeoutMain()
+function zilver_timeoutMain()
 {
-    if( window.location.href.includes("/inloggen_ww") ||
-        window.location.href.includes("/inloggen_sms") )
+    if( window.location.href.includes("/inloggen") )
     {
-        var login_btn = $("button:contains('Log in')");
-        console.log("h", login_btn);
-        if( $(login_btn).length )
-        {
-            //alert($(login_btn).length);
-            login_btn.click();
-        }
-    }
-    else if( window.location.href.includes("/sms_controleren") )
-    {
-        var login_btn = $("span:contains('With username')");
-        if( $(login_btn).length )
-        {
-                //alert($(login_btn).length);
-            login_btn.click();
-            return;
-        }
-        
-        login_btn = $("span:contains('With an SMS')");
-        if( $(login_btn).length )
-        {
-            login_btn.click();
-            return;
-        }
-        
-        login_btn = $("#smscode_smscode_field_0");
+        var login_btn = $("span:contains('Log in my silver cross')");
+        login_btn = login_btn.parent();
         if( login_btn.length )
         {
-            if( login_btn.val()!=='' )
-            {
-                login_btn = $("button:contains('Following')");
-                login_btn.click();
-            }
-            else
-            {
-                login_btn.focus();
-            }
+            console.log("h", login_btn);
+            //alert($(login_btn).length);
+            login_btn[0].click();
         }
     }
     else if( window.location.href.includes("/inloggen") )
@@ -73,13 +42,13 @@ function digid_timeoutMain()
     }
     //var mt          = $('mws-conversation-snippet');
     //var recent_span = mt.find("span").first();
-    //var digid_txt     = recent_span.text();
-    //var digid_digit   = (digid_txt.match(/\d/g) || []).join('');
+    //var zilver_txt     = recent_span.text();
+    //var zilver_digit   = (zilver_txt.match(/\d/g) || []).join('');
 
-    //if( digid_digit )
+    //if( zilver_digit )
     //{
-    //    console.log("h", digid_digit);
-    //    navigator.clipboard.writeText(digid_digit)
+    //    console.log("h", zilver_digit);
+    //    navigator.clipboard.writeText(zilver_digit)
     //            .then(() => console.log("Copied!"))
     //}
     //alert("hey");

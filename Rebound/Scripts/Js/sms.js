@@ -1,4 +1,4 @@
-var sms_rm_count = 0;
+var sms_last = 0;
 function main_sms()
 {
     join_timer = setInterval(sms_timeoutMain, 500);
@@ -18,43 +18,20 @@ function sms_timeoutMain()
     var recent_span = mt.find("span").first();
     var sms_txt     = recent_span.text();
     var sms_digit   = (sms_txt.match(/\d/g) || []).join('');
-
+    
     if( sms_digit )
     {
-        console.log("h", sms_digit);
-        setReClipboard(sms_digit);
+        var time_stamp = $('mws-relative-timestamp').first();
+        var time_txt   = time_stamp.text();
+        console.log("h", sms_digit, time_stamp, time_txt);
+        if( time_txt.includes("min") || time_txt.includes("Now") )
+        {
+            if( sms_last!==sms_digit )
+            {
+                sms_last = sms_digit;
+                sendPipe("sms", sms_digit);
+            }
+        }
     }
     //alert("hey");
 }
-
-document.addEventListener("keydown", function(event) 
-{ 
-    if( event.ctrlKey && event.shiftKey && event.code==="KeyR" ) 
-    { 
-        var mic_query = 'button[class*="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger speech_dictation_mic_button"]'; 
-        var mic_button = document.querySelector(mic_query); // Selects the button with class "rop" 
-        if( mic_button ) 
-        { 
-            mic_button.click(); 
-        } 
-        else 
-        { 
-            console.log("Mic button not found."); 
-        } 
-        event.preventDefault(); // Prevent the default action (optional) 
-    } 
-    if( event.ctrlKey && event.shiftKey && event.code==="KeyU" ) 
-    { 
-        var send_query = 'button[class*="send-button"]'; 
-        var send_button = document.querySelector(send_query); // Selects the button with class "rop" 
-        if( send_button ) 
-        { 
-            send_button.click(); 
-        } 
-        else 
-        { 
-            console.log("Send button not found."); 
-        } 
-        event.preventDefault(); // Prevent the default action (optional) 
-    } 
-});
