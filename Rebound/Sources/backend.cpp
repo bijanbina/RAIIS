@@ -195,4 +195,17 @@ int  isWinExplorer(QString title)
     }
     return 0;
 }
+
+void putInClipboard(QString data)
+{
+    int len = data.length() + 1;
+    HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
+    memcpy(GlobalLock(hMem), data.toStdString().c_str(),
+           len);
+    GlobalUnlock(hMem);
+    OpenClipboard(0);
+    EmptyClipboard();
+    SetClipboardData(CF_TEXT, hMem);
+    CloseClipboard();
+}
 #endif

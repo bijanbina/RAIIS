@@ -21,8 +21,8 @@
 
 #define RE_CLIENT 0
 #define RE_SERVER 1
-#define RE_REMOTE 0 // remote id
 
+#define RE_DIM_OPAC  230
 #define RE_PORT      7610
 #define RE_IP        "192.168.88.25"
 #define RE_CPORT0    5000

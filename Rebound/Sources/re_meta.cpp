@@ -217,6 +217,17 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         system("xdotool set_desktop 0");
     }
+    else if( val==KEY_D )
+    {
+        if( ReState::dim_opacity==RE_DIM_OPAC )
+        {
+            ReState::dim_opacity = 255;
+        }
+        else
+        {
+            ReState::dim_opacity = RE_DIM_OPAC;
+        }
+    }
     else if( val==KEY_K )
     {
         // Windows Calculator

@@ -1,5 +1,6 @@
 #include <QThread>
 #include "re_link_rx.h"
+#include "backend.h"
 
 ReLinkRx::ReLinkRx()
 {
@@ -110,15 +111,7 @@ void ReLinkRx::processCmd(QString cmd_type, QString cmd_data)
     }
     else if( cmd_type=="paste" )
     {
-        int len = cmd_data.length() + 1;
-        HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
-        memcpy(GlobalLock(hMem), cmd_data.toStdString().c_str(),
-               len);
-        GlobalUnlock(hMem);
-        OpenClipboard(0);
-        EmptyClipboard();
-        SetClipboardData(CF_TEXT, hMem);
-        CloseClipboard();
+        putInClipboard(cmd_data);
     }
     else if( cmd_type=="click" )
     {
@@ -131,6 +124,14 @@ void ReLinkRx::processCmd(QString cmd_type, QString cmd_data)
 
         qDebug() << "ReLinkRx::click" << cmd_data
                  << x << w << data_s;
+    }
+    else if( cmd_type=="sms" )
+    {
+        qDebug() << "ReLinkRx::sms" << cmd_data;
+        putInClipboard(cmd_data);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_V);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
     }
     else
     {

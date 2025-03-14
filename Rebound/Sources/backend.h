@@ -34,6 +34,7 @@ QString getDiffTime(clock_t start);
 void executeAhk(QString name);
 void executScript(QString name, int id);
 int  isWinExplorer(QString title);
+void putInClipboard(QString data);
 #endif
 
 #endif // BACKEND_H

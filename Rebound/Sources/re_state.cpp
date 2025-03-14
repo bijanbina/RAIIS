@@ -1,7 +1,7 @@
 #include "re_state.h"
 
 int  ReState::remote_id      = 0;
-int  ReState::dim_opacity    = 255;
+int  ReState::dim_opacity    = RE_DIM_OPAC;
 bool ReState::sleep_state    = 0;
 bool ReState::dictate_state  = 0;
 bool ReState::record_state   = 0;
