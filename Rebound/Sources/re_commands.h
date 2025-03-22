@@ -39,7 +39,7 @@
 #define RE_SUPER_SIDE    308
 #define RE_SUPER_LOVE    309
 #define RE_SUPER_ROGER   310
-#define RE_SUPER_RESIST  311
+#define RE_SUPER_TOUCH   311
 #define RE_SUPER_SPOTIFY 312
 #define RE_SUPER_DOUBLE  313
 #define RE_SUPER_SELECT  314

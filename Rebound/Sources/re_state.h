@@ -33,7 +33,8 @@ public:
     static bool isEscape(CCommand cmd);
     static int  stopFFScroll();
 
-    static int  remote_id;
+    static int  remote_id; // current    pc id
+    static int  rust_id;   // controlled pc id
     static int  dim_opacity;
     static bool sleep_state;
     static bool dictate_state;

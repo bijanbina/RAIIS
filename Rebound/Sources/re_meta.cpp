@@ -327,7 +327,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
            ReChess::sendCmd("system", "drag");
         ReState::ch_count = 4;
     }
-    else if( val==RE_SUPER_RESIST )
+    else if( val==RE_SUPER_TOUCH )
     {
         ReChess::sendCmd("system", "touch");
         ReState::ch_count = 999;

@@ -115,7 +115,7 @@ void ReChess::showChess(int val)
     {
         sendCmd("double");
     }
-    else if( val==RE_SUPER_RESIST )
+    else if( val==RE_SUPER_TOUCH )
     {
         setCount(999); //some large num
         sendCmd("touch");
@@ -201,7 +201,7 @@ int ReChess::isChessCmd(QString text)
     int val = text.toInt();
     if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
         val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
-        val==RE_SUPER_RESIST || val==RE_SUPER_DRAG    ||
+        val==RE_SUPER_TOUCH || val==RE_SUPER_DRAG    ||
         val==RE_SUPER_MAGIC )
     {
         return 1;

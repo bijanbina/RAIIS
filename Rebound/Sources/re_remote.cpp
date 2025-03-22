@@ -62,7 +62,7 @@ ReRemote::~ReRemote()
 void ReRemote::send(QString word)
 {
     qDebug() << "sendRemote"
-             << ReState::remote_id << word;
+             << ReState::rust_id << word;
 
     if( word=="go" || word=="system" || word=="mouse" )
     {
@@ -82,7 +82,7 @@ void ReRemote::send(QString word)
         return;
     }
 
-    QString data = QString::number(ReState::remote_id) + "::";
+    QString data = QString::number(ReState::rust_id) + "::";
     data += word + "\n";
     apache_tx->write(data);
 }
@@ -291,6 +291,16 @@ int ReRemote::procMouse(QString word)
     else if( word=="right" )
     {
         re_mouseKey(3);
+        return 1;
+    }
+    else if( word=="raise" )
+    {
+        re_mouseKey(4);
+        return 1;
+    }
+    else if( word=="down" )
+    {
+        re_mouseKey(5);
         return 1;
     }
     else if( word=="u" )

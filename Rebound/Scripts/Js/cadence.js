@@ -14,7 +14,8 @@ function html_filter(text)
 
 function cadence_timeoutMain()
 {
-    if( window.location.href.includes("/CadenceEcomLogin") )
+    if( window.location.href.includes("/CadenceEcomLogin") || 
+        window.location.href.includes("/CadenceApplicationLoginScreen") )
     {
 		var remember_me = $("input[type='checkbox']");
 		//console.log(remember_me);
@@ -26,9 +27,17 @@ function cadence_timeoutMain()
 				console.log("h", login_btn);
 				if( $(login_btn).length )
 				{
-					//alert($(login_btn).length);
+					alert($(login_btn).length);
 					login_btn.click();
+                    return;
 				}
+
+                login_btn = $("input[value='Login']");
+                if( $(login_btn).length )
+                {
+                    login_btn.click();
+                    return;
+                }
 			}
 			else
 			{
@@ -80,35 +89,3 @@ function cadence_timeoutMain()
     //}
     //alert("hey");
 }
-
-document.addEventListener("keydown", function(event) 
-{ 
-    if( event.ctrlKey && event.shiftKey && event.code==="KeyR" ) 
-    { 
-        var mic_query = 'button[class*="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base mat-mdc-tooltip-trigger speech_dictation_mic_button"]'; 
-        var mic_button = document.querySelector(mic_query); // Selects the button with class "rop" 
-        if( mic_button ) 
-        { 
-            mic_button.click(); 
-        } 
-        else 
-        { 
-            console.log("Mic button not found."); 
-        } 
-        event.preventDefault(); // Prevent the default action (optional) 
-    } 
-    if( event.ctrlKey && event.shiftKey && event.code==="KeyU" ) 
-    { 
-        var send_query = 'button[class*="send-button"]'; 
-        var send_button = document.querySelector(send_query); // Selects the button with class "rop" 
-        if( send_button ) 
-        { 
-            send_button.click(); 
-        } 
-        else 
-        { 
-            console.log("Send button not found."); 
-        } 
-        event.preventDefault(); // Prevent the default action (optional) 
-    } 
-});

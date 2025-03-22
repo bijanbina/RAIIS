@@ -101,7 +101,7 @@ void ReWindowW::updateRemoteID(ReWindow win)
         win.title.contains("Remote") )// rustdesk window
     {
         int r_id = re_getRemoteId(win.title);
-        ReState::remote_id = r_id;
+        ReState::rust_id = r_id;
     }
 }
 

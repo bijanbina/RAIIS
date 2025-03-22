@@ -1,6 +1,7 @@
 #include "re_state.h"
 
 int  ReState::remote_id      = 0;
+int  ReState::rust_id        = 0;
 int  ReState::dim_opacity    = RE_DIM_OPAC;
 bool ReState::sleep_state    = 0;
 bool ReState::dictate_state  = 0;
@@ -97,7 +98,7 @@ void ReState::goToRemote(int rid)
 {
     if( rid )
     {
-        remote_id = rid;
+        rust_id = rid;
     }
     remote_state = 1;
     sleep_state  = 0;
