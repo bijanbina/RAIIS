@@ -33,7 +33,8 @@ void ReSuper::castRunCmd(CCommand *cmd)
     cmd->type = RE_COMMAND_NULL;
 
     qDebug() << "Run" << ReState::app.pname;
-    if( ReState::app.pname==RE_PROC_QT )
+    if( ReState::app.pname==RE_PROC_QT ||
+        ReState::app.pname==RE_PROC_ALLEGRO )
     {
         cmd->val1 = KEY_F5;
         cmd->type = RE_COMMAND_DIRS;
@@ -297,6 +298,10 @@ void ReSuper::castJamesCmd(CCommand *cmd)
     {
         castJamesFF(cmd);
     }
+    else if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        ReKeyboard::sendKey(KEY_RIGHTSHIFT);
+    }
 }
 
 void ReSuper::castJamesFF(CCommand *cmd)
@@ -519,6 +524,10 @@ int  ReSuper::getScrollVal(int secondary)
              secondary==1 )
     {
         return 3;
+    }
+    else if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        return 1;
     }
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_SLACK )

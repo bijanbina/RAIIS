@@ -2,6 +2,7 @@
 #define RE_APP_W_H
 
 #define RE_PROC_ALTIUM    "X2.EXE"
+#define RE_PROC_ALLEGRO   "allegro"
 #define RE_PROC_CHESS     "Chess"
 #define RE_PROC_CHROME    "chrome"
 #define RE_PROC_EDITOR    ""

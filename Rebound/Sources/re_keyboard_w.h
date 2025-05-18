@@ -51,6 +51,7 @@
 #define KEY_LEFTALT    VK_MENU
 #define KEY_LEFTCTRL   VK_CONTROL
 #define KEY_LEFTSHIFT  VK_SHIFT
+#define KEY_RIGHTSHIFT VK_RSHIFT
 #define KEY_LEFTMETA   VK_LWIN
 #define KEY_TAB        VK_TAB
 #define KEY_PAGEUP     VK_PRIOR //Page Up
