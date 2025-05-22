@@ -137,6 +137,10 @@ void ReChess::showChess(int val)
         setCount(1);
         magic_mode = 1;
     }
+    else if( val==RE_SUPER_JAMES )
+    {
+        sendCmd("james");
+    }
 }
 
 void ReChess::sendCmd(QString cmd, QString arg)
@@ -199,10 +203,10 @@ void ReChess::addCount(int val)
 int ReChess::isChessCmd(QString text)
 {
     int val = text.toInt();
-    if( val==RE_SUPER_KICK   || val==RE_SUPER_COMMENT ||
-        val==RE_SUPER_SIDE   || val==RE_SUPER_DOUBLE  ||
+    if( val==RE_SUPER_KICK  || val==RE_SUPER_COMMENT ||
+        val==RE_SUPER_SIDE  || val==RE_SUPER_DOUBLE  ||
         val==RE_SUPER_TOUCH || val==RE_SUPER_DRAG    ||
-        val==RE_SUPER_MAGIC )
+        val==RE_SUPER_MAGIC || val==RE_SUPER_JAMES )
     {
         return 1;
     }

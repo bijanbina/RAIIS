@@ -217,6 +217,18 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         system("xdotool set_desktop 0");
     }
+    else if( val==KEY_B )
+    {
+        ReKeyboard::pressKey(KEY_LEFTMETA);
+        ReKeyboard::sendKey(KEY_B);
+        ReKeyboard::releaseKey(KEY_LEFTMETA);
+
+        QThread::msleep(100);
+        ReKeyboard::sendKey(KEY_ENTER);
+
+        QThread::msleep(100);
+        ReKeyboard::sendKey(KEY_UP);
+    }
     else if( val==KEY_D )
     {
         if( ReState::dim_opacity==RE_DIM_OPAC )

@@ -96,6 +96,13 @@ void ReLinkTx::scrollDown(int speed)
     sendPipe(cmd.toStdString().c_str());
 }
 
+void ReLinkTx::scrollPos(QString pos)
+{
+    QString cmd = "scroll: ";
+    cmd += pos;
+    sendPipe(cmd.toStdString().c_str());
+}
+
 void ReLinkTx::scrollEscape()
 {
     sc_dir = 0;

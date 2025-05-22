@@ -343,6 +343,12 @@ void ReSuper::castJamesFF(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.title.contains("- Google Search") )
+    {
+        re_mouseMoveW(700, 200);
+        QThread::msleep(100);
+        re_mousePress(1);
+    }
 }
 
 void ReSuper::castNextCmd(CCommand *cmd)
@@ -455,10 +461,12 @@ void ReSuper::castNorthCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
-        re_mouseMoveW(100, 600);
-
+        ReState::setScroll("top");
+    }
+    else if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
         cmd->val1  = RE_MOUSE_UP;
-        cmd->val2  = getScrollVal(1);
+        cmd->val2  = getScrollVal()*2;
         cmd->val3  = 1;
         cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;
@@ -498,10 +506,12 @@ void ReSuper::castSouthCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
-        re_mouseMoveW(100, 500);
-
+        ReState::setScroll("bottom");
+    }
+    else if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
         cmd->val1  = RE_MOUSE_DOWN;
-        cmd->val2  = getScrollVal(1);
+        cmd->val2  = getScrollVal()*2;
         cmd->val3  = 1;
         cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;

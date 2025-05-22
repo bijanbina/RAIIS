@@ -185,6 +185,11 @@ void ReState::enScroll(int dir, int speed)
     }
 }
 
+void ReState::setScroll(QString pos)
+{
+    link_tx->scrollPos(pos);
+}
+
 // is escape command
 bool ReState::isEscape(CCommand cmd)
 {

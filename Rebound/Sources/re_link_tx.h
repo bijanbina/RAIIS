@@ -15,10 +15,10 @@
 #endif
 
 #define RE_FFGEAR_COUNT 16
-#define RE_FFGEAR_DELAY { 100, 50, 25, 10, 10, 5, 5, 5, 5,  5,  \
-                          5  ,  5,  5,  5,  5}
-#define RE_FFGEAR_STEP  { 1  , 2 ,  3,  4,  5, 6, 7, 8, 9, 20, \
-                          25 , 40, 50, 60, 70}
+#define RE_FFGEAR_DELAY {100, 50, 25, 10, 10, 5, 5, 5, 5,  5,  \
+                         5  ,  5,  5,  5,  5}
+#define RE_FFGEAR_STEP  {1  , 2 ,  3,  4,  5, 6, 7, 8, 9, 20, \
+                         25 , 40, 50, 60, 70}
 
 class ReLinkTx : public QObject
 {
@@ -27,6 +27,7 @@ public:
     ReLinkTx();
     void connectPipe();
     void sendPipe(const char *data);
+    void scrollPos(QString pos);
     void scrollUp(int speed);
     void scrollDown(int speed);
     void scrollEscape();

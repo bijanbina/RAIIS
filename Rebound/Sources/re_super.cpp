@@ -207,6 +207,16 @@ void ReSuper::castMetaCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.pname==RE_PROC_ORCAD )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_F4;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
 #endif
 }
 

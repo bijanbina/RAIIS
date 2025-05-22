@@ -30,6 +30,7 @@ public:
     static void goToDrag();
     static void wakeUp();
     static void enScroll(int dir, int speed);
+    static void setScroll(QString pos);
     static bool isEscape(CCommand cmd);
     static int  stopFFScroll();
 

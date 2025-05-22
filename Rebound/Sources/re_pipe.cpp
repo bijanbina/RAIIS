@@ -57,10 +57,12 @@ void RePipe::sendChess(const char *data)
     }
 
     DWORD dwWritten;
-    int success = WriteFile(pipe_chess, data, len, &dwWritten, NULL);
+    int success = WriteFile(pipe_chess, data, len,
+                            &dwWritten, NULL);
     if( !success )
     {
-        qDebug() << "Error: NamedPipe writing failed," << GetLastError();
+        qDebug() << "Error: NamedPipe writing failed,"
+                 << GetLastError();
     }
 
     if( dwWritten!=len )
