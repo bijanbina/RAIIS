@@ -22,6 +22,7 @@ public:
     static void csatGitKraken(int val, CCommand *cmd);
     static void castAltium(int val, CCommand *cmd);
     static void castSlack(int val, CCommand *cmd);
+    static void castAllegro(int val, CCommand *cmd);
     static QString castXed(int val);
 };
 

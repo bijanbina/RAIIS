@@ -398,6 +398,10 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
     {
         ReMetaFox::castAltium(val, cmd);
     }
+    else if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        ReMetaFox::castAllegro(val, cmd);
+    }
     else if( ReState::app.pname==RE_PROC_SLACK )
     {
         ReMetaFox::castSlack(val, cmd);

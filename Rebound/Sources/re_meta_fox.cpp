@@ -512,3 +512,16 @@ void ReMetaFox::castSlack(int val, CCommand *cmd)
         re_mouseKey(1);
     }
 }
+
+void ReMetaFox::castAllegro(int val, CCommand *cmd)
+{
+    if( val>=KEY_1 && val<=KEY_9 ) //tab
+    {
+        cmd->val1 = val+(VK_NUMPAD0-KEY_0);
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
+}

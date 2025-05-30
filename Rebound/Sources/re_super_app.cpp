@@ -260,6 +260,30 @@ void ReSuper::castCarrotCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.pname==RE_PROC_GIT )
+    {
+        QThread::msleep(10);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::pressKey(KEY_LEFTSHIFT);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_P);
+        QThread::msleep(10);
+        ReKeyboard::releaseKey(KEY_LEFTSHIFT);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(100);
+        ReKeyboard::type("Switch Profile");
+        QThread::msleep(100);
+        ReKeyboard::sendKey(KEY_ENTER);
+        QThread::msleep(100);
+        ReKeyboard::sendKey(KEY_B);
+        QThread::msleep(100);
+
+        cmd->val1  = KEY_ENTER;
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
 }
 
 void ReSuper::castJamesCmd(CCommand *cmd)

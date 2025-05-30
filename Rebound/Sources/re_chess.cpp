@@ -206,7 +206,11 @@ int ReChess::isChessCmd(QString text)
     if( val==RE_SUPER_KICK  || val==RE_SUPER_COMMENT ||
         val==RE_SUPER_SIDE  || val==RE_SUPER_DOUBLE  ||
         val==RE_SUPER_TOUCH || val==RE_SUPER_DRAG    ||
-        val==RE_SUPER_MAGIC || val==RE_SUPER_JAMES )
+        val==RE_SUPER_MAGIC )
+    {
+        return 1;
+    }
+    if( ReState::ch_count && val==RE_SUPER_JAMES )
     {
         return 1;
     }
