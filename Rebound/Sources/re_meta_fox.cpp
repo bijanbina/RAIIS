@@ -240,8 +240,15 @@ void ReMetaFox::castFirefox(int val, CCommand *cmd)
     if( val==KEY_LEFT ) //tab
     {
         cmd->is_ctrl  = 1;
-        cmd->is_shift = 1;
-        cmd->val1 = KEY_TAB;
+        if( ReState::app.title.contains("Developer Tools") )
+        {
+            cmd->val1 = VK_OEM_4; //'['
+        }
+        else
+        {
+            cmd->is_shift = 1;
+            cmd->val1 = KEY_TAB;
+        }
 
         cmd->val2 = 1;
         cmd->val3 = 1;
@@ -251,7 +258,14 @@ void ReMetaFox::castFirefox(int val, CCommand *cmd)
     else if( val==KEY_RIGHT )
     {
         cmd->is_ctrl  = 1;
-        cmd->val1 = KEY_TAB;
+        if( ReState::app.title.contains("Developer Tools") )
+        {
+            cmd->val1 = VK_OEM_6; //']'
+        }
+        else
+        {
+            cmd->val1 = KEY_TAB;
+        }
 
         cmd->val2  = 1;
         cmd->val3  = 1;
@@ -517,7 +531,7 @@ void ReMetaFox::castAllegro(int val, CCommand *cmd)
 {
     if( val>=KEY_1 && val<=KEY_9 ) //tab
     {
-        cmd->val1 = val+(VK_NUMPAD0-KEY_0);
+        cmd->val1 = val+(VK_NUMPAD0-KEY_0 );
 
         cmd->val2 = 1;
         cmd->val3 = 1;

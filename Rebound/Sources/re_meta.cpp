@@ -229,6 +229,11 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         QThread::msleep(100);
         ReKeyboard::sendKey(KEY_UP);
     }
+    else if( val==KEY_C )
+    {
+       ReChess::sendCmd("system", "comment");
+       ReChess::setCount(2);
+    }
     else if( val==KEY_D )
     {
         if( ReState::dim_opacity==RE_DIM_OPAC )
@@ -324,11 +329,6 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
        ReChess::sendCmd("system", "side");
        ReChess::setCount(2);
     }
-    else if( val==RE_SUPER_COMMENT )
-    {
-       ReChess::sendCmd("system", "comment");
-       ReChess::setCount(2);
-    }
     else if( val==RE_SUPER_DOUBLE )
     {
        ReChess::sendCmd("system", "double");
@@ -336,7 +336,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     }
     else if( val==RE_SUPER_DRAG )
     {
-           ReChess::sendCmd("system", "drag");
+        ReChess::sendCmd("system", "drag");
         ReState::ch_count = 4;
     }
     else if( val==RE_SUPER_TOUCH )
@@ -347,7 +347,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     else if( val==RE_SUPER_SELECT )
     {
         ReChess::sendCmd("select");
-        ReChess::setCount(2);
+        ReChess::setCount(4);
     }
     else
     {

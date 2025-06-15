@@ -63,6 +63,7 @@
 #define RE_SUPER_WEST    332
 #define RE_SUPER_NORTH   333
 #define RE_SUPER_SOUTH   334
+#define RE_SUPER_HOOLEY  335
 
 #define RE_CHESS_KICK    401
 #define RE_CHESS_COMMENT 402

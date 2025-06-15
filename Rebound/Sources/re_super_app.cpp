@@ -170,13 +170,13 @@ void ReSuper::castGasCmd(CCommand *cmd)
 
     if( ReState::app.pname==RE_PROC_QT )
     {
-        ReChess::sendCmd("select");
+        ReChess::sendCmd("line_select");
         ReChess::setCount(2);
         ReChess::magic_mode = 1;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE )
     {
-        ReChess::sendCmd("select");
+        ReChess::sendCmd("line_select");
         ReChess::setCount(2);
         ReChess::magic_mode = 1;
     }

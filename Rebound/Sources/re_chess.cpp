@@ -126,6 +126,11 @@ void ReChess::showChess(int val)
         drag_mode = CH_DRAG_STATE2;
         sendCmd("drag");
     }
+    else if( val==RE_SUPER_HOOLEY )
+    {
+        setCount(2);
+        sendCmd("hover");
+    }
     else if( val==RE_SUPER_SHOT )
     {
         setCount(4);
@@ -206,7 +211,7 @@ int ReChess::isChessCmd(QString text)
     if( val==RE_SUPER_KICK  || val==RE_SUPER_COMMENT ||
         val==RE_SUPER_SIDE  || val==RE_SUPER_DOUBLE  ||
         val==RE_SUPER_TOUCH || val==RE_SUPER_DRAG    ||
-        val==RE_SUPER_MAGIC )
+        val==RE_SUPER_MAGIC || val==RE_SUPER_DRAG )
     {
         return 1;
     }
