@@ -2,7 +2,8 @@ import QtQuick 2.5
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 1.4
 
-Rectangle{
+Rectangle
+{
     id: switcher
     property color foreground_color: "#3a3b36"
     property color text_color: "#e8e9e3"
@@ -42,7 +43,8 @@ Rectangle{
         width: parent.width / 3
         button_text: button1_text
         button_type: 0
-        onButtonClicked: {
+        onButtonClicked:
+        {
             onTabChanged(1)
             button1Clicked()
         }
@@ -58,7 +60,8 @@ Rectangle{
         width: parent.width / 3
         button_text: button2_text
         button_type: 1
-        onButtonClicked: {
+        onButtonClicked:
+        {
             onTabChanged(2)
             button2Clicked()
         }
@@ -73,7 +76,8 @@ Rectangle{
         width: parent.width / 3
         button_text: button3_text
         button_type: 2
-        onButtonClicked: {
+        onButtonClicked:
+        {
             onTabChanged(3)
             button3Clicked()
         }

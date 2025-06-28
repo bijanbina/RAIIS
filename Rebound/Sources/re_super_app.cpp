@@ -495,6 +495,23 @@ void ReSuper::castNorthCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.pname==RE_PROC_ORCAD )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = RE_MOUSE_UP;
+        cmd->val2    = getScrollVal();
+        cmd->val3    = 1;
+        cmd->type    = RE_COMMAND_MOUSE;
+        cmd->state   = RE_CSTATE_0;
+    }
+    else
+    {
+        cmd->val1  = RE_MOUSE_UP;
+        cmd->val2  = getScrollVal()*2;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+    }
 }
 
 void ReSuper::castSouthCmd(CCommand *cmd)
@@ -540,6 +557,23 @@ void ReSuper::castSouthCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_MOUSE;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.pname==RE_PROC_ORCAD )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = RE_MOUSE_DOWN;
+        cmd->val2    = getScrollVal();
+        cmd->val3    = 1;
+        cmd->type    = RE_COMMAND_MOUSE;
+        cmd->state   = RE_CSTATE_0;
+    }
+    else
+    {
+        cmd->val1  = RE_MOUSE_DOWN;
+        cmd->val2  = getScrollVal()*2;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+    }
 }
 
 // secondary is 1 for north and south
@@ -560,6 +594,10 @@ int  ReSuper::getScrollVal(int secondary)
         return 3;
     }
     else if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        return 1;
+    }
+    else if( ReState::app.pname==RE_PROC_ORCAD )
     {
         return 1;
     }

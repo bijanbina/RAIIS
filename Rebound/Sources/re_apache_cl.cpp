@@ -94,8 +94,10 @@ void ReApacheCl::watchdogTimeout()
 {
     if( con->state()==QAbstractSocket::ConnectedState )
     {
-        qDebug() << "ReApacheCl::watchdogTimeout: connection dropped:"
-                 << con->state();
+        qDebug() << "ReApacheCl::watchdogTimeout:"
+                 << "connection dropped:"
+                 << con->state()
+                 << c_port;
         watchdog->start(RE_RECONNECT);
         live->stop();
 

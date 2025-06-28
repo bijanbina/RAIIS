@@ -1,14 +1,8 @@
 import QtQuick 2.5
 import "qrc:/"
 
-Rectangle{
-
-    function refreshFocus()
-    {
-        terminalEditor.forceActiveFocus();
-    }
-
-
+Rectangle
+{
     TextEdit
     {
         id: terminalOutput
@@ -54,7 +48,8 @@ Counting objects: 20, done."
         }
     }
 
-    TextEdit{
+    TextEdit
+    {
         id: terminalEditor
         anchors.left: commandSymbol.right
         anchors.top: terminalOutput.bottom
@@ -77,4 +72,8 @@ Counting objects: 20, done."
 //        anchors.top: terminalEditor.top
 //        anchors.bottom: terminalEditor.bottom
 //    }
+    function refreshFocus()
+    {
+        terminalEditor.forceActiveFocus();
+    }
 }

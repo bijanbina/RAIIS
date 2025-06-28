@@ -183,6 +183,16 @@ void ReSuper::castMetaCmd(CCommand *cmd)
         system("./Scripts/telegram_voice.sh");
 #endif
     }
+    else if( ReState::app.pname==RE_PROC_ORCAD )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_F4;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_SLACK )
     {
@@ -319,6 +329,14 @@ void ReSuper::castLoopCmd(CCommand *cmd)
 
 void ReSuper::castLoveCmd(CCommand *cmd)
 {
+    if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        cmd->val1  = RE_MOUSE_UP;
+        cmd->val2  = getScrollVal()*2;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+    }
     cmd->is_ctrl = 1;
     cmd->val1    = KEY_LEFT;
 

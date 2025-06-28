@@ -2,7 +2,8 @@ import QtQuick 2.5
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 1.4
 
-Rectangle {
+Rectangle
+{
     property bool   button_enabled: true
     property color  color_enabled : "#ffffff"
     property color  color_stroke  : "#e8e9e3"
@@ -15,7 +16,8 @@ Rectangle {
 
     color: "transparent"
 
-    Rectangle{
+    Rectangle
+    {
         id: rnd1
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -26,7 +28,9 @@ Rectangle {
         color: color_enabled
         visible: button_enabled
     }
-    Rectangle{
+
+    Rectangle
+    {
         id: rnd2
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -38,6 +42,7 @@ Rectangle {
         color: color_enabled
         visible: button_enabled
     }
+
     Label
     {
         anchors.horizontalCenter: parent.horizontalCenter
@@ -50,11 +55,14 @@ Rectangle {
         font.family: earlyTimes.name
         antialiasing: true
     }
+
     MouseArea
     {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: {
+        onClicked:
+        {
+            console.log("sag berine be internet");
             //button_enabled = ! button_enabled;
             buttonClicked();
         }

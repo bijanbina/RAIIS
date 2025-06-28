@@ -150,6 +150,8 @@ void ReCaptain::execMouse(CCommand command)
 {
     CCommand translated;
     int count = command.val2 * command.val3;
+
+    re_modPress(command);
     for( int j=0 ; j<count ; j++ )
     {
         if( command.val1==RE_MOUSE_LEFT )
@@ -175,6 +177,8 @@ void ReCaptain::execMouse(CCommand command)
             QThread::msleep(50);
         }
     }
+
+    re_modRelease(command);
 }
 
 int ReCaptain::execSleep(CCommand command)
