@@ -1,16 +1,8 @@
-var cadence_rm_count = 0;
+var cadence_gmail = 0;
 function main_cadence()
 {
     join_timer = setInterval(cadence_timeoutMain, 500);
 } 
-
-function html_filter(text)
-{
-    return function() 
-           {
-               return $(this).html()===text;
-           }
-}
 
 function cadence_timeoutMain()
 {
@@ -55,37 +47,19 @@ function cadence_timeoutMain()
         }
         
         login_btn = document.querySelector("a[data-se='stay-signed-in-btn']");
-		console.log("h", login_btn);
+		//console.log("h", login_btn);
         if( $(login_btn).length )
         {
             login_btn.click();
         }
+		else if( cadence_gmail==0 )
+		{
+			var ap =  $("h2:contains('Verify with your email')");
+			if( ap.length )
+			{
+				cadence_gmail = 1;
+				requestEmailCode("cadence");
+			}
+		}
     }
-    else if( window.location.href.includes("/inloggen") )
-    {
-        var login_btn = $("span:contains('With username')");
-        if( $(login_btn).length )
-        {
-                //alert($(login_btn).length);
-            login_btn.click();
-        }
-        
-        var login_btn = $("span:contains('With an SMS')");
-        if( $(login_btn).length )
-        {
-            login_btn.click();
-        }
-    }
-    //var mt          = $('mws-conversation-snippet');
-    //var recent_span = mt.find("span").first();
-    //var cadence_txt     = recent_span.text();
-    //var cadence_digit   = (cadence_txt.match(/\d/g) || []).join('');
-
-    //if( cadence_digit )
-    //{
-    //    console.log("h", cadence_digit);
-    //    navigator.clipboard.writeText(cadence_digit)
-    //            .then(() => console.log("Copied!"))
-    //}
-    //alert("hey");
 }

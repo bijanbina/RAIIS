@@ -8,6 +8,10 @@ else if( location.hostname.includes("meet.google.com") )
 {
     main_gmeet();
 }
+else if( location.hostname.includes("mail.google.com") )
+{
+    main_gmail();
+}
 else if( location.hostname.includes("accounts.google.com") )
 {
     main_gaccount();
