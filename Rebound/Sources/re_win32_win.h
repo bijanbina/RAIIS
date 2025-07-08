@@ -5,8 +5,9 @@
 #include <psapi.h> // For access to GetModuleFileNameEx
 #include <QDebug>
 
-int  re_isVpnConnected();
-void re_setWindowOpacity(HWND hwnd, BYTE opacity);
-int  re_getWindowOpacity(HWND hwnd);
+int     re_isVpnConnected();
+void    re_setWindowOpacity(HWND hwnd, BYTE opacity);
+int     re_getWindowOpacity(HWND hwnd);
+QString ch_getClass(HWND hwnd);
 
 #endif // RE_WIN32_WIN_H

@@ -54,6 +54,7 @@ void ReWindowW::addHwnd(HWND hwnd)
 
 void ReWindowW::applyOpacity(ReWindow win)
 {
+    QString win_class = ch_getClass(win.hWnd);
     if( win.pname=="Chess" ||
         win.pname=="rustdesk" ||
         win.title=="Qt Creator" ||
@@ -64,14 +65,19 @@ void ReWindowW::applyOpacity(ReWindow win)
     {
         return;
     }
-//    qDebug() << "process" << win.pname
-//             << win.title;
+    if( win_class=="popup" )
+    {
+        return;
+    }
+
     if( win_active.hWnd==win.hWnd )
     {
         re_setWindowOpacity(win.hWnd, 255);
     }
     else
     {
+//        qDebug() << "applyOpacity:" << win.pname
+//                 << ch_getClass(win.hWnd);
         re_setWindowOpacity(win.hWnd, ReState::dim_opacity);
 //        re_setWindowOpacity(win.hWnd, 255);
     }
@@ -119,7 +125,7 @@ void ReWindowW::handleNewWin(ReWindow win)
 
         if( ReState::sleep_state==0 )
         {
-            ReChess::showChess(RE_SUPER_KICK);
+            ReChess::showChess(RE_CHESS_KICK);
             QThread::msleep(200);
             ReChess::nato(QString::number(KEY_END));
             ReChess::dirs(QString::number(KEY_RIGHT));

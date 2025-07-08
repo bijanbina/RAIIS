@@ -17,7 +17,6 @@ void ReSuper::castLastCmd(CCommand *cmd)
 {
     re_mouseMoveC(-50, 0);
 
-    cmd->is_ctrl = 1;
     cmd->val1    = RE_MOUSE_DOWN;
 
     cmd->val2 = getScrollVal();

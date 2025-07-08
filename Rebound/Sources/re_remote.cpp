@@ -205,7 +205,14 @@ int ReRemote::procChess(QString word)
     if( word=="kick"    || word=="comment" || word=="side" ||
         word=="double"  || word=="touch"   || word=="drag" )
     {
-        ReChess::sendCmd("system", word);
+        if( word=="kick" )
+        {
+            ReChess::sendCmd("system", "left");
+        }
+        else
+        {
+            ReChess::sendCmd("system", word);
+        }
         if( word=="touch" )
         {
             ReChess::setCount(999); //some large num
@@ -235,7 +242,7 @@ int ReRemote::procSuper(QString word)
     {
         val = 2;
     }
-    else if( word=="three" )
+    else if( word=="free" )
     {
         val = 3;
     }
@@ -259,7 +266,7 @@ int ReRemote::procSuper(QString word)
     }
     else if( word=="sierra" )
     {
-        ReChess::showChess(RE_SUPER_SHOT);
+        ReChess::showChess(RE_CHESS_SHOT);
         return 1;
     }
     else if( word=="back" )
@@ -466,7 +473,7 @@ int ReRemote::procDigit(QString word)
     {
         return 2;
     }
-    else if( word=="three" )
+    else if( word=="free" )
     {
         return 3;
     }

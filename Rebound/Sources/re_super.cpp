@@ -43,7 +43,7 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castRogerCmd(cmd);
     }
-    else if( val==RE_SUPER_GAS )
+    else if( val==RE_CHESS_GAS )
     {
         castGasCmd(cmd);
     }
