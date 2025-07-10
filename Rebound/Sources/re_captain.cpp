@@ -342,7 +342,7 @@ void ReCaptain::wakeRecord()
     else if( ReState::app.pname==RE_PROC_FIREFOX ||
              ReState::app.pname==RE_PROC_GEKO )
     {
-        QThread::msleep(1000);
+//        QThread::msleep(1000);
 
         ReKeyboard::pressKey(KEY_LEFTCTRL);
         ReKeyboard::pressKey(KEY_LEFTSHIFT);
@@ -352,7 +352,7 @@ void ReCaptain::wakeRecord()
         ReKeyboard::releaseKey(KEY_LEFTSHIFT);
         ReKeyboard::releaseKey(KEY_LEFTCTRL);
 
-        QThread::msleep(1000);
+        QThread::msleep(5000);
 
         ReKeyboard::pressKey(KEY_LEFTCTRL);
         ReKeyboard::pressKey(KEY_LEFTSHIFT);

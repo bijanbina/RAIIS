@@ -1,9 +1,9 @@
 #include "re_chess.h"
 #include <unistd.h>
 
-int ReChess::drag_mode    = 0;
-int ReChess::magic_mode   = 0;
-QObject *ReChess::root    = NULL;
+int ReChess::drag_mode  = 0;
+int ReChess::magic_mode = 0;
+QObject *ReChess::root  = NULL;
 CCommand ReChess::mod_cmd;
 
 ReChess::ReChess()
@@ -19,9 +19,15 @@ void ReChess::resetChess()
 {
 }
 
-void ReChess::nato(const QString &text)
+// return 1 if command is captured
+int  ReChess::nato(const QString &text)
 {
+    if( ReState::ch_count==0 )
+    {
+        return 0;
+    }
     sendChessKey(text);
+    return 1;
 }
 
 void ReChess::digit(const QString &text)
@@ -39,10 +45,14 @@ void ReChess::meta(const QString &text)
     sendChessKey(text);
 }
 
-// only call on isChessCmd(text)==true
-void ReChess::super(const QString &text,
+// return 1 if command is captured
+int  ReChess::super(const QString &text,
                     QVector<CCommand> cmd_buf)
 {
+    if( ReChess::isChessCmd(text)==0 )
+    {
+        return 0;
+    }
     if( re_isLastMod(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
@@ -51,6 +61,7 @@ void ReChess::super(const QString &text,
     }
     int val = text.toInt();
     showChess(val);
+    return 1;
 }
 
 void ReChess::handleBackspace()
@@ -99,44 +110,40 @@ void ReChess::showChess(int val)
     // This function only on valid val values
     setCount(2);
     magic_mode = 0;
-    if( val==RE_SUPER_KICK )
+    if( val==RE_CHESS_KICK )
     {
-        sendCmd("show");
+        sendCmd("left");
     }
-    else if( val==RE_SUPER_COMMENT )
-    {
-        sendCmd("no_click");
-    }
-    else if( val==RE_SUPER_SIDE )
+    else if( val==RE_CHESS_SIDE )
     {
         sendCmd("side");
     }
-    else if( val==RE_SUPER_DOUBLE )
+    else if( val==RE_CHESS_DOUBLE )
     {
         sendCmd("double");
     }
-    else if( val==RE_SUPER_TOUCH )
+    else if( val==RE_CHESS_TOUCH )
     {
         setCount(999); //some large num
         sendCmd("touch");
     }
-    else if( val==RE_SUPER_DRAG )
+    else if( val==RE_CHESS_DRAG )
     {
         setCount(4);
         drag_mode = CH_DRAG_STATE2;
         sendCmd("drag");
     }
-    else if( val==RE_SUPER_HOOLEY )
+    else if( val==RE_CHESS_HOOLEY )
     {
         setCount(2);
         sendCmd("hover");
     }
-    else if( val==RE_SUPER_SHOT )
+    else if( val==RE_CHESS_SHOT )
     {
         setCount(4);
         sendCmd("screenshot");
     }
-    else if( val==RE_SUPER_MAGIC )
+    else if( val==RE_CHESS_MAGIC )
     {
         sendCmd("magic");
         setCount(1);
@@ -208,10 +215,10 @@ void ReChess::addCount(int val)
 int ReChess::isChessCmd(QString text)
 {
     int val = text.toInt();
-    if( val==RE_SUPER_KICK  || val==RE_SUPER_COMMENT ||
-        val==RE_SUPER_SIDE  || val==RE_SUPER_DOUBLE  ||
-        val==RE_SUPER_TOUCH || val==RE_SUPER_DRAG    ||
-        val==RE_SUPER_MAGIC || val==RE_SUPER_DRAG )
+    if( val==RE_CHESS_KICK  || val==RE_CHESS_HOOLEY ||
+        val==RE_CHESS_SIDE  || val==RE_CHESS_DOUBLE ||
+        val==RE_CHESS_TOUCH || val==RE_CHESS_DRAG   ||
+        val==RE_CHESS_MAGIC || val==RE_CHESS_DRAG )
     {
         return 1;
     }

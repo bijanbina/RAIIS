@@ -9,15 +9,26 @@ ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent)
     pre = new RePreProcessor(cpt);
     createPipe();
 
-    connect(this, SIGNAL(dirs(const QString &)), pre, SLOT(dirs(const QString &)));
-    connect(this, SIGNAL(nato(QString)), pre, SLOT(nato(QString)));
-    connect(this, SIGNAL(meta(QString)), pre, SLOT(meta(QString)));
-    connect(this, SIGNAL(spex(QString)), pre, SLOT(spex(QString)));
-    connect(this, SIGNAL(type(QString)), pre, SLOT(type(QString)));
-    connect(this, SIGNAL(super(QString)), pre, SLOT(super(QString)));
-    connect(this, SIGNAL(digit(QString)), pre, SLOT(digit(QString)));
-    connect(this, SIGNAL(debug(QString)), pre, SLOT(debug(QString)));
-    connect(this, SIGNAL(modifier(QString)), pre, SLOT(modifier(QString)));
+    connect(this, SIGNAL(chess(const QString &)),
+            pre , SLOT(chess(const QString &)));
+    connect(this, SIGNAL(dirs(const QString &)),
+            pre , SLOT(dirs(const QString &)));
+    connect(this, SIGNAL(nato(QString)),
+            pre , SLOT(nato(QString)));
+    connect(this, SIGNAL(meta(QString)),
+            pre , SLOT(meta(QString)));
+    connect(this, SIGNAL(spex(QString)),
+            pre , SLOT(spex(QString)));
+    connect(this, SIGNAL(type(QString)),
+            pre , SLOT(type(QString)));
+    connect(this, SIGNAL(super(QString)),
+            pre , SLOT(super(QString)));
+    connect(this, SIGNAL(digit(QString)),
+            pre , SLOT(digit(QString)));
+    connect(this, SIGNAL(debug(QString)),
+            pre , SLOT(debug(QString)));
+    connect(this, SIGNAL(modifier(QString)),
+            pre , SLOT(modifier(QString)));
 }
 
 ReChannelW::~ReChannelW()
@@ -117,6 +128,10 @@ void ReChannelW::processCommand(QString k_type,
         {
             emit sendRemote(k_code);
         }
+    }
+    else if( k_type=="chess" )
+    {
+        emit chess(k_code);
     }
     else if( k_type=="dirs" )
     {

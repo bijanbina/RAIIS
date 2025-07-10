@@ -22,15 +22,16 @@ public slots:
     void processCommand(QString k_type, QString k_code);
 
 signals:
-    void dirs(const QString &args);
-    void nato(QString args);
-    void meta(QString args);
-    void spex(QString args);
-    void type(QString args);
-    void super(QString args);
+    void chess(QString args);
     void digit(QString args);
     void debug(QString args);
+    void dirs(const QString &args);
     void modifier(QString args);
+    void meta(QString args);
+    void nato(QString args);
+    void type(QString args);
+    void spex(QString args);
+    void super(QString args);
     void sendRemote(QString k_code);
 
 private:
