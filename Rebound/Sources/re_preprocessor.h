@@ -13,18 +13,18 @@ class RePreProcessor : public QObject
     Q_OBJECT
 public:
     RePreProcessor(ReCaptain *cpt, QObject *parent = NULL);
-
     ~RePreProcessor();
 
     ReCaptain *captain;
 
 public slots:
+    void chess(const QString &arg);
     void dirs (const QString &arg);
     void nato (const QString &arg);
     void meta (const QString &arg);
     void type (const QString &arg); //No Repeat on LastCmd
     void spex (const QString &arg); //special
-    void super(const QString &arg); //single shot meta cmd
+    void super(const QString &arg);
     void digit(const QString &arg);
     void modifier(const QString &arg);
     void debug(const QString &arg);

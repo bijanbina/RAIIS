@@ -34,12 +34,21 @@ void RePreProcessor::execute()
     }
 }
 
+void RePreProcessor::chess(const QString &text)
+{
+    if( ReState::sleep_state )
+    {
+        return;
+    }
+
+    ReChess::super(text, cmd_buf);
+}
+
 void RePreProcessor::nato(const QString &text)
 {
     int val = text.toInt();
-    if( ReState::ch_count )
+    if( ReChess::nato(text) )
     {
-        ReChess::nato(text);
         if( ReState::ch_count==0 )
         {
             if( re_isLastMod(cmd_buf) )
@@ -334,21 +343,15 @@ void RePreProcessor::super(const QString &text)
         return;
     }
 
-    if( ReState::ch_count && ReChess::isValidChess(text) )
-    {
-        ReChess::sendChessKey(text);
-        return;
-    }
-    else if( re_isLastMeta(cmd_buf) )
+    if( re_isLastMeta(cmd_buf) )
     {
         int last_i = cmd_buf.count()-1; //last index
         cmd_buf[last_i].val2 = text.toInt();
         execute();
         return;
     }
-    else if( ReChess::isChessCmd(text) )
+    else if( ReChess::super(text, cmd_buf) )
     {
-        ReChess::super(text, cmd_buf);
         // no need to process super mode while in chess
         return;
     }

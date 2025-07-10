@@ -20,10 +20,10 @@ public:
     ReChess();
     ~ReChess();
 
-    static void nato (const QString &arg);
+    static int  nato(const QString &arg);
     static void dirs (const QString &arg);
     static void meta (const QString &arg);
-    static void super(const QString &arg,
+    static int  super(const QString &arg,
                       QVector<CCommand> cmd_buf); //single shot meta cmd
     static void digit(const QString &arg);
 
@@ -44,6 +44,7 @@ private:
     static CCommand   mod_cmd;
 
     static int drag_mode;
+    static int gas_mode;
 };
 
 #endif // RE_CHESS_H

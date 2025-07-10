@@ -203,7 +203,23 @@ void ReMeta::castMouseCmd(int val, CCommand *cmd)
 
 void ReMeta::castSystemCmd(int val, CCommand *cmd)
 {
-    if( val>=KEY_1 &&
+    if( val==KEY_7 )
+    {
+#ifdef WIN32
+        ReKeyboard::sendKey(KEY_B);
+        QThread::msleep(500);
+        ReKeyboard::sendKey('2');
+        cmd->val1 = KEY_ENTER;
+
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_DIRS;
+        cmd->state = RE_CSTATE_0;
+#else
+        system("xdotool key Menu");
+#endif
+    }
+    else if( val>=KEY_1 &&
         val<=KEY_9 )
     {
 #ifdef WIN32
@@ -319,27 +335,27 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         re_execSpeech();
     }
-    else if( val==RE_SUPER_KICK )
+    else if( val==RE_CHESS_KICK )
     {
-       ReChess::sendCmd("system", "show");
+       ReChess::sendCmd("system", "left");
        ReChess::setCount(2);
     }
-    else if( val==RE_SUPER_SIDE )
+    else if( val==RE_CHESS_SIDE )
     {
        ReChess::sendCmd("system", "side");
        ReChess::setCount(2);
     }
-    else if( val==RE_SUPER_DOUBLE )
+    else if( val==RE_CHESS_DOUBLE )
     {
        ReChess::sendCmd("system", "double");
        ReChess::setCount(2);
     }
-    else if( val==RE_SUPER_DRAG )
+    else if( val==RE_CHESS_DRAG )
     {
         ReChess::sendCmd("system", "drag");
         ReState::ch_count = 4;
     }
-    else if( val==RE_SUPER_TOUCH )
+    else if( val==RE_CHESS_TOUCH )
     {
         ReChess::sendCmd("system", "touch");
         ReState::ch_count = 999;
