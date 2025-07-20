@@ -65,6 +65,10 @@ else if( location.hostname.includes("gemini.google.com") )
 {
     main_gemini();
 }
+else if( location.hostname.includes("jlcpcb.com") )
+{
+    main_jlcpcb();
+}
 else if( location.hostname.includes("messages.google.com") )
 {
     main_sms();
