@@ -110,48 +110,24 @@ void ReChess::showChess(int val)
     // This function only on valid val values
     setCount(2);
     magic_mode = 0;
-    if( val==RE_CHESS_KICK )
-    {
-        sendCmd("left");
-    }
-    else if( val==RE_CHESS_SIDE )
-    {
-        sendCmd("side");
-    }
-    else if( val==RE_CHESS_DOUBLE )
-    {
-        sendCmd("double");
-    }
-    else if( val==RE_CHESS_TOUCH )
+    sendCmd("show", QString::number(val));
+    if( val==RE_CHESS_TOUCH )
     {
         setCount(999); //some large num
-        sendCmd("touch");
     }
     else if( val==RE_CHESS_DRAG )
     {
         setCount(4);
         drag_mode = CH_DRAG_STATE2;
-        sendCmd("drag");
-    }
-    else if( val==RE_CHESS_HOOLEY )
-    {
-        setCount(2);
-        sendCmd("hover");
     }
     else if( val==RE_CHESS_SHOT )
     {
         setCount(4);
-        sendCmd("screenshot");
     }
     else if( val==RE_CHESS_MAGIC )
     {
-        sendCmd("magic");
         setCount(1);
         magic_mode = 1;
-    }
-    else if( val==RE_SUPER_JAMES )
-    {
-        sendCmd("james");
     }
 }
 

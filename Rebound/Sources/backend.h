@@ -7,6 +7,12 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "re_config.h"
+#ifdef _WIN32
+#include "re_keyboard_w.h"
+#endif
+#ifdef __linux__
+#include "re_keyboard_l.h"
+#endif
 
 #ifdef _WIN32
     #include <windows.h>

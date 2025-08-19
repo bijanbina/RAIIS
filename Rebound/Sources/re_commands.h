@@ -1,16 +1,7 @@
 #ifndef RE_COMMANDS_H
 #define RE_COMMANDS_H
 
-#ifdef _WIN32
-#include "re_hardware_w.h"
-#include "re_keyboard_w.h"
-#endif
-#ifdef __linux__
-#include <QObject>
-#include <QDebug>
-#include <QStringList>
-#include "re_keyboard_l.h"
-#endif
+#include <QVector>
 
 #define RE_COMMAND_NULL   0
 #define RE_COMMAND_DIRS   1 //This command is repeatable
@@ -26,7 +17,6 @@
 #define RE_CSTATE_0  0
 #define RE_CSTATE_1  1
 #define RE_CSTATE_2  2
-
 
 // First 256 used for ASCII characters
 #define RE_SUPER_META    301
@@ -80,22 +70,6 @@
 #define RE_META_MUSIC    607
 #define RE_META_CLOSE    608
 #define RE_META_MOUSE    609
-
-typedef struct ReWindow
-{
-    // Verify Clear On Each Enumeration To
-    int  verify; //verify hwnd still exist
-    QString title;
-    QString pname;
-    int pid;
-#ifdef _WIN32
-    HWND hWnd;
-#endif
-#ifdef __linux__
-    unsigned long hWnd;
-    int desktop_id;
-#endif
-}ReWindow;
 
 // Captain Command
 typedef struct CCommand

@@ -1,5 +1,12 @@
 #include "re_commands.h"
 
+#ifdef _WIN32
+#include "re_keyboard_w.h"
+#endif
+#ifdef __linux__
+#include "re_keyboard_l.h"
+#endif
+
 bool re_isLastCmdFunction(QVector<CCommand> commands)
 {
     if( commands.count()==0 )

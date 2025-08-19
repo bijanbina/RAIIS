@@ -2,7 +2,7 @@ var jlcpcb_rm_count = 0;
 function main_jlcpcb()
 {
     jlcpcb_rm_count = 2;
-    join_timer = setInterval(jlcpcb_timeoutMain, 500);
+    join_timer = setInterval(jlcpcb_timeoutMain, 5000);
 } 
 
 function html_filter(text)
@@ -19,7 +19,7 @@ function jlcpcb_timeoutMain()
 
 	for( var i=1 ; i<list.length ; i++ )
 	{
-		list[i].remove();
+		//list[i].remove();
 	}
 
 	var homeDiv = $("#home_sign\\ in");
