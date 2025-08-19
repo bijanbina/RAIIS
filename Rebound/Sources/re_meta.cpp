@@ -335,35 +335,27 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
     {
         re_execSpeech();
     }
-    else if( val==RE_CHESS_KICK )
+    else if( val==RE_CHESS_KICK   || val==RE_CHESS_SIDE  ||
+             val==RE_CHESS_DOUBLE || val==RE_CHESS_TOUCH ||
+             val==RE_SUPER_SELECT )
     {
-       ReChess::sendCmd("system", "left");
-       ReChess::setCount(2);
-    }
-    else if( val==RE_CHESS_SIDE )
-    {
-       ReChess::sendCmd("system", "side");
-       ReChess::setCount(2);
-    }
-    else if( val==RE_CHESS_DOUBLE )
-    {
-       ReChess::sendCmd("system", "double");
-       ReChess::setCount(2);
-    }
-    else if( val==RE_CHESS_DRAG )
-    {
-        ReChess::sendCmd("system", "drag");
-        ReState::ch_count = 4;
-    }
-    else if( val==RE_CHESS_TOUCH )
-    {
-        ReChess::sendCmd("system", "touch");
-        ReState::ch_count = 999;
-    }
-    else if( val==RE_SUPER_SELECT )
-    {
-        ReChess::sendCmd("select");
-        ReChess::setCount(4);
+        ReChess::sendCmd("system", QString::number(val));
+        if( val==RE_CHESS_DRAG )
+        {
+            ReChess::setCount(4);
+        }
+        else if( val==RE_CHESS_TOUCH )
+        {
+            ReChess::setCount(999);
+        }
+        else if( val==RE_SUPER_SELECT )
+        {
+            ReChess::setCount(4);
+        }
+        else
+        {
+            ReChess::setCount(2);
+        }
     }
     else
     {

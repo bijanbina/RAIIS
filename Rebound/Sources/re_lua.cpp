@@ -140,6 +140,13 @@ void ReLua::addRegisteryKeys()
     key = "Default";
     QSettings ps_setting(reg, QSettings::NativeFormat);
     ps_setting.setValue(key, 0); // execute
+
+    // edit .bat file in VS Code instead of notepad
+    reg = "HKCR\\batfile\\shell\\edit\\command";
+    key = "Default";
+    QSettings vs_setting(reg, QSettings::NativeFormat);
+    vs_setting.setValue(key, "\"C:\\Program Files\\"
+                             "Microsoft VS Code\\Code.exe\" %1");
 }
 
 int ReLua::regExist(QString path, QString key)

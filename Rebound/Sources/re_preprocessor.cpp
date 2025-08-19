@@ -41,6 +41,13 @@ void RePreProcessor::chess(const QString &text)
         return;
     }
 
+    if( re_isLastMeta(cmd_buf) )
+    {
+        int last_i = cmd_buf.count()-1; //last index
+        cmd_buf[last_i].val2 = text.toInt();
+        execute();
+        return;
+    }
     ReChess::super(text, cmd_buf);
 }
 

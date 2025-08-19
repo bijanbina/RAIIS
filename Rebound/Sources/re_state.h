@@ -10,6 +10,28 @@
 #include "re_status_file.h"
 #include "ch_monitor.h"
 #include "re_link_tx.h"
+#ifdef _WIN32
+#include "re_keyboard_w.h"
+#endif
+#ifdef __linux__
+#include "re_keyboard_l.h"
+#endif
+
+typedef struct ReWindow
+{
+    // Verify Clear On Each Enumeration To
+    int  verify; //verify hwnd still exist
+    QString title;
+    QString pname;
+    int pid;
+#ifdef _WIN32
+    HWND hWnd;
+#endif
+#ifdef __linux__
+    unsigned long hWnd;
+    int desktop_id;
+#endif
+}ReWindow;
 
 class ReState
 {

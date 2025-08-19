@@ -5,6 +5,7 @@
 #include "backend.h"
 #include "re_status_file.h"
 #include "re_commands.h"
+#include "re_hardware_w.h"
 
 class ReStateOld : public QObject
 {
