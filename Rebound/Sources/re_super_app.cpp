@@ -498,7 +498,7 @@ void ReSuper::castNorthCmd(CCommand *cmd)
     {
         cmd->is_ctrl = 1;
         cmd->val1    = RE_MOUSE_UP;
-        cmd->val2    = getScrollVal();
+        cmd->val2    = getScrollVal(1);
         cmd->val3    = 1;
         cmd->type    = RE_COMMAND_MOUSE;
         cmd->state   = RE_CSTATE_0;
@@ -560,7 +560,7 @@ void ReSuper::castSouthCmd(CCommand *cmd)
     {
         cmd->is_ctrl = 1;
         cmd->val1    = RE_MOUSE_DOWN;
-        cmd->val2    = getScrollVal();
+        cmd->val2    = getScrollVal(1);
         cmd->val3    = 1;
         cmd->type    = RE_COMMAND_MOUSE;
         cmd->state   = RE_CSTATE_0;
@@ -598,7 +598,11 @@ int  ReSuper::getScrollVal(int secondary)
     }
     else if( ReState::app.pname==RE_PROC_ORCAD )
     {
-        return 1;
+        if( secondary )
+        {
+            return 1;
+        }
+        return 5;
     }
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_SLACK )

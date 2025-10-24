@@ -12,12 +12,10 @@ for /F "tokens=3 delims=: " %%H in ('sc query "w32time" ^| findstr "        STAT
 )
 
 :EnterDate
-set mydate=%date:~7,2%
-set day=%mydate%
-set mydate=%date:~4,2%
-set mon=%mydate%
-set mydate=%date:~10,4%
-set yer=%mydate%
+set mydate=
+set day=%date:~7,2%
+set mon=%date:~4,2%
+set yer=%date:~10,4%
 
 rem Remove leading zeros from the zero-extended number
 for /f "tokens=* delims=0" %%a in ("%day%") do set "day=%%a"
@@ -28,22 +26,24 @@ sc config w32time start= disabled
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 1 /t REG_SZ /d 1
 reg add HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers /f /v 2 /t REG_SZ /d 2
 SET /P D=Enter date(mm-d): 
+
+rem if it has dash, its a bit of trick
 if not x%D:-=%==x%D% (
 	call :ChangeMonDay
 	goto end
-	)
+)
 if %D% LEQ %day% (
 	call :ChangeDay
 	goto end
-	)
+)
 if %D% GTR %day% if %mon% GTR 01 (
 	call :ChangeMon
 	goto end
-	)
+)
 if %D% GTR %day% if %mon% LEQ 01 (
 	call :ChangeMonYer
 	goto end
-	)
+)
 
 :end
 EXIT /B %ERRORLEVEL%
@@ -69,7 +69,12 @@ date %new_mon%-%D%-%new_yer%
 EXIT /B 0
 
 :ChangeMonDay
-echo month and day changed to %D%
+rem read month from the input
+for /f "tokens=1 delims=-" %%a in ("%D%") do set new_mon=%%a
+if %new_mon% GTR %mon% (
+	set /A yer=%yer%-1
+)
+echo month and day changed to %D%-%yer%
 date %D%-%yer%
 EXIT /B 0
 

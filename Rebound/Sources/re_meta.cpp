@@ -373,7 +373,8 @@ void ReMeta::castFoxCmd(int val, CCommand *cmd)
         ReMetaFox::castXed(val);
     }
     else if( ReState::app.pname==RE_PROC_VSCODE ||
-             ReState::app.pname==RE_PROC_VIVADO )
+             ReState::app.pname==RE_PROC_VIVADO ||
+             ReState::app.pname==RE_PROC_CURSOR )
     {
         ReMetaFox::castCode(val, cmd);
     }

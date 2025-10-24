@@ -6,6 +6,7 @@
 #define RE_PROC_ORCAD     "Capture"
 #define RE_PROC_CHESS     "Chess"
 #define RE_PROC_CHROME    "chrome"
+#define RE_PROC_CURSOR    "Cursor"
 #define RE_PROC_ORCAD     "Capture"
 #define RE_PROC_EDITOR    ""
 #define RE_PROC_EXPLORER  "explorer"

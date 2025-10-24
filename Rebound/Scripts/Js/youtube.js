@@ -14,10 +14,17 @@ function yt_timeoutMain()
 {
     //var sk = $("div").filter(yt_skip_filter);
 	var sk = document.querySelector('button.ytp-skip-ad-button');
+    
 
 	if( sk )
 	{
 		var rect = sk.getBoundingClientRect();
+
+        if( rect.x==0 || rect.y==0 )
+        {
+            return;
+        }
+        console.log(rect);
 		var msg  = Math.round(rect.x) + "," + Math.round(rect.y) + ",";
 		msg     += Math.round(rect.width) + "," + Math.round(rect.height);  
 		sendPipe("click", msg);

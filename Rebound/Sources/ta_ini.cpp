@@ -284,7 +284,7 @@ int ini_getRemoteId()
 {
     TaINI *config = ini_load(BT_CONF_PATH);
     QString buf;
-    buf = ini_get(config, "misc", "remote");
+    buf = ini_get(config, "system", "remote");
     ini_free(config);
 
     return buf.toInt();
