@@ -7,9 +7,9 @@ function main_sms()
 function html_filter(text)
 {
     return function() 
-           {
-               return $(this).html()===text;
-           }
+    {
+        return $(this).html()===text;
+    }
 }
 
 function sms_timeoutMain()

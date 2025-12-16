@@ -4,6 +4,10 @@ if( location.hostname.includes("atlassian.net") )
     //alert("hi8");
     main_conf();
 }
+else if( location.hostname.includes("chatgpt.com") )
+{
+    main_gpt();
+}
 else if( location.hostname.includes("meet.google.com") )
 {
     main_gmeet();

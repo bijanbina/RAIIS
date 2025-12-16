@@ -7,9 +7,9 @@ function main_digid()
 function html_filter(text)
 {
     return function() 
-           {
-               return $(this).html()===text;
-           }
+    {
+        return $(this).html()===text;
+    }
 }
 
 function digid_timeoutMain()
@@ -19,6 +19,12 @@ function digid_timeoutMain()
     {
         var login_btn = $("button:contains('Log in')");
         console.log("h", login_btn);
+        if( $(login_btn).length )
+        {
+            //alert($(login_btn).length);
+            login_btn.click();
+        }
+        login_btn = $("button:contains('Login')");
         if( $(login_btn).length )
         {
             //alert($(login_btn).length);
@@ -60,14 +66,14 @@ function digid_timeoutMain()
     {
         var login_btn = $("span:contains('With username')");
         if( $(login_btn).length )
-            {
-                //alert($(login_btn).length);
+        {
+            //alert($(login_btn).length);
             login_btn.click();
         }
         
         var login_btn = $("span:contains('With an SMS')");
         if( $(login_btn).length )
-            {
+        {
             login_btn.click();
         }
     }
