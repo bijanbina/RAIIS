@@ -38,12 +38,11 @@
 #define RE_SUPER_RUN     317
 #define RE_SUPER_SKY     318
 #define RE_SUPER_DIVE    319
-#define RE_SUPER_LAUNCH  320
-#define RE_SUPER_JAMES   321
-#define RE_SUPER_NEXT    322
-#define RE_SUPER_WEST    323
-#define RE_SUPER_NORTH   324
-#define RE_SUPER_SOUTH   325
+#define RE_SUPER_JAMES   320
+#define RE_SUPER_NEXT    321
+#define RE_SUPER_WEST    322
+#define RE_SUPER_NORTH   323
+#define RE_SUPER_SOUTH   324
 
 #define RE_CHESS_KICK      1
 #define RE_CHESS_HOOLEY    2
@@ -53,7 +52,8 @@
 #define RE_CHESS_DRAG      6
 #define RE_CHESS_MAGIC     7
 #define RE_CHESS_GAS       8
-#define RE_CHESS_SHOT      9 // needed for communucating to chess
+#define RE_CHESS_SHOT      9  // needed for communucating to chess
+#define RE_CHESS_LAUNCH    10
 
 #define RE_MOUSE_LEFT    501
 #define RE_MOUSE_MIDDLE  502

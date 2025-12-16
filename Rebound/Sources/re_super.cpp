@@ -43,17 +43,9 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castRogerCmd(cmd);
     }
-    else if( val==RE_CHESS_GAS )
-    {
-        castGasCmd(cmd);
-    }
     else if( val==RE_SUPER_CARROT )
     {
         castCarrotCmd(cmd);
-    }
-    else if( val==RE_SUPER_LAUNCH )
-    {
-        castLaunchCmd(cmd);
     }
     else if( val==RE_SUPER_JAMES )
     {

@@ -124,9 +124,15 @@ void ReChess::showChess(int val)
     {
         setCount(4);
     }
-    else if( val==RE_CHESS_MAGIC )
+    else if( val==RE_CHESS_MAGIC ||
+             val==RE_CHESS_LAUNCH )
     {
         setCount(1);
+        magic_mode = 1;
+    }
+    else if( val==RE_CHESS_GAS )
+    {
+        setCount(2);
         magic_mode = 1;
     }
 }
@@ -194,7 +200,8 @@ int ReChess::isChessCmd(QString text)
     if( val==RE_CHESS_KICK  || val==RE_CHESS_HOOLEY ||
         val==RE_CHESS_SIDE  || val==RE_CHESS_DOUBLE ||
         val==RE_CHESS_TOUCH || val==RE_CHESS_DRAG   ||
-        val==RE_CHESS_MAGIC || val==RE_CHESS_DRAG )
+        val==RE_CHESS_MAGIC || val==RE_CHESS_GAS    ||
+        val==RE_CHESS_LAUNCH )
     {
         return 1;
     }

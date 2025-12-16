@@ -1,5 +1,7 @@
 #include <QThread>
+#include <QClipboard>
 #include "re_link_rx.h"
+#include "re_mouse.h"
 #include "backend.h"
 
 ReLinkRx::ReLinkRx()

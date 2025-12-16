@@ -3,7 +3,7 @@ var vattenfall_page1_done = 0;
 
 function main_vattenfall()
 {
-    if( window.location.href.includes("v3/signin/confirmidentifier") )
+    if( window.location.href.includes("/iamng/nlb2c-revamp/inloggen") )
     {
     }
     gacc_timer = setInterval(vattenfall_timeoutMain, 2000);
@@ -34,11 +34,20 @@ function vattenfall_timeoutMain()
     //}
     if( window.location.href.includes("inloggen?") )
     {
-        var login_btn = $("button:contains('login')");
-        if( $(login_btn).length )
+        var login_btn = $("button:contains('Login')");
+        //alert('t1 ' + login_btn.length);
+        if( login_btn.length )
         {
-            //alert($(login_btn).length);
             login_btn.click();
+        }
+        else
+        {
+            var login_btn = $("button:contains('Inloggen')");
+            //alert(login_btn.length);
+            if( login_btn.length )
+            {
+                login_btn.click();
+            }
         }
     }
     else
