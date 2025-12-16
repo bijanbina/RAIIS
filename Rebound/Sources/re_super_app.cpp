@@ -159,65 +159,6 @@ void ReSuper::castMediaCmd(CCommand *cmd)
     cmd->state = RE_CSTATE_0;
 }
 
-void ReSuper::castGasCmd(CCommand *cmd)
-{
-    cmd->val2 = 1;
-    cmd->val3 = 1;
-    cmd->type = RE_COMMAND_NULL;
-
-//    qDebug() << "Duke" << ReState::app.pname;
-
-    if( ReState::app.pname==RE_PROC_QT )
-    {
-        ReChess::sendCmd("line_select");
-        ReChess::setCount(2);
-        ReChess::magic_mode = 1;
-    }
-    else if( ReState::app.pname==RE_PROC_VSCODE )
-    {
-        ReChess::sendCmd("line_select");
-        ReChess::setCount(2);
-        ReChess::magic_mode = 1;
-    }
-    else if( ReState::app.pname==RE_PROC_FIREFOX )
-    {
-
-    }
-}
-
-void ReSuper::castLaunchCmd(CCommand *cmd)
-{
-    cmd->val2 = 1;
-    cmd->val3 = 1;
-    cmd->type = RE_COMMAND_NULL;
-
-//    qDebug() << "Duke" << ReState::app.pname;
-
-    if( ReState::app.pname==RE_PROC_QT )
-    {
-        ReChess::sendCmd("open");
-        ReChess::setCount(1);
-        ReChess::magic_mode = 1;
-    }
-    else if( ReState::app.pname==RE_PROC_VSCODE )
-    {
-        ReChess::sendCmd("open");
-        ReChess::setCount(1);
-        ReChess::magic_mode = 1;
-    }
-    else if( ReState::app.pname==RE_PROC_FIREFOX )
-    {
-        cmd->is_ctrl  = 1;
-        cmd->is_shift = 1;
-        cmd->val1     = KEY_T;
-
-        cmd->val2  = 1;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_NATO;
-        cmd->state = RE_CSTATE_0;
-    }
-}
-
 void ReSuper::castCarrotCmd(CCommand *cmd)
 {
     cmd->val2 = 1;

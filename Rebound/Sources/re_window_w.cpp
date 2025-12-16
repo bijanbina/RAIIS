@@ -114,9 +114,18 @@ void ReWindowW::updateRemoteID(ReWindow win)
 void ReWindowW::handleNewWin(ReWindow win)
 {
     windows.push_back(win);
-//        qDebug() << "New Window" << win.title;
     if( win.pname=="NLClientApp" )
     {
+        if( win.title.contains("4 Pro") )
+        {
+            return;
+        }
+
+        if( re_readStatus()=="Halt" )
+        {
+            return;
+        }
+        qDebug() << "New Window NLClientApp" << win.title;
         mm_focus(win.hWnd);
         QThread::msleep(400);
         re_mouseMoveW(250, 330);

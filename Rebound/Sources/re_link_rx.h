@@ -2,6 +2,9 @@
 #define RE_LINK_RX_H
 
 #include <QDebug>
+#include <QGuiApplication>
+#include <QMimeData>
+#include <QImage>
 #include "re_commands.h"
 #include "re_config.h"
 #ifdef WIN32
@@ -28,7 +31,12 @@ public slots:
 private:
     void processLine(QString line);
     void processCmd(QString cmd_type, QString cmd_data);
+    void processGPT(QString data);
     void createPipe();
+
+    QString     clipboard_s;
+    QClipboard *cb;
+
 
 #ifdef WIN32
     HANDLE hPipe;

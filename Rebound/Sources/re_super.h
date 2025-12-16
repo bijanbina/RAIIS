@@ -41,7 +41,6 @@ public:
     static void castRunCmd   (CCommand *cmd);
     static void castDukeCmd  (CCommand *cmd);
     static void castMediaCmd (CCommand *cmd);
-    static void castGasCmd   (CCommand *cmd);
     static void castJamesCmd (CCommand *cmd);
     static void castJamesFF  (CCommand *cmd);
     static void castNextCmd  (CCommand *cmd);
@@ -49,7 +48,6 @@ public:
     static void castNorthCmd (CCommand *cmd);
     static void castSouthCmd (CCommand *cmd);
     static void castCarrotCmd(CCommand *cmd);
-    static void castLaunchCmd(CCommand *cmd);
     static void castDiveSky  (int cmd, int arg);
     static int  getScrollVal (int secondary=0);
 
