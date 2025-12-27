@@ -9,12 +9,14 @@
 #include "mm_api.h"
 #include "mm_win32_guid.h"
 
-QVector<GUID>                ReVirtualW::vd_guids;
-IVirtualDesktopManager*      ReVirtualW::manager;
-IVirtDManagerInt*            ReVirtualW::manager_int;
-IVirtDManagerInt_WIN11_21H2* ReVirtualW::manager_int_win11_21H2;
-IServiceProvider*            ReVirtualW::services;
-int                          ReVirtualW::win_ver;
+QVector<GUID>                         ReVirtualW::vd_guids;
+QVector<IVirtualDesktop_Win11_21H2 *> ReVirtualW::vd_desks_win11_21H2;
+IVirtualDesktopManager*               ReVirtualW::manager;
+IVirtDManagerInt*                     ReVirtualW::manager_int;
+IVirtDManagerInt_WIN11_21H2*          ReVirtualW::manager_int_win11_21H2;
+IVirtDManagerInt_WIN11_22H2*          ReVirtualW::manager_int_win11_22H2;
+IServiceProvider*                     ReVirtualW::services;
+int                                   ReVirtualW::win_ver;
 
 ReVirtualW::ReVirtualW()
 {
@@ -71,6 +73,12 @@ void ReVirtualW::initInternal()
     else if( win_ver==MM_WIN11_21H2 )
     {
         initInternal_Win11_21H2();
+    }
+    else if( win_ver==MM_WIN11_22H2 ||
+             win_ver==MM_WIN11_23H2 ||
+             win_ver==MM_WIN11_24H2 )
+    {
+        initInternal_Win11_22H2();
     }
 }
 
@@ -138,6 +146,45 @@ void ReVirtualW::initInternal_Win11_21H2()
     desktops->Release();
 }
 
+void ReVirtualW::initInternal_Win11_22H2()
+{
+    IObjectArray *desktops = NULL;
+    IVirtualDesktop_Win11_21H2 *c_desktop_win11_22H2;
+    HRESULT hr;
+
+    hr = services->QueryService(CLSID_VirtualDesktopAPI_Unknown,
+                        IID_IVirtualDesktopManagerInternal_Win11_22H2,
+                        (void **)&manager_int_win11_22H2);
+    if( hr )
+    {
+        qDebug() << "IVirtualDesktopManagerInternal Failed" << hr;
+    }
+
+    hr = manager_int_win11_22H2->GetDesktops(&desktops);
+    if( hr )
+    {
+        qDebug() << "GetDesktops Failed" << hr;
+    }
+    UINT count;
+    desktops->GetCount(&count);
+
+    GUID buffer;
+
+    vd_guids.clear();
+    vd_desks_win11_21H2.clear();
+    for( unsigned int i=0 ; i<count ; i++ )
+    {
+        desktops->GetAt(i, UUID_IVirtualDesktop_Win11_22H2,
+                        (void**)&c_desktop_win11_22H2);
+
+        c_desktop_win11_22H2->GetID(&buffer);
+        vd_guids << buffer;
+        vd_desks_win11_21H2 << c_desktop_win11_22H2;
+    }
+
+    desktops->Release();
+}
+
 void ReVirtualW::setDesktop(int id)
 {
     IObjectArray *desktops = NULL;
@@ -170,6 +217,12 @@ void ReVirtualW::setDesktop(int id)
         desktops->GetAt(id, UUID_IVirtualDesktop_Win11_21H2,
                         (void**)&next_desktop);
         manager_int_win11_21H2->SwitchDesktop(NULL, next_desktop);
+    }
+    else if( win_ver==MM_WIN11_22H2 ||
+             win_ver==MM_WIN11_23H2 ||
+             win_ver==MM_WIN11_24H2 )
+    {
+        manager_int_win11_22H2->SwitchDesktop(vd_desks_win11_21H2[id]);
     }
 }
 

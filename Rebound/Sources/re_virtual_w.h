@@ -172,6 +172,26 @@ public:
     virtual HRESULT STDMETHODCALLTYPE SetDesktopIsPerMonitor(BOOL state) = 0;
 };
 
+struct IVirtDManagerInt_WIN11_22H2 : public IUnknown
+{
+public:
+    virtual HRESULT WINAPI GetCount(UINT * pCount) = 0;
+    virtual HRESULT WINAPI MoveViewToDesktop(IApplicationView* pView, IVirtualDesktop_Win11_21H2* pDesktop) = 0;
+    // Since build 10240
+    virtual HRESULT WINAPI CanViewMoveDesktops(IApplicationView* pView, int* pfCanViewMoveDesktops) = 0;
+    virtual HRESULT WINAPI GetCurrentDesktop(IVirtualDesktop_Win11_21H2** desktop) = 0;
+    virtual HRESULT WINAPI GetDesktops(IObjectArray** ppDesktops) = 0;
+    virtual HRESULT WINAPI GetAdjacentDesktop(IVirtualDesktop_Win11_21H2* pDesktopReference, int uDirection,
+                                              IVirtualDesktop_Win11_21H2** ppAdjacentDesktop) = 0;
+    virtual HRESULT WINAPI SwitchDesktop(IVirtualDesktop_Win11_21H2* pDesktop) = 0;
+    virtual HRESULT WINAPI CreateDesktop(IVirtualDesktop_Win11_21H2** ppNewDesktop) = 0;
+    virtual HRESULT WINAPI MoveDesktop(IVirtualDesktop_Win11_21H2* desktop, INT32 index);
+    virtual HRESULT WINAPI RemoveDesktop(IVirtualDesktop_Win11_21H2* pRemove, IVirtualDesktop_Win11_21H2* pFallbackDesktop) = 0;
+
+    // Since build 10240
+    virtual HRESULT WINAPI FindDesktop(GUID* desktopId, IVirtualDesktop_Win11_21H2** ppDesktop) = 0;
+};
+
 MIDL_INTERFACE("a5cd92ff-29be-454c-8d04-d82879fb3f1b")
 IVirtualDesktopManager : public IUnknown
 {
@@ -204,10 +224,13 @@ public:
 private:
     static void initInternal_Win10();
     static void initInternal_Win11_21H2();
+    static void initInternal_Win11_22H2();
 
     static QVector<GUID> vd_guids;
-    static IVirtDManagerInt* manager_int;
-    static IVirtDManagerInt_WIN11_21H2* manager_int_win11_21H2;
+    static QVector<IVirtualDesktop_Win11_21H2 *> vd_desks_win11_21H2;
+    static IVirtDManagerInt *manager_int;
+    static IVirtDManagerInt_WIN11_21H2 *manager_int_win11_21H2;
+    static IVirtDManagerInt_WIN11_22H2 *manager_int_win11_22H2;
     static IServiceProvider* services;
     static IVirtualDesktopManager* manager;
     static int win_ver;

@@ -346,10 +346,16 @@ QString mm_getPName(long pid)
     char path_r[MAX_PATH];
     if( GetLongPathNameA(path_buff, path_r, MAX_PATH)==0 )
     {
-        qDebug() << "Error" << GetLastError();
+//        qDebug() << "Error" << GetLastError();
+        return "";
     }
 
     QString path_q = path_r; //process filename
+
+    if( path_q.isEmpty() )
+    {
+        return "";
+    }
     QStringList path_list = path_q.split("\\", QString::SkipEmptyParts);
     QString filename = path_list.last();
     filename.remove(".exe");

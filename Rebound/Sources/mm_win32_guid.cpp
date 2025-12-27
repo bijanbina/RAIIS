@@ -21,6 +21,10 @@ int mm_getWinVer()
     {
         return MM_WIN11_21H2;
     }
+    else if( display_ver=="25H2" )
+    {
+        return MM_WIN11_24H2;
+    }
     else
     {
         return -1;

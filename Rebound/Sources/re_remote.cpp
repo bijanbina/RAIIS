@@ -62,7 +62,8 @@ ReRemote::~ReRemote()
 void ReRemote::send(QString word)
 {
     qDebug() << "sendRemote"
-             << ReState::rust_id << word;
+             << ReState::rust_id
+             << word;
 
     if( word=="go" || word=="system" || word=="mouse" )
     {
