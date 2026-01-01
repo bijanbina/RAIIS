@@ -59,6 +59,7 @@
 #define KEY_APOSTROPHE VK_OEM_7 //'
 #define KEY_MINUS      VK_SUBTRACT
 #define KEY_KPPLUS     VK_ADD
+#define KEY_EQUALS     VK_OEM_PLUS
 
 #define KEY_F1         VK_F1
 #define KEY_F2         VK_F2

@@ -104,14 +104,13 @@ void ReMetaPower::castQt(int val, CCommand *cmd)
     ReKeyboard::sendKey(KEY_T);
     ReKeyboard::releaseKey(KEY_LEFTCTRL);
 
-//    QThread::msleep(100); //little tweak
-//    ReKeyboard::sendKey(KEY_LEFT);
-//    QThread::msleep(100); //little tweak
-//    ReKeyboard::sendKey(KEY_LEFT);
-    QThread::msleep(100); //little tweak
+    QThread::msleep(60); //little tweak
     re_mouseMoveW_bl(100, 200);
+    QThread::msleep(10); //little tweak
+    re_mouseKey(1); //left Click
+
     ReKeyboard::sendKey(val);
-    QThread::msleep(100); //little tweak
+    QThread::msleep(20); //little tweak
     cmd->val1 = KEY_ESC;
 
     cmd->val2  = 1;

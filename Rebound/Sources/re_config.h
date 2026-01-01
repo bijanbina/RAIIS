@@ -8,13 +8,14 @@
 #define RE_PIPE_MOM     "\\\\.\\pipe\\com_binaee_mom"
 #define CH_NP_SEPARATOR ","
 
-#define RE_FIREFOX_DIR   "Scripts/Firefox"
-#define MOM_LABEL_DIR    "..\\..\\Benjamin\\Mom\\Labels"
-#define KAL_SI_DIR       "../../Benjamin/Tools/Scripts/interpreter"
-#define KAL_SI_DIR_WIN   "..\\..\\Benjamin\\Tools\\Scripts\\interpreter"
-#define BT_CONF_PATH     "../../Benjamin/Tools/BaTool.conf"
-#define MOM_LABEL_PNAME  "\\r1_pname.lbl"
-#define MOM_LABEL_STATUS "\\r2_status.lbl"
+#define RE_FIREFOX_DIR    "Scripts/Firefox"
+#define MOM_LABEL_DIR     "..\\..\\Benjamin\\Mom\\Labels"
+#define KAL_SI_DIR        "../../Benjamin/Tools/Scripts/interpreter"
+#define KAL_SI_DIR_WIN    "..\\..\\Benjamin\\Tools\\Scripts\\interpreter"
+#define BT_CONF_PATH      "../../Benjamin/Tools/BaTool.conf"
+#define MOM_LABEL_PNAME   "\\r1_pname.lbl"
+#define MOM_LABEL_STATUS  "\\r2_status.lbl"
+#define MOM_LABEL_OPACITY "\\r3_op.lbl"
 
 //#define RE_DEBUG_WIN //show window detection debug info
 

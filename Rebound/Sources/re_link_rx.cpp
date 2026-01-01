@@ -55,6 +55,7 @@ void ReLinkRx::listenPipe()
     char buffer[PIPE_BUFFER_SIZE];
     DWORD dwRead;
     qDebug() << "ReLinkRx::listenPipe: hpipe" << hPipe;
+    cb = QGuiApplication::clipboard();
     while( hPipe!=INVALID_HANDLE_VALUE )
     {
         // wait for someone to connect to the pipe
@@ -135,10 +136,51 @@ void ReLinkRx::processCmd(QString cmd_type, QString cmd_data)
         ReKeyboard::sendKey(KEY_V);
         ReKeyboard::releaseKey(KEY_LEFTCTRL);
     }
+    else if( cmd_type=="gpt" )
+    {
+        processGPT(cmd_data);
+    }
     else
     {
         qDebug() << "ReLinkRx::processCmd"
                  << "cmd_type" << cmd_type
                  << "cmd_data" << cmd_data;
+    }
+}
+
+void ReLinkRx::processGPT(QString data)
+{
+    qDebug() << "ReLinkRx::processGPT"
+             << "data" << data;
+    if( data=="1" )
+    {
+        clipboard_s = cb->text();
+    }
+    else if( data=="2" )
+    {
+        QThread::msleep(500);
+        SetCursorPos(1000, 600);
+        QThread::msleep(200);
+        re_mouseKey(1);
+        QThread::msleep(200);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_A);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(100);
+        ReKeyboard::sendKey(KEY_BACKSPACE);
+        QThread::msleep(100);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_V);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+
+        QThread::msleep(200);
+        qDebug() << "ReLinkRx::processGPT"
+                 << clipboard_s;
+        putInClipboard(clipboard_s);
+
+        QThread::msleep(500);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        ReKeyboard::sendKey(KEY_V);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
     }
 }
