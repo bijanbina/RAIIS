@@ -50,6 +50,10 @@ void ReState::updateApp(ReWindow active_window)
     QString cmd;
 #ifdef WIN32
     cmd  = "%{B#0067aa}%{F#ffffff}  ";
+    if( ReState::dim_opacity==255 )
+    {
+        cmd  = "%{B#006644}%{F#ffffff}  ";
+    }
     cmd += app.pname;
     cmd += "  %{B- F1-}";
 #else

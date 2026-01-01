@@ -3,10 +3,6 @@
 HANDLE RePipe::pipe_chess = NULL;
 HANDLE RePipe::pipe_mom = NULL;
 
-RePipe::RePipe()
-{
-}
-
 void RePipe::init()
 {
     pipe_chess = connectPipe(RE_PIPE_CHESS);

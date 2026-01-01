@@ -71,7 +71,7 @@ void ReSuper::cast(int val, CCommand *cmd)
     {
         castLoopCmd(cmd);
     }
-    else if( val==RE_SUPER_NEXT )
+    else if( val==RE_SUPER_CLOCK )
     {
         castNextCmd(cmd);
     }
@@ -277,6 +277,15 @@ void ReSuper::castSelectCmd(CCommand *cmd)
         cmd->val3 = 1;
         cmd->val1 = KEY_F7;
         cmd->type = RE_COMMAND_DIRS;
+    }
+    else if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        cmd->val1    = KEY_EQUALS;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
 #ifdef WIN32
     else if( ReState::app.pname==RE_PROC_ALTIUM )

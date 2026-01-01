@@ -8,8 +8,6 @@
 class RePipe
 {
 public:
-    RePipe();
-
     static void init();
 
     static void sendChess(const char *data);

@@ -102,11 +102,35 @@ void re_writePStatus(QString input)
         return;
     }
     QTextStream out(&st_file);
+    out << "%{A1:process:}";
     out << input;
+    out << "%{A1}";
     st_file.close();
 #else
     QString cmd = "echo '" + input;
     cmd += "' > ~/.config/polybar/awesomewm/ben_status";
     system(cmd.toStdString().c_str());
 #endif
+}
+
+QString re_readOpacity()
+{
+#ifdef WIN32
+    QString path = MOM_LABEL_DIR;
+    path += MOM_LABEL_OPACITY;
+#else
+    QString path = getenv("HOME");
+    path += "/.config/polybar/awesomewm/ben_status";
+#endif
+    QFile file(path);
+    QString buffer;
+
+    if( file.open(QIODevice::ReadOnly) )
+    {
+        buffer = file.readLine();
+        buffer.replace('\n', "");
+        file.close();
+    }
+
+    return buffer;
 }
