@@ -15,11 +15,12 @@ function html_filter(text)
 
 function jlcpcb_timeoutMain()
 {
-	var list = document.querySelectorAll('[id^="el-popover-"]:not(.global-style-user-popover)');
+	var list = document.querySelectorAll('.el-popover.el-popper.chat-icon-popover');
 
-	for( var i=1 ; i<list.length ; i++ )
+    console.log("jlcpcb_timeoutMain", list.length);
+	for( var i=0 ; i<list.length ; i++ )
 	{
-		//list[i].remove();
+		list[i].remove();
 	}
 
 	var homeDiv = $("#home_sign\\ in");
@@ -31,7 +32,8 @@ function jlcpcb_timeoutMain()
 
     if( window.location.href.includes("login?response_type") )
     {
-        var login_btn = $("button.el-button.public-login-btn.el-button--default");
+        var login_btn = $("#passport_sign_in");
+        //alert($(login_btn).length );
         if( $(login_btn).length )
         {
             //alert($(login_btn).length);

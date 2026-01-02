@@ -39,7 +39,7 @@
 #define RE_SUPER_SKY     318
 #define RE_SUPER_DIVE    319
 #define RE_SUPER_JAMES   320
-#define RE_SUPER_NEXT    321
+#define RE_SUPER_CLOCK    321
 #define RE_SUPER_WEST    322
 #define RE_SUPER_NORTH   323
 #define RE_SUPER_SOUTH   324

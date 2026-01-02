@@ -1,5 +1,59 @@
 #include "re_channel_w.h"
 #include <unistd.h>
+#include <QMetaObject>
+
+AcceptLoopWorker::AcceptLoopWorker(ReChannelW *channel) : m_channel(channel) {}
+
+void AcceptLoopWorker::doWork()
+{
+    HANDLE hPipe = m_channel->createPipeInstance();
+    while (hPipe != INVALID_HANDLE_VALUE)
+    {
+        if (ConnectNamedPipe(hPipe, nullptr) != FALSE)
+        {
+            qDebug() << "ReChannelW::Connect client";
+            HANDLE connectedPipe = hPipe;
+            hPipe = m_channel->createPipeInstance();
+            ClientHandlerWorker *worker = new ClientHandlerWorker(m_channel, connectedPipe);
+            QThread *thread = new QThread;
+            worker->moveToThread(thread);
+            connect(thread, SIGNAL(started()), 
+                    worker, SLOT(handle()));
+            connect(worker, SIGNAL(finished()), 
+                    worker, SLOT(deleteLater()));
+            connect(worker, SIGNAL(finished()), 
+                    thread, SLOT(quit()));
+            connect(thread, SIGNAL(finished()), 
+                    thread, SLOT(deleteLater()));
+            thread->start();
+        }
+    }
+}
+
+ClientHandlerWorker::ClientHandlerWorker(ReChannelW *channel, HANDLE pipe)
+    : m_channel(channel), m_pipe(pipe) {}
+
+void ClientHandlerWorker::handle()
+{
+    char buffer[PIPE_BUFFER_SIZE];
+    DWORD dwRead;
+    while( ReadFile(m_pipe, buffer, sizeof(buffer) - 1, &dwRead, nullptr)!=FALSE )
+    {
+        buffer[dwRead] = 0;
+        QString input(buffer);
+        QStringList lines = input.split("\n", QString::SkipEmptyParts);
+        for (int i = 0; i < lines.length(); i++)
+        {
+            QString line = lines[i];
+            QMetaObject::invokeMethod(m_channel, "processLine", Qt::QueuedConnection,
+                                     Q_ARG(QString, line));
+        }
+    }
+    qDebug() << "ReChannelW::Client Disconnected";
+    DisconnectNamedPipe(m_pipe);
+    CloseHandle(m_pipe);
+    emit finished();
+}
 
 ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent)
     : QObject(parent)
@@ -7,7 +61,7 @@ ReChannelW::ReChannelW(ReCaptain *cpt, QObject *parent)
     captain = cpt;
 
     pre = new RePreProcessor(cpt);
-    createPipe();
+    hPipe = INVALID_HANDLE_VALUE;
 
     connect(this, SIGNAL(chess(const QString &)),
             pre , SLOT(chess(const QString &)));
@@ -37,35 +91,13 @@ ReChannelW::~ReChannelW()
 
 void ReChannelW::listenPipe()
 {
-    char buffer[PIPE_BUFFER_SIZE];
-    DWORD dwRead;
-    while( hPipe!=INVALID_HANDLE_VALUE )
-    {
-        // wait for someone to connect to the pipe
-        if( ConnectNamedPipe(hPipe, nullptr)!=FALSE )
-        {
-            qDebug() << "ReChannelW::Connect client";
-            while( ReadFile(hPipe, buffer, sizeof(buffer)-1,
-                            &dwRead, nullptr)!=FALSE )
-            {
-                // add terminating zero
-                buffer[dwRead] = 0;
-                QString input(buffer);
-
-                QStringList lines = input.split
-                                    ("\n", QString::
-                                     SkipEmptyParts);
-
-                for(int i=0 ; i<lines.length() ; i++)
-                {
-                    processLine(lines[i]);
-                }
-            }
-        }
-
-        qDebug() << "ReChannelW::Client Disconnected";
-        DisconnectNamedPipe(hPipe);
-    }
+    AcceptLoopWorker *worker = new AcceptLoopWorker(this);
+    QThread *thread = new QThread(this);
+    worker->moveToThread(thread);
+    connect(thread, &QThread::started, worker, &AcceptLoopWorker::doWork);
+    connect(worker, &QObject::destroyed, thread, &QThread::quit);
+    connect(thread, &QThread::finished, thread, &QObject::deleteLater);
+    thread->start();
 }
 
 void ReChannelW::processLine(QString line)
@@ -99,22 +131,24 @@ void ReChannelW::processLine(QString line)
 
 void ReChannelW::createPipe()
 {
-    // To create an instance of a named pipe by using CreateNamedPipe,
-    // the user must have FILE_CREATE_PIPE_INSTANCE access to the named pipe object.
-    hPipe = CreateNamedPipe(TEXT(RE_PIPE_PATH),
-                            PIPE_ACCESS_INBOUND,            // dwOpenMode. The flow of data in the pipe goes from client to server only
-                            PIPE_TYPE_BYTE | PIPE_WAIT,     // dwPipeMode
-                            1,                              // nMaxInstances
-                            PIPE_BUFFER_SIZE,                    // nOutBufferSize
-                            PIPE_BUFFER_SIZE,                    // nInBufferSize
-                            NMPWAIT_WAIT_FOREVER,           // nDefaultTimeOut
-                            nullptr);                       // lpSecurityAttributes
-
-    if( hPipe==INVALID_HANDLE_VALUE )
+    hPipe = createPipeInstance();
+    if (hPipe == INVALID_HANDLE_VALUE)
     {
-        qDebug(RE_PIPE_PATH"Failed");
+        qDebug(RE_PIPE_PATH "Failed");
     }
-//    qDebug() << PIPE_PATH << "pipe Created";
+}
+
+HANDLE ReChannelW::createPipeInstance()
+{
+    // PIPE_UNLIMITED_INSTANCES allows creating more instances so the next client can connect.
+    return CreateNamedPipe(TEXT(RE_PIPE_PATH),
+                           PIPE_ACCESS_INBOUND,
+                           PIPE_TYPE_BYTE | PIPE_WAIT,
+                           PIPE_UNLIMITED_INSTANCES,
+                           PIPE_BUFFER_SIZE,
+                           PIPE_BUFFER_SIZE,
+                           NMPWAIT_WAIT_FOREVER,
+                           nullptr);
 }
 
 void ReChannelW::processCommand(QString k_type,
