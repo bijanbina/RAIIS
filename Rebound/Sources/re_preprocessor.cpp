@@ -129,18 +129,26 @@ void RePreProcessor::digit(const QString &text)
 {
     if( ReState::ch_count )
     {
-        ReChess::digit(text);
-        if( ReState::ch_count==0 )
+        if( ReState::last_cmd.type==RE_COMMAND_SUPER )
         {
-            if( re_isLastMod(cmd_buf) )
-            {
-                int last_i = cmd_buf.count()-1; //last index
-
-                cmd_buf[last_i].type = RE_COMMAND_NULL;
-                return;
-            }
+            int input = re_keyCode2Digit(text);
+            handleLastRepeatable(input);
         }
-        return;
+        else
+        {
+            ReChess::digit(text);
+            if( ReState::ch_count==0 )
+            {
+                if( re_isLastMod(cmd_buf) )
+                {
+                    int last_i = cmd_buf.count()-1; //last index
+
+                    cmd_buf[last_i].type = RE_COMMAND_NULL;
+                    return;
+                }
+            }
+            return;
+        }
     }
     else if( special_c ) //FUNC KEY
     {

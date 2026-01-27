@@ -49,6 +49,17 @@ void ReChess::meta(const QString &text)
 int  ReChess::super(const QString &text,
                     QVector<CCommand> cmd_buf)
 {
+    if( ReState::ch_count )
+    {
+        int val = text.toInt();
+        if( val==RE_SUPER_LAST ||
+            val==RE_SUPER_FRONT )
+        {
+            return 0;
+        }
+        sendChessKey(text);
+        return 1;
+    }
     if( ReChess::isChessCmd(text)==0 )
     {
         return 0;

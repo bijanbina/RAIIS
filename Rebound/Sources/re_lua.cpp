@@ -147,6 +147,18 @@ void ReLua::addRegisteryKeys()
     QSettings vs_setting(reg, QSettings::NativeFormat);
     vs_setting.setValue(key, "\"C:\\Program Files\\"
                              "Microsoft VS Code\\Code.exe\" %1");
+
+    // unpin This PC from File Explorer navigation pane
+    reg = "HKCU\\Software\\Classes\\CLSID\\{20D04FE0-3AEA-1069-A2D8-08002B30309D}";
+    key = "System.IsPinnedToNameSpaceTree";
+    QSettings pc_setting(reg, QSettings::NativeFormat);
+    pc_setting.setValue(key, 0);
+
+    // unpin Network from File Explorer navigation pane
+    reg = "HKCU\\Software\\Classes\\CLSID\\{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}";
+    key = "System.IsPinnedToNameSpaceTree";
+    QSettings net_setting(reg, QSettings::NativeFormat);
+    net_setting.setValue(key, 0);
 }
 
 int ReLua::regExist(QString path, QString key)

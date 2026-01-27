@@ -235,6 +235,17 @@ void ReSuper::castCopyCmd(CCommand *cmd)
 
 void ReSuper::castPasteCmd(CCommand *cmd)
 {
+    if( ReState::app.pname==RE_PROC_CMD )
+    {
+        re_mouseMoveC(-50, 0);
+
+        cmd->val1    = RE_MOUSE_RIGHT;
+        cmd->val2 = 1;
+        cmd->val3 = 1;
+        cmd->type  = RE_COMMAND_MOUSE;
+        cmd->state = RE_CSTATE_0;
+        return;
+    }
     cmd->is_ctrl = 1;
     cmd->val1    = KEY_V;
 
@@ -330,14 +341,6 @@ void ReSuper::castLoopCmd(CCommand *cmd)
 
 void ReSuper::castLoveCmd(CCommand *cmd)
 {
-    if( ReState::app.pname==RE_PROC_ALLEGRO )
-    {
-        cmd->val1  = RE_MOUSE_UP;
-        cmd->val2  = getScrollVal()*2;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_MOUSE;
-        cmd->state = RE_CSTATE_0;
-    }
     cmd->is_ctrl = 1;
     cmd->val1    = KEY_LEFT;
 
@@ -345,6 +348,12 @@ void ReSuper::castLoveCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type  = RE_COMMAND_DIRS;
     cmd->state = RE_CSTATE_0;
+
+    if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        cmd->is_ctrl = 0;
+        cmd->val2    = 5;
+    }
 }
 
 void ReSuper::castRogerCmd(CCommand *cmd)
@@ -356,6 +365,12 @@ void ReSuper::castRogerCmd(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type  = RE_COMMAND_DIRS;
     cmd->state = RE_CSTATE_0;
+
+    if( ReState::app.pname==RE_PROC_ALLEGRO )
+    {
+        cmd->is_ctrl = 0;
+        cmd->val2    = 5;
+    }
 }
 
 void ReSuper::castSwitchCmd(CCommand *cmd)

@@ -84,6 +84,16 @@ void ReSuper::castDukeCmd(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.pname==RE_PROC_ORCAD )
+    {
+        cmd->is_ctrl = 1;
+        cmd->val1    = KEY_F4;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
         ReKeyboard::pressKey(KEY_LEFTCTRL);
@@ -535,6 +545,10 @@ int  ReSuper::getScrollVal(int secondary)
     }
     else if( ReState::app.pname==RE_PROC_ALLEGRO )
     {
+        if( ReState::app.title.contains("Color") )
+        {
+            return 4;
+        }
         return 1;
     }
     else if( ReState::app.pname==RE_PROC_ORCAD )
