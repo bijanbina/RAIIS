@@ -108,7 +108,7 @@ void ReLinkRx::processCmd(QString cmd_type, QString cmd_data)
 {
     if( cmd_type=="url" )
     {
-        curr_url = cmd_data;
+        ReState::ff_url = cmd_data;
         qDebug() << "ReLinkRx::processUrl"
                  << "url_data" << cmd_data;
     }

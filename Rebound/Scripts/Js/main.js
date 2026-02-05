@@ -85,6 +85,10 @@ else if( location.hostname.includes("zilverenkruis.nl") )
 {
     main_zilver();
 }
+else if( location.hostname.includes("web.bale.ai") )
+{
+    main_bale();
+}
 else if( location.hostname.includes("registration.cadence.com") ||
 		 location.hostname.includes("cadence.okta.com") )
 {

@@ -10,6 +10,7 @@
 #define RE_PROC_CURSOR    "Cursor"
 #define RE_PROC_ORCAD     "Capture"
 #define RE_PROC_EDITOR    ""
+#define RE_PROC_EXCEL     "EXCEL.EXE"
 #define RE_PROC_EXPLORER  "explorer"
 #define RE_PROC_FIREFOX   "firefox"
 #define RE_PROC_GIT       "gitkraken"

@@ -70,6 +70,8 @@ int  ReChess::super(const QString &text,
         mod_cmd = cmd_buf[last_i];
         re_modPress(mod_cmd);
     }
+
+    ReState::last_cmd.type = RE_COMMAND_NULL;
     int val = text.toInt();
     showChess(val);
     return 1;

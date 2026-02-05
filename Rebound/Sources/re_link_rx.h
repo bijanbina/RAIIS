@@ -7,6 +7,7 @@
 #include <QImage>
 #include "re_commands.h"
 #include "re_config.h"
+#include "re_state.h"
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -22,8 +23,6 @@ class ReLinkRx : public QObject
     Q_OBJECT
 public:
     ReLinkRx();
-
-    QString curr_url;
 
 public slots:
     void listenPipe();
