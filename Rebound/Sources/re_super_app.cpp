@@ -188,27 +188,7 @@ void ReSuper::castCarrotCmd(CCommand *cmd)
     }
     else if( ReState::app.pname==RE_PROC_FIREFOX )
     {
-        re_mouseMoveW_tr(400, 100);
-        re_mouseKey(1);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_L);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::pressKey(KEY_LEFTCTRL);
-        QThread::msleep(10);
-        ReKeyboard::sendKey(KEY_C);
-        QThread::msleep(10);
-        ReKeyboard::releaseKey(KEY_LEFTCTRL);
-
-        cmd->val1     = KEY_ESC;
-
-        cmd->val2  = 1;
-        cmd->val3  = 1;
-        cmd->type  = RE_COMMAND_NATO;
-        cmd->state = RE_CSTATE_0;
+        castCarrotFF(cmd);
     }
     else if( ReState::app.pname==RE_PROC_GIT )
     {
@@ -317,11 +297,83 @@ void ReSuper::castJamesFF(CCommand *cmd)
         cmd->type  = RE_COMMAND_NATO;
         cmd->state = RE_CSTATE_0;
     }
+    else if( ReState::app.title.contains("ChatGPT") )
+    {
+        re_mouseMoveC(0, 20);
+        re_mouseKey(1);
+        cmd->is_ctrl  = 1;
+        cmd->val1     = KEY_V;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
+    }
     else if( ReState::app.title.contains("- Google Search") )
     {
         re_mouseMoveW(700, 200);
         QThread::msleep(100);
         re_mousePress(1);
+    }
+}
+
+void ReSuper::castCarrotFF(CCommand *cmd)
+{
+    cmd->val2 = 1;
+    cmd->val3 = 1;
+    cmd->type = RE_COMMAND_NULL;
+
+    qDebug() << "Carrot" << ReState::ff_url;
+    if( ReState::ff_url.contains("chatgpt.com/") )
+    {
+            ReKeyboard::pressKey(KEY_LEFTCTRL);
+            QThread::msleep(10);
+            ReKeyboard::sendKey(KEY_L);
+            QThread::msleep(10);
+            ReKeyboard::releaseKey(KEY_LEFTCTRL);
+            QThread::msleep(100);
+
+
+            ReKeyboard::pressKey(KEY_LEFTCTRL);
+            QThread::msleep(10);
+            ReKeyboard::sendKey(KEY_A);
+            QThread::msleep(10);
+            ReKeyboard::releaseKey(KEY_LEFTCTRL);
+            QThread::msleep(100);
+
+            ReKeyboard::type("https://chatgpt.com/");
+            QThread::msleep(100);
+
+            cmd->val1     = KEY_ENTER;
+
+            cmd->val2  = 1;
+            cmd->val3  = 1;
+            cmd->type  = RE_COMMAND_NATO;
+            cmd->state = RE_CSTATE_0;
+    }
+    else
+    {
+        re_mouseMoveW_tr(400, 100);
+        re_mouseKey(1);
+        QThread::msleep(10);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_L);
+        QThread::msleep(10);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+        QThread::msleep(10);
+        ReKeyboard::pressKey(KEY_LEFTCTRL);
+        QThread::msleep(10);
+        ReKeyboard::sendKey(KEY_C);
+        QThread::msleep(10);
+        ReKeyboard::releaseKey(KEY_LEFTCTRL);
+
+        cmd->val1     = KEY_ESC;
+
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type  = RE_COMMAND_NATO;
+        cmd->state = RE_CSTATE_0;
     }
 }
 

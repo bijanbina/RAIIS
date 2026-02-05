@@ -65,6 +65,7 @@ public:
     static bool remote_state;
     static bool drag_state;
     static int  ch_count; //Chess Count
+    static QString   ff_url  ; //Firefox URL
     static ReWindow  app; //Active Window
     static CCommand  last_cmd;
     static ReLinkTx *link_tx;

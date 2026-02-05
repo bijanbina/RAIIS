@@ -43,6 +43,7 @@ public:
     static void castMediaCmd (CCommand *cmd);
     static void castJamesCmd (CCommand *cmd);
     static void castJamesFF  (CCommand *cmd);
+    static void castCarrotFF (CCommand *cmd);
     static void castNextCmd  (CCommand *cmd);
     static void castWestCmd  (CCommand *cmd);
     static void castNorthCmd (CCommand *cmd);

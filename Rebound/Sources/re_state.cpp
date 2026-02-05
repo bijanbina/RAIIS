@@ -8,7 +8,8 @@ bool ReState::dictate_state  = 0;
 bool ReState::record_state   = 0;
 bool ReState::remote_state   = 0;
 bool ReState::drag_state     = 0;
-int  ReState::ch_count       = 0; //Chess Count
+int  ReState::ch_count       = 0;
+QString     ReState::ff_url  = "";
 ReLinkTx   *ReState::link_tx = NULL;
 ReWindow    ReState::app; //Active Window
 CCommand    ReState::last_cmd;
