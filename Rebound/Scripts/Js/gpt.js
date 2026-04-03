@@ -22,6 +22,8 @@ function main_gpt()
     gpt_btn.addEventListener("click", clickGPT);
   
     document.body.appendChild(gpt_btn);
+
+    dismissTryCodexPromo();
 }
 
 async function gpt_timeoutMain()
@@ -66,3 +68,73 @@ async function clickGPT()
 
     join_timer = setInterval(gpt_timeoutMain, 500);
 }
+
+function dismissTryCodexPromo(options = {}) {
+    const maxMs = options.maxWaitMs ?? 20000;
+    const deadline = Date.now() + maxMs;
+  
+    function regionLooksLikeTryCodex(el) {
+      if (!el || !el.textContent) return false;
+      const t = el.textContent;
+      if (!/try\s*codex/i.test(t)) return false;
+      // Avoid matching huge subtrees (e.g. whole sidebar)
+      return t.length < 4000;
+    }
+  
+    function findCloseInCodexRegion() {
+      const roots = document.querySelectorAll(
+        '[role="dialog"], [data-radix-dialog-content], [data-state="open"]'
+      );
+  
+      for (const root of roots) {
+        if (!regionLooksLikeTryCodex(root)) continue;
+        const closeBtn =
+          root.querySelector('button[aria-label="Close"]') ||
+          root.querySelector('button[aria-label^="Close"]') ||
+          root.querySelector('[data-testid*="close" i]');
+        if (closeBtn && closeBtn.offsetParent !== null) {
+          closeBtn.click();
+          return true;
+        }
+      }
+  
+      // Banner/card not always role=dialog: find “Try Codex” and climb to a small wrapper
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.children && node.children.length === 0 && /try\s*codex/i.test(node.textContent || "")) {
+          let p = node.parentElement;
+          for (let i = 0; i < 12 && p; i++, p = p.parentElement) {
+            if (!regionLooksLikeTryCodex(p)) continue;
+            const btn =
+              p.querySelector('button[aria-label="Close"]') ||
+              p.querySelector('button[aria-label*="close" i]');
+            if (btn && btn.offsetParent !== null) {
+              btn.click();
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    }
+  
+    if (findCloseInCodexRegion()) return Promise.resolve(true);
+  
+    return new Promise((resolve) => {
+      const obs = new MutationObserver(() => {
+        if (findCloseInCodexRegion()) {
+          obs.disconnect();
+          resolve(true);
+        } else if (Date.now() > deadline) {
+          obs.disconnect();
+          resolve(false);
+        }
+      });
+      obs.observe(document.documentElement, { childList: true, subtree: true });
+      setTimeout(() => {
+        obs.disconnect();
+        resolve(findCloseInCodexRegion());
+      }, maxMs);
+    });
+  }
