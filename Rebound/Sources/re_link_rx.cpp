@@ -123,7 +123,13 @@ void ReLinkRx::processCmd(QString cmd_type, QString cmd_data)
         int y = data_s[1].trimmed().toInt();
         int w = data_s[2].trimmed().toInt();
         int h = data_s[3].trimmed().toInt();
-        SetCursorPos((x + w/2)*1.25, (y + h/2)*1.25 + 175);
+
+        if( ReState::app.pname==RE_PROC_FIREFOX )
+        {
+            SetCursorPos((x + w/2)*1.25, (y + h/2)*1.25 + 175);
+            QThread::msleep(100);
+            re_mouseKey(1);
+        }
 
         qDebug() << "ReLinkRx::click" << cmd_data
                  << x << w << data_s;

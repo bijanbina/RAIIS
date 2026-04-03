@@ -15,7 +15,6 @@ function yt_timeoutMain()
     //var sk = $("div").filter(yt_skip_filter);
 	var sk = document.querySelector('button.ytp-skip-ad-button');
     
-
 	if( sk )
 	{
 		var rect = sk.getBoundingClientRect();
@@ -27,7 +26,14 @@ function yt_timeoutMain()
         console.log(rect);
 		var msg  = Math.round(rect.x) + "," + Math.round(rect.y) + ",";
 		msg     += Math.round(rect.width) + "," + Math.round(rect.height);  
-		sendPipe("click", msg);
+
+        // only send if the tab is active
+        if( document.visibilityState==='hidden' )
+        {
+            activateTab();
+        }
+        // This will send it to rebound
+        sendPipe("click", msg);
 	}
 	//var pr = sk.parent();
 

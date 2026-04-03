@@ -10,6 +10,7 @@
 #include "re_state.h"
 #ifdef WIN32
 #include <windows.h>
+#include "re_app_w.h"
 #endif
 
 #ifdef WIN32

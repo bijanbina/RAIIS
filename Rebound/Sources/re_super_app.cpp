@@ -74,6 +74,7 @@ void ReSuper::castDukeCmd(CCommand *cmd)
         cmd->state = RE_CSTATE_0;
     }
     else if( ReState::app.pname==RE_PROC_VSCODE ||
+             ReState::app.pname==RE_PROC_CURSOR ||
              ReState::app.pname==RE_PROC_GIT )
     {
         cmd->is_ctrl = 1;
@@ -694,6 +695,32 @@ void ReSuper::castDiveSky(int cmd, int arg)
         }
     }
     else if( ReState::app.pname==RE_PROC_EXPLORER )
+    {
+        re_mouseMoveW(100, 400);
+        int count = 10*(arg-KEY_1+1);
+        if( arg==-1 ) // default
+        {
+            count = 20;
+        }
+
+        if( cmd==RE_SUPER_DIVE )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(5);
+                QThread::msleep(50);
+            }
+        }
+        else if( cmd==RE_SUPER_SKY )
+        {
+            for( int j=0 ; j<count ; j++ )
+            {
+                re_mouseKey(4);
+                QThread::msleep(50);
+            }
+        }
+    }
+    else if( ReState::app.pname==RE_PROC_TELEGRAM )
     {
         re_mouseMoveW(100, 400);
         int count = 10*(arg-KEY_1+1);

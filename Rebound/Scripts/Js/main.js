@@ -4,6 +4,10 @@ if( location.hostname.includes("atlassian.net") )
     //alert("hi8");
     main_conf();
 }
+else if( location.hostname.includes("amazon.nl") )
+{
+    main_amazon();
+}
 else if( location.hostname.includes("chatgpt.com") )
 {
     main_gpt();
@@ -88,6 +92,10 @@ else if( location.hostname.includes("zilverenkruis.nl") )
 else if( location.hostname.includes("web.bale.ai") )
 {
     main_bale();
+}
+else if( location.hostname.includes("ircc-tracker-suivi.apps.cic.gc.ca") )
+{
+    main_canada();
 }
 else if( location.hostname.includes("registration.cadence.com") ||
 		 location.hostname.includes("cadence.okta.com") )
