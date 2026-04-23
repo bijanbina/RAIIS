@@ -324,7 +324,7 @@ bool ReCaptain::isSpeakerSw(CCommand command)
 void ReCaptain::wakeDictate()
 {
     ReState::dictate_state = 0;
-    re_hideSpeechNote();
+//    re_hideSpeechNote();
     ReState::wakeUp();
 }
 

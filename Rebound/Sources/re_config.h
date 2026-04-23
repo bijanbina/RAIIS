@@ -48,7 +48,7 @@
 #define RE_SCR_SPOTIFY 3     //Spotify Mode
 
 #define RE_SCR_UINPUT  "Scripts/uDev/init.sh"
-#define RE_NP_SEPARATOR ","
+#define RE_NP_SEPARATOR "|"
 
 // The buffer size specified should be small enough that your process will not run out of nonpaged pool,
 // but large enough to accommodate typical requests.

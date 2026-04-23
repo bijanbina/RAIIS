@@ -133,41 +133,10 @@ void ReSuper::castDukeCmd(CCommand *cmd)
 
 void ReSuper::castMediaCmd(CCommand *cmd)
 {
-    cmd->val2 = 1;
-    cmd->val3 = 1;
-    cmd->type = RE_COMMAND_NULL;
-
-    qDebug() << "Media" << ReState::app.pname;
-
-    QString url = "https://gemini.google.com/u/3/";
-
-    ReKeyboard::pressKey(KEY_LEFTCTRL);
-    ReKeyboard::sendKey(KEY_T);
-    ReKeyboard::releaseKey(KEY_LEFTCTRL);
-    QThread::msleep(1000);
-
-    ReKeyboard::type(url);
-    QThread::msleep(200);
-    ReKeyboard::sendKey(KEY_ENTER);
-
-    QThread::msleep(2000);
-
-    ReKeyboard::pressKey(KEY_LEFTCTRL);
-    ReKeyboard::pressKey(KEY_LEFTSHIFT);
-    ReKeyboard::sendKey(KEY_R);
-    ReKeyboard::releaseKey(KEY_LEFTSHIFT);
-    ReKeyboard::releaseKey(KEY_LEFTCTRL);
-    QThread::msleep(200);
-
     ReState::goToDictate();
-    cmd->is_ctrl  = 1;
-    cmd->is_shift = 1;
-    cmd->val1     = KEY_R;
-
     cmd->val2  = 1;
     cmd->val3  = 1;
-    cmd->type  = RE_COMMAND_NATO;
-    cmd->state = RE_CSTATE_0;
+    cmd->type = RE_COMMAND_NULL;
 }
 
 void ReSuper::castCarrotCmd(CCommand *cmd)

@@ -207,4 +207,8 @@ void ReChannelW::processCommand(QString k_type,
     {
         ReState::wakeUp();
     }
+    else if( k_type=="write" )
+    {
+        ReKeyboard::type(k_code);
+    }
 }
