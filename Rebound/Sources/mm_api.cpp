@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileInfo>
+#include <QSettings>
+#include <shellapi.h>
 #include <shobjidl.h>
 #include <shlguid.h>
 #include <dwmapi.h>
@@ -271,6 +273,7 @@ void mm_focus(HWND hwnd)
 int mm_focus(MmApplication *app)
 {
     app->hwnd = mm_getHWND(app);
+    qDebug() << "mm_focus" << app->hwnd;
     int timeout_i   = 0;
     int timeout_max = 20;
     while( app->hwnd==NULL )
@@ -289,6 +292,52 @@ int mm_focus(MmApplication *app)
     }
     mm_focus(app->hwnd);
     return 1;
+}
+
+void mm_openUrl(QString url)
+{
+    // Open the URL in the user's default browser (reuses an existing
+    // window as a new tab instead of spawning a new window).
+    ShellExecuteA(0, "open", url.toStdString().c_str(),
+                  0, 0, SW_SHOWNORMAL);
+
+    // ShellExecute opens the tab but Windows' foreground lock leaves the
+    // browser without keyboard focus, so figure out which browser handles
+    // http links and force-focus its window.
+    QSettings choice("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows"
+                     "\\Shell\\Associations\\UrlAssociations\\http\\UserChoice",
+                     QSettings::NativeFormat);
+    QString prog_id = choice.value("ProgId").toString();
+
+    // Its registered shell "open" command, e.g.
+    // "C:\Program Files\Mozilla Firefox\firefox.exe" -osint -url "%1"
+    QSettings cmd_key("HKEY_CLASSES_ROOT\\" + prog_id + "\\shell\\open\\command",
+                      QSettings::NativeFormat);
+    QString command = cmd_key.value(".").toString().trimmed();
+    if( command.isEmpty() )
+    {
+        qDebug() << "Error 27: cannot resolve default browser" << prog_id;
+        return;
+    }
+
+    // Pull the executable path out of the command line.
+    QString exe_path;
+    if( command.startsWith('\"') )
+    {
+        exe_path = command.mid(1, command.indexOf('\"', 1) - 1);
+    }
+    else
+    {
+        int space = command.indexOf(' ');
+        exe_path = (space==-1) ? command : command.left(space);
+    }
+
+    QThread::msleep(1000);
+    MmApplication app;
+    app.exe_name = QFileInfo(exe_path).completeBaseName(); // e.g. "firefox"
+
+    qDebug() << "mm_openUrl" << app.exe_name;
+    mm_focus(&app);
 }
 
 HWND mm_getHWND(MmApplication *app)

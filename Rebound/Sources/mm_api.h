@@ -26,6 +26,7 @@ typedef struct MmApplication
 void mm_closeWindow();
 void mm_focus(HWND hwnd);
 int  mm_focus(MmApplication *app);
+void mm_openUrl(QString url);
 long mm_getPid(HWND hWnd);
 HWND mm_getHWND(MmApplication *app);
 void mm_launchApp(MmApplication *app, QString arg="");

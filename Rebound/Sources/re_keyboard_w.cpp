@@ -1,8 +1,15 @@
 #include "re_keyboard_w.h"
+
 #include <QDebug>
 #include <QThread>
+#include <QImage>
+#include <QMimeData>
+#include <QGuiApplication>
+
+#include "backend.h"
 
 QVector<int> ReKeyboard::extended_keys  = QVector<int>();
+QClipboard  *ReKeyboard::cb             = NULL;
 
 ReKeyboard::ReKeyboard()
 {
@@ -26,6 +33,8 @@ void ReKeyboard::init()
     extended_keys << VK_UP;
     extended_keys << VK_DOWN;
     extended_keys << VK_RIGHT;
+
+    cb = QGuiApplication::clipboard();
 }
 
 void ReKeyboard::sendKey(int key_val)
@@ -105,6 +114,17 @@ void ReKeyboard::type(QString text)
 {
 #ifdef WIN32
     int len = text.length() + 1;
+
+    QString clipboard_s;
+    QImage  clipboard_i;
+    if( cb->mimeData()->hasText() )
+    {
+        clipboard_s = cb->text();
+    }
+    else
+    {
+        clipboard_i = cb->image();
+    }
     HGLOBAL hMem =  GlobalAlloc(GMEM_MOVEABLE, len);
     memcpy(GlobalLock(hMem), text.toStdString().c_str(), len);
     GlobalUnlock(hMem);
@@ -118,6 +138,9 @@ void ReKeyboard::type(QString text)
     ReKeyboard::pressKey(KEY_LEFTCTRL);
     ReKeyboard::sendKey(KEY_V);
     ReKeyboard::releaseKey(KEY_LEFTCTRL);
+
+    QThread::msleep(100);
+    putInClipboard(clipboard_s);
 #else
     QString cmd = "xdotool type '";
     cmd += text + "'";
