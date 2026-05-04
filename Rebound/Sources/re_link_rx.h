@@ -35,8 +35,9 @@ private:
     void createPipe();
 
     QString     clipboard_s;
+    // we need to keep a separate one as ReLinkRx
+    // is running in a separate thread
     QClipboard *cb;
-
 
 #ifdef WIN32
     HANDLE hPipe;

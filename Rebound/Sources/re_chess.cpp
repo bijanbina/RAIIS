@@ -95,7 +95,7 @@ void ReChess::sendChessKey(QString text)
     int val = text.toInt();
     QString cmd = "Key_";
     cmd += text;
-    qDebug() << "val" << val;
+//    qDebug() << "ReChess::sendChessKey" << val;
     sendCmd(cmd.toStdString().c_str());
 
     if( val==KEY_ESC )

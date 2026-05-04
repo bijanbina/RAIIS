@@ -1,6 +1,7 @@
 #include "re_mouse.h"
 #ifdef WIN32
 #include "re_keyboard_w.h"
+#include "mm_api.h"
 #include <Windows.h>
 #endif
 #include <QDebug>

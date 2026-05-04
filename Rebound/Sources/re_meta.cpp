@@ -261,32 +261,59 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
             ReState::dim_opacity = RE_DIM_OPAC;
         }
     }
-    else if( val==KEY_K )
+    else if( val==KEY_G )
     {
-        // Windows Calculator
-        system("calc");
+        ReKeyboard::pressKey(KEY_LEFTMETA);
+        ReKeyboard::sendKey(KEY_4);
+        ReKeyboard::releaseKey(KEY_LEFTMETA);
+        QThread::msleep(300);
+        ReState::goToDictate();
+        mm_openUrl("https://chatgpt.com/");
+        QThread::msleep(2000);
+        re_mouseMoveC(0, 30);
+        re_mouseKey(1);
+        cmd->val2  = 1;
+        cmd->val3  = 1;
+        cmd->type = RE_COMMAND_NULL;
     }
     else if( val==KEY_H )
     {
         ReChess::sendCmd("toggle");
+    }
+    else if( val==KEY_K )
+    {
+        // Windows Calculator
+        system("calc");
     }
     else if( val==KEY_M )
     {
         // Multimedia CPanel Recording Tab
         system("mmsys.cpl,1");
     }
-    else if( val==KEY_T )
-    {
-        system("gnome-terminal");
-    }
     else if( val==KEY_S )
     {
         ReChess::sendCmd("screenshot");
         ReState::ch_count = 4;
     }
+    else if( val==KEY_T )
+    {
+        system("gnome-terminal");
+    }
     else if( val==KEY_V )
     {
         system("~/.config/polybar/awesomewm/vpn_switch.sh");
+    }
+    else if( val==KEY_X )
+    {
+        re_mouseMoveC(0, 0);
+    }
+    else if( val==KEY_Z )
+    {
+        re_execSpeech();
+    }
+    else if( val==KEY_DOWN )
+    {
+        ReState::goToSleep();
     }
     else if( val==KEY_LEFT )
     {
@@ -318,22 +345,14 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
         system("xdotool key Menu");
 #endif
     }
-    else if( val==KEY_DOWN )
-    {
-        ReState::goToSleep();
-    }
-    else if( val==RE_META_CLOSE )
-    {
-        system("xdotool key Alt+F4");
-    }
     else if( val==KEY_UP )
     {
         system("dbus-send --dest=com.benjamin.chess"
                " / com.benjamin.chess.show string:\"\"");
     }
-    else if( val==KEY_Z )
+    else if( val==RE_META_CLOSE )
     {
-        re_execSpeech();
+        system("xdotool key Alt+F4");
     }
     else if( val==RE_CHESS_KICK   || val==RE_CHESS_SIDE  ||
              val==RE_CHESS_DOUBLE || val==RE_CHESS_TOUCH ||
@@ -366,7 +385,7 @@ void ReMeta::castSystemCmd(int val, CCommand *cmd)
 void ReMeta::castFoxCmd(int val, CCommand *cmd)
 {
     //////SHOULD GET FIXED WITH THE NEW SYSTEM
-    qDebug() << "FOX" << ReState::app.pname;
+//    qDebug() << "FOX" << ReState::app.pname;
 
     if( ReState::app.pname==RE_PROC_EDITOR )
     {

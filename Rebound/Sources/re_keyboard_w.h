@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <Windows.h>
 #include <QVector>
+#include <QClipboard>
 
 #define KEY_0          '0'
 #define KEY_1          '1'
@@ -88,6 +89,8 @@ public:
     static void pressKey(int key_val);
     static void releaseKey(int key_val);
     static void type(QString text);
+
+    static QClipboard *cb;
 
 private:
     static bool isExtended(int key_val);

@@ -234,8 +234,9 @@ void ReSuper::castJamesFF(CCommand *cmd)
     cmd->val3 = 1;
     cmd->type = RE_COMMAND_NULL;
 
-//    qDebug() << "James" << ReState::app.pname;
-    if( ReState::app.title.contains("Confluence") )
+    qDebug() << "castJamesFF"
+             << ReState::ff_url;
+    if( ReState::ff_url.contains(".atlassian.net/wiki/") )
     {
         if( ReState::app.title.contains("Edit") )
         {
