@@ -146,7 +146,8 @@ void ReSuper::castCarrotCmd(CCommand *cmd)
     cmd->type = RE_COMMAND_NULL;
 
     qDebug() << "Carrot" << ReState::app.pname;
-    if( ReState::app.pname==RE_PROC_QT )
+    if( ReState::app.pname==RE_PROC_QT ||
+        ReState::app.pname==RE_PROC_CURSOR )
     {
         cmd->val1 = KEY_F4;
         cmd->type = RE_COMMAND_DIRS;

@@ -18,8 +18,8 @@ HANDLE RePipe::connectPipe(const char *pipe_name)
     {
         hPipe = CreateFileA(pipe_name, GENERIC_WRITE, // dwDesiredAccess
                             0, nullptr,    // lpSecurityAttributes
-                            OPEN_EXISTING,  // dwCreationDisposition
-                            0, nullptr);    // hTemplateFile
+                            OPEN_EXISTING, // dwCreationDisposition
+                            0, nullptr);   // hTemplateFile
 
         if( hPipe==INVALID_HANDLE_VALUE )
         {

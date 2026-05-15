@@ -105,7 +105,7 @@ void ReChannelW::processLine(QString line)
 //    qDebug() << "ReChannelW::processLine" << line;
     line = line.trimmed();
     QStringList fields = line.split(RE_NP_SEPARATOR,
-                               QString::SkipEmptyParts);
+                                    QString::SkipEmptyParts);
 
     QString key_type, key_code;
     if ( fields.length()>0 )
@@ -116,8 +116,7 @@ void ReChannelW::processLine(QString line)
     {
         key_code = fields[1];
     }
-    if ( fields.length()==0 ||
-         fields.length()>2 )
+    if ( fields.length()==0 || fields.length()>2 )
     {
         qDebug() << "Error 128: wrong field length, data=`"
                     + line + "`";
@@ -203,9 +202,16 @@ void ReChannelW::processCommand(QString k_type,
     {
         emit modifier(k_code);
     }
-    else if( k_type=="wake" )
+    else if( k_type=="batool" )
     {
-        ReState::wakeUp();
+        if( k_code=="wake" )
+        {
+            ReState::wakeUp();
+        }
+        else if( k_code=="stop" )
+        {
+            ReState::stopFFScroll();
+        }
     }
     else if( k_type=="write" )
     {
